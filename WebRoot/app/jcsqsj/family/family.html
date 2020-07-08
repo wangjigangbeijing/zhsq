@@ -1,0 +1,104 @@
+
+
+<script src="./jcsqsj/family/family.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>家庭户名</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>居民户籍类别</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='registrationcategoryQuery' id='registrationcategoryQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='本市城镇'>本市城镇</option>
+						<option value='本市农业'>本市农业</option>
+						<option value='外埠城镇'>外埠城镇</option>
+						<option value='外埠农业'>外埠农业</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>户籍地址</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='registrationaddressQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
+<div class='col-sm-2'>
+					<select class='form-control field' name='ofcommunity' id='ofcommunityQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在楼宇</label>
+<div class='col-sm-2'>
+ 					<select class='form-control field' name='ofresidebuildingQuery' id='ofresidebuildingQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在单元</label>
+<div class='col-sm-2'>
+ 					<select class='form-control field' name='ofunitQuery' id='ofunitQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在房屋</label>
+<div class='col-sm-2'>
+					<select class='form-control field' name='ofroomQuery' id='ofroomQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>居住状态</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='statusQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>家庭户名</th>
+<th style='text-align:center;'>居民户籍类别</th>
+<th style='text-align:center;'>户籍地址</th>
+<th style='text-align:center;'>所属小区</th>
+<th style='text-align:center;'>所在楼宇</th>
+<th style='text-align:center;'>所在单元</th>
+<th style='text-align:center;'>所在房屋</th>
+<th style='text-align:center;'>居住状态</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+
+
+</script>

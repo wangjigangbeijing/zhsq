@@ -1,0 +1,82 @@
+
+
+		<script src="./common.js"></script>
+		<script src="./table/tableDataDetail.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstrap-datepicker/css/datepicker.css" />
+	
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstrap-datepicker/css/datepicker.css" />
+		<script type="text/javascript" src="../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="../plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+		<script src="../plugins/ajaxfileupload.js" type="text/javascript"></script>
+  
+  
+		<link rel="stylesheet" type="text/css" href="../plugins/webuploader/webuploader.css" />
+		<script type="text/javascript" src="../plugins/webuploader/webuploader.js"></script>
+			
+		<!--section class="wrapper">
+
+					<div class="row">
+						  <div class="col-lg-12">
+							  <section class="panel">
+								  <header class="panel-heading">
+									  
+									  
+								  </header>
+								  
+								  <div class="panel-body">
+									  <form role="form" class="form-horizontal tasi-form" id="dataDiv">
+										  
+
+											  <div class="modal-footer">
+												  <button class="btn btn-success pull-left" type="button" id="addOrUpdateBtn" onclick="addOrUpdate();">确定</button>							  
+												  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
+											  </div>
+										  
+									  </form>
+								  </div>
+							  </section>
+						  </div>
+					  </div>
+			
+		</section-->
+		
+		
+		
+	<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body" id="dataDiv">
+                  
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" onclick="addOrUpdateData();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+    </section>
+		
+		
+		
+
+	
+		  
+	<script>
+
+	$('#btnSearch').click(loadData);
+	
+	
+	loadData();
+
+	</script>

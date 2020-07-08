@@ -1,0 +1,113 @@
+
+		<script src="./table/editable-table.js"></script>
+	
+		<script src="./table/tableDetail.js"></script>
+		
+	<section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>表单定义</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">表单列表</a></li>
+              <li class="breadcrumb-item active">新增表单</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <!--div class="card-header">
+                <h3 class="card-title">社区职责清单</h3>
+              </div-->
+
+              <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">表单定义</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">表单中文名</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="tableZHName">
+                    </div>
+                  
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">表单英文名</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="tableENName">
+                    </div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">表单类型</label>
+                    <div class="col-sm-4">
+                      <select class="form-control m-bot15" id="tableType">
+											  <option value='主表'>主表</option>
+											  <option value='子表'>子表</option>
+										  </select>
+                    </div>
+                  </div>
+				  	
+				  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">描述</label>
+                    <div class="col-sm-9">
+						<textarea class="form-control" name="tableDescription" rows="6" id="tableDescription"></textarea>
+                    </div>
+                  </div>
+					
+				<div class="adv-table editable-table form-group panel">
+					<header class="panel-heading">
+					  表单字段
+					  <span class="pull-right">
+						  <button type="button" id="editable-sample_new" class="btn btn-info btn-xs" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>							  
+					  </span>
+					</header>
+					  <table class="table table-striped table-advance table-hover table-bordered" id="editable-sample">
+						  <thead>
+						  <tr>
+							  <th>中文名</th>
+							  <th>英文名</th>
+							  <th>控件类型</th>
+							  <th>控件取值</th>
+							  <th style="width:100px;">数据库类型</th>
+							  <th style="width:100px;">数据库长度</th>
+							  <th style="width:80px;">排序</th>
+							  <th style="width:80px;">查询字段</th>
+							  <th style="width:80px;">操作</th>
+						  </tr>
+						  </thead>
+						  <tbody>
+						  </tbody>
+					  </table>
+				  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdateTable();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackTablePage();">取消</button>
+				  
+                </div>
+                <!-- /.card-footer -->
+              </form>
+            </div>
+			  
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+	

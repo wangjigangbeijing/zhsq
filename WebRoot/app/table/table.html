@@ -1,0 +1,203 @@
+
+
+		 <!--link rel="stylesheet" type="text/css" href="assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+		<link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
+		<script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="js/select2-master/css/select2.min.css" />
+		<script type="text/javascript" src="js/select2-master/js/select2.min.js"></script>
+		<script type="text/javascript" src="assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+		
+		<script type="text/javascript" src="js/ajaxfileupload.js"></script-->
+		
+  
+		<script src="./table/table.js"></script>
+		
+		
+		
+		<!--section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>社区职责清单</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">DataTables</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section-->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">表单名称</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="tableNameQry">
+                    </div>
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+				
+              </div>
+			  
+			   </div>
+			  
+            <!-- /.card -->
+
+            <div class="card">
+              <!--div class="card-header">
+                <h3 class="card-title">社区职责清单</h3>
+              </div-->
+
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-striped"  id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style="text-align:center;"> 表单名称</th>
+					  <th style="text-align:center;"> 状态</th>
+					  <th style="text-align:center;"> 操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  
+                  </tbody>
+
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+	
+	
+	
+	
+          <!--section class="wrapper">
+              
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              
+							   <form class="form-horizontal tasi-form">
+								  <div class="form-group">
+									  <label id="streetLabel" class="col-sm-1 col-sm-1 control-label" style="text-align:right;">表单名称:</label>
+									  <div class="col-sm-2">
+										   <input type="text" class="form-control" id="tableNameQry"/>
+									  </div>
+									  
+									   <button type="button" id="btnSearch" class="btn btn-success">查询</button>
+									   
+									   <div class="col-sm-1 pull-right">
+										<button id="btnAdd" class="btn btn-info" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+									  </div>
+									  
+									  
+								  </div>
+								  
+							  </form>
+							  
+                          </header>
+						  
+						  
+                          <table class="display table table-bordered table-striped" id="dataTable">
+                              <thead>
+                              <tr>
+                                  <th style="text-align:center;"> 表单名称</th>
+								  <th style="text-align:center;"> 状态</th>
+								  <th style="text-align:center;"> 操作</th>
+                              </tr>
+                              </thead>
+							  <tbody></tbody>
+                          </table>
+                      </section>
+                  </div>
+              </div>
+			  
+			  
+			  <div class="modal" id="modalDetail" role="dialog" style="z-index:999;padding-top:100px;">
+				  <div class="modal-dialog modal-sm">
+					  <div class="modal-content-wrap">
+						  <div class="modal-content" style="width:700px;">
+							  <div class="modal-header">
+								  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeModalDetail();">&times;</button>
+								  <h4 class="modal-title" id="modalTitle"></h4>
+							  </div>
+							  <div class="modal-body" style="height:456px;">
+									
+									<form class="form-horizontal" role="form">
+									<div class="form-group">
+                                      <label class="col-md-2 control-label">表单名称</label>
+                                      <div class="col-md-9">
+                                          <input type="text" class="form-control" id="tableName">
+                                      </div>
+									</div>
+									
+									<div class="form-group">
+                                      <label class="col-md-2 control-label">表单编码</label>
+                                      <div class="col-md-9">
+                                          <input type="text" class="form-control" id="tableCode">
+                                      </div>
+									</div>
+									
+									<div class="form-group">
+                                      <label class="col-md-2 control-label">状态</label>
+                                      <div class="col-md-4">
+                                          <select class="form-control m-bot15" id="status">
+											  <option value="计划">计划</option>
+											  <option value="采集">采集</option>
+											  <option value="查图">查图</option>
+											  <option value="质检">质检</option>
+											  <option value="结束">结束</option>
+										  </select>
+                                      </div>
+										</div>
+								 
+								  
+								  </form>
+							</div>
+							  <div class="modal-footer">
+								  <button class="btn btn-success pull-left" type="button" id="addOrUpdateTableBtn" onclick="addOrUpdateTable();">确定</button>							  
+								  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+          </section-->
+		  
+	<script>
+
+	$('#btnSearch').click(loadTable);
+	
+	loadTable();
+
+	</script>

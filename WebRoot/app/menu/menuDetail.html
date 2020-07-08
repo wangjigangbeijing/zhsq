@@ -1,0 +1,102 @@
+
+		<script src="./menu/menuDetail.js"></script>
+		
+		<section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>社区职责清单</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">清单列表</a></li>
+              <li class="breadcrumb-item active">新增清单</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <!--label for="inputEmail3" class="col-sm-2 col-form-label">编号</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="bh">
+                    </div-->
+					
+					
+					<label class='col-md-2 col-form-label'>菜单名称</label>
+					<div class='col-md-9'>
+						<input type='text' class='form-control' id='menu_zhname'>
+					</div>
+                  
+                  </div>
+				  
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>英文名</label>
+					<div class='col-md-9'>
+						<input type='text' class='form-control' id='menu_enname'>
+					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>菜单类型</label>
+					<div class='col-md-9'>
+						<select class='form-control field' name='menu_type' id='menu_type'>
+						<option value='表单' selected>表单</option>
+						<option value='文件'>文件</option>
+						<option value='外部URL'>外部URL</option>
+						</select>
+					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>表单</label>
+						<div class='col-md-9'>
+							<select class='form-control field' name='table_id' id='table_id'>									
+							</select>
+						</label>
+					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>文件</label>
+					<div class='col-md-9'>
+						<input type='text' class='form-control' id='file_name'>
+					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>外部URL</label>
+						<div class='col-md-9'>
+							<input type='text' class='form-control' id='external_url'>
+ 						</div>
+                  </div>
+				  
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+    </section>
+		
+		

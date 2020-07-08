@@ -1,0 +1,175 @@
+
+
+		<script src="./js/echarts.min.js"></script>
+		<script src="./dashboard/dashboard.js"></script>
+		
+		
+		
+		
+          <section class="wrapper">
+              
+              <!--div class="row" id="queryDiv">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              
+							  
+							   <form class="form-horizontal tasi-form">
+								  <div class="form-group">
+									  <label id="streetLabel" class="col-sm-1 col-sm-1 control-label" style="text-align:right;">街乡镇:</label>
+									  <div class="col-sm-2"  id="entStreetSelectDiv">
+										  <select class="form-control m-bot15" id="entStreetSelect">
+											  
+										  </select>
+									  </div>
+									  
+									  <label id="streetLabel" class="col-sm-1 col-sm-1 control-label" style="text-align:right;">建设性质:</label>
+									  <div class="col-sm-2"  id="entStreetSelectDiv">
+										  <select class="form-control m-bot15" id="buildType">
+											   <option value=''>全部</option>
+											   <option value='新建'>新建</option>
+											   <option value='规范'>规范</option>
+										  </select>
+									  </div>
+									  
+									  <label class="control-label col-md-1" style="text-align:right;">时间段</label>
+									  <div class="col-md-4">
+										  <div class="input-group input-large" data-date-format="yyyy-mm-dd">
+											  <input type="text" class="form-control dpd1" name="from" id="fromTime">
+											  <span class="input-group-addon">到</span>
+											  <input type="text" class="form-control dpd2" name="to" id="toTime">
+										  </div>
+									  </div>
+									  
+									   <button type="button" id="btnSearch" class="btn btn-success">查询</button>
+									   
+									    <button type="button" id="btnReset" class="btn btn-info">重置</button>
+									   
+								  </div>								  
+							  </form>							  
+                          </header>	
+					  </section>
+                  </div>
+              </div-->
+			  
+			  
+			  <div class="row">
+                  <div class="col-lg-12">
+					  <section class="panel">
+                          <header class="panel-heading">
+                              基本情况
+                              <span class="tools pull-right">
+                                <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                <a class="fa fa-times" href="javascript:;"></a>
+                            </span>
+                          </header>
+						  
+                          <div class="panel-body">
+							
+							<div class="col-lg-3" id="streetChartDiv">
+								  <section class="panel">
+									  <!--header class="panel-heading">
+										  不同类型企业分布图
+									  </header-->
+									  <div class="panel-body">
+									  
+										  <div class="col-lg-6">
+													  <div class="bio-desk">
+														  <h4 class="red">234件</h4>
+														  <p>本月生成</p>
+													  </div>
+										  </div>
+										  <div class="col-lg-6">
+													  <div class="bio-desk">
+														  <h4 class="terques">120件</h4>
+														  <p>本月完成</p>
+													  </div>
+										  </div>
+										  
+										  
+										  <div class="col-lg-6">
+													  <div class="bio-desk">
+														  <h4 class="red">87%</h4>
+														  <p>本月完成率</p>
+													  </div>
+										  </div>
+										  <div class="col-lg-6">
+											  <div class="bio-desk">
+												  <h4 class="red">10%</h4>
+											  </div>
+										  </div>
+									  </div>
+								  </section>
+							  </div>
+							  
+                              
+							  <div class="col-lg-9" id="streetTableDiv">
+								  <section class="panel">
+									  <div class="panel-body">
+										  <div id="trendChart" class="chart" style="height:300px;"></div>
+									  </div>
+								  </section>
+							  </div>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+			  
+			  
+			  
+			 
+			  
+			  <div class="row">
+                      <div class="col-lg-12">
+                          <section class="panel">
+                              <!--header class="panel-heading">
+                                  每日数据采集统计
+                              </header-->
+                              <div class="panel-body">
+                                  <div id="trendChart" class="chart" style="height:400px;"></div>
+                              </div>
+                          </section>
+                      </div>
+                  </div>
+			  
+          </section>		  
+		  
+		  
+		  
+	<script>
+
+	/*$.get(getContextPath()+"/dashboardController/loadStreetList",
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			$('#entStreetSelect').html('');
+			var filterArr = [];
+			
+			for(var i=0;i<obj.streetList.length;i++)
+			{
+				var street = obj.streetList[i];
+				
+				filterArr[i+1] = "<option value='" + street.id + "'>" + street.value + "</option>";					
+			}
+			$('#entStreetSelect').html(filterArr.join(''));
+		}
+	});
+	
+	$('#btnSearch').click(dataSearch);
+
+	dataSearch();
+
+	
+	$('#btnReset').click(reset);
+	
+	function reset()
+	{
+		$('#entStreetSelect').val('');
+		$('#busiTypeSelect').val('');
+		$('#fromTime').val('');
+		$('#toTime').val('');
+		
+		dataSearch();
+	}*/
+	</script>

@@ -1,0 +1,120 @@
+
+
+<link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
+<script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+
+<script type="text/javascript" src="assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+<link rel="stylesheet" type="text/css" href="assets/webuploader/webuploader.css" />
+<script type="text/javascript" src="assets/webuploader/webuploader.js"></script>
+  
+<script src="./sysEquipment/sysEquipment.js"></script>
+
+<section class="wrapper">
+    <div class="row">
+		<div class="col-lg-12">
+			<section class="panel">
+				<header class="panel-heading">
+					<form class="form-horizontal tasi-form">
+						<div class="form-group">
+													<label class='col-md-1 control-label'>设备编号</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='equipment_noQuery'>
+</div>
+						<label class='col-md-1 control-label'>设备名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='equipment_nameQuery'>
+</div>
+						<label class='col-md-1 control-label'>设备类型</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='equipment_typeQuery'>
+</div>
+						<label class='col-md-1 control-label'>设备厂家</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='equipment_vendorQuery' id='equipment_vendorQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='中海达'>中海达</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label'>采购日期</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='purchase_dateQuery'>
+</div>
+						<label class='col-md-1 control-label'>状态</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='statusQuery' id='statusQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='启用'>启用</option>
+ 						<option value='损坏'>损坏</option>
+ 						<option value='报废'>报废</option>
+						</select>
+</div>
+
+						
+							<!--label id="streetLabel" class="col-sm-1 col-sm-1 control-label" style="text-align:right;">姓名:</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="userNameQry">
+							</div-->
+									  
+							<button type="button" id="btnSearch" class="btn btn-success">查询</button>
+							<!--button type="button" id="btnReset" class="btn btn-primary">重置</button-->
+									   
+							<div class="col-sm-1 pull-right">
+							<button id="btnAdd" class="btn btn-info" onclick="return false;" style="margin-right:20px;"><i class="fa fa-envelope"></i> 增加</button>
+							</div>
+						</div>
+					</form>
+				</header>
+						  
+						  
+                <table class="display table table-bordered table-striped" id="dataTable">
+					<thead>
+                    <tr>
+						<th style='text-align:center;'>设备编号</th>
+<th style='text-align:center;'>设备名称</th>
+<th style='text-align:center;'>设备类型</th>
+<th style='text-align:center;'>设备厂家</th>
+<th style='text-align:center;'>采购金额</th>
+<th style='text-align:center;'>采购日期</th>
+<th style='text-align:center;'>状态</th>
+<th style='text-align:center;'>操作</th>
+                    </tr>
+                    </thead>
+					<tbody></tbody>
+				</table>
+			</section>
+		</div>
+	</div>
+			  
+			  
+  <div class="modal" id="modalDetail" role="dialog" style="z-index:999;padding-top:100px;">
+	  <div class="modal-dialog modal-sm">
+		  <div class="modal-content-wrap">
+			  <div class="modal-content" style="width:600px;">
+				  <div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeModalDetail();">&times;</button>
+					  <h4 class="modal-title" id="modalTitle"></h4>
+				  </div>
+				  <div class="modal-body" style="height:456px;">
+						<form class="form-horizontal" role="form">
+						
+						{FormDetail}
+					  </form>
+				</div>
+				  <div class="modal-footer">
+					  <button class="btn btn-success pull-left" type="button" id="addOrUpdateBtn" onclick="addOrUpdate();">确定</button>							  
+					  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
+				  </div>
+			  </div>
+		  </div>
+	  </div>
+  </div>
+</section>		  
+
+
+<script>
+
+
+
+</script>

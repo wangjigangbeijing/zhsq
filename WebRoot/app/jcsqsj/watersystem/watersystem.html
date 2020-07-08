@@ -1,0 +1,111 @@
+
+
+<script src="./jcsqsj/watersystem/watersystem.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>河湖名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>河湖长姓名</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='leadernameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
+<div class='col-sm-2'>
+					
+					<select class='form-control field' name='statusQuery' id='statusQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='正常'>正常</option>
+						<option value='干涸'>干涸</option>
+						</select>
+					
+					
+					
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>数据编码</th>
+<th style='text-align:center;'>河湖名称</th>
+<th style='text-align:center;'>主管部门</th>
+<th style='text-align:center;'>权属单位</th>
+<th style='text-align:center;'>养护单位</th>
+<th style='text-align:center;'>河湖长姓名</th>
+<th style='text-align:center;'>河湖长联系电话</th>
+<th style='text-align:center;'>河湖长单位</th>
+<th style='text-align:center;'>经度</th>
+<th style='text-align:center;'>纬度</th>
+<th style='text-align:center;'>状态</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

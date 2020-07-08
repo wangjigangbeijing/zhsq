@@ -1,0 +1,349 @@
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+	<div class="row mb-2">
+	  <div class="col-sm-6">
+		<h1>社区概况图</h1>
+	  </div>
+	  <div class="col-sm-6">
+		<ol class="breadcrumb float-sm-right">
+		  <li class="breadcrumb-item"><a href="#">Home</a></li>
+		  <li class="breadcrumb-item active">ChartJS</li>
+		</ol>
+	  </div>
+	</div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+	<div class="row">
+	  <div class="col-md-12">
+		<!-- AREA CHART -->
+		<div class="card card-primary">
+		  <div class="card-header">
+			<h3 class="card-title">社区概况图</h3>
+
+			<div class="card-tools">
+			  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+			  </button>
+			  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+			</div>
+		  </div>
+		 <div class="card-body" id="sqmqtDiv" style="height:700px;">
+		  </div>
+		  <!-- /.card-body -->
+		</div>
+		<!-- /.card -->
+	  </div>
+ 
+	  <!-- /.col (RIGHT) -->
+	</div>
+	<!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- ChartJS>
+<script src="./plugins/chart.js/Chart.min.js"></script -->
+
+<!-- page script -->
+<script>
+$(function () {
+  
+	var map = new ol.Map({
+        target: 'sqmqtDiv',
+        view: new ol.View({
+            center: [12965554.49 , 4903893.99],
+            zoom: 12,
+            //projection: 'EPSG:4326',
+			projection: 'EPSG:3857',// 
+            multiWorld: true
+        })/*,
+        overlays: [overlay]*/
+    });
+    
+	var baseLayer = new ol.layer.Tile({
+        source: new ol.source.TileSuperMapRest({
+            url: "http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai"
+        })
+    });
+    map.addLayer(baseLayer);
+	
+	
+	var dataSource = new ol.source.Vector();
+								
+	dataLayer = new ol.layer.Vector({
+		source: dataSource
+	});
+	
+	var iconFeature = new ol.Feature({
+		//geometry: new ol.geom.Point(data.coordinates),			
+		geometry: new ol.geom.Point([116.32757062,39.88583062])/*,
+		weight:1,
+		population: 4000,
+		rainfall: 500*/
+	});
+	
+	
+	dataLayer.getSource().addFeature(iconFeature);	
+								
+	map.addLayer(dataLayer);							
+								
+								
+	$.get(getContextPath()+"/gismapController/getMapByName?name=社区概况图",
+			function(response)
+			{	
+				var respObj = jQuery.parseJSON(response); 
+
+				var geoServerURL = respObj.mapurl;
+				
+				for(var i=0;i<respObj.list.length;i++)
+				{
+					var layer = respObj.list[i];
+					
+					var layerId = layer.id;
+					
+					var layerName = layer.layersource;
+					
+					var layerType = layer.layertype;
+					
+					var layerStyle = layer.layerstyle;
+					
+					if(layerName != 'jc_community')
+						continue;
+					/*
+					var tiled = new ol.layer.Tile({
+						visible: true,
+						source: new ol.source.TileWMS({
+						  url: 'http://49.233.26.198:8082/gis/zhsq/wms',
+						  params: {'FORMAT': 'image/png', 
+								   'VERSION': '1.1.1',
+								   tiled: true,
+								"LAYERS": 'zhsq:'+layerName,
+								"exceptions": 'application/vnd.ogc.se_inimage',
+							 tilesOrigin: 116.32646421269499 + "," + 39.88449282783788
+						  }
+						})
+					  });
+				
+					map.addLayer(tiled);  
+					*/
+					
+						$.ajax({
+							type: "GET",
+							//url:"http://49.233.26.198:8082/gis/zhsq/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=zhsq:jc_community&maxFeatures=50&outputFormat=application/json",
+							url: getContextPath()+"/dataController/webwfs?layerId="+layerId,
+							contentType: "application/json; charset=utf-8",
+							//data: JSON.stringify(submitPayload),
+							dataType: "json",
+							success: function (dataList) {
+								debugger;
+								
+								var dataSource = new ol.source.Vector();
+								
+								dataLayer = new ol.layer.Vector({
+									source: dataSource
+								});
+								
+								var iconFeature = new ol.Feature({
+									//geometry: new ol.geom.Point(data.coordinates),			
+									geometry: new ol.geom.Point([[116.32757062,39.88583062]])/*,
+									weight:1,
+									population: 4000,
+									rainfall: 500*/
+								});
+								
+								
+								dataLayer.getSource().addFeature(iconFeature);	
+										
+								/*for(var p=0;p < dataList.features.length;p++)
+								{
+									var data = dataList.features[p];
+									
+									console.log(data.type);
+									if(data.type == 'MultiLineString')
+									{
+										var iconFeature = new ol.Feature({
+											geometry: new ol.geom.MultiLineString(data.coordinates),
+											weight:1,
+											population: 4000,
+											rainfall: 500
+										});
+										
+										iconFeature.setId(data.id);
+										
+										dataLayer.getSource().addFeature(iconFeature);	
+									}
+									else if(data.type == 'Point')
+									{
+										var iconFeature = new ol.Feature({
+											//geometry: new ol.geom.Point(data.coordinates),			
+											geometry: new ol.geom.Point([116.32757062,39.88583062]),
+											weight:1,
+											population: 4000,
+											rainfall: 500
+										});
+										
+										iconFeature.setId(data.id);
+										dataLayer.getSource().addFeature(iconFeature);	
+									}
+									else if(data.type == 'MultiPolygon')
+									{
+										
+										var iconFeature = new ol.Feature({
+											//geometry: new ol.geom.MultiPolygon(data.coordinates),
+											//geometry: new ol.geom.MultiPolygon([[[116.32757062,39.88583062],[116.32753307,39.88587281],[116.32871459,39.8859397],[116.32867838,39.88544884],[116.32940794,39.88544884],[116.32950986,39.88463278],[116.32734264,39.88449283],[116.32730911,39.88494356],[116.32767389,39.88504338],[116.32757196,39.88580284],[116.32757062,39.88583062]]]),
+											geometry: new ol.geom.Polygon([[[116.32757062,39.88583062],[116.32753307,39.88587281],[116.32871459,39.8859397],[116.32867838,39.88544884],[116.32940794,39.88544884],[116.32950986,39.88463278],[116.32734264,39.88449283],[116.32730911,39.88494356],[116.32767389,39.88504338],[116.32757196,39.88580284],[116.32757062,39.88583062]]]),
+											weight:1,
+											population: 4000,
+											rainfall: 500
+										});
+										iconFeature.setId(data.id);
+										
+										dataLayer.getSource().addFeature(iconFeature);	
+									}
+								}*/
+								
+								map.addLayer(dataLayer);
+								
+								
+								
+							}
+						});
+				}
+			}
+	);
+	
+	
+	
+	
+	
+	/*var pajstlayer = new ol.layer.Tile({
+        source: new ol.source.TileSuperMapRest({
+            url: "http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai"
+        })
+    });
+	pajst.addLayer(pajstlayer);*/
+	
+	/*wjtyt.addLayer(layer);
+	xfdjt.addLayer(layer);
+	sqfwt.addLayer(layer);
+	hjwst.addLayer(layer);
+	*/
+	//map.getView().fit(bounds, map.getSize());
+	
+	/*layer = new ol.layer.Image({
+		source: new ol.source.ImageWMS({
+		  ratio: 1,
+		  url: 'http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai',
+		  params: {'FORMAT': 'image/png',
+				   'VERSION': '1.1.1',  
+				"STYLES": 'dt_green',
+				"LAYERS": workspace+':'+baseLayerName,
+				"exceptions": 'application/vnd.ogc.se_inimage',
+		  }
+		})
+	  });
+
+	map.addLayer(layer);*/
+	
+	map.on('singleclick', function(evt) 
+	{
+		var feature = map.forEachFeatureAtPixel(evt.pixel,
+			function(feature) {
+			
+				return feature;
+		});
+		
+		if(feature != null && feature != undefined)
+		{
+		
+			var gid = feature.getId();
+			
+			curId = gid.substring(gid.indexOf('\.')+1);
+			
+			$.get(getContextPath()+"/dataController/getData?projectId="+curProjectId+"&layerId="+curLayerId+"&dataId="+curId,
+			function(dataDetail)
+			{										
+				$('#imgList').empty();
+				
+				curData = jQuery.parseJSON(dataDetail);  
+				
+				for(var i=attributeList.length - 1;i>=0 ;i--)
+				{
+					$('#'+attributeList[i].enName).val(curData[attributeList[i].enName]);
+					
+					if(attributeList[i].componentsType == '下拉' || attributeList[i].componentsType == '数字' 
+							|| attributeList[i].componentsType == '单行文本' || attributeList[i].componentsType == '多行文本')
+					{
+						if(curData[attributeList[i].enName] == null)
+							$('#'+attributeList[i].enName).val('');
+						else
+							$('#'+attributeList[i].enName).val(curData[attributeList[i].enName]);
+					}
+					else if(attributeList[i].componentsType == '单选')
+					{
+						$("input[name='"+attributeList[i].enName+"'][value='"+curData[attributeList[i].enName]+"']").attr('checked','true');
+					}
+					else if(attributeList[i].componentsType == '多选')
+					{
+						var checkArr = curData[attributeList[i].enName].split(VALUE_SPLITTER);
+						
+						for(var j=0;j<checkArr.length;j++)
+						{
+							if(curData[attributeList[i].enName] == null)
+								$("input[name='"+attributeList[i].enName+"'][value='"+checkArr[j]+"']").attr('checked','false');
+							else
+							{
+								if(checkArr[j] != '')
+								{
+									$("input[name='"+attributeList[i].enName+"'][value='"+checkArr[j]+"']").attr('checked','true');
+								}
+							}
+						}
+					}
+					else if(attributeList[i].componentsType == '图片' || attributeList[i].componentsType == '文件')
+					{
+						$('#'+attributeList[i].enName+'picktable').dataTable({searching:false,paging:false,info:false}).fnClearTable();
+						
+						if(curData[attributeList[i].enName] != null)
+						{
+							var fjArr = curData[attributeList[i].enName].split(VALUE_SPLITTER);
+								
+							for(var j=0;j<fjArr.length;j++)
+							{
+								if(fjArr[j] != '')
+								{
+									var fileName = fjArr[j].substring(fjArr[j].lastIndexOf('/')+1);
+									
+									$('#'+attributeList[i].enName+'picktable').dataTable({searching:false,paging:false,info:false}).fnAddData(
+										[fileName,'已提交','<button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+fileName+'\');return false;"><i class="fa fa-check"></i></button><button type="button" class="btn btn-danger btn-xs" onclick="javascript:deleteAttach(\''+attributeList[i].enName+'picktable\',\''+fileName+'\');return false;"><i class="fa fa-trash-o"></i></button>']
+									);		
+									
+									var fileURL = getContextPath()+"/fileController/imagePreview?projectId="+curProjectId+"&layerId="+curLayerId+"&fileName="+fileName;
+									
+									var file = '<li>                                                                               '+
+											'	<figure>                                                                           '+
+											'		  <img src="'+fileURL+'" alt="img06">                                    	   '+
+											'		  <figcaption>                                                                 '+
+											'			  <h3>'+fileName+'</h3>                                                    '+
+											'		  </figcaption>                                                                '+
+											'	  </figure>                                                                        '+
+											' </li>                                                                                ';
+									
+									$('#imgList').append(file);
+								}
+							}	
+						}
+					}
+				}
+			});
+		}
+	});
+	
+	
+})
+</script>
+</body>
+</html>

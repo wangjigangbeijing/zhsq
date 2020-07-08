@@ -1,0 +1,142 @@
+
+
+<script src="./jc_rubbish/jc_rubbish.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>垃圾站名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>垃圾站类型</label>
+<div class='col-sm-2'>
+					
+					<select class='form-control field' name='typeQuery' id='typeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='垃圾桶站'>垃圾桶站</option>
+						<option value='临时垃圾存放点'>临时垃圾存放点</option>
+						<option value='垃圾收集站'>垃圾收集站</option>
+					</select>
+						
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>垃圾站分类</label>
+<div class='col-sm-2'>
+					<select class='form-control field' name='kindQuery' id='kindQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='四色'>四色</option>
+						<option value='三色'>三色</option>
+						<option value='二色'>二色</option>
+						<option value='一色'>一色</option>
+					</select>
+					
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>容纳设施类别</label>
+<div class='col-sm-2'>
+					
+					<select class='form-control field' name='catagoryQuery' id='catagoryQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='厨余绿桶'>厨余绿桶</option>
+						<option value='可回收蓝桶'>可回收蓝桶</option>
+						<option value='有害红桶'>有害红桶</option>
+						<option value='其他灰桶'>其他灰桶</option>
+						<option value='其他堆放'>其他堆放</option>
+					</select>
+					
+ 				</label>
+				
+				
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>垃圾站位置</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='addressQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>管理单位</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='departmentQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>管理单位电话</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='departtelQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>垃圾站名称</th>
+<th style='text-align:center;'>垃圾站类型</th>
+<th style='text-align:center;'>垃圾站分类</th>
+<th style='text-align:center;'>容纳设施类别</th>
+<th style='text-align:center;'>垃圾站位置</th>
+<th style='text-align:center;'>管理单位</th>
+<th style='text-align:center;'>管理单位电话</th>
+<th style='text-align:center;'>清运垃圾时间</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturepick',
+formData:{
+attributeName:'picture'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

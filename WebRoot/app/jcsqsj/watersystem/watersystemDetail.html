@@ -1,0 +1,151 @@
+
+
+<script src="./jcsqsj/watersystem/watersystemDetail.js"></script>
+
+
+
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+										<div class='form-group row'>
+						<label class='col-md-2 control-label'>数据编码</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='dateid'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>河湖名称</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='name'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>主管部门</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='deptname1'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>权属单位</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='deptname2'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>养护单位</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='deptname3'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>河湖长姓名</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='leadername'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>河湖长联系电话</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='leadertel'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>河湖长单位</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='leaderorg'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>经度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>纬度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>状态</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='status' value='正常'> 正常
+						<input type='radio' name='status' value='干涸'> 干涸
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>照片</label>
+  				<div class='col-md-9'>
+<div id='picturesdiv' class='wu-example'>
+<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
+<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='picturespick'>选择文件</div>
+</div>
+</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>备注</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
+ 						</div>
+ 					</div>
+
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+	
+	
+<script>
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

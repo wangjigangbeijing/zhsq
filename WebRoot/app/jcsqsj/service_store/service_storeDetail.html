@@ -1,0 +1,203 @@
+
+
+<script src="./jcsqsj/service_store/service_storeDetail.js"></script>
+
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+										<div class='form-group row'>
+						<label class='col-md-2 control-label'>数据编码</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='dateid'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>网点名称</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='name'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>网点类型</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='type' id='type'>
+ 						<option value='政府机关'>政府机关</option>
+						<option value='房产居住'>房产居住</option>
+						<option value='购物百货'>购物百货</option>
+						<option value='生活服务'>生活服务</option>
+						<option value='休闲娱乐'>休闲娱乐</option>
+						<option value='餐饮小吃'>餐饮小吃</option>
+						<option value='企业实业'>企业实业</option>
+						<option value='金融保险'>金融保险</option>
+						<option value='旅游住宿'>旅游住宿</option>
+						<option value='文化教育'>文化教育</option>
+						<option value='医疗卫生'>医疗卫生</option>
+						<option value='交通运输'>交通运输</option>
+						<option value='汽车服务'>汽车服务</option>
+						<option value='社会团体'>社会团体</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>网点地址</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='address'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>统一社会信用代码</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='socialcode'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>经营范围</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='businessscope'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>营业面积（平方米）</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>是否为连锁</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='ischain' value='是'> 是
+						<input type='radio' name='ischain' value='否'> 否
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>搭载其他业态</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='otherbusiness'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>联系人</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='contact'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>联系人电话</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='contacttel'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>开始营业时间</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>结束营业时间</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>是否24小时营业</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='is24hours' value='是'> 是
+						<input type='radio' name='is24hours' value='否'> 否
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>经度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>纬度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>状态</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='status' value='在营'> 在营
+						<input type='radio' name='status' value='迁出'> 迁出
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>照片</label>
+  				<div class='col-md-9'>
+<div id='picturesdiv' class='wu-example'>
+<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
+<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='picturespick'>选择文件</div>
+</div>
+</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>备注</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
+ 						</div>
+ 					</div>
+
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+	
+	
+<script>
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

@@ -1,0 +1,76 @@
+jNotify——优秀的jQuery结果提示框插件 我爱模板推荐
+
+jNotify提示框，一款优秀的jQuery结果提示框插件。我们在提交表单后，通过Ajax响应后台返回结果，并在前台显示返回信息，jNotify能非常优雅的显示操作结果信息。jNotify是一款基于jQuery的信息提示插件，它支持操作成功、操作失败和操作提醒三种信息提示方式。jNotify浏览器兼容性非常好，支持更改提示内容，支持定位提示框的位置，可配置插件参数。
+
+使用方法：
+1.引入jNotify的css文件、js文件和jQuery库文件：
+<link rel="stylesheet" type="text/css" href="jNotify.jquery.css" />
+<script type="text/javascript" src="http://www.5imoban.net/download/jquery/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="jNotify.jquery.js"></script>
+
+2、引入jNotify的调用代码，下面只是调用成功提示的例子：
+$(function(){ 
+   $(a.success).click(function(){ 
+       jSuccess(message,{option}); 
+   });
+});
+
+如果是失败提示：
+$(function(){
+	$("a.error").click(function(){
+		jError("操作失败，请重试!!");
+	});
+});
+
+一般提示：
+$(function(){
+	$("a.notice").click(function(){
+		jNotify("注意：请完善你的<strong>个人资料！</strong>");
+	});
+});
+
+多个提示依次调用：
+$(function(){
+	$("a.three").click(function(){
+		jSuccess("操作成功，2秒后显示下一个提示框!!",{
+			TimeShown : 2000,
+			onClosed:function(){
+				jNotify("注意：点击这里显示下一个提示框",{
+					VerticalPosition : 'top',
+					autoHide : false,
+					onClosed:function(){
+						jError("出错啦! 演示结束,<br /> 请点击背景层关闭提示框。",{
+							   clickOverlay : true,
+							   autoHide : false,
+							   HorizontalPosition : 'left'
+						});
+					}
+				});
+			}
+		});
+	});
+});
+
+3、jNotify的参数详细配置：
+autoHide : true,                // 是否自动隐藏提示条 
+clickOverlay : false,            // 是否单击遮罩层才关闭提示条 
+MinWidth : 200,                    // 最小宽度 
+TimeShown : 1500,                 // 显示时间：毫秒 
+ShowTimeEffect : 200,             // 显示到页面上所需时间：毫秒 
+HideTimeEffect : 200,             // 从页面上消失所需时间：毫秒 
+LongTrip : 15,                    // 当提示条显示和隐藏时的位移 
+HorizontalPosition : "right",     // 水平位置:left, center, right 
+VerticalPosition : "bottom",     // 垂直位置：top, center, bottom 
+ShowOverlay : true,                // 是否显示遮罩层 
+ColorOverlay : "#000",            // 设置遮罩层的颜色 
+OpacityOverlay : 0.3,            // 设置遮罩层的透明度 
+onClosed:fn			//关闭提示框后执行函数，可以再次调用其他jNotify。如上面的三个依次调用。
+
+从上面代码可以看出，jNotify提供三种调用方式，分别是jSuccess()，jNotify()，jError()，使用方法都一样。message就是提示信息的内容，支持html标签。option是参数配置项，可以进行相关配置，如果不要option则采用默认配置。
+
+4、触发的html代码，例如a链接点击后弹出成功提示框：
+<a href="#" class="success">点击查看操作成功提示</a>
+然后在调用代码的触发器上写明：
+$(a.success).click(function(){js代码}
+
+更多网站特效欢迎访问：http://www.5imoban.net/texiao/

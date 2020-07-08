@@ -1,0 +1,110 @@
+
+
+<script src="./jcsqsj/partyorganization/partyorganization.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>党组织名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>组织类别</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='tpyeQuery' id='tpyeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='611党委'>611党委</option>
+						<option value='621党总支部'>621党总支部</option>
+						<option value='631党支部'>631党支部</option>
+						<option value='632联合党支部'>632联合党支部</option>
+						<option value='911临时党委'>911临时党委</option>
+						<option value='921临时党总支部'>921临时党总支部</option>
+						<option value='931临时党支部'>931临时党支部</option>
+						<option value='932临时联合党支部'>932临时联合党支部</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>书记</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='secretaryQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>数据编码</th>
+<th style='text-align:center;'>党组织名称</th>
+<th style='text-align:center;'>组织类别</th>
+<th style='text-align:center;'>书记</th>
+<th style='text-align:center;'>书记联系电话</th>
+<th style='text-align:center;'>联系人</th>
+<th style='text-align:center;'>联系电话</th>
+<th style='text-align:center;'>所在单位名称</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

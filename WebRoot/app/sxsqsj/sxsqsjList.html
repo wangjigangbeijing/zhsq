@@ -1,0 +1,98 @@
+
+<script src="./sxsqsj/sxsqsjList.js"></script>
+		
+		
+  
+   <!-- Content Header (Page header)>
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>社区办事服务</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">DataTables</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section -->
+
+    
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">编号</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="tableNameQry">
+                    </div>
+					
+					<!--label for="inputEmail3" class="col-sm-1 col-form-label">类别</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="tableNameQry">
+                    </div-->
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>				
+              </div>			  
+			</div>
+			   
+			   
+            <!-- /.card -->
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title" id="sxType">办事服务列表</h3>
+              </div>
+
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="dataTable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>事项编码</th>
+                    <th>事项名称</th>
+                    <th>事项大类</th>
+                    <th>事项小类</th>
+                    <th>地点</th>
+                    <th>当事人</th>
+					<th>开始时间</th>
+					<th>结束时间</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->

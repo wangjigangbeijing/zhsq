@@ -1,0 +1,287 @@
+
+
+<script src="./jcsqsj/residebuilding/residebuildingDetail.js"></script>
+
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+										<div class='form-group row'>
+						<label class='col-md-2 control-label'>数据编码</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='dataid'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>楼栋名称</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='name'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>楼栋地址</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='address'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>建设年代</label>
+  				<div class='col-md-9'>
+					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='year'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>产权年限</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='propertyyears' value='40年'> 40年
+						<input type='radio' name='propertyyears' value='50年'> 50年
+						<input type='radio' name='propertyyears' value='70年'> 70年
+						<input type='radio' name='propertyyears' value='不详'> 不详
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>产权性质</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='propertyrights' id='propertyrights'>
+ 						<option value='市政产权'>市政产权</option>
+						<option value='小产权'>小产权</option>
+						<option value='城中村改造'>城中村改造</option>
+						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>采暖方式</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='heatingsystem' value='自采暖'> 自采暖
+						<input type='radio' name='heatingsystem' value='集体采暖'> 集体采暖
+						<input type='radio' name='heatingsystem' value='其他'> 其他
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>所属小区</label>
+							<div class='col-md-9'>
+				
+							<select class='form-control field' name='ofcommunity' id='ofcommunity'>
+								
+							</select>
+				
+							</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>楼栋类型</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='buildtype' value='楼房,平房'> 楼房,平房
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>楼栋结构</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='buildframework' id='buildframework'>
+ 						<option value='框架结构'>框架结构</option>
+						<option value='砖混结构'>砖混结构</option>
+						<option value='框筒结构'>框筒结构</option>
+						<option value='框剪结构'>框剪结构</option>
+						<option value='简易结构'>简易结构</option>
+						<option value='钢结构'>钢结构</option>
+						<option value='钢混结构'>钢混结构</option>
+						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>建筑类型</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='constructiontype' id='constructiontype'>
+ 						<option value='高层楼宇'>高层楼宇</option>
+						<option value='小高层建筑'>小高层建筑</option>
+						<option value='多层建筑'>多层建筑</option>
+						<option value='居民自建房'>居民自建房</option>
+						<option value='临时建筑'>临时建筑</option>
+						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>单元号</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='units'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>层数</label>
+  				<div class='col-md-9'>
+ 					<input type='number' class='form-control' id='levels'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>电梯数</label>
+  				<div class='col-md-9'>
+ 					<input type='number' class='form-control' id='elevators'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>建筑面积（平方米）</label>
+  				<div class='col-md-9'>
+						<input type='number' class='form-control' id='area'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>开发商</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='developer'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>产权人</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='propertyowner'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>产权人联系电话</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='propertyownertel'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>使用人</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='user'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>使用人联系电话</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='usertel'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>物业管理公司</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='propertymanage'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>物业管理公司联系人</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='propertymanagecontact'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>物业管理公司联系电话</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='propertymanagecontacttel'>
+ 						</div>
+ 					</div>
+					<!--div class='form-group row'>
+						<label class='col-md-2 control-label'>楼栋经度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>楼栋纬度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div-->
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>住宅楼宇状态</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='status' value='正常'> 正常
+						<input type='radio' name='status' value='关闭'> 关闭
+						<input type='radio' name='status' value='拆除'> 拆除
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>照片</label>
+  				<div class='col-md-9'>
+<div id='picturesdiv' class='wu-example'>
+<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
+<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='picturespick'>选择文件</div>
+</div>
+</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>备注</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>家庭户数</label>
+  				<div class='col-md-9'>
+ 					<input type='number' class='form-control' id='familiesinbuilding'>
+ 						</div>
+ 					</div>
+
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+	
+	
+<script>
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

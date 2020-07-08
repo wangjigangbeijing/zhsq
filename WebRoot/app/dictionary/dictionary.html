@@ -1,0 +1,84 @@
+
+
+<!--link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
+<script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/bootstrap-fileupload/bootstrap-fileupload.css" /-->
+
+<script src="./dictionary/dictionary.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">名称</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="dic_zhnameQry">
+                    </div>
+					
+					<!--label for="inputEmail3" class="col-sm-1 col-form-label">类别</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="lbQry">
+                    </div-->
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+				
+              </div>
+			  
+			   </div>
+			
+			
+			
+            <!-- /.card -->
+            <div class="card">
+              <!--div class="card-header">
+                <h3 class="card-title">社区职责清单</h3>
+              </div-->
+
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>字典名称</th>
+					<th style='text-align:center;'>英文名</th>
+					<th style='text-align:center;'>字典类型</th>
+					<th style='text-align:center;'>字典取值</th>
+					<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+	
+	
+	
+
+

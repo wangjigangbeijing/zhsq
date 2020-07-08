@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="launchpad-flatlab"
+  id="myeclipse.1457682072608"
+  context-root="/launchpad"
+  j2ee-spec="5.0"
+  archive="launchpad-flatlab.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

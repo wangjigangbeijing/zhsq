@@ -1,0 +1,143 @@
+
+
+<script src="./jcsqsj/vehicle/vehicle.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>车牌号</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='numberQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
+<div class='col-sm-2'>
+ 					<select class='form-control field' name='ofcommunity' id='ofcommunityQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在楼宇</label>
+<div class='col-sm-2'>
+ 					<select class='form-control field' name='ofresidebuildingQuery' id='ofresidebuildingQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在单元</label>
+<div class='col-sm-2'>
+ 					<select class='form-control field' name='ofunitQuery' id='ofunitQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在房屋</label>
+<div class='col-sm-2'>
+ 					<select class='form-control field' name='ofroomQuery' id='ofroomQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在家庭</label>
+<div class='col-sm-2'>
+ 					<select class='form-control field' name='offamilyQuery' id='offamilyQuery'> 						
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>车辆类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='typeQuery' id='typeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='轿车'>轿车</option>
+						<option value='SUV'>SUV</option>
+						<option value='MPV'>MPV</option>
+						<option value='货车'>货车</option>
+						<option value='其他'>其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>车主姓名</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='ownernameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='statusQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>数据编码</th>
+<th style='text-align:center;'>车牌号</th>
+<th style='text-align:center;'>车架号</th>
+<th style='text-align:center;'>所属小区</th>
+<th style='text-align:center;'>所在楼宇</th>
+<th style='text-align:center;'>所在单元</th>
+<th style='text-align:center;'>所在房屋</th>
+<th style='text-align:center;'>所在家庭</th>
+<th style='text-align:center;'>车辆类型</th>
+<th style='text-align:center;'>车辆品牌</th>
+<th style='text-align:center;'>车辆型号</th>
+<th style='text-align:center;'>车身颜色</th>
+<th style='text-align:center;'>车主姓名</th>
+<th style='text-align:center;'>车主联系电话</th>
+<th style='text-align:center;'>状态</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

@@ -1,0 +1,76 @@
+
+		<script src="./dictionary/dictionaryDetail.js"></script>
+		
+		<section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>系统管理</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">字典列表</a></li>
+              <li class="breadcrumb-item active">新增字典</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                   
+					<label class='col-md-2 col-form-label'>字典名称</label>
+					<div class='col-md-9'>
+						<input type='text' class='form-control' id='dic_zhname'>
+					</div>                  
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>英文名</label>
+					<div class='col-md-9'>
+						<input type='text' class='form-control' id='dic_enname'>
+					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>字典类型</label>
+					<div class='col-md-9'>
+						<select class='form-control field' id='dic_type'>
+						<option value='SQL' selected>SQL</option>
+						</select>
+					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>字典取值</label>
+						<div class='col-md-9'>
+							<textarea class="form-control" rows="6" id="dic_value"></textarea>
+ 						</div>
+                  </div>
+				  
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+    </section>
+		
+		

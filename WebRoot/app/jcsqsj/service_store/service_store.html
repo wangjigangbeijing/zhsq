@@ -1,0 +1,154 @@
+
+
+<script src="./jcsqsj/service_store/service_store.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>网点名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>网点类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='typeQuery' id='typeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='政府机关'>政府机关</option>
+						<option value='房产居住'>房产居住</option>
+						<option value='购物百货'>购物百货</option>
+						<option value='生活服务'>生活服务</option>
+						<option value='休闲娱乐'>休闲娱乐</option>
+						<option value='餐饮小吃'>餐饮小吃</option>
+						<option value='企业实业'>企业实业</option>
+						<option value='金融保险'>金融保险</option>
+						<option value='旅游住宿'>旅游住宿</option>
+						<option value='文化教育'>文化教育</option>
+						<option value='医疗卫生'>医疗卫生</option>
+						<option value='交通运输'>交通运输</option>
+						<option value='汽车服务'>汽车服务</option>
+						<option value='社会团体'>社会团体</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>网点地址</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='addressQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>统一社会信用代码</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='socialcodeQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否为连锁</label>
+<div class='col-sm-2'>
+					<select class='form-control field' name='ischainQuery' id='ischainQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='是'>是</option>
+						<option value='否'>否</option>
+					</select>
+					
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>联系人</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='contactQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否24小时营业</label>
+<div class='col-sm-2'>
+					<select class='form-control field' name='is24hoursQuery' id='is24hoursQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='是'>是</option>
+						<option value='否'>否</option>
+					</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='statusQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>数据编码</th>
+<th style='text-align:center;'>网点名称</th>
+<th style='text-align:center;'>网点类型</th>
+<th style='text-align:center;'>网点地址</th>
+<th style='text-align:center;'>统一社会信用代码</th>
+<th style='text-align:center;'>经营范围</th>
+<th style='text-align:center;'>营业面积（平方米）</th>
+<th style='text-align:center;'>是否为连锁</th>
+<th style='text-align:center;'>搭载其他业态</th>
+<th style='text-align:center;'>联系人</th>
+<th style='text-align:center;'>联系人电话</th>
+<th style='text-align:center;'>开始营业时间</th>
+<th style='text-align:center;'>结束营业时间</th>
+<th style='text-align:center;'>是否24小时营业</th>
+<th style='text-align:center;'>经度</th>
+<th style='text-align:center;'>纬度</th>
+<th style='text-align:center;'>状态</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

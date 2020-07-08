@@ -1,0 +1,191 @@
+
+
+<script src="./oa/notice/noticeDetail.js"></script>
+
+
+
+
+
+<!--section class="wrapper">
+
+			<div class="row">
+                  <div class="col-lg-12">
+					  <section class="panel">
+                          <header class="panel-heading">
+                              
+                          </header>
+						  
+                          <div class="panel-body">
+                              <form role="form" class="form-horizontal tasi-form" id="submitLayerForm">
+                                  
+																<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告标题</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='title'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告类型</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='type' value='社区公告,街道公告'> 社区公告,街道公告
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告部门范围</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='authorityorg'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告正文</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='body' id='body' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告附件</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='attach' id='attach' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告发布时间</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+
+									  <div class="modal-footer">
+										  <button class="btn btn-success pull-left" type="button" id="addOrUpdateBtn" onclick="addOrUpdate();">确定</button>							  
+										  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
+									  </div>
+								  
+                              </form>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+	
+</section-->		  
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+										<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告标题</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='title'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告类型</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='type' value='社区公告'> 社区公告
+						<input type='radio' name='type' value='街道公告'> 街道公告
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告部门范围</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='authorityorg'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告正文</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='body' id='body' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告附件</label>
+  				<div class='col-md-9'>
+					<!--textarea class='form-control ckeditor field' name='attach' id='attach' rows='6'></textarea-->
+					
+<div id='picturesdiv' class='wu-example'>
+<input type='text' class='form-control field' name='attach' id='attach' style='display:none;'>
+<table class='table' id='attachpicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='attachpick'>选择文件</div>
+</div>
+</div>
+
+
+					
+					
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>公告发布时间</label>
+  				<div class='col-md-9'>
+				
+				
+						<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+							<input type='text' size='16' class='form-control' id='time'>
+							<span class='input-group-btn add-on'>
+								<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+							</span>
+						</div>
+				
+				
+ 						</div>
+ 					</div>
+
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+	
+	
+<script>
+
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#attachpick',
+formData:{
+attributeName:'attach'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

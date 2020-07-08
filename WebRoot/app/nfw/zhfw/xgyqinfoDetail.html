@@ -1,0 +1,367 @@
+
+
+<script src="./nfw/zhfw/xgyqinfoDetail.js"></script>
+
+
+<section class="content">
+      <div class="container-fluid">
+	  
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>姓名</label>
+						<div class='col-md-9'>
+						<div class='form-group row'>
+						
+						<div class='col-md-9'>
+						<input type='text' class='form-control' id='name'>
+						</div>
+						
+						<div class='col-md-3'>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog">选择</button>
+						
+						</div>
+						
+						</div>
+ 						</div>
+ 					</div>
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>身份证</label>
+						<div class='col-md-9'>					
+						<input type='text' class='form-control' id='idnumber'>					
+						</div>
+ 					</div>
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>手机号</label>
+						<div class='col-md-9'>
+							<input type='text' class='form-control' id='mobile'>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>居住地</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='address'>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>是否确诊病例</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='quezhen' value='是'>是
+						<input type='radio' name='quezhen' value='否'>否
+					</label>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>确诊时间</label>
+  				<div class='col-md-9'>
+					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='qzdate'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+ 						</div>
+ 					</div>
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>确诊说明</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='qznote' id='qznote' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>是否疑似病例</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='yisi' value='是'>是
+						<input type='radio' name='yisi' value='否'>否
+					</label>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>是否密切接触</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='mijie' value='是'>是
+						<input type='radio' name='mijie' value='否'>否
+					</label>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>密接说明</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='mjnote' id='mjnote' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>开始隔离时间</label>
+  				<div class='col-md-9'>
+						<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='glstartdate'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>解除隔离时间</label>
+  				<div class='col-md-9'>
+						<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='glenddate'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+					
+ 						</div>
+ 					</div>
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>备注</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>是否核酸检测</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='hsjc' value='是'>是
+						<input type='radio' name='hsjc' value='否'>否
+					</label>
+ 						</div>
+ 					</div>
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>核酸检测时间</label>
+  				<div class='col-md-9'>
+							
+							<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='hsjcdate'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+				
+ 						</div>
+ 					</div>
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>核酸检测机构</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='hsjcjigou'>
+ 						</div>
+ 					</div>
+					
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>核酸检测结果</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='hsjc' value='阴性'>阴性
+						<input type='radio' name='hsjc' value='阳性'>阳性
+					</label>
+ 						</div>
+ 					</div>
+
+					</div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+	  </div>
+	  
+	  
+	  <div class="modal fade" id="residentDialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+              <h4 class="modal-title">居民选择</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+			  
+			  
+			  <form class="form-horizontal">
+                <!--div class="card-body"-->
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">姓名</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="residentNameQry">
+                    </div>
+					
+					<button id="btnSearch" type="button" class="btn btn-success" onclick="searchResident();">查询</button>
+					
+                  </div>
+				  
+                <!--/div-->
+              </form>
+			  
+			  
+			  <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>姓名</th>
+					<th style='text-align:center;'>身份证号</th>
+					<th style='text-align:center;'>手机号</th>
+					<th style='text-align:center;'>居住地</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+			  
+			  
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <!--button type="button" class="btn btn-primary">关闭</button-->
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+	  
+    </section>
+	
+	
+<script>
+
+function searchResident()
+{
+	var residentName = $('#residentNameQry').val();
+	
+	$.get(getContextPath()+'/residentController/load?name='+residentName,
+	function(result){
+		$('#btnSearch').removeAttr('disabled');
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			dataTable = $('#dataTable').dataTable( {
+				"processing": true,
+				"bJQueryUI": false,
+				"bFilter": false,
+				"bStateSave":true,
+				"bAutoWidth": false, //自适应宽度 
+				iDisplayLength: 10,
+				lengthChange: false,
+				"bProcessing": true, 
+				"bDestroy":true,
+				"bSort": false, //是否使用排序 		
+				/*"oLanguage": { 
+					"sProcessing": "正在加载中......", 
+					"sLengthMenu": "每页显示 _MENU_ 条记录", 
+					"sZeroRecords": "对不起，查询不到相关数据！", 
+					"sInfoEmpty":"",
+					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+					"sSearch": "搜索", 
+					"oPaginate":  
+					{ 
+						"sFirst": "首页", 
+						"sPrevious": "上一页", 
+						"sNext": "下一页", 
+						"sLast": "末页" 
+					}
+				}, *///多语言配置					
+				"data":obj.list,
+				"columns": [
+					{ 'data': 'name' ,'sClass':'text-center'},
+					{ 'data': 'idnumber' ,'sClass':'text-center'},
+					{ 'data': 'mobile' ,'sClass':'text-center'},
+					{ 'data': 'address' ,'sClass':'text-center'}
+				],
+				columnDefs: [
+					{
+					className: 'control',
+					orderable: false,
+					targets:  0,//从0开始
+					mRender : function(data,type,full){
+						var btn = "<a href=\"#\" onclick=\"selectUser('"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
+						return btn;
+					}
+					}
+				]
+			} );
+		}
+	});
+}
+
+function selectUser(name,idnumber,mobile,address)
+{
+	$('#name').val(name);
+	$('#idnumber').val(idnumber);
+	$('#mobile').val(mobile);
+	$('#address').val(address);
+}
+
+</script>

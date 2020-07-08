@@ -1,0 +1,194 @@
+
+
+		<script src="./style/style.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
+		<script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+  
+      <!--sidebar end-->
+      <!--main content start-->
+          <section class="wrapper">
+              
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              
+							   <form class="form-horizontal tasi-form">
+								  <div class="form-group">
+									  <label id="streetLabel" class="col-sm-1 col-sm-1 control-label" style="text-align:right;">图层类型:</label>
+									  <div class="col-sm-2"  id="entStreetSelectDiv">
+										  <select class="form-control m-bot15" id="styleTypeQry">
+											  <option value="">全部</option>
+											  <option value="点">点</option>
+											  <option value="线">线</option>
+											  <option value="面">面</option>
+										  </select>
+									  </div>
+									  
+									  <!--label class="control-label col-md-1" style="text-align:right;">时间段</label>
+									  <div class="col-md-4">
+										  <div class="input-group input-large" data-date-format="yyyy-mm-dd">
+											  <input type="text" class="form-control dpd1" name="from" id="fromTime">
+											  <span class="input-group-addon">到</span>
+											  <input type="text" class="form-control dpd2" name="to" id="toTime">
+										  </div>
+									  </div-->
+									  
+									  
+									   <button type="button" id="btnSearch" class="btn btn-success">查询</button>
+									   <!--button type="button" id="btnExport" class="btn btn-primary">导出</button-->
+									   
+									   
+									   
+									   <div class="col-sm-1 pull-right">
+										<button id="btnAdd" class="btn btn-info" onclick="return false;" style="margin-right:20px;"><i class="fa fa-envelope"></i> 增加</button>
+									  </div>
+									  
+									  
+								  </div>
+								  
+							  </form>
+							  
+                          </header>
+						  
+						  
+                          <table class="display table table-bordered table-striped" id="dataTable">
+                              <thead>
+                              <tr>
+                                  <th style="text-align:center;"> 图层类型</th>
+								  <th style="text-align:center;"> Style名称</th>
+								  <th style="text-align:center;"> 操作</th>
+                              </tr>
+                              </thead>
+							  <tbody></tbody>
+                          </table>
+                      </section>
+                  </div>
+              </div>
+			  
+			  
+			  <div class="modal" id="modalDetail" role="dialog" style="z-index:999;padding-top:100px;">
+				  <div class="modal-dialog modal-sm">
+					  <div class="modal-content-wrap">
+						  <div class="modal-content" style="width:600px;">
+							  <div class="modal-header">
+								  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeModalDetail();">&times;</button>
+								  <h4 class="modal-title" id="modalTitle"></h4>
+							  </div>
+							  <div class="modal-body" style="height:356px;">
+									
+									<form class="form-horizontal" role="form">
+									<div class="form-group">
+                                      <label class="col-md-2 control-label">Style名称</label>
+                                      <div class="col-md-9">
+                                          <input type="text" class="form-control" id="styleName">
+                                      </div>
+									</div>
+									
+									<form class="form-horizontal" role="form">
+									<div class="form-group">
+                                      <label class="col-md-2 control-label">图层类型</label>
+                                      <div class="col-md-9">
+                                          <select class="form-control m-bot15" id="styleType">
+											  <option value="点">点</option>
+											  <option value="线">线</option>
+											  <option value="面">面</option>
+										  </select>
+                                      </div>
+									</div>
+								
+									
+									<form class="form-horizontal" role="form">
+									<div class="form-group">
+                                      <label class="col-md-2 control-label">SLD定义</label>
+                                      <div class="col-md-9">
+                                          <textarea class="form-control" id="sld" rows="9"></textarea>
+                                      </div>
+									</div>
+									
+									
+									
+									<!--div class="form-group">
+									  <label class="control-label col-md-2">项目周期</label>
+									  <div class="col-md-9">
+										  <div class="input-group input-large" data-date="13/07/2013" data-date-format="mm/dd/yyyy">
+											  <input type="text" class="form-control dpd1" id="startDate">
+											  <span class="input-group-addon">To</span>
+											  <input type="text" class="form-control dpd2" id="stopDate">
+										  </div>
+									  </div>
+								  </div-->
+								
+								  <!--div class="row">	
+										<label class="col-sm-3 control-label col-lg-3" for="inputSuccess">是否连锁</label>
+											<input type="radio" name="chainStoreRadio" id="chainStoreRadioYes" value="true" checked>是
+											<input type="radio" name="chainStoreRadio" id="chainStoreRadioNo" value="false" >否
+								  </div-->
+								  
+								  </form>
+							</div>
+							  <div class="modal-footer">
+								  <button class="btn btn-success pull-left" type="button" id="addOrUpdateBtn" onclick="addOrUpdateStyle();">修改</button>							  
+								  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+			  
+			  
+          </section>		  
+		  
+		  
+		  
+	<script>
+
+	/*$.get(getContextPath()+"/dashboardController/loadStreetList",
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			$('#entStreetSelect').html('');
+			var filterArr = [];
+			
+			for(var i=0;i<obj.streetList.length;i++)
+			{
+				var street = obj.streetList[i];
+				
+				filterArr[i+1] = "<option value='" + street.id + "'>" + street.value + "</option>";					
+			}
+			$('#entStreetSelect').html(filterArr.join(''));
+		}
+	});
+
+	$.get(getContextPath()+"/dictionaryController/loadBusiType",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$('#busiTypeSelect').html('');
+				var filterArr = [];
+				
+				for(var i=0;i<obj.busiTypeList.length;i++)
+				{
+					var street = obj.busiTypeList[i];
+					
+					filterArr[i+1] = "<option value='" + street.id + "'>" + street.value + "</option>";					
+				}
+				$('#busiTypeSelect').html(filterArr.join(''));
+			}
+		});
+
+	
+	
+	$('#btnExport').click(dataExport);
+	*/
+	
+	$('#btnSearch').click(loadStyle);
+	
+	
+	loadStyle();
+
+	</script>

@@ -1,0 +1,209 @@
+
+
+<script src="./jcsqsj/organization/organization.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>法人组织名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>有无证照</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='haslicenceQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>统一社会信用代码</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='socialcodeQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>机构类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='orgtypeQuery' id='orgtypeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='企业法人'>企业法人</option>
+						<option value='事业法人'>事业法人</option>
+						<option value='社团法人'>社团法人</option>
+						<option value='行政法人'>行政法人</option>
+						<option value='工会法人'>工会法人</option>
+						<option value='其他机构'>其他机构</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>经济类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='economictypeQuery' id='economictypeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='国有经济'>国有经济</option>
+						<option value='集体经济'>集体经济</option>
+						<option value='私营经济'>私营经济</option>
+						<option value='个体经济'>个体经济</option>
+						<option value='联营经济'>联营经济</option>
+						<option value='股份制'>股份制</option>
+						<option value='外商投资'>外商投资</option>
+						<option value='港澳台投资'>港澳台投资</option>
+						<option value='其他'>其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>行业名称</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='industryQuery' id='industryQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='A农林牧渔业'>A农林牧渔业</option>
+						<option value='B采矿业'>B采矿业</option>
+						<option value='C制造业'>C制造业</option>
+						<option value='D电力热力燃气及水生产和供应业'>D电力热力燃气及水生产和供应业</option>
+						<option value='E建筑业'>E建筑业</option>
+						<option value='F批发和零售业'>F批发和零售业</option>
+						<option value='G交通运输仓储和邮政业'>G交通运输仓储和邮政业</option>
+						<option value='H住宿和餐饮业'>H住宿和餐饮业</option>
+						<option value='J金融业'>J金融业</option>
+						<option value='K房地产业'>K房地产业</option>
+						<option value='M科学研究和技术服务业'>M科学研究和技术服务业</option>
+						<option value='N水利环境和公共设施管理业'>N水利环境和公共设施管理业</option>
+						<option value='O居民服务修理和其他服务业'>O居民服务修理和其他服务业</option>
+						<option value='P教育'>P教育</option>
+						<option value='Q卫生和社会工作'>Q卫生和社会工作</option>
+						<option value='R文化体育和娱乐业'>R文化体育和娱乐业</option>
+						<option value='S公共管理社会保障和社会组织'>S公共管理社会保障和社会组织</option>
+						<option value='T国际组织'>T国际组织</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>隶属关系</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='subordinationQuery' id='subordinationQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='中央'>中央</option>
+						<option value='省'>省</option>
+						<option value='市地区'>市地区</option>
+						<option value='县'>县</option>
+						<option value='街道乡镇'>街道乡镇</option>
+						<option value='社区村'>街道乡镇</option>
+						<option value='其他'>其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>企业规模</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='scaleQuery' id='scaleQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='0到10人'>0到10人</option>
+						<option value='10到50人'>10到50人</option>
+						<option value='51-300人'>51-300人</option>
+						<option value='300人以上'>300人以上</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>办公地址</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='officeaddressQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>办公地址所在商业楼宇</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='ofbizbuildingQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否有消防设备</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='hasfirefacilitiesQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='statusQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>数据编码</th>
+<th style='text-align:center;'>法人组织名称</th>
+<th style='text-align:center;'>有无证照</th>
+<th style='text-align:center;'>统一社会信用代码</th>
+<th style='text-align:center;'>证照登记时间</th>
+<th style='text-align:center;'>机构类型</th>
+<th style='text-align:center;'>经济类型</th>
+<th style='text-align:center;'>行业名称</th>
+<th style='text-align:center;'>隶属关系</th>
+<th style='text-align:center;'>成立时间</th>
+<th style='text-align:center;'>注册资本类型</th>
+<th style='text-align:center;'>注册资本</th>
+<th style='text-align:center;'>经营(业务)范围</th>
+<th style='text-align:center;'>企业规模</th>
+<th style='text-align:center;'>注册地址</th>
+<th style='text-align:center;'>办公地址</th>
+<th style='text-align:center;'>办公地址所在商业楼宇</th>
+<th style='text-align:center;'>办公地址经度</th>
+<th style='text-align:center;'>办公地址纬度</th>
+<th style='text-align:center;'>法人姓名</th>
+<th style='text-align:center;'>联系人姓名</th>
+<th style='text-align:center;'>联系电话</th>
+<th style='text-align:center;'>迁入现址时间</th>
+<th style='text-align:center;'>责任牌编号</th>
+<th style='text-align:center;'>是否有消防设备</th>
+<th style='text-align:center;'>垃圾消纳情况</th>
+<th style='text-align:center;'>状态</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>
