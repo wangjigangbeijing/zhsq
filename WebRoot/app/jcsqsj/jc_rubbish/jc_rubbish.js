@@ -162,7 +162,7 @@ function closeModalDetail()
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jc_rubbish/jc_rubbishDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_rubbish/jc_rubbishDetail.html", function () {
 		
     });
 }
@@ -173,7 +173,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jc_rubbish/jc_rubbishDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_rubbish/jc_rubbishDetail.html", function () {
 		
     });
 	

@@ -57,7 +57,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./service_store/service_store.html", function () {
+	$('#main-content').load("./jcsqsj/service_store/service_store.html", function () {
 		
     });
 	

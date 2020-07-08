@@ -134,6 +134,7 @@ public void setcontacttel(String contacttel)
 {
 	this.contacttel = contacttel;
 }
+/*
 @Column(name = "opentime", nullable = true)
 public Date opentime;
 public Date getopentime()
@@ -153,7 +154,7 @@ public Date getclosetime()
 public void setclosetime(Date closetime)
 {
 	this.closetime = closetime;
-}
+}*/
 @Column(name = "is24hours", nullable = true)
 public String is24hours;
 public String getis24hours()
@@ -163,7 +164,7 @@ public String getis24hours()
 public void setis24hours(String is24hours)
 {
 	this.is24hours = is24hours;
-}
+}/*
 @Column(name = "longitude", nullable = true)
 public Integer longitude;
 public Integer getlongitude()
@@ -183,7 +184,7 @@ public Integer getlatitude()
 public void setlatitude(Integer latitude)
 {
 	this.latitude = latitude;
-}
+}*/
 @Column(name = "status", nullable = true)
 public String status;
 public String getstatus()
