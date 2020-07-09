@@ -925,9 +925,13 @@ public class DataController {
 		{
 			Gismaplayers mapLayer = gismaplayersService.getById(layerId);
 			
+			String infoFields = mapLayer.getinfofields();
+			
 			String sTableName = mapLayer.getlayersource();
 			
-			String sSql = "select id,st_astext(geom) as geom from "+sTableName+" where 1 = 1 AND ";
+			String [] infoFieldArr = infoFields.split(",");
+			
+			String sSql = "select id,st_astext(geom) as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
 			
 			String sCond = "";
 			
@@ -980,10 +984,21 @@ public class DataController {
 				String sGeom = (String)hm.get("geom");
 				String gid = (String)hm.get("id");
 				
+				String info = "";
+				for(int j=0;j<infoFieldArr.length;j++)
+				{
+					String field = infoFieldArr[j];
+					
+					String val = hm.get(field).toString();
+					
+					info += val + "\r\n";
+				}
+				
 				sGeom = sGeom.replaceAll("\\ ", ",").replaceAll("POINT", "").replaceAll("POLYGON", "").replaceAll("MULTIPOLYGON", "").replaceAll("MULTILINESTRING", "").replaceAll(",,", " ").trim();
 				
 				JSONObject jsonTmp = new JSONObject();
 				
+				jsonTmp.put("info", info);
 				jsonTmp.put("type", sLayerType);
 				jsonTmp.put("id", sTableName+"."+gid);
 				if(sLayerType.equalsIgnoreCase("Point"))
@@ -1018,6 +1033,12 @@ public class DataController {
 				{
 					sGeom = sGeom.replaceAll("\\(", "").replaceAll("\\)", "");
 					
+					//sGeom = "116.30454,39.859639,116.20654,39.859239,116.30954,39.559339,116.30454,39.859639";//可以显示的例子，不能删除
+					
+					//sGeom = "116.31424437203337,39.88458832721425,116.31639416252204,39.88455745597841,116.31637404595477,39.88335655411623,"
+					//		+ "116.31522471941156,39.88327628743202,116.31529579794925,39.8829161152562,116.31421084442128,39.882887301400395,"
+					//		+ "116.31424437203337,39.88458832721425";
+					
 					String [] coorArr = sGeom.split(",");
 
 					String [][] aArr = new String[coorArr.length/2][2];
@@ -1028,8 +1049,9 @@ public class DataController {
 						aArr[j/2][1] =  coorArr[j+1];
 					}
 					
-					String [][][][] lineArr = {{aArr}};
-					//Double [][][][] lineArr = {{{{648375.86889923, 3506272.67651771}, {648375.834726, 3506272.52366788}, {648375.82848796, 3506272.52805023}, {648375.86889923, 3506272.67651771}}}};
+					//String [][][][] lineArr = {{aArr}};
+					
+					String [][] lineArr = aArr;
 					
 					jsonTmp.put("coordinates", lineArr);
 				}

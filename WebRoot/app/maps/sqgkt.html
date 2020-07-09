@@ -44,19 +44,102 @@
   </div><!-- /.container-fluid -->
 </section>
 
+
+
+<style>
+      .map {
+        width: 100%;
+        height:400px;
+      }
+      .ol-popup {
+        position: absolute;
+        background-color: white;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #cccccc;
+        bottom: 12px;
+        left: -50px;
+        min-width: 280px;
+      }
+      .ol-popup:after, .ol-popup:before {
+        top: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      .ol-popup:after {
+        border-top-color: white;
+        border-width: 10px;
+        left: 48px;
+        margin-left: -10px;
+      }
+      .ol-popup:before {
+        border-top-color: #cccccc;
+        border-width: 11px;
+        left: 48px;
+        margin-left: -11px;
+      }
+      .ol-popup-closer {
+        text-decoration: none;
+        position: absolute;
+        top: 2px;
+        right: 8px;
+      }
+      .ol-popup-closer:after {
+        content: "✖";
+      }
+    </style>
+	
+	
+<div id="map" class="map"></div>
+
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
 <!-- ChartJS>
 <script src="./plugins/chart.js/Chart.min.js"></script -->
 
 <!-- page script -->
 <script>
-$(function () {
-  
+$(function () 
+{
+	var container = document.getElementById('popup');
+	var content = document.getElementById('popup-content');
+	var closer = document.getElementById('popup-closer');
+
+	/**
+	 * Add a click handler to hide the popup.
+	 * @return {boolean} Don't follow the href.
+	 */
+	closer.onclick = function() {
+	  overlay.setPosition(undefined);
+	  closer.blur();
+	  return false;
+	};
+
+
+	/**
+	 * Create an overlay to anchor the popup to the map.
+	 */
+	var overlay = new ol.Overlay({
+	  element: container,
+	  autoPan: true,
+	  autoPanAnimation: {
+		duration: 250
+	  }
+	});
+	
 	var map = new ol.Map({
+		overlays: [overlay],
         target: 'sqmqtDiv',
         view: new ol.View({
-            center: [12965554.49 , 4903893.99],
+			center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
             zoom: 12,
-            //projection: 'EPSG:4326',
 			projection: 'EPSG:3857',// 
             multiWorld: true
         })/*,
@@ -70,27 +153,40 @@ $(function () {
     });
     map.addLayer(baseLayer);
 	
-	
-	var dataSource = new ol.source.Vector();
-								
+	var dataSource = new ol.source.Vector();								
 	dataLayer = new ol.layer.Vector({
-		source: dataSource
+		source: dataSource/*,
+		style: new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: 'red',
+                    width: 3
+                }),
+                fill: new ol.style.Fill({
+                    color: 'rgba(0, 0, 255, 0.1)'
+                })
+            })*/
 	});
-	
+	/*
 	var iconFeature = new ol.Feature({
-		//geometry: new ol.geom.Point(data.coordinates),			
-		geometry: new ol.geom.Point([116.32757062,39.88583062])/*,
+		geometry: new ol.geom.Point(ol.proj.transform([116.30454,39.859639], 'EPSG:4326', 'EPSG:3857')),
 		weight:1,
 		population: 4000,
-		rainfall: 500*/
+		rainfall: 500
 	});
-	
-	
 	dataLayer.getSource().addFeature(iconFeature);	
-								
-	map.addLayer(dataLayer);							
-								
-								
+	
+	var iconFeature = new ol.Feature({
+		geometry: new ol.geom.Polygon([[ol.proj.transform(["116.30454","39.859639"], 'EPSG:4326', 'EPSG:3857'),
+											ol.proj.transform(["116.20654","39.859239"], 'EPSG:4326', 'EPSG:3857'),
+											ol.proj.transform(["116.30954","39.559339"], 'EPSG:4326', 'EPSG:3857'),
+											ol.proj.transform(["116.30454","39.859639"], 'EPSG:4326', 'EPSG:3857')]]),
+		weight:1,
+		population: 4000,
+		rainfall: 500
+	});
+	dataLayer.getSource().addFeature(iconFeature);	*/
+	map.addLayer(dataLayer);
+	
 	$.get(getContextPath()+"/gismapController/getMapByName?name=社区概况图",
 			function(response)
 			{	
@@ -110,143 +206,75 @@ $(function () {
 					
 					var layerStyle = layer.layerstyle;
 					
-					if(layerName != 'jc_community')
-						continue;
-					/*
-					var tiled = new ol.layer.Tile({
-						visible: true,
-						source: new ol.source.TileWMS({
-						  url: 'http://49.233.26.198:8082/gis/zhsq/wms',
-						  params: {'FORMAT': 'image/png', 
-								   'VERSION': '1.1.1',
-								   tiled: true,
-								"LAYERS": 'zhsq:'+layerName,
-								"exceptions": 'application/vnd.ogc.se_inimage',
-							 tilesOrigin: 116.32646421269499 + "," + 39.88449282783788
-						  }
-						})
-					  });
-				
-					map.addLayer(tiled);  
-					*/
+					//if(layerName != 'jc_community')
+					//	continue;
 					
-						$.ajax({
-							type: "GET",
-							//url:"http://49.233.26.198:8082/gis/zhsq/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=zhsq:jc_community&maxFeatures=50&outputFormat=application/json",
-							url: getContextPath()+"/dataController/webwfs?layerId="+layerId,
-							contentType: "application/json; charset=utf-8",
-							//data: JSON.stringify(submitPayload),
-							dataType: "json",
-							success: function (dataList) {
-								debugger;
+					$.ajax({
+						type: "GET",
+						//url:"http://49.233.26.198:8082/gis/zhsq/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=zhsq:jc_community&maxFeatures=50&outputFormat=application/json",
+						url: getContextPath()+"/dataController/webwfs?layerId="+layerId,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (dataList) {
+							
+							for(var p=0;p < dataList.features.length;p++)
+							{
+								var data = dataList.features[p];
 								
-								var dataSource = new ol.source.Vector();
-								
-								dataLayer = new ol.layer.Vector({
-									source: dataSource
-								});
-								
-								var iconFeature = new ol.Feature({
-									//geometry: new ol.geom.Point(data.coordinates),			
-									geometry: new ol.geom.Point([[116.32757062,39.88583062]])/*,
-									weight:1,
-									population: 4000,
-									rainfall: 500*/
-								});
-								
-								
-								dataLayer.getSource().addFeature(iconFeature);	
-										
-								/*for(var p=0;p < dataList.features.length;p++)
+								console.log(data.type);
+								if(data.type == 'MultiLineString')
 								{
-									var data = dataList.features[p];
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.MultiLineString(data.coordinates),
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
 									
-									console.log(data.type);
-									if(data.type == 'MultiLineString')
+									iconFeature.setId(data.id);
+									
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+								else if(data.type == 'Point')
+								{
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.Point(ol.proj.transform(data.coordinates, 'EPSG:4326', 'EPSG:3857')),			
+										//geometry: new ol.geom.Point([116.32757062,39.88583062]),
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									
+									iconFeature.setId(data.id);
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+								else if(data.type == 'MultiPolygon')
+								{
+									var pointArr = data.coordinates;
+									
+									var transferedArr = [];//data.coordinates;
+									
+									for(var q=0;q<pointArr.length;q++)
 									{
-										var iconFeature = new ol.Feature({
-											geometry: new ol.geom.MultiLineString(data.coordinates),
-											weight:1,
-											population: 4000,
-											rainfall: 500
-										});
-										
-										iconFeature.setId(data.id);
-										
-										dataLayer.getSource().addFeature(iconFeature);	
+										transferedArr[q] = ol.proj.transform(pointArr[q], 'EPSG:4326', 'EPSG:3857');
 									}
-									else if(data.type == 'Point')
-									{
-										var iconFeature = new ol.Feature({
-											//geometry: new ol.geom.Point(data.coordinates),			
-											geometry: new ol.geom.Point([116.32757062,39.88583062]),
-											weight:1,
-											population: 4000,
-											rainfall: 500
-										});
-										
-										iconFeature.setId(data.id);
-										dataLayer.getSource().addFeature(iconFeature);	
-									}
-									else if(data.type == 'MultiPolygon')
-									{
-										
-										var iconFeature = new ol.Feature({
-											//geometry: new ol.geom.MultiPolygon(data.coordinates),
-											//geometry: new ol.geom.MultiPolygon([[[116.32757062,39.88583062],[116.32753307,39.88587281],[116.32871459,39.8859397],[116.32867838,39.88544884],[116.32940794,39.88544884],[116.32950986,39.88463278],[116.32734264,39.88449283],[116.32730911,39.88494356],[116.32767389,39.88504338],[116.32757196,39.88580284],[116.32757062,39.88583062]]]),
-											geometry: new ol.geom.Polygon([[[116.32757062,39.88583062],[116.32753307,39.88587281],[116.32871459,39.8859397],[116.32867838,39.88544884],[116.32940794,39.88544884],[116.32950986,39.88463278],[116.32734264,39.88449283],[116.32730911,39.88494356],[116.32767389,39.88504338],[116.32757196,39.88580284],[116.32757062,39.88583062]]]),
-											weight:1,
-											population: 4000,
-											rainfall: 500
-										});
-										iconFeature.setId(data.id);
-										
-										dataLayer.getSource().addFeature(iconFeature);	
-									}
-								}*/
-								
-								map.addLayer(dataLayer);
-								
-								
-								
+									
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.Polygon([transferedArr]),
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									iconFeature.setId(data.info);
+									
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
 							}
-						});
+						}
+					});
 				}
 			}
 	);
-	
-	
-	
-	
-	
-	/*var pajstlayer = new ol.layer.Tile({
-        source: new ol.source.TileSuperMapRest({
-            url: "http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai"
-        })
-    });
-	pajst.addLayer(pajstlayer);*/
-	
-	/*wjtyt.addLayer(layer);
-	xfdjt.addLayer(layer);
-	sqfwt.addLayer(layer);
-	hjwst.addLayer(layer);
-	*/
-	//map.getView().fit(bounds, map.getSize());
-	
-	/*layer = new ol.layer.Image({
-		source: new ol.source.ImageWMS({
-		  ratio: 1,
-		  url: 'http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai',
-		  params: {'FORMAT': 'image/png',
-				   'VERSION': '1.1.1',  
-				"STYLES": 'dt_green',
-				"LAYERS": workspace+':'+baseLayerName,
-				"exceptions": 'application/vnd.ogc.se_inimage',
-		  }
-		})
-	  });
-
-	map.addLayer(layer);*/
 	
 	map.on('singleclick', function(evt) 
 	{
@@ -258,90 +286,19 @@ $(function () {
 		
 		if(feature != null && feature != undefined)
 		{
-		
 			var gid = feature.getId();
 			
-			curId = gid.substring(gid.indexOf('\.')+1);
+			//curId = gid.substring(gid.indexOf('\.')+1);
 			
-			$.get(getContextPath()+"/dataController/getData?projectId="+curProjectId+"&layerId="+curLayerId+"&dataId="+curId,
-			function(dataDetail)
-			{										
-				$('#imgList').empty();
-				
-				curData = jQuery.parseJSON(dataDetail);  
-				
-				for(var i=attributeList.length - 1;i>=0 ;i--)
-				{
-					$('#'+attributeList[i].enName).val(curData[attributeList[i].enName]);
-					
-					if(attributeList[i].componentsType == '下拉' || attributeList[i].componentsType == '数字' 
-							|| attributeList[i].componentsType == '单行文本' || attributeList[i].componentsType == '多行文本')
-					{
-						if(curData[attributeList[i].enName] == null)
-							$('#'+attributeList[i].enName).val('');
-						else
-							$('#'+attributeList[i].enName).val(curData[attributeList[i].enName]);
-					}
-					else if(attributeList[i].componentsType == '单选')
-					{
-						$("input[name='"+attributeList[i].enName+"'][value='"+curData[attributeList[i].enName]+"']").attr('checked','true');
-					}
-					else if(attributeList[i].componentsType == '多选')
-					{
-						var checkArr = curData[attributeList[i].enName].split(VALUE_SPLITTER);
-						
-						for(var j=0;j<checkArr.length;j++)
-						{
-							if(curData[attributeList[i].enName] == null)
-								$("input[name='"+attributeList[i].enName+"'][value='"+checkArr[j]+"']").attr('checked','false');
-							else
-							{
-								if(checkArr[j] != '')
-								{
-									$("input[name='"+attributeList[i].enName+"'][value='"+checkArr[j]+"']").attr('checked','true');
-								}
-							}
-						}
-					}
-					else if(attributeList[i].componentsType == '图片' || attributeList[i].componentsType == '文件')
-					{
-						$('#'+attributeList[i].enName+'picktable').dataTable({searching:false,paging:false,info:false}).fnClearTable();
-						
-						if(curData[attributeList[i].enName] != null)
-						{
-							var fjArr = curData[attributeList[i].enName].split(VALUE_SPLITTER);
-								
-							for(var j=0;j<fjArr.length;j++)
-							{
-								if(fjArr[j] != '')
-								{
-									var fileName = fjArr[j].substring(fjArr[j].lastIndexOf('/')+1);
-									
-									$('#'+attributeList[i].enName+'picktable').dataTable({searching:false,paging:false,info:false}).fnAddData(
-										[fileName,'已提交','<button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+fileName+'\');return false;"><i class="fa fa-check"></i></button><button type="button" class="btn btn-danger btn-xs" onclick="javascript:deleteAttach(\''+attributeList[i].enName+'picktable\',\''+fileName+'\');return false;"><i class="fa fa-trash-o"></i></button>']
-									);		
-									
-									var fileURL = getContextPath()+"/fileController/imagePreview?projectId="+curProjectId+"&layerId="+curLayerId+"&fileName="+fileName;
-									
-									var file = '<li>                                                                               '+
-											'	<figure>                                                                           '+
-											'		  <img src="'+fileURL+'" alt="img06">                                    	   '+
-											'		  <figcaption>                                                                 '+
-											'			  <h3>'+fileName+'</h3>                                                    '+
-											'		  </figcaption>                                                                '+
-											'	  </figure>                                                                        '+
-											' </li>                                                                                ';
-									
-									$('#imgList').append(file);
-								}
-							}	
-						}
-					}
-				}
-			});
+			var coordinate = evt.coordinate;
+			//var hdms = toStringHDMS(toLonLat(coordinate));
+
+			content.innerHTML = '<p>图斑信息:</p><code>' + gid +
+			  '</code>';
+			overlay.setPosition(coordinate);
+		
 		}
 	});
-	
 	
 })
 </script>
