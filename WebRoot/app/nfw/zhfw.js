@@ -5,6 +5,11 @@ $(document).ready(function (){
         loadXgyqInfo('新冠疫情信息');
     });
 	
+	$('#jsjbAnchor').click(function () {
+        loadJSJBFW('接诉即办服务');
+    });
+	
+	
 	loadXgyqInfo();
 });
 
@@ -17,6 +22,11 @@ function loadXgyqInfo()
     });
 }
 
-
+function loadJSJBFW()
+{
+	$('#zhfwDiv').load("./nfw/zhfw/jsjbfw.html", function () {
+        
+    });
+}
 
 

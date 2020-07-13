@@ -132,7 +132,7 @@ function addOrUpdate()
 	$.post(getContextPath()+"/sxsqsjController/addOrUpdate",
 	{
 		id:curId,
-		sxbm:$('#sxbm').val(),
+		//sxbm:$('#sxbm').val(),
 		sxmc:$('#sxmc').val(),
 		sxdl:$('#sxdl').val(),
 		sxxl:$('#sxxl').val(),

@@ -168,7 +168,10 @@ $(document).ready(function (){
 	
 	getCurrentLoginUserInfo();
 	
-	loadTablePage();
+	//loadTablePage();
+	
+	updateActiveMenu('sqzzqdAnchor');
+    loadSqzzqdPage();
 });	
 
 function generateMenu()

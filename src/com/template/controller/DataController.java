@@ -540,21 +540,21 @@ public class DataController {
 
 				if(sGisType.equalsIgnoreCase("点"))
 				{
-					sCols += "geom,";
+					sCols += "geom,point,";
 					
-					sVals += "ST_GeomFromText('POINT("+sPoint+")'),";
+					sVals += "ST_GeomFromText('POINT("+sPoint+")'),'"+sPoint+"',";
 				}
 				else if(sGisType.equalsIgnoreCase("线"))
 				{
-					sCols += "geom,";
+					sCols += "geom,point,";
 					
-					sVals += "ST_GeomFromText('LINESTRING("+sPoint+")'),";
+					sVals += "ST_GeomFromText('LINESTRING("+sPoint+")'),'"+sPoint+"',";
 				}
 				else if(sGisType.equalsIgnoreCase("面"))
 				{
-					sCols += "geom,";
+					sCols += "geom,point,";
 					
-					sVals += "ST_GeomFromText('POLYGON(("+sPoint+"))'),";
+					sVals += "ST_GeomFromText('POLYGON(("+sPoint+"))'),'"+sPoint+"',";
 				}
 				
 				if(sCols != null && sCols.endsWith(","))
@@ -620,6 +620,8 @@ public class DataController {
 						}
 					}
 				}
+				
+				sSql += " POINT = '"+sPoint+"' ";
 				
 				if(sSql != null && sSql.endsWith(","))
 					sSql = sSql.substring(0,sSql.length() - 1);
@@ -1049,9 +1051,7 @@ public class DataController {
 						aArr[j/2][1] =  coorArr[j+1];
 					}
 					
-					//String [][][][] lineArr = {{aArr}};
-					
-					String [][] lineArr = aArr;
+					String [][][] lineArr = {aArr};
 					
 					jsonTmp.put("coordinates", lineArr);
 				}

@@ -32,9 +32,11 @@ import com.template.util.TimeUtil;
 import com.template.util.Utility;
 import com.template.model.SXSQSJ;
 import com.template.model.SXSQSJ_FL;
+import com.template.model.SysSeq;
 import com.template.model.SysUser;
 import com.template.service.SXSQSJFLService;
 import com.template.service.SXSQSJService;
+import com.template.service.SysSeqService;
 import com.template.service.UserService;
 
 @Controller
@@ -52,10 +54,12 @@ public class SXSQSJController {
 	@Autowired
 	private SXSQSJFLService sxsqsjflService;
 	
+	@Autowired
+	private SysSeqService sysSeqService;
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String addOrUpdate(String id,String sxbm,
+	public String addOrUpdate(String id,//String sxbm,
 			String sxmc,
 			String sxdl,
 			String sxxl,
@@ -87,7 +91,7 @@ public class SXSQSJController {
 				sxsqsj.setId(Utility.getUniStr());
 			}
 			
-			sxsqsj.setSXBM(sxbm);
+			sxsqsj.setSXBM(getSXBM());
 			sxsqsj.setSXMC(sxmc);
 			sxsqsj.setSXDL(sxdl);
 			sxsqsj.setSXXL(sxxl);
@@ -375,5 +379,46 @@ public class SXSQSJController {
 			jsonObj.put("success", false);
 		}
         return jsonObj.toString();
+    }
+	
+	
+	@RequestMapping(value="getSXBM",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String getSXBM()
+	{
+		logger.info("getSXBM");
+		
+		JSONObject jsonObj = new JSONObject();
+    	
+		String sxbm = "sxsq";
+		
+		try
+		{
+			String year = TimeUtil.getYear(new Date());
+			
+			SysSeq sysSeq = sysSeqService.getById("sxbm");
+			
+			int seq = 1;
+			
+			if(sysSeq != null)
+			{
+				seq = sysSeq.getSeq() + 1;
+			}
+			
+			String str = String.format("%05d", seq);      
+
+			sxbm = sxbm + year + str;
+			
+			sysSeq.setSeq(seq);
+			
+			sysSeqService.save(sysSeq);
+			
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+        return sxbm;
     }
 }

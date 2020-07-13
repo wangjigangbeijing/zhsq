@@ -131,8 +131,8 @@ public String addOrUpdate(String id,String dataid,String name,String identitytyp
 		resident.setcj_disabilityemployment(cj_disabilityemployment);
 		resident.setjsb_type(jsb_type);
 		resident.setjsb_medicalhistory(jsb_medicalhistory);
-		resident.setjhr_name(jhr_name);
-		resident.sethjr_tel(hjr_tel);
+		//resident.setjhr_name(jhr_name);
+		//resident.sethjr_tel(hjr_tel);
 		resident.setzyz_certificate_id(zyz_certificate_id);
 		resident.setzyz_special_skill(zyz_special_skill);
 		resident.setjmdb_representative_level(jmdb_representative_level);
@@ -508,8 +508,8 @@ if(jsb_type != null && jsb_type.equalsIgnoreCase("") == false && jsb_type.equals
 			jsonTmp.put("cj_disabilityemployment",resident.getcj_disabilityemployment());
 			jsonTmp.put("jsb_type",resident.getjsb_type());
 			jsonTmp.put("jsb_medicalhistory",resident.getjsb_medicalhistory());
-			jsonTmp.put("jhr_name",resident.getjhr_name());
-			jsonTmp.put("hjr_tel",resident.gethjr_tel());
+			//jsonTmp.put("jhr_name",resident.getjhr_name());
+			//jsonTmp.put("hjr_tel",resident.gethjr_tel());
 			jsonTmp.put("zyz_certificate_id",resident.getzyz_certificate_id());
 			jsonTmp.put("zyz_special_skill",resident.getzyz_special_skill());
 			jsonTmp.put("jmdb_representative_level",resident.getjmdb_representative_level());
@@ -641,8 +641,8 @@ public String get(String id)
 			jsonObj.put("cj_disabilityemployment",resident.getcj_disabilityemployment());
 			jsonObj.put("jsb_type",resident.getjsb_type());
 			jsonObj.put("jsb_medicalhistory",resident.getjsb_medicalhistory());
-			jsonObj.put("jhr_name",resident.getjhr_name());
-			jsonObj.put("hjr_tel",resident.gethjr_tel());
+			//jsonObj.put("jhr_name",resident.getjhr_name());
+			//jsonObj.put("hjr_tel",resident.gethjr_tel());
 			jsonObj.put("zyz_certificate_id",resident.getzyz_certificate_id());
 			jsonObj.put("zyz_special_skill",resident.getzyz_special_skill());
 			jsonObj.put("jmdb_representative_level",resident.getjmdb_representative_level());
