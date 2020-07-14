@@ -70,33 +70,20 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
+					
 					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
-					{ 'data': 'year' ,'sClass':'text-center'},
+					
+					
 					{ 'data': 'purpose' ,'sClass':'text-center'},
 					{ 'data': 'propertyyears' ,'sClass':'text-center'},
-					{ 'data': 'propertyrights' ,'sClass':'text-center'},
-					{ 'data': 'heatingsystem' ,'sClass':'text-center'},
+					
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
 					{ 'data': 'buildtype' ,'sClass':'text-center'},
-					{ 'data': 'buildframework' ,'sClass':'text-center'},
-					{ 'data': 'constructiontype' ,'sClass':'text-center'},
-					{ 'data': 'units' ,'sClass':'text-center'},
+					
 					{ 'data': 'levels' ,'sClass':'text-center'},
-					{ 'data': 'elevators' ,'sClass':'text-center'},
-					{ 'data': 'area' ,'sClass':'text-center'},
-					{ 'data': 'developer' ,'sClass':'text-center'},
-					{ 'data': 'propertyowner' ,'sClass':'text-center'},
-					{ 'data': 'propertyownertel' ,'sClass':'text-center'},
-					{ 'data': 'user' ,'sClass':'text-center'},
-					{ 'data': 'usertel' ,'sClass':'text-center'},
+					
 					{ 'data': 'propertymanage' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontact' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontacttel' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
-					{ 'data': 'orginbuilding' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -112,7 +99,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  27,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

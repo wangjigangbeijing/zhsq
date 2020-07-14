@@ -21,17 +21,16 @@ function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
 	 var name = $('#nameQuery').val();
- var address = $('#addressQuery').val();
- var propertyyears = $('#propertyyearsQuery').val();
- var propertyrights = $('#propertyrightsQuery').val();
- var heatingsystem = $('#heatingsystemQuery').val();
- var ofcommunity = $('#ofcommunityQuery').val();
- var buildtype = $('#buildtypeQuery').val();
- var buildframework = $('#buildframeworkQuery').val();
- var constructiontype = $('#constructiontypeQuery').val();
- var status = $('#statusQuery').val();
+	 var address = $('#addressQuery').val();
+	 var propertyyears = $('#propertyyearsQuery').val();
+	 var propertyrights = $('#propertyrightsQuery').val();
+	 var heatingsystem = $('#heatingsystemQuery').val();
+	 var ofcommunity = $('#ofcommunityQuery').val();
+	 var buildtype = $('#buildtypeQuery').val();
+	 var buildframework = $('#buildframeworkQuery').val();
+	 var constructiontype = $('#constructiontypeQuery').val();
+	 var status = $('#statusQuery').val();
 
-	
 	$.get(getContextPath()+'/residebuildingController/load?name='+name+'&address='+address+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
@@ -68,36 +67,20 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
 					{ 'data': 'year' ,'sClass':'text-center'},
 					{ 'data': 'propertyyears' ,'sClass':'text-center'},
 					{ 'data': 'propertyrights' ,'sClass':'text-center'},
 					{ 'data': 'heatingsystem' ,'sClass':'text-center'},
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
 					{ 'data': 'buildtype' ,'sClass':'text-center'},
-					{ 'data': 'buildframework' ,'sClass':'text-center'},
-					{ 'data': 'constructiontype' ,'sClass':'text-center'},
-					{ 'data': 'units' ,'sClass':'text-center'},
+					//{ 'data': 'buildframework' ,'sClass':'text-center'},					
 					{ 'data': 'levels' ,'sClass':'text-center'},
-					{ 'data': 'elevators' ,'sClass':'text-center'},
-					{ 'data': 'area' ,'sClass':'text-center'},
-					{ 'data': 'developer' ,'sClass':'text-center'},
-					{ 'data': 'propertyowner' ,'sClass':'text-center'},
-					{ 'data': 'propertyownertel' ,'sClass':'text-center'},
-					{ 'data': 'user' ,'sClass':'text-center'},
-					{ 'data': 'usertel' ,'sClass':'text-center'},
+					{ 'data': 'elevators' ,'sClass':'text-center'},					
 					{ 'data': 'propertymanage' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontact' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontacttel' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
+					{ 'data': 'propertymanagecontacttel' ,'sClass':'text-center'},					
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
-					{ 'data': 'familiesinbuilding' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
-
 				],
 				columnDefs: [ /*{
 					className: 'control',
@@ -111,7 +94,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  28,//从0开始
+					targets:  12,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						
@@ -126,90 +109,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/residebuildingController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dataid').val(obj.dataid);
-				$('#name').val(obj.name);
-				$('#address').val(obj.address);
-				$('#year').val(obj.year);
-				$('#propertyyears').val(obj.propertyyears);
-				$('#propertyrights').val(obj.propertyrights);
-				$('#heatingsystem').val(obj.heatingsystem);
-				$('#ofcommunity').val(obj.ofcommunity);
-				$('#buildtype').val(obj.buildtype);
-				$('#buildframework').val(obj.buildframework);
-				$('#constructiontype').val(obj.constructiontype);
-				$('#units').val(obj.units);
-				$('#levels').val(obj.levels);
-				$('#elevators').val(obj.elevators);
-				$('#area').val(obj.area);
-				$('#developer').val(obj.developer);
-				$('#propertyowner').val(obj.propertyowner);
-				$('#propertyownertel').val(obj.propertyownertel);
-				$('#user').val(obj.user);
-				$('#usertel').val(obj.usertel);
-				$('#propertymanage').val(obj.propertymanage);
-				$('#propertymanagecontact').val(obj.propertymanagecontact);
-				$('#propertymanagecontacttel').val(obj.propertymanagecontacttel);
-				$('#longitude').val(obj.longitude);
-				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-				$('#familiesinbuilding').val(obj.familiesinbuilding);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dataid').val('');
-	$('#name').val('');
-	$('#address').val('');
-	$('#year').val('');
-	$('#propertyyears').val('');
-	$('#propertyrights').val('');
-	$('#heatingsystem').val('');
-	$('#ofcommunity').val('');
-	$('#buildtype').val('');
-	$('#buildframework').val('');
-	$('#constructiontype').val('');
-	$('#units').val('');
-	$('#levels').val('');
-	$('#elevators').val('');
-	$('#area').val('');
-	$('#developer').val('');
-	$('#propertyowner').val('');
-	$('#propertyownertel').val('');
-	$('#user').val('');
-	$('#usertel').val('');
-	$('#propertymanage').val('');
-	$('#propertymanagecontact').val('');
-	$('#propertymanagecontacttel').val('');
-	$('#longitude').val('');
-	$('#latitude').val('');
-	$('#status').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-	$('#familiesinbuilding').val('');
-
-}
-*/
-
 function editData(id)
 {
 	curId = id;
@@ -220,18 +119,11 @@ function editData(id)
 
 
 function ShowAddModal()
-{
-	//$('#modalDetail').show();
-	
+{	
 	curId = '';
 	$('#main-content').load("./jcsqsj/residebuilding/residebuildingDetail.html", function () {
 		
     });
-	
-	//$('#modalTitle').text('新增');
-	
-	//$('#addOrUpdateBtn').text('确定');
-	
 }
 
 function deleteData(id)

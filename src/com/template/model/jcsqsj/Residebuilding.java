@@ -135,12 +135,12 @@ public void setconstructiontype(String constructiontype)
 	this.constructiontype = constructiontype;
 }
 @Column(name = "units", nullable = true)
-public Integer units;
-public Integer getunits()
+public String units;
+public String getunits()
 {
 	return units;
 }
-public void setunits(Integer units)
+public void setunits(String units)
 {
 	this.units = units;
 }

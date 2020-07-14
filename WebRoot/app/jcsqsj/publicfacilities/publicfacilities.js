@@ -65,19 +65,12 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dateid' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
 					{ 'data': 'objid' ,'sClass':'text-center'},
 					{ 'data': 'objname' ,'sClass':'text-center'},
 					{ 'data': 'locatedsc' ,'sClass':'text-center'},
 					{ 'data': 'deptname1' ,'sClass':'text-center'},
-					{ 'data': 'deptname2' ,'sClass':'text-center'},
-					{ 'data': 'deptname3' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
 					{ 'data': 'isincommunity' ,'sClass':'text-center'},
-					{ 'data': 'material' ,'sClass':'text-center'},
-					{ 'data': 'form' ,'sClass':'text-center'},
 					{ 'data': 'objState' ,'sClass':'text-center'},
 					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
@@ -95,7 +88,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  15,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

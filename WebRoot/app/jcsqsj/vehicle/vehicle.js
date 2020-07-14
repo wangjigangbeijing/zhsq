@@ -263,25 +263,13 @@ function load()
 					}
 				}, //多语言配置					
 				"data":obj.list,
-				"columns": [
-					{ 'data': 'dataid' ,'sClass':'text-center'},
-					{ 'data': 'number' ,'sClass':'text-center'},
-					{ 'data': 'frameno' ,'sClass':'text-center'},
+				"columns": [					
+					{ 'data': 'number' ,'sClass':'text-center'},					
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
-					{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
-					{ 'data': 'ofunit' ,'sClass':'text-center'},
-					{ 'data': 'ofroom' ,'sClass':'text-center'},
-					{ 'data': 'offamily' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
-					{ 'data': 'brand' ,'sClass':'text-center'},
-					{ 'data': 'model' ,'sClass':'text-center'},
-					{ 'data': 'color' ,'sClass':'text-center'},
 					{ 'data': 'ownername' ,'sClass':'text-center'},
 					{ 'data': 'ownertel' ,'sClass':'text-center'},
-					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
-
 				],
 				columnDefs: [ /*{
 					className: 'control',
@@ -295,7 +283,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  16,//从0开始
+					targets:  5,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

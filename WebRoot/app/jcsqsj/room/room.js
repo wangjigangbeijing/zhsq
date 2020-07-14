@@ -176,19 +176,19 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
+					//{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'number' ,'sClass':'text-center'},
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
-					{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
-					{ 'data': 'ofunit' ,'sClass':'text-center'},
-					{ 'data': 'level' ,'sClass':'text-center'},
+					//{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
+					//{ 'data': 'ofunit' ,'sClass':'text-center'},
+					//{ 'data': 'level' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': 'isgrouporiented' ,'sClass':'text-center'},
 					{ 'data': 'ownertype' ,'sClass':'text-center'},
-					{ 'data': 'propertypapertype' ,'sClass':'text-center'},
-					{ 'data': 'propertypaperid' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
+					//{ 'data': 'propertypapertype' ,'sClass':'text-center'},
+					//{ 'data': 'propertypaperid' ,'sClass':'text-center'},
+					//{ 'data': 'address' ,'sClass':'text-center'},
+					//{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -204,9 +204,9 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  13,//从0开始
+					targets:  5,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>&nbsp;";
 						
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
 						
@@ -219,60 +219,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/roomController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dataid').val(obj.dataid);
-				$('#number').val(obj.number);
-				$('#ofcommunity').val(obj.ofcommunity);
-				$('#ofresidebuilding').val(obj.ofresidebuilding);
-				$('#ofunit').val(obj.ofunit);
-				$('#level').val(obj.level);
-				$('#status').val(obj.status);
-				$('#isgrouporiented').val(obj.isgrouporiented);
-				$('#ownertype').val(obj.ownertype);
-				$('#propertypapertype').val(obj.propertypapertype);
-				$('#propertypaperid').val(obj.propertypaperid);
-				$('#address').val(obj.address);
-				$('#propertymap').val(obj.propertymap);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dataid').val('');
-	$('#number').val('');
-	$('#ofcommunity').val('');
-	$('#ofresidebuilding').val('');
-	$('#ofunit').val('');
-	$('#level').val('');
-	$('#status').val('');
-	$('#isgrouporiented').val('');
-	$('#ownertype').val('');
-	$('#propertypapertype').val('');
-	$('#propertypaperid').val('');
-	$('#address').val('');
-	$('#propertymap').val('');
-	$('#note').val('');
-
-}
-*/
-
 function editData(id)
 {
 	curId = id;
@@ -284,17 +230,10 @@ function editData(id)
 
 function ShowAddModal()
 {
-	//$('#modalDetail').show();
-	
 	curId = '';
 	$('#main-content').load("./jcsqsj/room/roomDetail.html", function () {
 		
     });
-	
-	//$('#modalTitle').text('新增');
-	
-	//$('#addOrUpdateBtn').text('确定');
-	
 }
 
 function deleteData(id)

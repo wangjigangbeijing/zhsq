@@ -155,7 +155,7 @@ public void setform(String form)
 {
 	this.form = form;
 }
-@Column(name = "objState", nullable = true)
+@Column(name = "objstate", nullable = true)
 public String objState;
 public String getobjState()
 {

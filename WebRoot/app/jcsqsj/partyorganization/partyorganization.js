@@ -61,15 +61,10 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dateid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'tpye' ,'sClass':'text-center'},
-					{ 'data': 'secretary' ,'sClass':'text-center'},
-					{ 'data': 'secretarytel' ,'sClass':'text-center'},
 					{ 'data': 'contact' ,'sClass':'text-center'},
 					{ 'data': 'contacttel' ,'sClass':'text-center'},
-					{ 'data': 'company' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -85,7 +80,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  9,//从0开始
+					targets:  4,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

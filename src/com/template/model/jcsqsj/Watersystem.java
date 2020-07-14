@@ -104,6 +104,7 @@ public void setleaderorg(String leaderorg)
 {
 	this.leaderorg = leaderorg;
 }
+/*
 @Column(name = "longitude", nullable = true)
 public Integer longitude;
 public Integer getlongitude()
@@ -123,7 +124,7 @@ public Integer getlatitude()
 public void setlatitude(Integer latitude)
 {
 	this.latitude = latitude;
-}
+}*/
 @Column(name = "status", nullable = true)
 public String status;
 public String getstatus()

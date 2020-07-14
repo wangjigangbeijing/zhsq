@@ -124,7 +124,7 @@ if(form != null && form.equalsIgnoreCase("") == false && form.equalsIgnoreCase("
 }
 if(objState != null && objState.equalsIgnoreCase("") == false && objState.equalsIgnoreCase("null") == false)
 {
-	hqlFilter.addQryCond("objState", HqlFilter.Operator.EQ, objState);
+	hqlFilter.addQryCond("objstate", HqlFilter.Operator.EQ, objState);
 }
 
         List<Publicfacilities> listObj = publicfacilitiesService.findByFilter(hqlFilter);

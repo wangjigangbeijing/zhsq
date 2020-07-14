@@ -28,7 +28,10 @@ public class ResidebuildingController {
 @ResponseBody
 public String addOrUpdate(String id,String dataid,String name,String address,
 		String year,String propertyyears,String propertyrights,String heatingsystem,
-		String ofcommunity,String buildtype,String buildframework,String constructiontype,Integer units,Integer levels,Integer elevators,Integer area,String developer,String propertyowner,String propertyownertel,String user,String usertel,String propertymanage,String propertymanagecontact,String propertymanagecontacttel,Integer longitude,Integer latitude,String status,String pictures,String note,Integer familiesinbuilding)
+		String ofcommunity,String buildtype,String buildframework,String constructiontype,String units,
+		Integer levels,Integer elevators,Integer area,String developer,String propertyowner,String propertyownertel,
+		String user,String usertel,String propertymanage,String propertymanagecontact,String propertymanagecontacttel,
+		Integer longitude,Integer latitude,String status,String pictures,String note,Integer familiesinbuilding)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -164,7 +167,10 @@ public String load(String name,String address,String propertyyears,String proper
 			jsonTmp.put("dataid",residebuilding.getdataid());
 			jsonTmp.put("name",residebuilding.getname());
 			jsonTmp.put("address",residebuilding.getaddress());
-			jsonTmp.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
+			if(residebuilding.getyear() != null)
+				jsonTmp.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("year","");
 			jsonTmp.put("propertyyears",residebuilding.getpropertyyears());
 			jsonTmp.put("propertyrights",residebuilding.getpropertyrights());
 			jsonTmp.put("heatingsystem",residebuilding.getheatingsystem());
