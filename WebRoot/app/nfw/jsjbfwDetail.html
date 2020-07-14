@@ -1,6 +1,6 @@
 
 
-<script src="./nfw/zhfw/jsjbfwDetail.js"></script>
+<script src="./nfw/jsjbfwDetail.js"></script>
 
 
 <section class="content">
@@ -17,12 +17,12 @@
 
                     <div class="form-group">
                       <label>事件标题</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="sjbt" placeholder="">
                     </div>
 
                     <div class="form-group">
                       <label>事件紧急程度</label>
-                      <select class="form-control">
+                      <select class="form-control" id="sjjjcd">
                         <option>一般</option>
                         <option>紧急</option>
                         <option>特急</option>
@@ -31,7 +31,7 @@
 
                     <div class="form-group">
                       <label>事件来源级别</label>
-                      <select class="form-control">
+                      <select class="form-control" id="sjlyjb">
                         <option>市级</option>
                         <option>区级</option>
                         <option>街道级</option>
@@ -41,7 +41,7 @@
 
                     <div class="form-group">
                       <label>事件来源</label>
-                      <select class="form-control">
+                      <select class="form-control" id="sjly">
                         <option>12345市民热线</option>
                         <option>96005接诉即办</option>
                         <option>街道指挥中心</option>
@@ -51,71 +51,83 @@
 
                     <div class="form-group">
                       <label>事件来源编号</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="sjlybh" placeholder="">
                     </div>   
 
                     <div class="form-group">
                       <label>事件分类</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="sjfl" placeholder="">
                     </div>
 
                     <div class="form-group">
                       <label>问题分类</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="wtfl" placeholder="">
                     </div>
 
                     <div class="form-group">
                       <label>发生地址</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="fsdz" placeholder="">
                     </div>
 
                     <div class="form-group">
                       <label>当事人</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="dsr" placeholder="">
                     </div>
 
                     <div class="form-group">
                       <label>当事人电话</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="dsrdh" placeholder="">
                     </div>
 
                     <div class="form-group">
                       <label>是否要求回访</label>
                       <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+                        <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="是" name="sfyqhf">
                         <label for="customCheckbox1" class="custom-control-label">是</label>
                       </div>
                       <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="customCheckbox2">
+                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" value="否" name="sfyqhf">
                         <label for="customCheckbox2" class="custom-control-label">否</label>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label>派单时间</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <!--input type="" class="form-control" id="pdsj" placeholder=""-->
+					  
+					  <div class="input-group-append" data-target="#pdsj" data-toggle="datetimepicker">
+							<input type="text" class="form-control datetimepicker-input" id="pdsj">
+							<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						</div>	
+						
+						
                     </div>
 
                     <div class="form-group">
                       <label>处理时限</label>
-                      <input type="" class="form-control" id="" placeholder="">
+                      <input type="" class="form-control" id="clsx" placeholder="">
                     </div>
 
                     <div class="form-group">
                       <label>处理截止时间</label>
-                      <input type="" class="form-control" id="" placeholder="">
+					  
+					  <div class="input-group-append" data-target="#cljzsj" data-toggle="datetimepicker">
+							<input type="text" class="form-control datetimepicker-input" id="cljzsj">
+							<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						</div>	
+						
                     </div>
 
 
 
                     <div class="form-group">
                           <label>事件内容</label>
-                          <textarea class="form-control" rows="3" placeholder=""></textarea>
+                          <textarea class="form-control" rows="3" placeholder="" id="sjnr"></textarea>
                         </div>
                       
                         <div class="form-group">
                           <label>备注</label>
-                          <textarea class="form-control" rows="3" placeholder=""></textarea>
+                          <textarea class="form-control" rows="3" placeholder="" id="bz"></textarea>
                         </div>
 
                   <!--div class="form-group">
@@ -173,7 +185,7 @@
       </div>
 	  
 	  
-	  <div class="modal fade" id="residentDialog">
+	  <!--div class="modal fade" id="residentDialog">
         <div class="modal-dialog">
           <div class="modal-content" style="width:1000px;">
             <div class="modal-header">
@@ -184,10 +196,7 @@
             </div>
             <div class="modal-body">
               
-			  
-			  
 			  <form class="form-horizontal">
-                <!--div class="card-body"-->
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-1 col-form-label">姓名</label>
                     <div class="col-sm-2">
@@ -198,7 +207,6 @@
 					
                   </div>
 				  
-                <!--/div-->
               </form>
 			  
 			  
@@ -220,16 +228,12 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-              <!--button type="button" class="btn btn-primary">关闭</button-->
             </div>
           </div>
-          <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
+      </div-->
 	  
     </section>
-	
 	
 <script>
 

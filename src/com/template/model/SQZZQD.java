@@ -101,4 +101,18 @@ public class SQZZQD implements java.io.Serializable {
 	{
 		this.yjflfgmc = yjflfgmc;
 	}
+	
+
+	@Column(name = "FJ", nullable = true)
+	public String FJ;
+	
+	public String getFJ()
+	{
+		return FJ;
+	}
+	public void setFJ(String FJ)
+	{
+		this.FJ = FJ;
+	}
+	
 }

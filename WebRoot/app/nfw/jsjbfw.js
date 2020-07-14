@@ -174,7 +174,7 @@ function closeModalDetail()
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./nfw/zhfw/jsjbfwDetail.html", function () {
+	$('#main-content').load("./nfw/jsjbfwDetail.html", function () {
 		
     });
 }
@@ -185,7 +185,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./nfw/zhfw/jsjbfwDetail.html", function () {
+	$('#main-content').load("./nfw/jsjbfwDetail.html", function () {
 		
     });
 	

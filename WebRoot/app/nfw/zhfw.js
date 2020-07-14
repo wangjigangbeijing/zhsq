@@ -2,15 +2,17 @@
 $(document).ready(function (){
 	
 	$('#xgyqInfoAnchor').click(function () {
-        loadXgyqInfo('新冠疫情信息');
+        loadXgyqInfo();
     });
 	
-	$('#jsjbAnchor').click(function () {
-        loadJSJBFW('接诉即办服务');
-    });
+	/*$('#jsjbAnchor').click(function () {
+        loadJSJBFW();
+    });*/
 	
-	
-	loadXgyqInfo();
+	if(curSXType == '' || curSXType == '新冠疫情信息')
+		loadXgyqInfo();
+	else if (curSXType == '接诉即办服务')
+		loadJSJBFW();
 });
 
 var curSXType = '';
@@ -21,12 +23,12 @@ function loadXgyqInfo()
         
     });
 }
-
+/*
 function loadJSJBFW()
 {
 	$('#zhfwDiv').load("./nfw/zhfw/jsjbfw.html", function () {
         
     });
 }
-
+*/
 

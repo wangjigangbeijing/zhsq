@@ -120,6 +120,11 @@ $(document).ready(function (){
         loadXfslfwPage();
     });
 	
+	$('#jsjbfwAnchor').click(function () {
+		updateActiveMenu('jsjbfwAnchor');
+        loadJSJBFW();
+    });
+	
 	$('#sqcsfwAnchor').click(function () {
 		updateActiveMenu('sqcsfwAnchor');
         loadSqcsfwPage();
@@ -390,15 +395,12 @@ function loadSqbsfwPage()
     });
 }
 
-
-
-
-
-
-
-
-
-
+function loadJSJBFW()
+{
+	$('#main-content').load("./nfw/jsjbfw.html", function () {
+        
+    });
+}
 
 
 function loadDicPage()

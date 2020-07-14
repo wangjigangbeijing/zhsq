@@ -49,7 +49,7 @@ public class SQZZQDController {
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String addOrUpdate(String id,String bh,String zzly,String zzy,String gzzz,
-			String lb,String yjflfgmc)
+			String lb,String yjflfgmc,String fj)
 	{
 		logger.debug("addOrUpdate");
     	JSONObject jsonObj = new JSONObject();
@@ -206,6 +206,7 @@ public class SQZZQDController {
 				jsonObj.put("lb", sqzzqd.getlb());
 				jsonObj.put("gzzz", sqzzqd.getgzzz());
 				jsonObj.put("yjflfgmc", sqzzqd.getyjflfgmc());
+				jsonObj.put("fj", sqzzqd.getFJ());
 			}
 			else
 			{

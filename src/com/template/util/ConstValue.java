@@ -170,4 +170,12 @@ public class ConstValue {
 	public static HashMap<String,String> hmDicMap = new HashMap<String,String>();
 	
 	
+	public static HashMap<String,String> residentMap = new HashMap<String,String>();
+	
+	
+	
+	
+	public static HashMap<String,String> userMap = new HashMap<String,String>();
+	
+	
 }

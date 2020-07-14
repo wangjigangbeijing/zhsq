@@ -26,7 +26,7 @@ public class JSJBFW implements java.io.Serializable
 		this.id = id;
 	}
 	
-	@Column(name = "sjbt", nullable = false)
+	@Column(name = "sjbt", nullable = true)
 	public String sjbt;
 	public String getsjbt()
 	{
@@ -37,7 +37,7 @@ public class JSJBFW implements java.io.Serializable
 		this.sjbt = sjbt;
 	}
 
-	@Column(name = "sjjjcd", nullable = false)
+	@Column(name = "sjjjcd", nullable = true)
 	public String sjjjcd;
 	public String getsjjjcd()
 	{
@@ -49,7 +49,7 @@ public class JSJBFW implements java.io.Serializable
 	}
 
 	
-	@Column(name = "sjlyjb", nullable = false)
+	@Column(name = "sjlyjb", nullable = true)
 	public String sjlyjb;
 	public String getsjlyjb()
 	{
@@ -60,7 +60,7 @@ public class JSJBFW implements java.io.Serializable
 		this.sjlyjb = sjlyjb;
 	}
 	
-	@Column(name = "sjly", nullable = false)
+	@Column(name = "sjly", nullable = true)
 	public String sjly;
 	public String getsjly()
 	{
@@ -71,7 +71,7 @@ public class JSJBFW implements java.io.Serializable
 		this.sjly = sjly;
 	}
 	
-	@Column(name = "sjlybh", nullable = false)
+	@Column(name = "sjlybh", nullable = true)
 	public String sjlybh;
 	public String getsjlybh()
 	{
@@ -82,7 +82,7 @@ public class JSJBFW implements java.io.Serializable
 		this.sjlybh = sjlybh;
 	}
 
-	@Column(name = "sjfl", nullable = false)
+	@Column(name = "sjfl", nullable = true)
 	public String sjfl;
 	public String getsjfl()
 	{
@@ -93,7 +93,7 @@ public class JSJBFW implements java.io.Serializable
 		this.sjfl = sjfl;
 	}
 	
-	@Column(name = "wtfl", nullable = false)
+	@Column(name = "wtfl", nullable = true)
 	public String wtfl;
 	public String getwtfl()
 	{
@@ -104,7 +104,7 @@ public class JSJBFW implements java.io.Serializable
 		this.wtfl = wtfl;
 	}
 	
-	@Column(name = "fsdz", nullable = false)
+	@Column(name = "fsdz", nullable = true)
 	public String fsdz;
 	public String getfsdz()
 	{
@@ -116,7 +116,7 @@ public class JSJBFW implements java.io.Serializable
 	}
 
 
-	@Column(name = "dsr", nullable = false)
+	@Column(name = "dsr", nullable = true)
 	public String dsr;
 	public String getdsr()
 	{
@@ -128,7 +128,7 @@ public class JSJBFW implements java.io.Serializable
 	}
 
 
-	@Column(name = "dsrdh", nullable = false)
+	@Column(name = "dsrdh", nullable = true)
 	public String dsrdh;
 	public String getdsrdh()
 	{
@@ -139,7 +139,7 @@ public class JSJBFW implements java.io.Serializable
 		this.dsrdh = dsrdh;
 	}
 	
-	@Column(name = "sfyqhf", nullable = false)
+	@Column(name = "sfyqhf", nullable = true)
 	public String sfyqhf;
 	public String getsfyqhf()
 	{
@@ -150,7 +150,7 @@ public class JSJBFW implements java.io.Serializable
 		this.sfyqhf = sfyqhf;
 	}
 
-	@Column(name = "pdsj", nullable = false)
+	@Column(name = "pdsj", nullable = true)
 	public String pdsj;
 	public String getpdsj()
 	{
@@ -162,7 +162,7 @@ public class JSJBFW implements java.io.Serializable
 	}
 
 
-	@Column(name = "clsx", nullable = false)
+	@Column(name = "clsx", nullable = true)
 	public String clsx;
 	public String getclsx()
 	{
@@ -173,7 +173,7 @@ public class JSJBFW implements java.io.Serializable
 		this.clsx = clsx;
 	}
 	
-	@Column(name = "cljzsj", nullable = false)
+	@Column(name = "cljzsj", nullable = true)
 	public String cljzsj;
 	public String getcljzsj()
 	{
@@ -185,7 +185,7 @@ public class JSJBFW implements java.io.Serializable
 	}
 
 
-	@Column(name = "sjnr", nullable = false)
+	@Column(name = "sjnr", nullable = true)
 	public String sjnr;
 	public String getsjnr()
 	{
@@ -197,7 +197,7 @@ public class JSJBFW implements java.io.Serializable
 	}
 
 
-	@Column(name = "bz", nullable = false)
+	@Column(name = "bz", nullable = true)
 	public String bz;
 	public String getbz()
 	{
@@ -209,7 +209,7 @@ public class JSJBFW implements java.io.Serializable
 	}
 
 
-	@Column(name = "fj", nullable = false)
+	@Column(name = "fj", nullable = true)
 	public String fj;
 	public String getfj()
 	{

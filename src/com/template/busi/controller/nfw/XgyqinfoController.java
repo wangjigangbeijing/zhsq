@@ -151,16 +151,28 @@ if(hsjcjieguo != null && hsjcjieguo.equalsIgnoreCase("") == false && hsjcjieguo.
 			jsonTmp.put("mobile",xgyqinfo.getmobile());
 			jsonTmp.put("address",xgyqinfo.getaddress());
 			jsonTmp.put("quezhen",xgyqinfo.getquezhen());
-			jsonTmp.put("qzdate",TimeUtil.formatDate(xgyqinfo.getqzdate(),"yyyy-MM-dd"));
+			if(xgyqinfo.getqzdate() != null)
+				jsonTmp.put("qzdate",TimeUtil.formatDate(xgyqinfo.getqzdate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("qzdate","-");
 			//jsonTmp.put("qznote",xgyqinfo.getqznote());
 			jsonTmp.put("yisi",xgyqinfo.getyisi());
 			jsonTmp.put("mijie",xgyqinfo.getmijie());
 			//jsonTmp.put("mjnote",xgyqinfo.getmjnote());
-			jsonTmp.put("glstartdate",TimeUtil.formatDate(xgyqinfo.getglstartdate(),"yyyy-MM-dd HH:mm"));
-			jsonTmp.put("glenddate",TimeUtil.formatDate(xgyqinfo.getglenddate(),"yyyy-MM-dd HH:mm"));
+			if(xgyqinfo.getglstartdate() != null)
+				jsonTmp.put("glstartdate",TimeUtil.formatDate(xgyqinfo.getglstartdate(),"yyyy-MM-dd HH:mm"));
+			else
+				jsonTmp.put("glstartdate","");
+			if(xgyqinfo.getglenddate() != null)
+				jsonTmp.put("glenddate",TimeUtil.formatDate(xgyqinfo.getglenddate(),"yyyy-MM-dd HH:mm"));
+			else
+				jsonTmp.put("glenddate","-");
 			//jsonTmp.put("note",xgyqinfo.getnote());
 			jsonTmp.put("hsjc",xgyqinfo.gethsjc());
-			jsonTmp.put("hsjcdate",TimeUtil.formatDate(xgyqinfo.gethsjcdate(),"yyyy-MM-dd HH:mm"));
+			if(xgyqinfo.gethsjcdate() != null)
+				jsonTmp.put("hsjcdate",TimeUtil.formatDate(xgyqinfo.gethsjcdate(),"yyyy-MM-dd HH:mm"));
+			else
+				jsonTmp.put("hsjcdate","-");
 			jsonTmp.put("hsjcjigou",xgyqinfo.gethsjcjigou());
 			jsonTmp.put("hsjcjieguo",xgyqinfo.gethsjcjieguo());
 

@@ -10,45 +10,23 @@
 
 $(document).ready(function (){
 	
-	var checkin = $('#begindate').datepicker({
-			format: 'yyyy-mm-dd',
-			todayBtn: 'linked',
-			onRender: function(date) {
-				console.log('onRender startDate');
-				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
-			}
-		}).on('changeDate', function(ev) {
-				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
-					var newDate = new Date(ev.date)
-					newDate.setDate(newDate.getDate() + 1);
-					checkout.setValue(newDate);
-				}*/
-				checkin.hide();
-				//$('.dpd2')[0].focus();
-				
-				console.log('time Change');
-			}).data('datepicker');
-		
-	var checkin = $('#enddate').datepicker({
-			format: 'yyyy-mm-dd',
-			todayBtn: 'linked',
-			onRender: function(date) {
-				console.log('onRender startDate');
-				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
-			}
-		}).on('changeDate', function(ev) {
-				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
-					var newDate = new Date(ev.date)
-					newDate.setDate(newDate.getDate() + 1);
-					checkout.setValue(newDate);
-				}*/
-				checkin.hide();
-				//$('.dpd2')[0].focus();
-				
-				console.log('time Change');
-			}).data('datepicker');	
+	$("#sxkssj").datetimepicker({
+		format: 'yyyy-mm-dd hh:ii',
+		autoclose: true,
+		todayBtn: true,
+		pickerPosition: "bottom-left"
+
+	});
+
+	$("#sxjssj").datetimepicker({
+		format: 'yyyy-mm-dd hh:ii',
+		autoclose: true,
+		todayBtn: true,
+		pickerPosition: "bottom-left"
+
+	});
+
 	
-	//$('#sxdl').change(function(){
 		
 		$('#sxdl').val(curSXType);
 		
@@ -120,28 +98,55 @@ function get()
 				$('#sxxq').val(obj.sxxq);
 				$('#sxdd').val(obj.sxdd);
 				$('#sxdsr').val(obj.sxdsr);
+				$('#sxdsrname').val(obj.sxdsrname);
+				$('#sxjbr').val(obj.sxjbr);
+				$('#sxjbrname').val(obj.sxjbrname);
+				$('#sxdsrname').attr('readonly','readonly');
 				$('#sxkssj').val(obj.sxkssj);
 				$('#sxjssj').val(obj.sxjssj);
 				$('#sxzj').val(obj.sxzj);
+				
+				$('#selectResidentDiv').hide();
+				
+				if(obj.fj != null)
+				{
+					var picturesArr = obj.fj.split(VALUE_SPLITTER);				
+					for(var j=0;picturesArr != null && j<picturesArr.length;j++)				
+					{					
+						if(picturesArr[j] != '')					
+						{						
+							$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+						}
+					}
+				}
 			}
 		});
 }
 
 function addOrUpdate()
 {
+	var sxdsr = $('#sxdsr').val();
+	if(sxdsr == null || sxdsr == undefined || sxdsr == '')
+		sxdsr = $('#sxdsrname').val();
+	
+	var sxjbr = $('#sxjbr').val();
+	if(sxjbr == null || sxjbr == undefined || sxjbr == '')
+		sxjbr = $('#sxjbrname').val();
+	
 	$.post(getContextPath()+"/sxsqsjController/addOrUpdate",
 	{
-		id:curId,
-		//sxbm:$('#sxbm').val(),
+		id:curId,		
 		sxmc:$('#sxmc').val(),
 		sxdl:$('#sxdl').val(),
 		sxxl:$('#sxxl').val(),
 		sxxq:$('#sxxq').val(),
 		sxdd:$('#sxdd').val(),
-		sxdsr:$('#sxdsr').val(),
+		sxdsr:sxdsr,
+		sxjbr:sxjbr,
 		sxkssj:$('#sxkssj').val(),
 		sxjssj:$('#sxjssj').val(),
-		sxzj:$('#sxzj').val()
+		sxzj:$('#sxzj').val(),
+		fj:$('#pictures').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
@@ -161,123 +166,6 @@ function addOrUpdate()
 			return ;
 		}
 	});
-	
-	/*
-	var attributeTbl = $('#editable-sample').dataTable().fnGetData();
-	if(attributeTbl.length == 0)
-	{
-		jError("至少应包含一个字段!",{
-					VerticalPosition : 'center',
-					HorizontalPosition : 'center'});
-		return ;
-	}
-	
-	var attributeArr = new Array();
-	
-	for(var i=0;i<attributeTbl.length;i++)
-	{
-		var id = attributeTbl[i].id;
-		var attrZHName = attributeTbl[i].attrZHName;
-		var attrENName = attributeTbl[i].attrENName;
-		var attrComponentType = attributeTbl[i].attrComponentType;
-		var attrDBType = attributeTbl[i].attrDBType;
-		var attrValue = attributeTbl[i].attrValue;
-		var attrDBLength = attributeTbl[i].attrDBLength;
-		var seq = attributeTbl[i].seq;
-		//var appDisplay = attributeTbl[i].appDisplay;
-		var supportQuery = attributeTbl[i].supportQuery;
-		var saved = attributeTbl[i].saved;
-		
-		if(attrZHName == undefined)
-		{
-			jError("有未保存的字段!",{
-						VerticalPosition : 'center',
-						HorizontalPosition : 'center'});
-			return ;
-		}
-		
-		if(id === undefined) id = '';
-		if(attrZHName === undefined) attrZHName = '';
-		if(attrENName === undefined) attrENName = '';
-		if(attrComponentType === undefined) attrComponentType = '';
-		if(attrDBType === undefined) attrDBType = '';
-		if(attrValue === undefined) attrValue = '';
-		if(attrDBLength === undefined || attrDBLength == '') attrDBLength = 16;//对于字符串类型的字段,默认长度为16
-		if(seq === undefined || seq == '') seq = i;
-		
-		attributeArr.push("{'id':'"+id+"','attrZHName':'"+attrZHName+"','attrENName':'"+attrENName+"','attrComponentType':'"+attrComponentType+"','attrDBType':'"+attrDBType+"','attrValue':'"+attrValue+"','attrDBLength':"+attrDBLength+",'seq':"+seq+",'supportQuery':"+supportQuery+"}");
-	}
-	
-	var layerInfo = {'tableId':curTableId,'tableZHName':$('#tableZHName').val(),'tableType':'',
-						'tableENName':$('#tableENName').val(),
-						'tableDescription':$('#tableDescription').val(),
-						'seq':$('#seq').val(),
-						'tableAttribute':attributeArr};
-						
-	var attrJson = attributeArr.join(',');
-	
-	$.post(getContextPath()+"/tableController/addOrUpdateTable",
-	{
-		tableId:curTableId,
-		tableZHName:$('#tableZHName').val(),
-		tableType:'',
-		tableENName:$('#tableENName').val(),
-		tableDescription:$('#tableDescription').val(),
-		seq:$('#seq').val(),
-		tableAttribute:attrJson
-	},
-	function(result){
-		var obj = jQuery.parseJSON(result);  
-		if(obj.success)
-		{
-			jSuccess("表单创建成功!",{
-						VerticalPosition : 'center',
-						HorizontalPosition : 'center'});
-						
-			gobackTablePage();
-		}
-		else
-		{
-			jError("表单创建失败!"+data.errMsg,{
-				VerticalPosition : 'center',
-				HorizontalPosition : 'center'});
-			return ;
-		}
-	});
-	
-	$.ajaxFileUpload
-	(  
-		{
-			url:getContextPath()+'/tableController/addOrUpdateTable/',
-			fileElementId: [], //文件上传控件的id属性  <input type="file" id="file" name="file" /> 注意，这里一定要有name值     
-			dataType: 'json',//返回值类型 一般设置为json  
-			data:layerInfo,
-			success: function (data, status)  //服务器成功响应处理函数  
-			{
-				if(data.success == false)
-				{
-					jError("表单创建失败!"+data.errMsg,{
-						VerticalPosition : 'center',
-						HorizontalPosition : 'center'});
-					return ;
-				}
-				else
-				{
-					jSuccess("表单创建成功!",{
-						VerticalPosition : 'center',
-						HorizontalPosition : 'center'});
-						
-					gobackTablePage();
-				}
-			},  
-			error: function (data, status, e)//服务器响应失败处理函数  
-			{  
-				jError("表单创建失败!",{
-					VerticalPosition : 'center',
-					HorizontalPosition : 'center'});
-			}  
-		}  
-	)  */
 }
 
 function gobackPage()
