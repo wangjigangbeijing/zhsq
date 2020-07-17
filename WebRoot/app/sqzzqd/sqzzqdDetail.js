@@ -53,6 +53,8 @@ function get()
 
 function addOrUpdate()
 {
+	var fj = $('#pictures').val();
+	debugger;
 	$.post(getContextPath()+"/sqzzqdController/addOrUpdate",
 	{
 		id:curId,

@@ -59,7 +59,7 @@ public class SXSQSJController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String addOrUpdate(String id,//String sxbm,
+	public String addOrUpdate(String id,
 			String sxmc,
 			String sxdl,
 			String sxxl,
@@ -306,6 +306,7 @@ public class SXSQSJController {
 				
 				jsonTmp.put("sxxl", (String)hm.get("SXXL"));
 				jsonTmp.put("sxdl", (String)hm.get("SXDL"));
+				jsonTmp.put("icon", (String)hm.get("ICON"));
 				
 				if(hm.containsKey("CNT") && hm.get("CNT") != null)
 					jsonTmp.put("cnt", (BigInteger)hm.get("CNT")+"/"+(BigInteger)hm.get("CNT"));

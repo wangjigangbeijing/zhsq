@@ -73,6 +73,7 @@ public class SQZZQDController {
 			sqzzqd.setgzzz(gzzz);
 			sqzzqd.setlb(lb);
 			sqzzqd.setyjflfgmc(yjflfgmc);
+			sqzzqd.setFJ(fj);
 			
 			sqzzqdService.saveOrUpdate(sqzzqd);
 			

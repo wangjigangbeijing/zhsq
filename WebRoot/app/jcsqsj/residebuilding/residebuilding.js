@@ -96,9 +96,11 @@ function load()
 					orderable: false,
 					targets:  12,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
+						var btn = "<a href=\"#\" onclick=\"mingqing('"+full.id+"')\" data-toggle=\"tooltip\" class=\"btn btn-primary btn-xs\" title=\"查看\">民情图</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" class=\"btn btn-info btn-xs\" title=\"查看\">编辑</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\" data-toggle=\"tooltip\">删除</a>";
 						
 						return btn;
 					}
@@ -117,6 +119,13 @@ function editData(id)
     });
 }
 
+function mingqing(id)
+{
+	curId = id;
+	$('#main-content').load("./jcsqsj/residebuilding/residebuildingMinqing.html", function () {
+		
+    });
+}
 
 function ShowAddModal()
 {	

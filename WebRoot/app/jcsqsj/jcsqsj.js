@@ -268,9 +268,9 @@ $(document).ready(function (){
 			$('#jmttSpan').html(obj.populationgroup);//居民团体
 			$('#zbdlSpan').html(obj.roads);//周边道路
 			$('#hhsxSpan').html(obj.watersystem);//河湖水系
-			//$('#szssSpan').html(obj.);
+			$('#szssSpan').html(obj.publicfacilities);//市政设施
 			$('#wtssSpan').html(obj.culturefacilities);//文体设施
-			//$('#tczySpan').html(obj.);
+			$('#tczySpan').html(obj.parking);
 			$('#bncsSpan').html(obj.shelter);//避难场所
 			$('#ffwdSpan').html(obj.service_store);//服务网点
 			$('#ljzSpan').html(obj.ljz);//垃圾站
