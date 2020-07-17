@@ -165,6 +165,16 @@ $(document).ready(function (){
         loadContactPage();
     });
 	
+	$('#nodeAnchor').click(function () {
+		updateActiveMenu('nodeAnchor');
+        loadNodePage();
+    });
+	
+	$('#templateAnchor').click(function () {
+		updateActiveMenu('templateAnchor');
+        loadTemplatePage();
+    });
+	
 	
 	getCurrentLoginUserInfo();
 	
@@ -426,6 +436,20 @@ function loadNoticePage()
 function loadContactPage()
 {
 	$('#main-content').load("./oa/contact/contact.html", function () {
+        
+    });
+}
+
+function loadNodePage()
+{
+	$('#main-content').load("./flow/node.html", function () {
+        
+    });
+}
+
+function loadTemplatePage()
+{
+	$('#main-content').load("./flow/template.html", function () {
         
     });
 }
