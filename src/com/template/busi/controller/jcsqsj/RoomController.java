@@ -157,6 +157,7 @@ if(propertypapertype != null && propertypapertype.equalsIgnoreCase("") == false 
 			jsonTmp.put("address",room.getaddress());
 			jsonTmp.put("propertymap",room.getpropertymap());
 			jsonTmp.put("note",room.getnote());
+			jsonTmp.put("peoplecharacteristics",room.getpeoplecharacteristics());
 
        		jsonArr.put(jsonTmp);
         	iTotalCnt++;

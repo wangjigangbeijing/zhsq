@@ -102,6 +102,12 @@ public class JCSQSJController {
 	@Autowired
 	private Jc_rubbishService jc_rubbishService;
 	
+	@Autowired
+	private PublicfacilitiesService publicfacilitiesService;
+	
+	@Autowired
+	private ParkingService parkingService;
+	
 	@RequestMapping(value="get",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String get(String id)
@@ -143,16 +149,15 @@ public class JCSQSJController {
 			
 			long watersystem = watersystemService.countByFilter(hqlFilter);//河湖水系
 			
-			//市政设施
+			long publicfacilities = publicfacilitiesService.countByFilter(hqlFilter);//市政设施
 			
 			long culturefacilities = culturefacilitiesService.countByFilter(hqlFilter); //文体设施
 			
-			//停车资源
+			long parking = parkingService.countByFilter(hqlFilter); //停车资源
 			
 			long service_store = service_storeService.countByFilter(hqlFilter); //服务网点
 			
 			long ljz = jc_rubbishService.countByFilter(hqlFilter); //垃圾站
-			
 			
 			jsonObj.put("success", true);
 			jsonObj.put("community", community);
@@ -171,9 +176,10 @@ public class JCSQSJController {
 			jsonObj.put("watersystem", watersystem);
 			jsonObj.put("culturefacilities", culturefacilities);
 			jsonObj.put("service_store", service_store);
+			jsonObj.put("publicfacilities", publicfacilities);
 			jsonObj.put("commercialbuilding", commercialbuilding);
 			jsonObj.put("ljz", ljz);
-			
+			jsonObj.put("parking", parking);
 		}
 		catch(Exception e)
 		{

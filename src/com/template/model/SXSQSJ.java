@@ -223,9 +223,30 @@ public class SXSQSJ implements java.io.Serializable {
 		this.SXZT = SXZT;
 	}
 	
+	@Column(name = "FJ", nullable = true)
+	public String FJ;
 	
+	public String getFJ()
+	{
+		return FJ;
+	}
+	public void setFJ(String FJ)
+	{
+		this.FJ = FJ;
+	}
 	
+
 	
+	@Column(name = "SXJBR", nullable = true)
+	public String SXJBR;
 	
+	public String getSXJBR()
+	{
+		return SXJBR;
+	}
+	public void setSXJBR(String SXJBR)
+	{
+		this.SXJBR = SXJBR;
+	}
 	
 }

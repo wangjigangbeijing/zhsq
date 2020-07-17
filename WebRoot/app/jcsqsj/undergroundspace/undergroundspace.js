@@ -64,19 +64,9 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dateid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
-					{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
-					{ 'data': 'ofbizbuilding' ,'sClass':'text-center'},
-					{ 'data': 'level' ,'sClass':'text-center'},
-					{ 'data': 'area' ,'sClass':'text-center'},
-					{ 'data': 'purpose' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -92,7 +82,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  13,//从0开始
+					targets:  3,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

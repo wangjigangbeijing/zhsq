@@ -65,20 +65,20 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
+										//{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'buildtype' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
 					{ 'data': 'year' ,'sClass':'text-center'},
 					{ 'data': 'buildings' ,'sClass':'text-center'},
 					{ 'data': 'gates' ,'sClass':'text-center'},
-					{ 'data': 'groundparking' ,'sClass':'text-center'},
-					{ 'data': 'underparking' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
+					//{ 'data': 'groundparking' ,'sClass':'text-center'},
+					//{ 'data': 'underparking' ,'sClass':'text-center'},
+					//{ 'data': 'longitude' ,'sClass':'text-center'},
+					//{ 'data': 'latitude' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
+					//{ 'data': 'address' ,'sClass':'text-center'},
+					//{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -94,7 +94,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  14,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

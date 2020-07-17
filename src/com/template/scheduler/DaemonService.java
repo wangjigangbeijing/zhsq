@@ -13,7 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.template.model.SysDictionary;
+import com.template.model.SysUser;
+import com.template.model.jcsqsj.Resident;
+import com.template.model.jcsqsj.Room;
 import com.template.service.DictionaryService;
+import com.template.service.UserService;
+import com.template.service.jcsqsj.ResidentService;
+import com.template.service.jcsqsj.RoomService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
 
@@ -29,6 +35,15 @@ public class DaemonService
 	@Autowired
 	private DictionaryService dictionaryService;
 	
+	@Autowired
+	private ResidentService residentService;
+	
+	@Autowired
+	private RoomService roomService;
+
+	@Autowired
+	private UserService userService;
+	
 	/*
 	 * @Desc	
 	 */
@@ -39,6 +54,12 @@ public class DaemonService
 			logger.info("Periodic Job...");
 			
 			loadDictionaryInfo();
+			
+			loadResidentInfo();
+			
+			loadUserInfo();
+			
+			refreshResident();//定期刷民情图数据
 		}
 		catch(Exception e)
 		{
@@ -49,7 +70,6 @@ public class DaemonService
 	
 	public void loadDictionaryInfo()
 	{
-		
 		HqlFilter hqlFilter = new HqlFilter();
 		
         List<SysDictionary> listDic = dictionaryService.findByFilter(hqlFilter);
@@ -113,5 +133,125 @@ public class DaemonService
 				}
 			}
 		}
+	}
+	
+	public void loadResidentInfo()
+	{
+		try
+		{
+			List<Resident> residentList = residentService.findByFilter(new HqlFilter());
+			
+			for(int i=0;i<residentList.size();i++)
+			{
+				Resident resident = residentList.get(i);
+				
+				String id = resident.getId();
+				String name = resident.getname();
+				
+				ConstValue.residentMap.put(id,name);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+	}
+
+	public void loadUserInfo()
+	{
+		try
+		{
+			List<SysUser> userList = userService.findByFilter(new HqlFilter());
+			
+			for(int i=0;i<userList.size();i++)
+			{
+				SysUser sysUser = userList.get(i);
+				
+				String id = sysUser.getId();
+				String name = sysUser.getUsername();
+				
+				ConstValue.userMap.put(id,name);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+	}
+	
+	
+	public void refreshResident()
+	{
+		try
+		{
+			List<Room> roomList = roomService.findByFilter(new HqlFilter());
+			
+			for(int r=0;r<roomList.size();r++)	
+			{
+				Room room = roomList.get(r);
+				
+				String roomId = room.getId();
+				
+				HqlFilter hqlFilter = new HqlFilter();
+				
+				hqlFilter.addQryCond("ofroom", HqlFilter.Operator.EQ, roomId);
+				
+				List<Resident> residentList = residentService.findByFilter(hqlFilter);
+				
+				String characteristics = "";
+				
+				String residentnames = "";
+				
+				for(int i=0;i<residentList.size();i++)
+				{
+					try
+					{
+						Resident resident = residentList.get(i);
+						
+						String residentcharacteristic = resident.characteristics;
+						
+						if(residentcharacteristic != null && residentcharacteristic.equalsIgnoreCase("") == false)
+						{
+							//==========================  人员角色刷新
+							
+							String [] charArr = residentcharacteristic.split(",");
+							
+							for(int j=0;j<charArr.length;j++)
+							{
+								if(characteristics.indexOf(charArr[j]) == -1)
+								{
+									characteristics = characteristics + charArr[j] + ",";
+								}
+							}
+						}
+						
+						//==========================  人员名称刷新
+						String name = resident.getname();
+	
+						if(name == null || name.equalsIgnoreCase(""))
+							continue;
+						
+						if(residentnames.indexOf(name) == -1)
+						{
+							residentnames = residentnames + name + ",";
+						}
+					}
+					catch(Exception e)
+					{
+						logger.error(e.getMessage(),e);
+					}
+				}
+				
+				room.setpeoplecharacteristics(characteristics);
+
+				room.setresidentname(residentnames);
+				
+				roomService.save(room);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}		
 	}
 }

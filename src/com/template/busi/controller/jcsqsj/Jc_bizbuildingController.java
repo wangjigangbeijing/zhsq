@@ -169,7 +169,10 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			jsonTmp.put("dataid",jc_bizbuilding.getdataid());
 			jsonTmp.put("name",jc_bizbuilding.getname());
 			jsonTmp.put("address",jc_bizbuilding.getaddress());
-			jsonTmp.put("year",TimeUtil.formatDate(jc_bizbuilding.getyear(),"yyyy-MM-dd"));
+			if(jc_bizbuilding.getyear() != null)
+				jsonTmp.put("year",TimeUtil.formatDate(jc_bizbuilding.getyear(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("year","-");
 			jsonTmp.put("purpose",jc_bizbuilding.getpurpose());
 			jsonTmp.put("propertyyears",jc_bizbuilding.getpropertyyears());
 			jsonTmp.put("propertyrights",jc_bizbuilding.getpropertyrights());

@@ -32,9 +32,11 @@ import com.template.util.TimeUtil;
 import com.template.util.Utility;
 import com.template.model.SXSQSJ;
 import com.template.model.SXSQSJ_FL;
+import com.template.model.SysSeq;
 import com.template.model.SysUser;
 import com.template.service.SXSQSJFLService;
 import com.template.service.SXSQSJService;
+import com.template.service.SysSeqService;
 import com.template.service.UserService;
 
 @Controller
@@ -52,10 +54,12 @@ public class SXSQSJController {
 	@Autowired
 	private SXSQSJFLService sxsqsjflService;
 	
+	@Autowired
+	private SysSeqService sysSeqService;
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String addOrUpdate(String id,String sxbm,
+	public String addOrUpdate(String id,
 			String sxmc,
 			String sxdl,
 			String sxxl,
@@ -69,7 +73,7 @@ public class SXSQSJController {
 			String sxfj, 
 			String sxjf, 
 			String sxbz, 
-			String sxzt)
+			String sxzt,String fj,String sxjbr)
 	{
 		logger.debug("addOrUpdate");
     	JSONObject jsonObj = new JSONObject();
@@ -87,7 +91,7 @@ public class SXSQSJController {
 				sxsqsj.setId(Utility.getUniStr());
 			}
 			
-			sxsqsj.setSXBM(sxbm);
+			sxsqsj.setSXBM(getSXBM());
 			sxsqsj.setSXMC(sxmc);
 			sxsqsj.setSXDL(sxdl);
 			sxsqsj.setSXXL(sxxl);
@@ -104,6 +108,8 @@ public class SXSQSJController {
 			//sxsqsj.setSXJF(Double.valueOf(sxjf));
 			sxsqsj.setSXBZ(sxbz);
 			sxsqsj.setSXZT(sxzt);
+			sxsqsj.setFJ(fj);
+			sxsqsj.setSXJBR(sxjbr);
 			
 			sxsqsjService.saveOrUpdate(sxsqsj);
 			
@@ -177,6 +183,12 @@ public class SXSQSJController {
 				jsonTmp.put("sxdd", sxsqsj.getSXDD());
 				jsonTmp.put("sxdl", sxsqsj.getSXDL());
 				jsonTmp.put("sxdsr", sxsqsj.getSXDSR());
+				
+				if(ConstValue.residentMap.containsKey(sxsqsj.getSXDSR()))
+					jsonTmp.put("sxdsrname", ConstValue.residentMap.get(sxsqsj.getSXDSR()));
+				else
+					jsonTmp.put("sxdsrname", sxsqsj.getSXDSR());
+				
 				jsonTmp.put("sxfj", sxsqsj.getSXFJ());
 				jsonTmp.put("sxjf", sxsqsj.getSXJF());
 				jsonTmp.put("sxjssj", sxsqsj.getSXJSSJ());
@@ -187,6 +199,7 @@ public class SXSQSJController {
 				jsonTmp.put("sxzj", sxsqsj.getSXZJ());
 				jsonTmp.put("sxzp", sxsqsj.getSXZP());
 				jsonTmp.put("sxzt", sxsqsj.getSXZT());
+				
 	        	jsonArr.put(jsonTmp);
 	        	
 	        	iTotalCnt++;
@@ -225,6 +238,18 @@ public class SXSQSJController {
 				jsonObj.put("sxdd", sxsqsj.getSXDD());
 				jsonObj.put("sxdl", sxsqsj.getSXDL());
 				jsonObj.put("sxdsr", sxsqsj.getSXDSR());
+				
+				if(ConstValue.residentMap.containsKey(sxsqsj.getSXDSR()))
+					jsonObj.put("sxdsrname", ConstValue.residentMap.get(sxsqsj.getSXDSR()));
+				else
+					jsonObj.put("sxdsrname", sxsqsj.getSXDSR());
+				
+				jsonObj.put("sxjbr", sxsqsj.getSXJBR());
+				if(ConstValue.userMap.containsKey(sxsqsj.getSXJBR()))
+					jsonObj.put("sxjbrname", ConstValue.userMap.get(sxsqsj.getSXJBR()));
+				else
+					jsonObj.put("sxjbrname", sxsqsj.getSXJBR());
+				
 				jsonObj.put("sxfj", sxsqsj.getSXFJ());
 				jsonObj.put("sxjf", sxsqsj.getSXJF());
 				jsonObj.put("sxjssj", sxsqsj.getSXJSSJ());
@@ -235,6 +260,7 @@ public class SXSQSJController {
 				jsonObj.put("sxzj", sxsqsj.getSXZJ());
 				jsonObj.put("sxzp", sxsqsj.getSXZP());
 				jsonObj.put("sxzt", sxsqsj.getSXZT());
+				jsonObj.put("fj", sxsqsj.getFJ());
 			}
 			else
 			{
@@ -280,6 +306,7 @@ public class SXSQSJController {
 				
 				jsonTmp.put("sxxl", (String)hm.get("SXXL"));
 				jsonTmp.put("sxdl", (String)hm.get("SXDL"));
+				jsonTmp.put("icon", (String)hm.get("ICON"));
 				
 				if(hm.containsKey("CNT") && hm.get("CNT") != null)
 					jsonTmp.put("cnt", (BigInteger)hm.get("CNT")+"/"+(BigInteger)hm.get("CNT"));
@@ -375,5 +402,49 @@ public class SXSQSJController {
 			jsonObj.put("success", false);
 		}
         return jsonObj.toString();
+    }
+	
+	
+	@RequestMapping(value="getSXBM",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String getSXBM()
+	{
+		logger.info("getSXBM");
+		
+		JSONObject jsonObj = new JSONObject();
+    	
+		String sxbm = "sxsq";
+		
+		try
+		{
+			String year = TimeUtil.getYear(new Date());
+			
+			SysSeq sysSeq = sysSeqService.getById("sxbm");
+			
+			int seq = 1;
+			
+			if(sysSeq != null)
+			{
+				seq = sysSeq.getSeq() + 1;
+			}
+			else
+			{
+				sysSeq = new SysSeq();
+				sysSeq.setId("sxbm");
+			}
+			String str = String.format("%05d", seq);      
+
+			sxbm = sxbm + year + str;
+			
+			sysSeq.setSeq(seq);
+			
+			sysSeqService.save(sysSeq);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+        return sxbm;
     }
 }

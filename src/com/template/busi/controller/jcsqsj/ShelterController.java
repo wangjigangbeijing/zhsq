@@ -45,8 +45,8 @@ public String addOrUpdate(String id,String dateid,String name,String address,Int
 		shelter.setname(name);
 		shelter.setaddress(address);
 		shelter.setarea(area);
-		shelter.setlongitude(longitude);
-		shelter.setlatitude(latitude);
+		//shelter.setlongitude(longitude);
+		//shelter.setlatitude(latitude);
 		shelter.setstatus(status);
 		shelter.setpictures(pictures);
 		shelter.setnote(note);
@@ -115,8 +115,8 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			jsonTmp.put("name",shelter.getname());
 			jsonTmp.put("address",shelter.getaddress());
 			jsonTmp.put("area",shelter.getarea());
-			jsonTmp.put("longitude",shelter.getlongitude());
-			jsonTmp.put("latitude",shelter.getlatitude());
+			//jsonTmp.put("longitude",shelter.getlongitude());
+			//jsonTmp.put("latitude",shelter.getlatitude());
 			jsonTmp.put("status",shelter.getstatus());
 			jsonTmp.put("pictures",shelter.getpictures());
 			jsonTmp.put("note",shelter.getnote());
@@ -149,8 +149,8 @@ public String get(String id)
 			jsonObj.put("name",shelter.getname());
 			jsonObj.put("address",shelter.getaddress());
 			jsonObj.put("area",shelter.getarea());
-			jsonObj.put("longitude",shelter.getlongitude());
-			jsonObj.put("latitude",shelter.getlatitude());
+			//jsonObj.put("longitude",shelter.getlongitude());
+			//jsonObj.put("latitude",shelter.getlatitude());
 			jsonObj.put("status",shelter.getstatus());
 			jsonObj.put("pictures",shelter.getpictures());
 			jsonObj.put("note",shelter.getnote());

@@ -61,7 +61,7 @@ function loadsxsqsj()
 					{ "data": "sxdl" ,"sClass":"text-center"},
 					{ "data": "sxxl" ,"sClass":"text-center"},
 					{ "data": "sxdd" ,"sClass":"text-center"},
-					{ "data": "sxdsr" ,"sClass":"text-center"},
+					{ "data": "sxdsrname" ,"sClass":"text-center"},
 					{ "data": "sxkssj" ,"sClass":"text-center"},
 					{ "data": "sxjssj" ,"sClass":"text-center"},
 					{ "data": "" ,"sClass":"text-center"}
@@ -72,9 +72,9 @@ function loadsxsqsj()
 					orderable: false,
 					targets:   8,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>";
+						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"deleteObj('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
+						btn += "<a href=\"#\" onclick=\"deleteObj('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}

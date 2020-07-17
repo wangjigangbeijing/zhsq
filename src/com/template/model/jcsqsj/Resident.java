@@ -923,7 +923,7 @@ public String getjsb_medicalhistory()
 public void setjsb_medicalhistory(String jsb_medicalhistory)
 {
 	this.jsb_medicalhistory = jsb_medicalhistory;
-}
+}/*
 @Column(name = "jhr_name", nullable = true)
 public String jhr_name;
 public String getjhr_name()
@@ -943,7 +943,7 @@ public String gethjr_tel()
 public void sethjr_tel(String hjr_tel)
 {
 	this.hjr_tel = hjr_tel;
-}
+}*/
 @Column(name = "zyz_certificate_id", nullable = true)
 public String zyz_certificate_id;
 public String getzyz_certificate_id()

@@ -65,17 +65,13 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'type' ,'sClass':'text-center'},
-					{ 'data': 'kind' ,'sClass':'text-center'},
+					{ 'data': 'name' ,'sClass':'text-center'},
+					{ 'data': 'type' ,'sClass':'text-center'},					
 					{ 'data': 'catagory' ,'sClass':'text-center'},
 					{ 'data': 'address' ,'sClass':'text-center'},
 					{ 'data': 'department' ,'sClass':'text-center'},
 					{ 'data': 'departtel' ,'sClass':'text-center'},
-					{ 'data': 'cleartime' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
-
 				],
 				columnDefs: [ /*{
 					className: 'control',
@@ -89,7 +85,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  9,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

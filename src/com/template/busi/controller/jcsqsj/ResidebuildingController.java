@@ -3,7 +3,9 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.template.model.jcsqsj.Residebuilding;
+import com.template.model.jcsqsj.Room;
 import com.template.service.jcsqsj.ResidebuildingService;
+import com.template.service.jcsqsj.RoomService;
 import com.template.util.HqlFilter;
 import com.template.util.ConstValue;
 import com.template.util.Utility;
@@ -24,11 +26,18 @@ public class ResidebuildingController {
 	private  HttpServletRequest request;
 	@Autowired
 	private ResidebuildingService residebuildingService;
+	@Autowired
+	private RoomService roomService;
+	
+	
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
 public String addOrUpdate(String id,String dataid,String name,String address,
 		String year,String propertyyears,String propertyrights,String heatingsystem,
-		String ofcommunity,String buildtype,String buildframework,String constructiontype,Integer units,Integer levels,Integer elevators,Integer area,String developer,String propertyowner,String propertyownertel,String user,String usertel,String propertymanage,String propertymanagecontact,String propertymanagecontacttel,Integer longitude,Integer latitude,String status,String pictures,String note,Integer familiesinbuilding)
+		String ofcommunity,String buildtype,String buildframework,String constructiontype,String units,
+		Integer levels,Integer elevators,Integer area,String developer,String propertyowner,String propertyownertel,
+		String user,String usertel,String propertymanage,String propertymanagecontact,String propertymanagecontacttel,
+		Integer longitude,Integer latitude,String status,String pictures,String note,Integer familiesinbuilding)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -164,7 +173,10 @@ public String load(String name,String address,String propertyyears,String proper
 			jsonTmp.put("dataid",residebuilding.getdataid());
 			jsonTmp.put("name",residebuilding.getname());
 			jsonTmp.put("address",residebuilding.getaddress());
-			jsonTmp.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
+			if(residebuilding.getyear() != null)
+				jsonTmp.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("year","");
 			jsonTmp.put("propertyyears",residebuilding.getpropertyyears());
 			jsonTmp.put("propertyrights",residebuilding.getpropertyrights());
 			jsonTmp.put("heatingsystem",residebuilding.getheatingsystem());
@@ -206,61 +218,148 @@ public String load(String name,String address,String propertyyears,String proper
 		jsonObj.put("success", false);
 	}
     return jsonObj.toString();
-}
-@RequestMapping(value="get",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
-@ResponseBody
-public String get(String id)
-{
-	JSONObject jsonObj = new JSONObject();
-	try
+	}
+	@RequestMapping(value="get",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String get(String id)
 	{
-		Residebuilding residebuilding = residebuildingService.getById(id);
-		if(residebuilding != null)
+		JSONObject jsonObj = new JSONObject();
+		try
 		{
-			jsonObj.put("dataid",residebuilding.getdataid());
-			jsonObj.put("name",residebuilding.getname());
-			jsonObj.put("address",residebuilding.getaddress());
-			jsonObj.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
-			jsonObj.put("propertyyears",residebuilding.getpropertyyears());
-			jsonObj.put("propertyrights",residebuilding.getpropertyrights());
-			jsonObj.put("heatingsystem",residebuilding.getheatingsystem());
-			jsonObj.put("ofcommunity",residebuilding.getofcommunity());
-			jsonObj.put("buildtype",residebuilding.getbuildtype());
-			jsonObj.put("buildframework",residebuilding.getbuildframework());
-			jsonObj.put("constructiontype",residebuilding.getconstructiontype());
-			jsonObj.put("units",residebuilding.getunits());
-			jsonObj.put("levels",residebuilding.getlevels());
-			jsonObj.put("elevators",residebuilding.getelevators());
-			jsonObj.put("area",residebuilding.getarea());
-			jsonObj.put("developer",residebuilding.getdeveloper());
-			jsonObj.put("propertyowner",residebuilding.getpropertyowner());
-			jsonObj.put("propertyownertel",residebuilding.getpropertyownertel());
-			jsonObj.put("user",residebuilding.getuser());
-			jsonObj.put("usertel",residebuilding.getusertel());
-			jsonObj.put("propertymanage",residebuilding.getpropertymanage());
-			jsonObj.put("propertymanagecontact",residebuilding.getpropertymanagecontact());
-			jsonObj.put("propertymanagecontacttel",residebuilding.getpropertymanagecontacttel());
-			//jsonObj.put("longitude",residebuilding.getlongitude());
-			//jsonObj.put("latitude",residebuilding.getlatitude());
-			jsonObj.put("status",residebuilding.getstatus());
-			jsonObj.put("pictures",residebuilding.getpictures());
-			jsonObj.put("note",residebuilding.getnote());
-			jsonObj.put("familiesinbuilding",residebuilding.getfamiliesinbuilding());
-
-			jsonObj.put("success", true);
+			Residebuilding residebuilding = residebuildingService.getById(id);
+			if(residebuilding != null)
+			{
+				jsonObj.put("dataid",residebuilding.getdataid());
+				jsonObj.put("name",residebuilding.getname());
+				jsonObj.put("address",residebuilding.getaddress());
+				if(residebuilding.getyear() != null)
+					jsonObj.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
+				else
+					jsonObj.put("year","-");
+				
+				jsonObj.put("propertyyears",residebuilding.getpropertyyears());
+				jsonObj.put("propertyrights",residebuilding.getpropertyrights());
+				jsonObj.put("heatingsystem",residebuilding.getheatingsystem());
+				jsonObj.put("ofcommunity",residebuilding.getofcommunity());
+				jsonObj.put("buildtype",residebuilding.getbuildtype());
+				jsonObj.put("buildframework",residebuilding.getbuildframework());
+				jsonObj.put("constructiontype",residebuilding.getconstructiontype());
+				jsonObj.put("units",residebuilding.getunits());
+				jsonObj.put("levels",residebuilding.getlevels());
+				jsonObj.put("elevators",residebuilding.getelevators());
+				jsonObj.put("area",residebuilding.getarea());
+				jsonObj.put("developer",residebuilding.getdeveloper());
+				jsonObj.put("propertyowner",residebuilding.getpropertyowner());
+				jsonObj.put("propertyownertel",residebuilding.getpropertyownertel());
+				jsonObj.put("user",residebuilding.getuser());
+				jsonObj.put("usertel",residebuilding.getusertel());
+				jsonObj.put("propertymanage",residebuilding.getpropertymanage());
+				jsonObj.put("propertymanagecontact",residebuilding.getpropertymanagecontact());
+				jsonObj.put("propertymanagecontacttel",residebuilding.getpropertymanagecontacttel());
+				//jsonObj.put("longitude",residebuilding.getlongitude());
+				//jsonObj.put("latitude",residebuilding.getlatitude());
+				jsonObj.put("status",residebuilding.getstatus());
+				jsonObj.put("pictures",residebuilding.getpictures());
+				jsonObj.put("note",residebuilding.getnote());
+				jsonObj.put("familiesinbuilding",residebuilding.getfamiliesinbuilding());
+	
+				jsonObj.put("success", true);
+			}
+			else
+			{
+				logger.error("object is not found...");
+				jsonObj.put("success", false);
+				jsonObj.put("errMsg", "Object can not found...");
+			}
 		}
-		else
+		catch(Exception e)
 		{
-			logger.error("object is not found...");
+			logger.error(e.getMessage(),e);
 			jsonObj.put("success", false);
-			jsonObj.put("errMsg", "Object can not found...");
 		}
+	    return jsonObj.toString();
 	}
-	catch(Exception e)
+	
+	@RequestMapping(value="getMinqing",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String getMinqing(String id)
 	{
-		logger.error(e.getMessage(),e);
-		jsonObj.put("success", false);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			Residebuilding residebuilding = residebuildingService.getById(id);
+			if(residebuilding != null)
+			{
+				String units = residebuilding.getunits();
+				
+				String [] unitArr = units.split(",");
+				
+				JSONArray jsonUnitArr = new JSONArray();
+				
+				for(int i=0;i<unitArr.length;i++)
+				{
+					JSONObject jsonUnit = new JSONObject();
+					
+					String unit = unitArr[i];
+				
+					HqlFilter hqlFilter = new HqlFilter();
+					
+					hqlFilter.addQryCond("ofunit", HqlFilter.Operator.EQ, unit);
+					
+					hqlFilter.addQryCond("ofresidebuilding", HqlFilter.Operator.EQ, residebuilding.getId());
+					
+					hqlFilter.setSort("level");
+					
+					JSONArray jsonRoomArr = new JSONArray();
+					
+					List<Room> listRoom = roomService.findByFilter(hqlFilter);
+					
+					for(int j=0;j<listRoom.size();j++)
+					{
+						Room room = listRoom.get(j);
+						
+						JSONObject jsonRoom = new JSONObject();
+
+						jsonRoom.put("number", room.getnumber());
+						
+						jsonRoom.put("peoplecharacteristics", room.getpeoplecharacteristics());
+						
+						String residentNames = room.getresidentname();
+						
+						if(residentNames.endsWith(","))
+							residentNames = residentNames.substring(0,residentNames.length() - 1);
+						
+						jsonRoom.put("residentNames", residentNames);
+						
+						jsonRoomArr.put(jsonRoom);
+					}
+					jsonUnit.put("rooms", jsonRoomArr);
+					jsonUnit.put("name", unit);
+					
+					jsonUnitArr.put(jsonUnit);
+				}
+				
+				jsonObj.put("units", jsonUnitArr);
+				jsonObj.put("name", residebuilding.getofcommunity()+residebuilding.getname());
+				
+				jsonObj.put("success", true);
+			}
+			else
+			{
+				logger.error("object is not found...");
+				jsonObj.put("success", false);
+				jsonObj.put("errMsg", "Object can not found...");
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
 	}
-    return jsonObj.toString();
-}
+
+
+
+
 }

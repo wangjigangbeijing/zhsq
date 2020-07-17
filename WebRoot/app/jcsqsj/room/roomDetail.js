@@ -148,8 +148,13 @@ function viewDetail(id)
 				$('#propertypapertype').val(obj.propertypapertype);
 				$('#propertypaperid').val(obj.propertypaperid);
 				$('#address').val(obj.address);
-				var propertymapArr = obj.propertymap.split(VALUE_SPLITTER);				for(var j=0;j<propertymapArr.length;j++)				{					if(propertymapArr[j] != '')					{						$('#propertymappicktable').append('<tr><td>'+propertymapArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+propertymapArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 				
+				if(obj.propertymap != null)
+				{
+					var propertymapArr = obj.propertymap.split(VALUE_SPLITTER);				for(var j=0;j<propertymapArr.length;j++)				{					if(propertymapArr[j] != '')					{						$('#propertymappicktable').append('<tr><td>'+propertymapArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+propertymapArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				
+					
+					}
+				}	
 				
 				$('#ofcommunity').html('');
 				var filterArr = [];				

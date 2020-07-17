@@ -428,3 +428,15 @@ $.ajax({
 	});
 	
 	
+	
+	
+
+function downloadAttach(fileName)
+{
+	var url = getContextPath()+"/fileController/download?fileName="+fileName;
+	
+	window.open(encodeURI(url));
+	
+	//window.open(getContextPath()+"/fileController/downLoad/"+encodeURI(obj.fileName));
+}
+	

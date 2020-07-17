@@ -73,7 +73,7 @@ public Date getqzdate()
 public void setqzdate(Date qzdate)
 {
 	this.qzdate = qzdate;
-}
+}/*
 @Column(name = "qznote", nullable = true)
 public String qznote;
 public String getqznote()
@@ -83,7 +83,7 @@ public String getqznote()
 public void setqznote(String qznote)
 {
 	this.qznote = qznote;
-}
+}*/
 @Column(name = "yisi", nullable = true)
 public String yisi;
 public String getyisi()
@@ -103,7 +103,7 @@ public String getmijie()
 public void setmijie(String mijie)
 {
 	this.mijie = mijie;
-}
+}/*
 @Column(name = "mjnote", nullable = true)
 public String mjnote;
 public String getmjnote()
@@ -113,7 +113,7 @@ public String getmjnote()
 public void setmjnote(String mjnote)
 {
 	this.mjnote = mjnote;
-}
+}*/
 @Column(name = "glstartdate", nullable = true)
 public Date glstartdate;
 public Date getglstartdate()
@@ -133,7 +133,7 @@ public Date getglenddate()
 public void setglenddate(Date glenddate)
 {
 	this.glenddate = glenddate;
-}
+}/*
 @Column(name = "note", nullable = true)
 public String note;
 public String getnote()
@@ -143,7 +143,7 @@ public String getnote()
 public void setnote(String note)
 {
 	this.note = note;
-}
+}*/
 @Column(name = "hsjc", nullable = true)
 public String hsjc;
 public String gethsjc()

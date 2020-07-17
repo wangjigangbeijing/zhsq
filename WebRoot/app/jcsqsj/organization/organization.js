@@ -21,17 +21,17 @@ function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
 	 var name = $('#nameQuery').val();
- var haslicence = $('#haslicenceQuery').val();
- var socialcode = $('#socialcodeQuery').val();
- var orgtype = $('#orgtypeQuery').val();
- var economictype = $('#economictypeQuery').val();
- var industry = $('#industryQuery').val();
- var subordination = $('#subordinationQuery').val();
- var scale = $('#scaleQuery').val();
- var officeaddress = $('#officeaddressQuery').val();
- var ofbizbuilding = $('#ofbizbuildingQuery').val();
- var hasfirefacilities = $('#hasfirefacilitiesQuery').val();
- var status = $('#statusQuery').val();
+	 var haslicence = $('#haslicenceQuery').val();
+	 var socialcode = $('#socialcodeQuery').val();
+	 var orgtype = $('#orgtypeQuery').val();
+	 var economictype = $('#economictypeQuery').val();
+	 var industry = $('#industryQuery').val();
+	 var subordination = $('#subordinationQuery').val();
+	 var scale = $('#scaleQuery').val();
+	 var officeaddress = $('#officeaddressQuery').val();
+	 var ofbizbuilding = $('#ofbizbuildingQuery').val();
+	 var hasfirefacilities = $('#hasfirefacilitiesQuery').val();
+	 var status = $('#statusQuery').val();
 
 	
 	$.get(getContextPath()+'/organizationController/load?name='+name+'&haslicence='+haslicence+'&socialcode='+socialcode+'&orgtype='+orgtype+'&economictype='+economictype+'&industry='+industry+'&subordination='+subordination+'&scale='+scale+'&officeaddress='+officeaddress+'&ofbizbuilding='+ofbizbuilding+'&hasfirefacilities='+hasfirefacilities+'&status='+status+'&',
@@ -69,35 +69,16 @@ function load()
 					}
 				}, //多语言配置					
 				"data":obj.list,
-				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
+				"columns": [					
 					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'haslicence' ,'sClass':'text-center'},
-					{ 'data': 'socialcode' ,'sClass':'text-center'},
-					{ 'data': 'socialcodedate' ,'sClass':'text-center'},
 					{ 'data': 'orgtype' ,'sClass':'text-center'},
+					
 					{ 'data': 'economictype' ,'sClass':'text-center'},
-					{ 'data': 'industry' ,'sClass':'text-center'},
-					{ 'data': 'subordination' ,'sClass':'text-center'},
-					{ 'data': 'establishdate' ,'sClass':'text-center'},
-					{ 'data': 'capitaltype' ,'sClass':'text-center'},
-					{ 'data': 'capital' ,'sClass':'text-center'},
-					{ 'data': 'businessscope' ,'sClass':'text-center'},
 					{ 'data': 'scale' ,'sClass':'text-center'},
-					{ 'data': 'regaddress' ,'sClass':'text-center'},
-					{ 'data': 'officeaddress' ,'sClass':'text-center'},
-					{ 'data': 'ofbizbuilding' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
-					{ 'data': 'legalname' ,'sClass':'text-center'},
-					{ 'data': 'contactname' ,'sClass':'text-center'},
+					
 					{ 'data': 'contacttel' ,'sClass':'text-center'},
-					{ 'data': 'moveindate' ,'sClass':'text-center'},
-					{ 'data': 'responsibilityplateno' ,'sClass':'text-center'},
-					{ 'data': 'hasfirefacilities' ,'sClass':'text-center'},
-					{ 'data': 'wastedisposal' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
+					
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -113,7 +94,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  28,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

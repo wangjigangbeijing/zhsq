@@ -54,7 +54,6 @@ function viewDetail(id)
 
 function gobackPage()
 {
-	
 	curId = '';
 	
 	$('#main-content').load("./jcsqsj/community/community.html", function () {
@@ -80,7 +79,7 @@ function addOrUpdate()
 	$.post(getContextPath()+"/communityController/addOrUpdate",
 	{
 		id:curId,
-				dataid:$('#dataid').val(),
+		dataid:$('#dataid').val(),
 		name:$('#name').val(),
 		buildtype:$("input[name='buildtype']:checked").val(),//$('#buildtype').val(),
 		type:$('#type').val(),

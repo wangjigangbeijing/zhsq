@@ -21,10 +21,10 @@ function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
 	 var name = $('#nameQuery').val();
- var type = $('#typeQuery').val();
- var direction = $('#directionQuery').val();
- var leadername = $('#leadernameQuery').val();
- var status = $('#statusQuery').val();
+	 var type = $('#typeQuery').val();
+	 var direction = $('#directionQuery').val();
+	 var leadername = $('#leadernameQuery').val();
+	 var status = $('#statusQuery').val();
 
 	
 	$.get(getContextPath()+'/roadsController/load?name='+name+'&type='+type+'&direction='+direction+'&leadername='+leadername+'&status='+status+'&',
@@ -63,22 +63,14 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dateid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
 					{ 'data': 'length' ,'sClass':'text-center'},
-					{ 'data': 'width' ,'sClass':'text-center'},
-					{ 'data': 'material' ,'sClass':'text-center'},
-					{ 'data': 'direction' ,'sClass':'text-center'},
+					{ 'data': 'width' ,'sClass':'text-center'},					
 					{ 'data': 'leadername' ,'sClass':'text-center'},
 					{ 'data': 'leadertel' ,'sClass':'text-center'},
-					{ 'data': 'leaderorg' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
-
 				],
 				columnDefs: [ /*{
 					className: 'control',
@@ -92,7 +84,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  14,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

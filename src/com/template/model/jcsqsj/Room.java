@@ -164,5 +164,28 @@ public void setnote(String note)
 {
 	this.note = note;
 }
+
+	@Column(name = "peoplecharacteristics", nullable = true)
+	public String peoplecharacteristics;
+	public String getpeoplecharacteristics()
+	{
+		return peoplecharacteristics;
+	}
+	public void setpeoplecharacteristics(String peoplecharacteristics)
+	{
+		this.peoplecharacteristics = peoplecharacteristics;
+	}
+	
+	
+	@Column(name = "residentname", nullable = true)
+	public String residentname;
+	public String getresidentname()
+	{
+		return residentname;
+	}
+	public void setresidentname(String residentname)
+	{
+		this.residentname = residentname;
+	}
 }
 

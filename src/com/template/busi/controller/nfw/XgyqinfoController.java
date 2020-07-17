@@ -47,16 +47,16 @@ public String addOrUpdate(String id,String name,String mobile,String address,Str
 		xgyqinfo.setquezhen(quezhen);
 		if(qzdate != null && qzdate.equalsIgnoreCase("") == false)
 			xgyqinfo.setqzdate(TimeUtil.parseDate(qzdate, "yyyy-MM-dd"));
-		xgyqinfo.setqznote(qznote);
+		//xgyqinfo.setqznote(qznote);
 		xgyqinfo.setyisi(yisi);
 		xgyqinfo.setmijie(mijie);
-		xgyqinfo.setmjnote(mjnote);
+		//xgyqinfo.setmjnote(mjnote);
 		if(glstartdate != null && glstartdate.equalsIgnoreCase("") == false)
 			xgyqinfo.setglstartdate(TimeUtil.parseDate(glstartdate, "yyyy-MM-dd"));// HH:mm
 		
 		if(glenddate != null && glenddate.equalsIgnoreCase("") == false)
 			xgyqinfo.setglenddate(TimeUtil.parseDate(glenddate, "yyyy-MM-dd"));// HH:mm
-		xgyqinfo.setnote(note);
+		//xgyqinfo.setnote(note);
 		xgyqinfo.sethsjc(hsjc);
 		if(hsjcdate != null && hsjcdate.equalsIgnoreCase("") == false)
 			xgyqinfo.sethsjcdate(TimeUtil.parseDate(hsjcdate, "yyyy-MM-dd"));// HH:mm
@@ -151,16 +151,28 @@ if(hsjcjieguo != null && hsjcjieguo.equalsIgnoreCase("") == false && hsjcjieguo.
 			jsonTmp.put("mobile",xgyqinfo.getmobile());
 			jsonTmp.put("address",xgyqinfo.getaddress());
 			jsonTmp.put("quezhen",xgyqinfo.getquezhen());
-			jsonTmp.put("qzdate",TimeUtil.formatDate(xgyqinfo.getqzdate(),"yyyy-MM-dd"));
-			jsonTmp.put("qznote",xgyqinfo.getqznote());
+			if(xgyqinfo.getqzdate() != null)
+				jsonTmp.put("qzdate",TimeUtil.formatDate(xgyqinfo.getqzdate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("qzdate","-");
+			//jsonTmp.put("qznote",xgyqinfo.getqznote());
 			jsonTmp.put("yisi",xgyqinfo.getyisi());
 			jsonTmp.put("mijie",xgyqinfo.getmijie());
-			jsonTmp.put("mjnote",xgyqinfo.getmjnote());
-			jsonTmp.put("glstartdate",TimeUtil.formatDate(xgyqinfo.getglstartdate(),"yyyy-MM-dd HH:mm"));
-			jsonTmp.put("glenddate",TimeUtil.formatDate(xgyqinfo.getglenddate(),"yyyy-MM-dd HH:mm"));
-			jsonTmp.put("note",xgyqinfo.getnote());
+			//jsonTmp.put("mjnote",xgyqinfo.getmjnote());
+			if(xgyqinfo.getglstartdate() != null)
+				jsonTmp.put("glstartdate",TimeUtil.formatDate(xgyqinfo.getglstartdate(),"yyyy-MM-dd HH:mm"));
+			else
+				jsonTmp.put("glstartdate","");
+			if(xgyqinfo.getglenddate() != null)
+				jsonTmp.put("glenddate",TimeUtil.formatDate(xgyqinfo.getglenddate(),"yyyy-MM-dd HH:mm"));
+			else
+				jsonTmp.put("glenddate","-");
+			//jsonTmp.put("note",xgyqinfo.getnote());
 			jsonTmp.put("hsjc",xgyqinfo.gethsjc());
-			jsonTmp.put("hsjcdate",TimeUtil.formatDate(xgyqinfo.gethsjcdate(),"yyyy-MM-dd HH:mm"));
+			if(xgyqinfo.gethsjcdate() != null)
+				jsonTmp.put("hsjcdate",TimeUtil.formatDate(xgyqinfo.gethsjcdate(),"yyyy-MM-dd HH:mm"));
+			else
+				jsonTmp.put("hsjcdate","-");
 			jsonTmp.put("hsjcjigou",xgyqinfo.gethsjcjigou());
 			jsonTmp.put("hsjcjieguo",xgyqinfo.gethsjcjieguo());
 
@@ -193,13 +205,13 @@ public String get(String id)
 			jsonObj.put("address",xgyqinfo.getaddress());
 			jsonObj.put("quezhen",xgyqinfo.getquezhen());
 			jsonObj.put("qzdate",TimeUtil.formatDate(xgyqinfo.getqzdate(),"yyyy-MM-dd"));
-			jsonObj.put("qznote",xgyqinfo.getqznote());
+			//jsonObj.put("qznote",xgyqinfo.getqznote());
 			jsonObj.put("yisi",xgyqinfo.getyisi());
 			jsonObj.put("mijie",xgyqinfo.getmijie());
-			jsonObj.put("mjnote",xgyqinfo.getmjnote());
+			//jsonObj.put("mjnote",xgyqinfo.getmjnote());
 			jsonObj.put("glstartdate",TimeUtil.formatDate(xgyqinfo.getglstartdate(),"yyyy-MM-dd HH:mm"));
 			jsonObj.put("glenddate",TimeUtil.formatDate(xgyqinfo.getglenddate(),"yyyy-MM-dd HH:mm"));
-			jsonObj.put("note",xgyqinfo.getnote());
+			//jsonObj.put("note",xgyqinfo.getnote());
 			jsonObj.put("hsjc",xgyqinfo.gethsjc());
 			jsonObj.put("hsjcdate",TimeUtil.formatDate(xgyqinfo.gethsjcdate(),"yyyy-MM-dd HH:mm"));
 			jsonObj.put("hsjcjigou",xgyqinfo.gethsjcjigou());

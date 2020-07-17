@@ -26,7 +26,8 @@ public class WatersystemController {
 	private WatersystemService watersystemService;
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String addOrUpdate(String id,String dateid,String name,String deptname1,String deptname2,String deptname3,String leadername,String leadertel,String leaderorg,Integer longitude,Integer latitude,String status,String pictures,String note)
+public String addOrUpdate(String id,String dateid,String name,String deptname1,String deptname2,String deptname3,
+		String leadername,String leadertel,String leaderorg,Integer longitude,Integer latitude,String status,String pictures,String note)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -49,8 +50,8 @@ public String addOrUpdate(String id,String dateid,String name,String deptname1,S
 		watersystem.setleadername(leadername);
 		watersystem.setleadertel(leadertel);
 		watersystem.setleaderorg(leaderorg);
-		watersystem.setlongitude(longitude);
-		watersystem.setlatitude(latitude);
+		//watersystem.setlongitude(longitude);
+		//watersystem.setlatitude(latitude);
 		watersystem.setstatus(status);
 		watersystem.setpictures(pictures);
 		watersystem.setnote(note);
@@ -123,8 +124,8 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			jsonTmp.put("leadername",watersystem.getleadername());
 			jsonTmp.put("leadertel",watersystem.getleadertel());
 			jsonTmp.put("leaderorg",watersystem.getleaderorg());
-			jsonTmp.put("longitude",watersystem.getlongitude());
-			jsonTmp.put("latitude",watersystem.getlatitude());
+			//jsonTmp.put("longitude",watersystem.getlongitude());
+			//jsonTmp.put("latitude",watersystem.getlatitude());
 			jsonTmp.put("status",watersystem.getstatus());
 			jsonTmp.put("pictures",watersystem.getpictures());
 			jsonTmp.put("note",watersystem.getnote());
@@ -161,8 +162,8 @@ public String get(String id)
 			jsonObj.put("leadername",watersystem.getleadername());
 			jsonObj.put("leadertel",watersystem.getleadertel());
 			jsonObj.put("leaderorg",watersystem.getleaderorg());
-			jsonObj.put("longitude",watersystem.getlongitude());
-			jsonObj.put("latitude",watersystem.getlatitude());
+			//jsonObj.put("longitude",watersystem.getlongitude());
+			//jsonObj.put("latitude",watersystem.getlatitude());
 			jsonObj.put("status",watersystem.getstatus());
 			jsonObj.put("pictures",watersystem.getpictures());
 			jsonObj.put("note",watersystem.getnote());
