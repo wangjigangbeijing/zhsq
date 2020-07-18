@@ -112,7 +112,7 @@ function loadzmblfw()
 var uuid = '';
 function addzmblfw()
 {
-	uuid = guid();
+	//uuid = guid();
 	$('#main-content').load("./nfw/zmblfwDetail.html", function () {
 		//EditableTable.init();
 		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况

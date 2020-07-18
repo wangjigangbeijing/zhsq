@@ -277,7 +277,20 @@ $(document).ready(function ()
 						
 						var characteristics = '';
 						
-						if(room.peoplecharacteristics.indexOf('') != -1)
+						var peoplecharacteristics = room.peoplecharacteristics;
+						
+						if(peoplecharacteristics != undefined && peoplecharacteristics != null && peoplecharacteristics != '')
+						{
+							var characteristicsArr = peoplecharacteristics.split(',');
+							
+							for(var k=0;k<characteristicsArr.length;k++)
+							{
+								if(characteristicsArr[k] != '')
+									characteristics += '<i><img src="../icons/'+characteristicsArr[k]+'.png"  width="28px"  /></i>';	
+							}
+						}
+						
+						/*if(room.peoplecharacteristics.indexOf('') != -1)
 							characteristics += '<i class="fas fa-heart" style="color:orange"></i>';
 						if(room.peoplecharacteristics.indexOf('') != -1)
 							characteristics += '<i class="fas fa-wheelchair" style="color:orange"></i>';
@@ -285,7 +298,7 @@ $(document).ready(function ()
 							characteristics += '<i class="fas fa-star" style="color:orange"></i>';	
 						if(room.peoplecharacteristics.indexOf('') != -1)
 							characteristics += '<i class="fas fa-user" style="color:orange"></i>';
-						
+						*/
 						unitDiv += '<div class="col-sm-2">'+
 							'<div class="position-relative p-3 " style="height: 80px; background:#ececec">'+
 							  '<div class="ribbon-wrapper">'+
