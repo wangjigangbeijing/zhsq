@@ -48,6 +48,7 @@ function loadtemplates()
 				"data":obj.list,
 				"columns": [
 					{ "data": "templatename" ,"sClass":"text-center"},
+					{ "data": "serviceid" ,"sClass":"text-center"},
 					{ "data": "subserviceid" ,"sClass":"text-center"},
 					{ "data": "communityname" ,"sClass":"text-center"},
 					{ "data": "createtime" ,"sClass":"text-center"},
@@ -57,7 +58,7 @@ function loadtemplates()
 				{
 					className: 'control',
 					orderable: false,
-					targets:   4,//从0开始
+					targets:   5,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 						

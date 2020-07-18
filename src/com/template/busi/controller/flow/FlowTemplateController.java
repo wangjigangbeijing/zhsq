@@ -48,7 +48,7 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id,String templatename, String communityid)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id,String templatename, String communityid, String sxdl, String sxxl)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate");
 		JSONObject jsonObj = new JSONObject();
@@ -64,6 +64,8 @@ public class FlowTemplateController {
 					//新增
 					map.put("templatename", templatename);
 					map.put("communityid", communityid);
+					map.put("serviceid", sxdl);
+					map.put("subserviceid", sxxl);
 					map.put("createtime", TimeUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 					
 					int ret = this.userService.addData(map, "fw_flowtemplateinfo");
@@ -82,6 +84,8 @@ public class FlowTemplateController {
 					
 					map.put("templatename", templatename);
 					map.put("communityid", communityid);
+					map.put("serviceid", sxdl);
+					map.put("subserviceid", sxxl);
 					map.put("createtime", TimeUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 					
 					int ret = this.userService.updateData(map, kvs, "fw_flowtemplateinfo");
@@ -97,6 +101,8 @@ public class FlowTemplateController {
 			else {
 				map.put("templatename", templatename);
 				map.put("communityid", communityid);
+				map.put("serviceid", sxdl);
+				map.put("subserviceid", sxxl);
 				map.put("createtime", TimeUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 				
 				int ret = this.userService.addData(map, "fw_flowtemplateinfo");
@@ -205,6 +211,46 @@ public class FlowTemplateController {
 			String sql = "select a.nodeid, (select nodename from fw_nodeinfo where id=a.nodeid) as nodename, a.prevnodeid, (select nodename from fw_nodeinfo where id=a.prevnodeid) as prevnodename, a.nextnodeid, (select nodename from fw_nodeinfo where id=a.nextnodeid) as nextnodename from fw_flowprocessinfo a where a.templateid=?";
 			List<Object> params = new ArrayList<Object>();
 			params.add(templateid);
+			List<HashMap> templateprocesslist = this.userService.findBySql(sql, params);
+			
+			jsonObj.put("success", true);
+			jsonObj.put("list", JSONArray.toJSON(templateprocesslist));
+		} catch(Exception e) {
+			jsonObj.put("success", false);
+		}
+		
+		return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="getsxdllist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String getSxdlList() {
+		logger.info("getsxdllist");
+		
+		JSONObject jsonObj = new JSONObject();
+		try {
+			String sql = "select distinct blsxdl from nfw_sqbsfw";
+			List<HashMap> templateprocesslist = this.userService.findBySql(sql);
+			
+			jsonObj.put("success", true);
+			jsonObj.put("list", JSONArray.toJSON(templateprocesslist));
+		} catch(Exception e) {
+			jsonObj.put("success", false);
+		}
+		
+		return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="getsxxllist",method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String getSxxlList(String sxdl) {
+		logger.info("getsxxllist");
+		
+		JSONObject jsonObj = new JSONObject();
+		try {
+			String sql = "select distinct blsxxl from nfw_sqbsfw where blsxdl=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(sxdl);
 			List<HashMap> templateprocesslist = this.userService.findBySql(sql, params);
 			
 			jsonObj.put("success", true);

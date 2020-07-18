@@ -10,6 +10,8 @@ $(document).ready(function (){
 	
 	loadcommunity();
 	
+	loadsxdl();
+	
 	if(curId != '')
 		viewDetail(curId);
 });
@@ -48,6 +50,44 @@ function loadcommunity(){
 		});
 }
 
+function loadsxdl(){
+	$.get(getContextPath()+"/flowtemplateController/getsxdllist",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#sxdl option:not(:first)").remove();
+				for(var i = 0; i < obj.list.length; i++)
+				{
+					var item = "<option value=" + obj.list[i].blsxdl + ">" + obj.list[i].blsxdl + "</option>";
+					$("#sxdl").append(item);
+				}
+				
+			}
+		});
+}
+
+function loadsxxl(){
+	var sxdl = $("#sxdl").val();
+	$.post(getContextPath()+"/flowtemplateController/getsxxllist",
+	{
+		sxdl:sxdl
+	},
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#sxxl option:not(:first)").remove();
+				for(var i = 0; i < obj.list.length; i++)
+				{
+					var item = "<option value=" + obj.list[i].blsxxl + ">" + obj.list[i].blsxxl + "</option>";
+					$("#sxxl").append(item);
+				}
+				
+			}
+		});
+}
+
 function gobackPage()
 {
 	
@@ -75,7 +115,9 @@ function addOrUpdate()
 	{
 		id:curId,
 		templatename:$('#templatename').val(),
-		communityid: $("#communityid").val()
+		communityid: $("#communityid").val(),
+		sxdl: $("#sxdl").val(),
+		sxxl: $("#sxxl").val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
