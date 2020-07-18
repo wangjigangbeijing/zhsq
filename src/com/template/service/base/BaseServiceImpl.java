@@ -3,6 +3,9 @@ package com.template.service.base;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -207,6 +210,10 @@ public class BaseServiceImpl<T> implements BaseServiceI<T> {
 	public List findBySql(String sql, Map<String, Object> params) {
 		return baseDao.findBySql(sql, params);
 	}
+	
+	public List findBySql(String sql, List<Object> params) {
+		return baseDao.findBySql(sql, params);
+	}
 
 	@Override
 	public List findBySql(String sql, Map<String, Object> params, int page, int rows) {
@@ -236,6 +243,10 @@ public class BaseServiceImpl<T> implements BaseServiceI<T> {
 	public int executeSql(String sql, Map<String, Object> params) {
 		return baseDao.executeSql(sql, params);
 	}
+	
+	public int executeSql(String sql, List<Object> params) {
+		return baseDao.executeSql(sql, params);
+	}
 
 	@Override
 	public BigInteger countBySql(String sql) {
@@ -246,6 +257,89 @@ public class BaseServiceImpl<T> implements BaseServiceI<T> {
 	public BigInteger countBySql(String sql, Map<String, Object> params) {
 		return baseDao.countBySql(sql, params);
 	}
+	
+	/**
+	 * 新增数据
+	 * @param map
+	 */
+	public int addData(Map<String, Object> map, String tablename){
+		if(map == null || map.size() == 0){
+			return 0;
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		int index = 0;
+		List<Object> values = new ArrayList<Object>();
+		String sql = "insert into " + tablename + " (";
+		Iterator<String> it = map.keySet().iterator();
+		while(it.hasNext()){
+			String key = it.next();
+			Object v = map.get(key);
+			if(index == 0){
+				sql += key;
+			}
+			else {
+				sql += ", " + key;
+			}
+			values.add(v);
+			index++;
+		}
+		sql += ") values (";
+		for(int i = 0; i < values.size(); i++){
+			if(i == 0){
+				sql += "?";
+			}
+			else {
+				sql += ", ?";
+			}
+		}
+		sql += ")";
+		try {
+			return baseDao.executeSql(sql, values);
+		} catch(Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	/**
+	 * 修改数据
+	 * @param map
+	 * @param trailid
+	 * @return
+	 */
+	public int updateData(Map<String, Object> map, Map<String, Object> keyv, String tablename){
+		if(map == null || map.size() == 0){
+			return 0;
+		}
+		Iterator<String> itt = keyv.keySet().iterator();
+		String kkey = itt.next();
+		Object keyval = keyv.get(kkey);
+		
+		int index = 0;
+		List<Object> values = new ArrayList<Object>();
+		String sql = "update " + tablename + " set ";
+		Iterator<String> it = map.keySet().iterator();
+		while(it.hasNext()){
+			String key = it.next();
+			Object v = map.get(key);
+			if(index == 0){
+				sql += (key + "=?");
+			}
+			else {
+				sql += ", " + key + "=?";
+			}
+			values.add(v);
+			index++;
+		}
+		sql += " where " + kkey + "=?";
+		values.add(keyval);
+		try {
+			return this.baseDao.executeSql(sql, values);
+		} catch(Exception e){
+			return 0;
+		}
+	}
+	
 	/*
 	@Override
 	public List<T> updateSEQ(HqlFilter hqlFilter) {

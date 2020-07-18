@@ -192,7 +192,17 @@ public class BaseDao<T>{
 		}
 		return q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
-
+	
+	public List<Map> findBySql(String sql, List<Object> params) {
+		SQLQuery q = getCurrentSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for(int i = 0; i < params.size(); i++) {
+				q.setParameter(i, params.get(i));
+			}
+		}
+		return q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+	
 	public List<Map> findBySql(String sql, Map<String, Object> params, int page, int rows) {
 		SQLQuery q = getCurrentSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {
@@ -215,6 +225,16 @@ public class BaseDao<T>{
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
 				q.setParameter(key, params.get(key));
+			}
+		}
+		return q.executeUpdate();
+	}
+	
+	public int executeSql(String sql, List<Object> params) {
+		SQLQuery q = getCurrentSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for(int i = 0; i < params.size(); i++) {
+				q.setParameter(i, params.get(i));
 			}
 		}
 		return q.executeUpdate();
