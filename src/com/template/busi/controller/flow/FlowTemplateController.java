@@ -34,7 +34,7 @@ public class FlowTemplateController {
 		
 		JSONObject jsonObj = new JSONObject();
 		try {
-			String sql = "select * from fw_flowtemplateinfo";
+			String sql = "select a.*, (select name from jc_community where id=a.communityid) as communityname from fw_flowtemplateinfo a";
 			List<HashMap> templatelist = this.userService.findBySql(sql);
 			
 			jsonObj.put("success", true);
@@ -48,7 +48,7 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id,String templatename)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id,String templatename, String communityid)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate");
 		JSONObject jsonObj = new JSONObject();
@@ -63,6 +63,7 @@ public class FlowTemplateController {
 				if(list == null || list.size() == 0) {
 					//新增
 					map.put("templatename", templatename);
+					map.put("communityid", communityid);
 					map.put("createtime", TimeUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 					
 					int ret = this.userService.addData(map, "fw_flowtemplateinfo");
@@ -80,6 +81,7 @@ public class FlowTemplateController {
 					kvs.put("id", id);
 					
 					map.put("templatename", templatename);
+					map.put("communityid", communityid);
 					map.put("createtime", TimeUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 					
 					int ret = this.userService.updateData(map, kvs, "fw_flowtemplateinfo");
@@ -94,6 +96,7 @@ public class FlowTemplateController {
 			}
 			else {
 				map.put("templatename", templatename);
+				map.put("communityid", communityid);
 				map.put("createtime", TimeUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 				
 				int ret = this.userService.addData(map, "fw_flowtemplateinfo");
@@ -171,6 +174,25 @@ public class FlowTemplateController {
 			jsonObj.put("success", false);
 		}
 	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="getcommunitylist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String getCommunityList() {
+		logger.info("getcommunitylist");
+		
+		JSONObject jsonObj = new JSONObject();
+		try {
+			String sql = "select * from jc_community";
+			List<HashMap> templateprocesslist = this.userService.findBySql(sql);
+			
+			jsonObj.put("success", true);
+			jsonObj.put("list", JSONArray.toJSON(templateprocesslist));
+		} catch(Exception e) {
+			jsonObj.put("success", false);
+		}
+		
+		return jsonObj.toString();
 	}
 	
 	@RequestMapping(value="gettemplateprocesslist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")

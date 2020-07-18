@@ -49,7 +49,7 @@ function loadtemplates()
 				"columns": [
 					{ "data": "templatename" ,"sClass":"text-center"},
 					{ "data": "subserviceid" ,"sClass":"text-center"},
-					{ "data": "communityid" ,"sClass":"text-center"},
+					{ "data": "communityname" ,"sClass":"text-center"},
 					{ "data": "createtime" ,"sClass":"text-center"},
 					{ "data": "" ,"sClass":"text-center"}
 				],
@@ -59,7 +59,9 @@ function loadtemplates()
 					orderable: false,
 					targets:   4,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>定制流程</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"editProcess('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>定制流程</a>&nbsp;";
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
@@ -140,6 +142,15 @@ function deleteData(id)
 var curId = '';
 
 function editData(id)
+{
+	curId = id;
+	
+	$('#main-content').load("./flow/templateDetail.html", function () {
+		
+    });
+}
+
+function editProcess(id)
 {
 	curId = id;
 	

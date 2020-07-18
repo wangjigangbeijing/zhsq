@@ -8,6 +8,8 @@ $(document).ready(function (){
 	
 	//load();
 	
+	loadcommunity();
+	
 	if(curId != '')
 		viewDetail(curId);
 });
@@ -22,7 +24,25 @@ function viewDetail(id)
 			{
 				
 				$("#id").val(obj.data.id);
-				$('#templatename').val(templatename);
+				$('#templatename').val(obj.data.templatename);
+				$("#communityid").val(obj.data.communityid);
+				
+			}
+		});
+}
+
+function loadcommunity(){
+	$.get(getContextPath()+"/flowtemplateController/getcommunitylist",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				
+				for(var i = 0; i < obj.list.length; i++)
+				{
+					var item = "<option value=" + obj.list[i].id + ">" + obj.list[i].name + "</option>";
+					$("#communityid").append(item);
+				}
 				
 			}
 		});
@@ -54,7 +74,8 @@ function addOrUpdate()
 	$.post(getContextPath()+"/flowtemplateController/addOrUpdate",
 	{
 		id:curId,
-		templatename:$('#templatename').val()
+		templatename:$('#templatename').val(),
+		communityid: $("#communityid").val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
