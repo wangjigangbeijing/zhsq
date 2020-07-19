@@ -77,8 +77,7 @@ public class FlowTemplateController {
 					}
 				}
 				else {
-					//更新
-					
+					//更新					
 					Map<String, Object> kvs = new HashMap<String, Object>();
 					kvs.put("id", id);
 					
@@ -208,7 +207,7 @@ public class FlowTemplateController {
 		
 		JSONObject jsonObj = new JSONObject();
 		try {
-			String sql = "select a.nodeid, (select nodename from fw_nodeinfo where id=a.nodeid) as nodename, a.prevnodeid, (select nodename from fw_nodeinfo where id=a.prevnodeid) as prevnodename, a.nextnodeid, (select nodename from fw_nodeinfo where id=a.nextnodeid) as nextnodename from fw_flowprocessinfo a where a.templateid=?";
+			String sql = "select a.*, (select nodename from fw_nodeinfo where id=a.nodeid) as nodename, (select nodename from fw_nodeinfo where id=a.prevnodeid) as prevnodename, (select nodename from fw_nodeinfo where id=a.nextnodeid) as nextnodename from fw_flowprocessinfo a where a.templateid=?";
 			List<Object> params = new ArrayList<Object>();
 			params.add(templateid);
 			List<HashMap> templateprocesslist = this.userService.findBySql(sql, params);
@@ -264,7 +263,7 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="addtemplateprocess",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addTemplateProcess(String templateid, Integer nodeid, Integer prevnode,Integer nextnode)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addTemplateProcess(String templateid, Integer nodeid, Integer prevnode, String prevlabel, String prevstatus, Integer nextnode, String nextlabel, String nextstatus)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addtemplateprocess");
 		JSONObject jsonObj = new JSONObject();
@@ -274,9 +273,41 @@ public class FlowTemplateController {
 			map.put("templateid", templateid);
 			map.put("nodeid", nodeid);
 			map.put("prevnodeid", prevnode);
+			map.put("prevlabel", prevlabel);
+			map.put("prevstatus", prevstatus);
 			map.put("nextnodeid", nextnode);
+			map.put("nextlabel", nextlabel);
+			map.put("nextstatus", nextstatus);
 			
 			int ret = this.userService.addData(map, "fw_flowprocessinfo");
+			if(ret > 0) {
+				jsonObj.put("success", true);
+			}
+			else {
+				jsonObj.put("success", false);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", e.getMessage());
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="deleteprocess",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String deleteProcess(int id)
+	{
+		logger.debug("deleteprocess "+id);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			String sql = "delete from fw_flowprocessinfo where id=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(id);
+			int ret = this.userService.executeSql(sql, params);
 			if(ret > 0) {
 				jsonObj.put("success", true);
 			}
