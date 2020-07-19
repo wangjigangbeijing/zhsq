@@ -135,7 +135,7 @@ $(document).ready(function (){
         loadZnhffwPage();
     });
 	
-	$('#xxqffwAnchor').click(function () {
+	/*$('#xxqffwAnchor').click(function () {
 		updateActiveMenu('xxqffwAnchor');
         loadXxqffwPage();
     });
@@ -149,12 +149,7 @@ $(document).ready(function (){
 	
 	
 	
-	
-	$('#smsAnchor').click(function () {
-		updateActiveMenu('smsAnchor');
-        loadSMSPage();
-    });
-	
+	*/
 	$('#dicAnchor').click(function () {
 		updateActiveMenu('dicAnchor');
         loadDicPage();
@@ -179,6 +174,17 @@ $(document).ready(function (){
 		updateActiveMenu('templateAnchor');
         loadTemplatePage();
     });
+	
+	
+	
+	
+	
+	$('#smsAnchor').click(function () {
+		updateActiveMenu('smsAnchor');
+        loadSMSPage();
+    });
+	
+	
 	
 	
 	getCurrentLoginUserInfo();
@@ -338,13 +344,6 @@ function loadZhfwPage()
 function loadSqbsfwPage()
 {
 	$('#main-content').load("./nfw/sqbsfw.html", function () {
-        
-    });
-}
-
-function loadXxqffwPage()
-{
-	$('#main-content').load("./nfw/xxqffw.html", function () {
         
     });
 }

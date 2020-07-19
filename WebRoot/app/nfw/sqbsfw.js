@@ -112,7 +112,7 @@ function loadsqbsfw()
 var uuid = '';
 function addsqbsfw()
 {
-	uuid = guid();
+	//uuid = guid();
 	$('#main-content').load("./nfw/sqbsfwDetail.html", function () {
 		//EditableTable.init();
 		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况

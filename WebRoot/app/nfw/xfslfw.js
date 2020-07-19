@@ -112,7 +112,7 @@ function loadxfslfw()
 var uuid = '';
 function addxfslfw()
 {
-	uuid = guid();
+	//uuid = guid();
 	$('#main-content').load("./nfw/xfslfwDetail.html", function () {
 		//EditableTable.init();
 		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况

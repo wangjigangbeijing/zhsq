@@ -26,7 +26,7 @@ public class SQZZQD implements java.io.Serializable {
 		this.id = id;
 	}
 	
-	@Column(name = "bh", nullable = false)
+	@Column(name = "bh", nullable = true)
 	public String bh;
 	
 	public String getbh()
