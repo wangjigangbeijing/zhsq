@@ -1,0 +1,292 @@
+
+		<script src="./nfw/sqbsfwDetail.js"></script>
+		
+		<section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>添加社区办事事项</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">列表</a></li>
+              <li class="breadcrumb-item active">新增</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+					
+                    <div class="form-group">
+                      <label>事项名称</label>
+                      <input type="" class="form-control" id="sxmc" placeholder="">
+                    </div>
+
+               
+
+                    <div class="form-group">
+                      <label>事项类别</label>
+                      <select class="form-control" id='sxlb'>
+                        <option>文化教育</option>
+                        <option>民主自治</option>
+                        <option>社区服务</option>
+                        <option>平安建设</option>
+                        <option>文化教育</option>
+                        <option>社区环境</option>
+                        <option>卫生健康</option>
+                        <option>社区组织</option>
+                      </select>
+                    </div>
+					
+					  <div class="form-group">
+                      <label>服务对象</label>
+                      <input type="" class="form-control" id="fwdx" placeholder="">
+                    </div>
+					
+					 <div class="form-group">
+                      <label>业务主管部门</label>
+                      <input type="" class="form-control" id="ywzgbm" placeholder="">
+                    </div>
+					
+					 <div class="form-group">
+                      <label>办理科室</label>
+                      <input type="" class="form-control" id="blks" placeholder="">
+                    </div>
+					
+					<div class="form-group">
+                      <label>收费依据及标准</label>
+                      <input type="" class="form-control" id="sfyjjbz" placeholder="">
+                    </div>
+					
+					 <div class="form-group">
+                          <label>办理条件</label>
+                          <textarea class="form-control" rows="3" placeholder="" id='bltj'></textarea>
+                        </div>
+					
+					 <div class="form-group">
+                          <label>办理流程</label>
+                          <textarea class="form-control" rows="3" placeholder="" id='bllc'></textarea>
+                        </div>
+						
+					 <div class="form-group">
+                          <label>申请材料</label>
+                          <textarea class="form-control" rows="3" placeholder="sqcl"></textarea>
+                        </div>
+					
+					<div class="form-group">
+                          <label>受理条件</label>
+                          <textarea class="form-control" rows="3" placeholder="" id="sltj"></textarea>
+                        </div>
+						
+					 <div class="form-group">
+                          <label>批准形式</label>
+                          <textarea class="form-control" rows="3" placeholder="" id="pzxs"></textarea>
+                        </div>	
+						
+				  
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>启用时间</label>
+  				<div class='col-md-9'>
+					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='qysj'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+ 						</div>
+ 					</div>
+					
+					
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>停用时间</label>
+  				<div class='col-md-9'>
+					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='tysj'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+ 						</div>
+ 					</div>
+					
+					
+					
+                        <div class="form-group">
+                          <label>备注</label>
+                          <textarea class="form-control" rows="3" placeholder="" id='bz'></textarea>
+                        </div>
+
+                  <div class='form-group row'>
+						<label class='col-md-2 control-label'>照片</label>
+  				<div class='col-md-9'>
+<div id='picturesdiv' class='wu-example'>
+<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
+<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='picturespick'>选择文件</div>
+</div>
+</div>
+ 						</div>
+ 					</div>
+    
+				  
+				  
+				  
+				  
+                </div>
+                <div class="card-footer">
+				
+				 <button type="button" class="btn btn-info" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<script>
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+
+
+$('.dpYears').datepicker({
+	autoclose: true
+});
+
+
+
+
+
+
+
+
+  
+$(document).ready(function (){
+	
+	if(curId != '')
+	{
+		$.get(getContextPath()+"/sqbsfwqdController/get?id="+curId,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$('#sxmc').val(obj.sxmc);
+				$('#sxlb').val(obj.sxlb);
+				
+				$('#fwdx').val(obj.fwdx);
+				$('#ywzgbm').val(obj.ywzgbm);
+				
+				$('#blks').val(obj.blks);
+				$('#sfyjjbz').val(obj.sfyjjbz);
+				$('#bltj').val(obj.bltj);
+				$('#bllc').val(obj.bllc);
+				$('#sqcl').val(obj.sqcl);
+				
+				$('#sltj').val(obj.sltj);
+				$('#pzxs').val(obj.pzxs);
+				$('#qysj').val(obj.qysj);
+				$('#tysj').val(obj.tysj);
+				$('#bz').val(obj.bz);
+				
+				//$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
+				
+				var picturesArr = obj.fj.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
+
+					
+			}
+		});
+	
+	
+	
+	}
+	
+});
+
+function addOrUpdate()
+{
+	$.post(getContextPath()+"/sqbsfwqdController/addOrUpdate",
+	{
+		id:curId,
+		sxmc:$('#sxmc').val(),
+		sxlb:$('#sxlb').val(),
+		fwdx:$('#fwdx').val(),
+		ywzgbm:$('#ywzgbm').val(),
+		blks:$('#blks').val(),
+		sfyjjbz:$('#sfyjjbz').val(),
+		bltj:$('#bltj').val(),
+		bllc:$('#bllc').val(),
+		sqcl:$('#sqcl').val(),
+		sltj:$('#sltj').val(),
+		pzxs:$('#pzxs').val(),
+		qysj:$('#qysj').val(),
+		tysj:$('#tysj').val(),
+		bz:$('#bz').val(),
+		fj:$('#pictures').val()
+	},
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			jSuccess("数据修改成功!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+			
+			gobackPage();
+			
+			//load();
+		}
+		else
+		{
+			jError("数据修改失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	});
+}
+</script>
+

@@ -364,33 +364,37 @@ public class SXSQSJController {
 				BigInteger iCnt = (BigInteger)hm.get("CNT");
 				String sxdl = (String)hm.get("SXDL");
 				
-				if(sxdl.equalsIgnoreCase("社区党建事项"))
+				if(sxdl != null && sxdl.equalsIgnoreCase("社区党建事项"))
 				{
 					jsonObj.put("sqdj", iCnt);//社区党建
 				}
-				else if(sxdl.equalsIgnoreCase("民主自治事项"))
+				else if(sxdl != null && sxdl.equalsIgnoreCase("民主自治事项"))
 				{
 					jsonObj.put("mzzz", iCnt);//民主自治		
 				}
-				else if(sxdl.equalsIgnoreCase("社区服务事项"))
+				else if(sxdl != null && sxdl.equalsIgnoreCase("社区服务事项"))
 				{
 					jsonObj.put("sqfw", iCnt);//社区服务
 				}
-				else if(sxdl.equalsIgnoreCase("平安建设事项"))
+				else if(sxdl != null && sxdl.equalsIgnoreCase("平安建设事项"))
 				{
 					jsonObj.put("pajs", iCnt);//平安建设
 				}
-				else if(sxdl.equalsIgnoreCase("文化教育事项"))
+				else if(sxdl != null && sxdl.equalsIgnoreCase("文化教育事项"))
 				{
 					jsonObj.put("whjy", iCnt);//文化教育
 				}
-				else if(sxdl.equalsIgnoreCase("社区环境事项"))
+				else if(sxdl != null && sxdl.equalsIgnoreCase("社区环境事项"))
 				{
 					jsonObj.put("sqhj", iCnt);//社区环境
 				}
-				else if(sxdl.equalsIgnoreCase("卫生健康事项"))
+				else if(sxdl != null && sxdl.equalsIgnoreCase("卫生健康事项"))
 				{
 					jsonObj.put("wsjk", iCnt);//卫生健康
+				}
+				else
+				{
+					logger.error("Invalid sxdl in table SXSQSJ");
 				}
 			}
 	        

@@ -33,11 +33,12 @@ $(document).ready(function (){
         loadSxsqsjPageByType('社区组织事项');
     });
 	
-	if(curSXType != '')
+	if(curSXType == '')
 	{
-		loadSxsqsjPageByType(curSXType);
+		curSXType = '社区党建事项';	
 	}
 	
+	loadSxsqsjPageByType(curSXType);
 	
 	$.get(getContextPath()+"/sxsqsjController/count",
 	function(result){

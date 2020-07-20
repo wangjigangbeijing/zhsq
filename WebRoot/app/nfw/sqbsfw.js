@@ -5,6 +5,8 @@ $(document).ready(function (){
 	
 	$('#btnAdd').click(addsqbsfw);
 	
+	$('#sqbssxqdAnchor').click(sqbssxqd);
+	
 });
 
 var dataTable;
@@ -177,38 +179,16 @@ function tableData(tableId)
 		
     });
 }
-/*
-function generateCode(tableId)
+
+
+
+function sqbssxqd()
 {
-	$.post(getContextPath()+"/templateController/generateCode",
-	{
-		tableId:tableId
-	},
-	function(result){
-		var obj = jQuery.parseJSON(result);  
-		if(obj.success)
-		{
-			jSuccess("代码生成成功!",{
-				VerticalPosition : 'center',
-				HorizontalPosition : 'center'
-			});
-			
-		}
-		else
-		{
-			jError("代码生成失败!",{
-				VerticalPosition : 'center',
-				HorizontalPosition : 'center'
-			});
-		}
-	});
+	//uuid = guid();
+	$('#main-content').load("./nfw/sqbsfwqd.html", function () {
+		//EditableTable.init();
+		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况
+    });
+	
 }
 
-
-function guid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-    return v.toString(16);
-  });
-}
-*/

@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "SQBSFW")
+@Table(name = "NFW_SQBSFW")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class SQBSFW implements java.io.Serializable {

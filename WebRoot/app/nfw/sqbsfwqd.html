@@ -1,0 +1,266 @@
+
+   <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>社区办事服务</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <!--li class="breadcrumb-item"><a href="#">Home</a></li-->
+              <li class="breadcrumb-item active"><a href="#" id="sqbssxAnchor">社区办事事项</a></li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">编号</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="tableNameQry">
+                    </div>
+					
+					<label for="inputEmail3" class="col-sm-1 col-form-label">类别</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="tableNameQry">
+                    </div>
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					&nbsp
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+				
+              </div>
+			  
+			   </div>
+			   
+			   
+            <!-- /.card -->
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">办事服务列表</h3>
+              </div>
+
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="dataTable" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <!--th>事项编码</th-->
+                    <th>事项名称</th>
+                    <th>事项类别</th>
+                    <th>服务对象</th>
+                    <th>业务主管部门</th>
+					<th>街道办理科室</th>
+					<th>收费依据及标准</th>
+					<th>启用时间</th>
+					<th>停用时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  
+                  </tbody>
+
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+	
+
+<script>
+  
+$(document).ready(function (){
+	
+	$('#btnAdd').click(addsqbsfwqd);
+	
+	$('#sqbssxAnchor').click(sqbssx);
+	
+	$('#btnSearch').click(loadsqbsfwqd);
+	
+	loadsqbsfwqd();
+	
+});
+
+function addsqbsfwqd()
+{
+	$('#main-content').load("./nfw/sqbsfwqdDetail.html", function () {
+		//EditableTable.init();
+		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况
+    });
+	
+}
+
+function sqbssx()
+{
+	//uuid = guid();
+	$('#main-content').load("./nfw/sqbsfw.html", function () {
+		//EditableTable.init();
+		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况
+    });
+	
+}
+
+var dataTable;
+
+function loadsqbsfwqd()
+{
+	$('#btnSearch').attr('disabled','disabled');
+	var tableName = $('#tableNameQry').val();
+	
+	$.get(getContextPath()+"/sqbsfwqdController/load",
+	function(result){
+		$('#btnSearch').removeAttr('disabled');
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			dataTable = $('#dataTable').dataTable( {
+				"processing": true,
+				"bJQueryUI": false,
+				"bFilter": false,
+				"bStateSave":true,
+				"bAutoWidth": false, //自适应宽度 
+				//"sPaginationType": "full_numbers", 
+				iDisplayLength: 10,
+				lengthChange: false,
+				"bProcessing": true, 
+				"bDestroy":true,
+				"bSort": false, //是否使用排序 		
+				"oLanguage": { 
+					"sProcessing": "正在加载中......", 
+					"sLengthMenu": "每页显示 _MENU_ 条记录", 
+					"sZeroRecords": "对不起，查询不到相关数据！", 
+					"sInfoEmpty":"",
+					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+					"sSearch": "搜索", 
+					"oPaginate":  
+					{ 
+						"sFirst": "首页", 
+						"sPrevious": "上一页", 
+						"sNext": "下一页", 
+						"sLast": "末页" 
+					}
+				}, //多语言配置					
+				"data":obj.list,
+				"columns": [
+					{ "data": "sxmc" ,"sClass":"text-center"},
+					{ "data": "sxlb" ,"sClass":"text-center"},
+					{ "data": "fwdx" ,"sClass":"text-center"},
+					{ "data": "ywzgbm" ,"sClass":"text-center"},
+					{ "data": "jdblks" ,"sClass":"text-center"},
+					{ "data": "sfyjjbz" ,"sClass":"text-center"},
+					{ "data": "qysj" ,"sClass":"text-center"},
+					{ "data": "tysj" ,"sClass":"text-center"},
+					{ "data": "status" ,"sClass":"text-center"},
+					{ "data": "" ,"sClass":"text-center"}
+				],
+				columnDefs: [ /*{
+					className: 'control',
+					orderable: false,
+					targets:   0,//从0开始
+					mRender : function(data,type,full){
+						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.tableName+"</a>";
+						return btn;
+					}
+					},*/
+					{
+					className: 'control',
+					orderable: false,
+					targets:   9,//从0开始
+					mRender : function(data,type,full){
+						var btn = "<a href=\"#\" onclick=\"viewsqbsfwqd('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+
+						//btn += "<a href=\"#\" onclick=\"tableData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>数据</a>&nbsp;";
+						
+						if(full.status == '正常')
+							btn += "<a href=\"#\" onclick=\"changestatus('"+full.id+"','已停办')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>停办</a>&nbsp;";
+						if(full.status == '已停办')
+							btn += "<a href=\"#\" onclick=\"changestatus('"+full.id+"','正常')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>启用</a>&nbsp;";
+						
+						//btn += "<a href=\"#\" onclick=\"generateCode('"+full.id+"')\"  class=\"btn btn-info btn-xs\"><i class=\"fa fa-trash-o\"></i>生成代码</a>&nbsp;";
+						
+						return btn;
+					}
+					}
+				]
+			} );
+			
+			/*$('#tableSelect').html('');
+			var userArr = [];
+			
+			for(var i=0;i<obj.tableList.length;i++)
+			{
+				var table = obj.tableList[i];
+				
+				userArr[i] = "<option value='" + table.id + "'>" + table.tableName + "</option>";						
+			}
+			$('#tableSelect').html(userArr.join(''));
+			*/
+		}
+		else
+		{
+			jError(obj.errMsg,{
+						VerticalPosition : 'center',
+						HorizontalPosition : 'center'});
+		}
+	});
+}
+
+var curId = '';
+function viewsqbsfwqd(id)
+{
+	curId = id;
+	$('#main-content').load("./nfw/sqbsfwqdDetail.html", function () {
+		//EditableTable.init();
+		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况
+    });	
+}
+
+function changestatus(id,newstatus)
+{
+	$.get(getContextPath()+"/sqbsfwqdController/changestatus?id="+id+"&status="+newstatus,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				loadsqbsfwqd();	
+			}
+		});
+}
+
+</script>
+	
+	
+	
+

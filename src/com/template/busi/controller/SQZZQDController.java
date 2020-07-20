@@ -153,7 +153,7 @@ public class SQZZQDController {
 				String gzzzTxt = sqzzqd.getgzzz();
 				String gzzzShort = gzzzTxt;
 				
-				if(gzzzShort.length() > 10)
+				if(gzzzShort != null && gzzzShort.length() > 10)
 					gzzzShort = gzzzShort.substring(0, 10) + "...";
 				
 				jsonTmp.put("gzzz", sqzzqd.getgzzz());
@@ -162,7 +162,7 @@ public class SQZZQDController {
 				String yjflfgmcTxt = sqzzqd.getyjflfgmc();
 				String yjflfgmcShort = yjflfgmcTxt;
 				
-				if(yjflfgmcShort.length() > 10)
+				if(yjflfgmcShort != null && yjflfgmcShort.length() > 10)
 					yjflfgmcShort = yjflfgmcShort.substring(0, 10) + "...";
 				
 				jsonTmp.put("yjflfgmc", sqzzqd.getyjflfgmc());
