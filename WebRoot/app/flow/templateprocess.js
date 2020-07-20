@@ -34,10 +34,8 @@ function loadnodes()
 				$("#nextnode").append(item);
 			}
 			
-			$("#prev1").hide();
-			$("#prev2").hide();
-			$("#next1").hide();
-			$("#next2").hide();
+			$("#prev").hide();
+			$("#next").hide();
 		}
 	});
 }
@@ -82,16 +80,22 @@ function loadtemplateprocess(id)
 				"columns": [
 					{ "data": "nodename" ,"sClass":"text-center"},
 					{ "data": "prevnodename" ,"sClass":"text-center"},
+					{ "data": "prevlabel" ,"sClass":"text-center"},
+					{ "data": "prevstatus" ,"sClass":"text-center"},
 					{ "data": "nextnodename" ,"sClass":"text-center"},
+					{ "data": "nextlabel" ,"sClass":"text-center"},
+					{ "data": "nextstatus" ,"sClass":"text-center"},
+					{ "data": "node_dept" ,"sClass":"text-center"},
+					{ "data": "node_role" ,"sClass":"text-center"},
 					{ "data": "" ,"sClass":"text-center"}
 				],
 				columnDefs: [ 
 				{
 					className: 'control',
 					orderable: false,
-					targets:   3,//从0开始
+					targets:   9,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>删除</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash\"></i>删除</a>&nbsp;";
 						
 						return btn;
 					}
@@ -136,20 +140,16 @@ function selectcurnode(){
 	var index = $('#curnode').get(0).selectedIndex;
 	var nodeinfo = nodelist[index - 1];
 	if(nodeinfo.canback == 1){
-		$("#prev1").show();
-		$("#prev2").show();
+		$("#prev").show();
 	}
 	else {
-		$("#prev1").hide();
-		$("#prev2").hide();
+		$("#prev").hide();
 	}
 	if(nodeinfo.cangoon == 1){
-		$("#next1").show();
-		$("#next2").show();
+		$("#next").show();
 	}
 	else {
-		$("#next1").hide();
-		$("#next2").hide();
+		$("#next").hide();
 	}
 }
 
@@ -160,7 +160,11 @@ function add()
 		templateid:curId,
 		nodeid:$('#curnode').val(),
 		prevnode:$('#prevnode').val(),
-		nextnode:$('#nextnode').val()
+		prevlabel: $("#prevlabel").val(),
+		prevstatus: $("#prevstatus").val(),
+		nextnode:$('#nextnode').val(),
+		nextlabel: $("#nextlabel").val(),
+		nextstatus: $("#nextstatus").val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
@@ -195,10 +199,10 @@ function deleteData(id)
 {
 	$.confirm({
 		title:"删除确认",
-		text:"确认删除该流程模板?",
+		text:"确认删除该模板流程?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/flowtemplateController/delete",
+			$.post(getContextPath()+"/flowtemplateController/deleteprocess",
 			{
 				id:id
 			},
@@ -206,16 +210,16 @@ function deleteData(id)
 				var obj = jQuery.parseJSON(result);  
 				if(obj.success)
 				{
-					jSuccess("流程模板删除成功!",{
+					jSuccess("模板流程删除成功!",{
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'
 					});
 					
-					loadtemplates();
+					loadtemplateprocess(curId);
 				}
 				else
 				{
-					jError("流程模板删除成功!",{
+					jError("模板流程删除成功!",{
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'
 					});
