@@ -1,11 +1,10 @@
-package com.template.service.jcsqsj;
+package com.template.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.template.model.jcsqsj.Jc_rubbish;
+import com.template.model.SysUser;
 import com.template.service.base.BaseServiceImpl;
 @Transactional
 @Service
-public class Jc_rubbishService extends BaseServiceImpl<Jc_rubbish>
+public class SysUserService extends BaseServiceImpl<SysUser>
 {
 }

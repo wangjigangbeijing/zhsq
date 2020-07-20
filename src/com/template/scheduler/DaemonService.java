@@ -17,7 +17,7 @@ import com.template.model.SysUser;
 import com.template.model.jcsqsj.Resident;
 import com.template.model.jcsqsj.Room;
 import com.template.service.DictionaryService;
-import com.template.service.UserService;
+import com.template.service.SysUserService;
 import com.template.service.jcsqsj.ResidentService;
 import com.template.service.jcsqsj.RoomService;
 import com.template.util.ConstValue;
@@ -42,7 +42,7 @@ public class DaemonService
 	private RoomService roomService;
 
 	@Autowired
-	private UserService userService;
+	private SysUserService userService;
 	
 	/*
 	 * @Desc	
@@ -168,7 +168,7 @@ public class DaemonService
 				SysUser sysUser = userList.get(i);
 				
 				String id = sysUser.getId();
-				String name = sysUser.getUsername();
+				String name = sysUser.getname();
 				
 				ConstValue.userMap.put(id,name);
 			}

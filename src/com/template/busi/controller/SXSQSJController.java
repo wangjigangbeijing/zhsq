@@ -33,11 +33,9 @@ import com.template.util.Utility;
 import com.template.model.SXSQSJ;
 import com.template.model.SXSQSJ_FL;
 import com.template.model.SysSeq;
-import com.template.model.SysUser;
 import com.template.service.SXSQSJFLService;
 import com.template.service.SXSQSJService;
 import com.template.service.SysSeqService;
-import com.template.service.UserService;
 
 @Controller
 @RequestMapping("sxsqsjController")

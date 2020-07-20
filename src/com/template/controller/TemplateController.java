@@ -25,7 +25,6 @@ import com.template.model.SysTable;
 import com.template.model.SysTableAttribute;
 import com.template.service.TableAttributeService;
 import com.template.service.TableService;
-import com.template.service.UserService;
 import com.template.util.ConstValue;
 import com.template.util.FileUtil;
 import com.template.util.HqlFilter;
@@ -56,8 +55,6 @@ public class TemplateController {
 	@Autowired
 	private TableService tableService;
 	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private TableAttributeService tableAttributeService;

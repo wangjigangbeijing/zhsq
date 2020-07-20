@@ -35,7 +35,7 @@ import com.template.model.nfw.SQBSFW_QD;
 import com.template.model.SysUser;
 import com.template.service.nfw.SQBSFWQDService;
 import com.template.service.nfw.SQBSFWService;
-import com.template.service.UserService;
+import com.template.service.SysUserService;
 
 @Controller
 @RequestMapping("sqbsfwqdController")

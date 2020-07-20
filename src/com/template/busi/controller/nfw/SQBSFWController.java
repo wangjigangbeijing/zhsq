@@ -33,7 +33,7 @@ import com.template.util.Utility;
 import com.template.model.nfw.SQBSFW;
 import com.template.model.SysUser;
 import com.template.service.nfw.SQBSFWService;
-import com.template.service.UserService;
+import com.template.service.SysUserService;
 
 @Controller
 @RequestMapping("sqbsfwController")
