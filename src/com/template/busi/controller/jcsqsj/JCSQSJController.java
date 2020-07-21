@@ -35,7 +35,7 @@ import com.template.model.SXSQSJ_FL;
 import com.template.model.SysUser;
 import com.template.service.SXSQSJFLService;
 import com.template.service.SXSQSJService;
-import com.template.service.UserService;
+import com.template.service.SysUserService;
 //import com.template.service.jcsqsj.CommercialbuildingService;
 import com.template.service.jcsqsj.*;
 

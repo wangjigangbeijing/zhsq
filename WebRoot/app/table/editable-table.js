@@ -271,7 +271,7 @@ var EditableTable = function () {
                 nEditing = nRow;
             });
 
-            $('#editable-sample a.delete'+uuid+'').on('click', function (e) {
+            $('#editable-sample').on('click', 'a.delete'+uuid, function (e) {
                 e.preventDefault();
 
                 if (confirm("确定删除 ?") == false) {
@@ -296,7 +296,7 @@ var EditableTable = function () {
                 }
             });
 
-            $('#editable-sample a.edit'+uuid+'').on('click', function (e) {
+            $('#editable-sample').on('click', 'a.edit'+uuid,function (e) {
 				
                 e.preventDefault();
                 /* Get the row as a parent of the link that was clicked on */
@@ -321,6 +321,7 @@ var EditableTable = function () {
 			
 			//$('#editable-sample a.save'+uuid+'').on('click', function (e) {
 			$('#editable-sample').on('click', 'a.save'+uuid, function (e) {	
+			
                 e.preventDefault();
 				
                 /* Get the row as a parent of the link that was clicked on */

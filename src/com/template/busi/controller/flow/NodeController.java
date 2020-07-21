@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.template.model.jcsqsj.Community;
-import com.template.service.UserService;
+import com.template.service.SysUserService;
 import com.template.util.TimeUtil;
 
 @Controller
@@ -25,7 +25,7 @@ public class NodeController {
 	private static Logger logger = Logger.getLogger(NodeController.class);
 	
 	@Autowired
-	private UserService userService;
+	private SysUserService userService;
 	
 	@RequestMapping(value="getnodelist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody

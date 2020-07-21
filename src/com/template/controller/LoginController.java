@@ -1,5 +1,6 @@
 package com.template.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
-
+import com.template.util.EncryptUtil;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.template.model.SysUser;
+import com.template.service.SysUserService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
 
@@ -32,6 +35,9 @@ public class LoginController {
 	
 	@Autowired
 	private  HttpServletRequest request;
+	
+	@Autowired
+	private SysUserService userService;
 	
 	@RequestMapping(value=ConstValue.LOGIN_CONTROLLER_LOGIN,method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
@@ -53,8 +59,93 @@ public class LoginController {
 				
 				return jsonObj.toString();
 			}
-			jsonObj.put("success", false);	
-			jsonObj.put("errMsg", "用户名或者密码错误");
+			
+			
+			HqlFilter hqlFilter = new HqlFilter();
+			hqlFilter.addQryCond("loginid", HqlFilter.Operator.EQ, username);
+			//hqlFilter.addQryCond("password", HqlFilter.Operator.EQ, password);
+			
+			ArrayList<String> alPassword = new ArrayList<String>();
+			alPassword.add(password);
+			alPassword.add(EncryptUtil.encodeStr(password));
+			
+			hqlFilter.addOrCondGroup("password", HqlFilter.Operator.EQ, alPassword);
+			
+			//hqlFilter.addQryCond("status", HqlFilter.Operator.NEQ, ConstValue.USER_STATUS_DISABLED);
+			List<SysUser> userInfoList = userService.findByFilter(hqlFilter);
+
+			if(userInfoList.size() == 0)
+			{
+				jsonObj.put("success", false);	
+				jsonObj.put("errMsg", "无效的用户名或密码");
+				
+				logger.info("invalid username or password:"+username+"	"+password);
+				
+				return jsonObj.toString();
+			}
+			else
+			{
+				SysUser sysUser = userInfoList.get(0);
+				
+				//Date expireTime = sysUser.getExpireTime();
+				
+				/*Date currentDate = new Date();
+				
+				if(expireTime != null && expireTime.getTime() < currentDate.getTime())
+				{
+					jsonObj.put("success", false);	
+					jsonObj.put("errMsg", "用户已过期");
+					
+					return jsonObj.toString();
+				}
+				*/
+				jsonObj.put("success", true);	
+				jsonObj.put("userId", sysUser.getId());	
+				jsonObj.put("token", sysUser.getId());	
+				jsonObj.put("homePage", "/app/homepage.html");
+				//jsonObj.put("mobile", sysUser.getMobile());
+				//jsonObj.put("nickName", sysUser.getUsername());
+				
+				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, userInfoList.get(0).getId());
+				
+				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
+				
+				String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+				
+				if(sSource != null && sSource.equalsIgnoreCase(ConstValue.HTTP_HEADER_SOURCE_APP))//用户从APP端登陆
+				{
+					logger.info("login success from app:"+username);
+					
+					/*String logoutMessage = "{\"type\":\"system\",\"action\":\"logout\",\"content\":\"\",\"timestamp\":\""+timestamp+"\"}";
+					
+					String logoutTarget = sysUser.getMobile();
+					
+					//if(workMode != null && workMode.equalsIgnoreCase("RTK双模") )
+					if(rtkmode != null && rtkmode.equalsIgnoreCase("1") )
+					{
+						logoutTarget = "rtk"+logoutTarget;
+					}
+					new LocalUDPDataSender.SendCommonDataAsync(logoutMessage, logoutTarget)
+					{
+						@Override
+						protected void onPostExecute(Integer code)
+						{
+							System.out.println(code);
+						}
+					}.execute();  
+					
+
+					sysUser.setVersion(appVersion);
+					sysUser.setDeviceId(deviceId);
+					sysUser.setMobileModel(mobileModel);
+					sysUser.setOSVersion(osVersion);
+					sysUser.setLastLoginTime(new Date());*/
+					
+				}
+				
+				jsonObj.put("success", true);	
+			}
+			
 		}
 		catch(Exception e)
 		{

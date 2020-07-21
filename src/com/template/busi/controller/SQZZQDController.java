@@ -30,9 +30,7 @@ import com.template.util.HqlFilter;
 import com.template.util.TimeUtil;
 import com.template.util.Utility;
 import com.template.model.SQZZQD;
-import com.template.model.SysUser;
 import com.template.service.SQZZQDService;
-import com.template.service.UserService;
 
 @Controller
 @RequestMapping("sqzzqdController")

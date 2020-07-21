@@ -187,6 +187,22 @@ $(document).ready(function (){
 	
 	
 	
+	
+	$('#organizationAnchor').click(function () {
+		updateActiveMenu('organizationAnchor');
+        loadOrganizationPage();
+    });
+	$('#roleAnchor').click(function () {
+		updateActiveMenu('roleAnchor');
+        loadRolePage();
+    });
+	$('#userAnchor').click(function () {
+		updateActiveMenu('userAnchor');
+        loadUserPage();
+    });
+	
+	
+	
 	getCurrentLoginUserInfo();
 	
 	//loadTablePage();
@@ -459,8 +475,28 @@ function loadTemplatePage()
 }
 
 
+function loadOrganizationPage()
+{
+	$('#main-content').load("./sys/sys_organization/sys_organization.html", function () {
+        
+    });
+}
 
 
+function loadRolePage()
+{
+	$('#main-content').load("./sys/sys_role/sys_role.html", function () {
+        
+    });
+}
+
+
+function loadUserPage()
+{
+	$('#main-content').load("./sys/sys_user/sys_user.html", function () {
+        
+    });
+}
 
 
 var page = 'list';

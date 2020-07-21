@@ -1,4 +1,4 @@
-package com.template.model;
+package com.template.model.jcsqsj;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -6,11 +6,14 @@
 	  <div class="col-sm-6">
 		<h1>社区概况图</h1>
 	  </div>
-	  <div class="col-sm-6">
-		<ol class="breadcrumb float-sm-right">
-		  <li class="breadcrumb-item"><a href="#">Home</a></li>
-		  <li class="breadcrumb-item active">ChartJS</li>
-		</ol>
+	  <div class="col-sm-6 pull-right">
+		<form class="form-horizontal">
+		
+		<div class='form-group row pull-right' id="layerDiv">
+		
+		</div>
+		</form>
+		
 	  </div>
 	</div>
   </div><!-- /.container-fluid -->
@@ -205,13 +208,23 @@ $(function ()
 
 				var geoServerURL = respObj.mapurl;
 				
+				$('#layerDiv').empty();				
+				
 				for(var i=0;i<respObj.list.length;i++)
 				{
 					var layer = respObj.list[i];
 					
+					var layerName = layer.layersource;
+					
 					var layerId = layer.id;
 					
-					var layerName = layer.layersource;
+					//图层列表
+					var layerCtl = '<div class="form-check">' + 
+                          '<input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
+                          '<label class="form-check-label">'+layer.note+'</label>' + 
+                        '</div>';
+					
+					$('#layerDiv').append(layerCtl);
 					
 					var layerType = layer.layertype;
 					
@@ -228,7 +241,7 @@ $(function ()
 						dataType: "json",
 						success: function (dataList) {
 							
-							for(var p=0;p < dataList.features.length;p++)
+							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 							{
 								var data = dataList.features[p];
 								
@@ -262,13 +275,6 @@ $(function ()
 								{
 									var pointArr = data.coordinates;
 									
-									/*var transferedArr = [];//data.coordinates;
-									
-									for(var q=0;q<pointArr.length;q++)
-									{
-										transferedArr[q] = ol.proj.transform(pointArr[q], 'EPSG:4326', 'EPSG:3857');
-									}*/
-									
 									var iconFeature = new ol.Feature({
 										geometry: new ol.geom.Polygon(data.coordinates),
 										weight:1,
@@ -283,6 +289,77 @@ $(function ()
 						}
 					});
 				}
+				
+				
+				$("input[name='layer']").change(function() {
+					
+					var checkedLayerId = '';
+					
+					$("input[name='layer']").each(function () {
+						
+						if($(this).prop('checked'))
+							checkedLayerId += $(this).attr('id')+',';
+					});
+					
+					
+					$.ajax({
+						type: "GET",
+						//url:"http://49.233.26.198:8082/gis/zhsq/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=zhsq:jc_community&maxFeatures=50&outputFormat=application/json",
+						url: getContextPath()+"/dataController/wfs?layerIds="+checkedLayerId,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (dataList) {
+							
+							dataLayer.getSource().clear();
+							
+							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
+							{
+								var data = dataList.features[p];
+								
+								if(data.type == 'MultiLineString')
+								{
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.MultiLineString(data.coordinates),
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									
+									iconFeature.setId(data.id);
+									
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+								else if(data.type == 'Point')
+								{
+									var iconFeature = new ol.Feature({
+										geometry: data.coordinates,			
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									
+									iconFeature.setId(data.id);
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+								else if(data.type == 'MultiPolygon')
+								{
+									var pointArr = data.coordinates;
+									
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.Polygon(data.coordinates),
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									iconFeature.setId(data.info);
+									
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+							}
+						}
+					});
+					
+				});
 			}
 	);
 	
@@ -311,6 +388,6 @@ $(function ()
 	});
 	
 })
+
+
 </script>
-</body>
-</html>

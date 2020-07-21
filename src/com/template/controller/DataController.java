@@ -45,7 +45,7 @@ import com.template.model.SysTableAttribute;
 import com.template.model.gis.Gismaplayers;
 import com.template.service.TableAttributeService;
 import com.template.service.TableService;
-import com.template.service.UserService;
+import com.template.service.SysUserService;
 import com.template.service.gis.GismaplayersService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
@@ -75,7 +75,7 @@ public class DataController {
 	private TableService tableService;
 	
 	@Autowired
-	private UserService userService;
+	private SysUserService userService;
 	
 	@Autowired
 	private TableAttributeService layerAttributeService;
@@ -935,6 +935,9 @@ public class DataController {
 			
 				Gismaplayers mapLayer = gismaplayersService.getById(layerId);
 				
+				if(mapLayer == null)
+					continue;
+				
 				String infoFields = mapLayer.getinfofields();
 				
 				String sTableName = mapLayer.getlayersource();
@@ -978,7 +981,9 @@ public class DataController {
 					{
 						String field = infoFieldArr[j];
 						
-						String val = hm.get(field).toString();
+						String val = "";
+						if(hm.containsKey(field) && hm.get(field) != null)
+							val = hm.get(field).toString();
 						
 						info += val + "\r\n";
 					}

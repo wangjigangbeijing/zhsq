@@ -2,7 +2,8 @@ package com.template.busi.controller.jcsqsj;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.template.model.Jc_rubbish;
+
+import com.template.model.jcsqsj.Jc_rubbish;
 import com.template.service.jcsqsj.Jc_rubbishService;
 import com.template.util.HqlFilter;
 import com.template.util.ConstValue;
