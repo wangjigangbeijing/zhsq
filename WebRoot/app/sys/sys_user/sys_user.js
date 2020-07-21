@@ -13,6 +13,9 @@ $(document).ready(function (){
 	$('#btnSearch').click(load);
 	
 	load();
+	
+	$('.select2').select2();
+	
 });
 
 var curId;
@@ -62,8 +65,8 @@ function load()
 				"columns": [
 										{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'loginid' ,'sClass':'text-center'},
-					{ 'data': 'password' ,'sClass':'text-center'},
-					{ 'data': 'gender' ,'sClass':'text-center'},
+					//{ 'data': 'password' ,'sClass':'text-center'},
+					//{ 'data': 'gender' ,'sClass':'text-center'},
 					{ 'data': 'birthday' ,'sClass':'text-center'},
 					{ 'data': 'joinday' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
@@ -86,11 +89,12 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  11,//从0开始
+					targets:  9,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">编辑</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\">删除</a>";
 						
 						return btn;
 					}
@@ -133,7 +137,7 @@ function deleteData(id)
 		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/sys_userController/delete",
+			$.post(getContextPath()+"/sysUserController/delete",
 			{
 				id:id
 			},

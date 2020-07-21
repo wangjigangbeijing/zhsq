@@ -62,7 +62,7 @@ function load()
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'code' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
-					{ 'data': 'border' ,'sClass':'text-center'},
+					//{ 'data': 'border' ,'sClass':'text-center'},
 					{ 'data': 'area' ,'sClass':'text-center'},
 					{ 'data': 'address' ,'sClass':'text-center'},
 					{ 'data': 'telphone' ,'sClass':'text-center'},
@@ -70,7 +70,7 @@ function load()
 					{ 'data': 'secretaryphone' ,'sClass':'text-center'},
 					{ 'data': 'directorname' ,'sClass':'text-center'},
 					{ 'data': 'directorphone' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
+					//{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -86,11 +86,11 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  12,//从0开始
+					targets:  10,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">编辑</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\">删除</a>";
 						
 						return btn;
 					}

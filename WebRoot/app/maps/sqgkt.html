@@ -11,21 +11,7 @@
 		
 		<div class='form-group row pull-right' id="layerDiv">
 		
-		
-						<div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Checkbox</label>
-                        </div>
-						
-						
-						<div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Checkbox</label>
-                        </div>
-
-
-		
-		
+		</div>
 		</form>
 		
 	  </div>
@@ -255,7 +241,7 @@ $(function ()
 						dataType: "json",
 						success: function (dataList) {
 							
-							for(var p=0;p < dataList.features.length;p++)
+							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 							{
 								var data = dataList.features[p];
 								
@@ -289,13 +275,6 @@ $(function ()
 								{
 									var pointArr = data.coordinates;
 									
-									/*var transferedArr = [];//data.coordinates;
-									
-									for(var q=0;q<pointArr.length;q++)
-									{
-										transferedArr[q] = ol.proj.transform(pointArr[q], 'EPSG:4326', 'EPSG:3857');
-									}*/
-									
 									var iconFeature = new ol.Feature({
 										geometry: new ol.geom.Polygon(data.coordinates),
 										weight:1,
@@ -319,10 +298,66 @@ $(function ()
 					$("input[name='layer']").each(function () {
 						
 						if($(this).prop('checked'))
-							checkedLayerId += $(this).$(this).attr('id')+',';
+							checkedLayerId += $(this).attr('id')+',';
 					});
 					
-					alert(checkedLayerId);
+					
+					$.ajax({
+						type: "GET",
+						//url:"http://49.233.26.198:8082/gis/zhsq/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=zhsq:jc_community&maxFeatures=50&outputFormat=application/json",
+						url: getContextPath()+"/dataController/wfs?layerIds="+checkedLayerId,
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (dataList) {
+							
+							dataLayer.getSource().clear();
+							
+							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
+							{
+								var data = dataList.features[p];
+								
+								if(data.type == 'MultiLineString')
+								{
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.MultiLineString(data.coordinates),
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									
+									iconFeature.setId(data.id);
+									
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+								else if(data.type == 'Point')
+								{
+									var iconFeature = new ol.Feature({
+										geometry: data.coordinates,			
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									
+									iconFeature.setId(data.id);
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+								else if(data.type == 'MultiPolygon')
+								{
+									var pointArr = data.coordinates;
+									
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.Polygon(data.coordinates),
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									iconFeature.setId(data.info);
+									
+									dataLayer.getSource().addFeature(iconFeature);	
+								}
+							}
+						}
+					});
 					
 				});
 			}

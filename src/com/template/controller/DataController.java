@@ -935,6 +935,9 @@ public class DataController {
 			
 				Gismaplayers mapLayer = gismaplayersService.getById(layerId);
 				
+				if(mapLayer == null)
+					continue;
+				
 				String infoFields = mapLayer.getinfofields();
 				
 				String sTableName = mapLayer.getlayersource();
