@@ -183,7 +183,14 @@ $(document).ready(function (){
 		updateActiveMenu('smsAnchor');
         loadSMSPage();
     });
-	
+	$('#telAnchor').click(function () {
+		updateActiveMenu('telAnchor');
+        loadTelPage();
+    });
+	$('#boardAnchor').click(function () {
+		updateActiveMenu('boardAnchor');
+        loadBoardPage();
+    });
 	
 	
 	
@@ -443,6 +450,22 @@ function loadSMSPage()
 }
 
 
+function loadTelPage()
+{
+	$('#main-content').load("./sys/sys_tel_publish/sys_tel_publish.html", function () {
+        
+    });
+}
+
+
+
+function loadBoardPage()
+{
+	$('#main-content').load("./sys/sys_board_publish/sys_board_publish.html", function () {
+        
+    });
+}
+
 
 
 
@@ -498,7 +521,7 @@ function loadUserPage()
     });
 }
 
-
+/*
 var page = 'list';
 
 var PAGE_LIST = 'list';
@@ -538,7 +561,7 @@ function loadSsjsjPage()
     });
 	
 }
-
+*/
 function getCurrentLoginUserInfo()
 {
 	$.get(getContextPath()+"/loginController/getCurrentLoginUserInfo",
