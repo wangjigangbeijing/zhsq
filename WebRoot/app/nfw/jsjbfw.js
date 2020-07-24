@@ -1,4 +1,4 @@
-
+﻿
 
 $(document).ready(function (){
 	
@@ -67,22 +67,14 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
-					{ 'data': 'quezhen' ,'sClass':'text-center'},
-					{ 'data': 'qzdate' ,'sClass':'text-center'},
-					{ 'data': 'qznote' ,'sClass':'text-center'},
-					{ 'data': 'yisi' ,'sClass':'text-center'},
-					{ 'data': 'mijie' ,'sClass':'text-center'},
-					{ 'data': 'mjnote' ,'sClass':'text-center'},
-					{ 'data': 'glstartdate' ,'sClass':'text-center'},
-					{ 'data': 'glenddate' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
-					{ 'data': 'hsjc' ,'sClass':'text-center'},
-					{ 'data': 'hsjcdate' ,'sClass':'text-center'},
-					{ 'data': 'hsjcjigou' ,'sClass':'text-center'},
-					{ 'data': 'hsjcjieguo' ,'sClass':'text-center'},
+					{ 'data': 'sjbt' ,'sClass':'text-center'},
+					{ 'data': 'dsr' ,'sClass':'text-center'},
+					{ 'data': 'dsrdh' ,'sClass':'text-center'},
+					{ 'data': 'sjly' ,'sClass':'text-center'},
+					{ 'data': 'sjlybh' ,'sClass':'text-center'},
+					{ 'data': 'pdsj' ,'sClass':'text-center'},
+					{ 'data': 'cljzsj' ,'sClass':'text-center'},
+					{ 'data': 'bz' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -98,7 +90,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  16,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

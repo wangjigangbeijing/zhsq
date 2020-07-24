@@ -1,4 +1,4 @@
-
+﻿var curnodeprocess;
 
 $(document).ready(function (){
 	
@@ -16,6 +16,8 @@ $(document).ready(function (){
 	
 	if(curId != '')
 		viewDetail(curId);
+	
+	loadTemplateProcess(curId);
 	
 	var pdsj = $('#pdsj').datepicker({
 			format: 'yyyy-mm-dd',
@@ -56,6 +58,44 @@ $(document).ready(function (){
 			}).data('datepicker');
 
 });
+
+//加载流程节点信息
+function loadTemplateProcess(id){
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?id="+id,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				if(obj.isfinish){
+					$("#btn_back").hide();
+					$("#btn_goon").hide();
+				}
+				else {
+					curnodeprocess = obj.data;
+					
+					if(obj.data.prevlabel != null && obj.data.prevlabel != ''){
+						$("#btn_back").html(obj.data.prevlabel);
+					}
+					else {
+						$("#btn_back").hide();
+					}
+					
+					if(obj.data.nextlabel != null && obj.data.nextlabel != ''){
+						$("#btn_goon").text(obj.data.nextlabel);
+					}
+					else {
+						$("#btn_goon").hide();
+					}
+				}
+			}
+			else {
+				jError("获取业务流程数据失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+			}
+		});
+}
 
 
 function viewDetail(id)
@@ -150,6 +190,46 @@ function addOrUpdate()
 				VerticalPosition : 'center',
 				HorizontalPosition : 'center'
 			});
+			
+			//存储业务流信息
+			
+			var dataid = obj.dataid;
+			
+			gobackPage();
+			
+			//load();
+		}
+		else
+		{
+			jError("数据修改失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	});
+}
+
+
+//保存业务流程信息
+function saveProcessInfo(dataid){
+	$.post(getContextPath()+"/flowtemplateController/saveprocess",
+	{
+		dataid:dataid,
+		processid:curnodeprocess.id,
+		opertype:2
+	},
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			jSuccess("数据修改成功!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+			
+			//存储业务流信息
+			
+			var dataid = obj.dataid;
 			
 			gobackPage();
 			

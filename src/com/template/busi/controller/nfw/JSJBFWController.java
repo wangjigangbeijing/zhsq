@@ -104,6 +104,7 @@ public class JSJBFWController {
 			
 			jsjbfwService.save(jsjbfw);
 			
+			jsonObj.put("dataid", jsjbfw.getId());
 	        jsonObj.put("success", true);
 		}
 		catch(Exception e)

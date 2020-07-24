@@ -323,4 +323,66 @@ public class FlowTemplateController {
 		}
 	    return jsonObj.toString();
 	}
+	
+	@RequestMapping(value="getdatatemplateprocessinfo",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String getCurDataTemplateProcessInfo(String dataid) {
+		logger.info("getdatatemplateprocessinfo");
+		
+		JSONObject jsonObj = new JSONObject();
+		try {
+			
+			String sql = "select * from fw_flowprocessinfo where templateid=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(6);
+			List<HashMap> templateprocesslist = this.userService.findBySql(sql, params);
+			if(templateprocesslist == null || templateprocesslist.size() == 0) {
+				jsonObj.put("success", false);
+			}
+			else {
+				if(dataid == null || dataid.trim().length() == 0) {
+					jsonObj.put("success", true);
+					jsonObj.put("finish", false);
+					jsonObj.put("data", templateprocesslist.get(0));
+				}
+				else {
+					sql = "select b.* from fw_flowdatainfo a, fw_flowprocessinfo b where a.processid=b.id and a.dataid=? order by a.inserttime desc";
+					params.clear();
+					params.add(dataid);
+					List<HashMap> dataprocesslist = this.userService.findBySql(sql, params);
+					if(dataprocesslist != null && dataprocesslist.size() > 0) {
+						if(dataprocesslist.get(0).get("nextnodeid") == null) {
+							//最终节点
+							jsonObj.put("success", true);
+							jsonObj.put("finish", true);
+						}
+						else {
+							int nextnodeid = (int) dataprocesslist.get(0).get("nextnodeid");
+							sql = "select * from fw_flowprocessinfo where nodeid=?";
+							params.clear();
+							params.add(nextnodeid);
+							List<HashMap> templateprocesslist2 = this.userService.findBySql(sql, params);
+							if(templateprocesslist2 == null || templateprocesslist2.size() == 0) {
+								jsonObj.put("success", false);
+							}
+							else {
+								jsonObj.put("success", true);
+								jsonObj.put("finish", false);
+								jsonObj.put("data", templateprocesslist2.get(0));
+							}
+							
+						}
+					}
+					else {
+						jsonObj.put("success", false);
+					}
+				}
+			}		
+			
+		} catch(Exception e) {
+			jsonObj.put("success", false);
+		}
+		
+		return jsonObj.toString();
+	}
 }
