@@ -3,89 +3,11 @@
 <script src="./sys/sys_tel_publish/sys_tel_publishDetail.js"></script>
 
 
+<script language="javascript" type="text/javascript" src="../plugins/telbox/qnviccub.js"></script>
+<script language="javascript" type="text/javascript" src="../plugins/telbox/qnvfunc.js"></script>
+<script language="javascript" type="text/javascript" src="../plugins/telbox/json2.js"></script>
+<script language="javascript" type="text/javascript" src="../plugins/telbox/deviceapi.js"></script>
 
-
-
-<!--section class="wrapper">
-
-			<div class="row">
-                  <div class="col-lg-12">
-					  <section class="panel">
-                          <header class="panel-heading">
-                              
-                          </header>
-						  
-                          <div class="panel-body">
-                              <form role="form" class="form-horizontal tasi-form" id="submitLayerForm">
-                                  
-																<div class='form-group row'>
-						<label class='col-md-2 control-label'>通知标题</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='title'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>类别</label>
-  				<div class='col-md-9'>
-						<select class='form-control field' name='category' id='category'>
- 						<option value='民主自治'>民主自治</option>
-						</select>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>通知内容</label>
-  				<div class='col-md-9'>
-					<textarea class='form-control ckeditor field' name='content' id='content' rows='6'></textarea>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>通知录音</label>
-  				<div class='col-md-9'>
-<div id='audiodiv' class='wu-example'>
-<input type='text' class='form-control field' name='audio' id='audio' style='display:none;'>
-<table class='table' id='audiopicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
-<div class='btns'>
-<div id='audiopick'>选择文件</div>
-</div>
-</div>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>通知人</label>
-  				<div class='col-md-9'>
-					<textarea class='form-control ckeditor field' name='target' id='target' rows='6'></textarea>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>电话通知时间</label>
-  				<div class='col-md-9'>
-					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
-						<input type='text' size='16' class='form-control' id='publishtime'>
-						<span class='input-group-btn add-on'>
-							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
-						</span>
-					</div>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>状态</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='status'>
- 						</div>
- 					</div>
-
-									  <div class="modal-footer">
-										  <button class="btn btn-success pull-left" type="button" id="addOrUpdateBtn" onclick="addOrUpdate();">确定</button>							  
-										  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
-									  </div>
-								  
-                              </form>
-                          </div>
-                      </section>
-                  </div>
-              </div>
-	
-</section-->		  
 
 <section class="content">
       <div class="container-fluid">
@@ -116,6 +38,16 @@
 					<textarea class='form-control ckeditor field' name='content' id='content' rows='6'></textarea>
  						</div>
  					</div>
+					
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>通知录音（本地路径）</label>
+						<div class='col-md-9'>
+							<div class="custom-file">
+							  <input type='text' class='form-control' id='audioLocalPath'>
+							</div>
+ 						</div>
+ 					</div>
+					
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>通知录音</label>
   				<div class='col-md-9'>
@@ -128,13 +60,14 @@
 </div>
  						</div>
  					</div>
+					
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>通知人</label>
   				<div class='col-md-9'>
 					<textarea class='form-control ckeditor field' name='target' id='target' rows='6'></textarea>
  						</div>
  					</div>
-					<div class='form-group row'>
+					<!--div class='form-group row'>
 						<label class='col-md-2 control-label'>电话通知时间</label>
   				<div class='col-md-9'>
 					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
@@ -144,13 +77,15 @@
 						</span>
 					</div>
  						</div>
- 					</div>
-					<div class='form-group row'>
+ 					</div-->
+					
+					
+					<!--div class='form-group row'>
 						<label class='col-md-2 control-label'>状态</label>
   				<div class='col-md-9'>
  					<input type='text' class='form-control' id='status'>
  						</div>
- 					</div>
+ 					</div-->
 
 					
                 </div>
@@ -185,7 +120,17 @@ formData:{
 attributeName:'audio'
 }
 });
+
+uploaderaudio.on( 'beforeFileQueued', function( file ) {
+	
+	debugger;
+
+	
+});
 uploaderaudio.on( 'fileQueued', function( file ) {
+	
+	debugger;
+
 	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
 						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
 						'</tr>');

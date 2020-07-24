@@ -314,5 +314,18 @@ public void setfamiliesinbuilding(Integer familiesinbuilding)
 {
 	this.familiesinbuilding = familiesinbuilding;
 }
+
+
+
+@Column(name = "owner", nullable = true)
+public String owner;
+public String getowner()
+{
+	return owner;
+}
+public void setowner(String owner)
+{
+	this.owner = owner;
+}
 }
 

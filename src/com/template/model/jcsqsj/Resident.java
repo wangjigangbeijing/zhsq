@@ -1014,5 +1014,18 @@ public void setwtgg_special_skill(String wtgg_special_skill)
 {
 	this.wtgg_special_skill = wtgg_special_skill;
 }
+
+
+
+@Column(name = "owner", nullable = true)
+public String owner;
+public String getowner()
+{
+	return owner;
+}
+public void setowner(String owner)
+{
+	this.owner = owner;
+}
 }
 

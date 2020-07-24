@@ -304,5 +304,16 @@ public void setorginbuilding(Integer orginbuilding)
 {
 	this.orginbuilding = orginbuilding;
 }
+
+@Column(name = "owner", nullable = true)
+public String owner;
+public String getowner()
+{
+	return owner;
+}
+public void setowner(String owner)
+{
+	this.owner = owner;
+}
 }
 

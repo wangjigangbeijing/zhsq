@@ -422,6 +422,14 @@ public class DataController {
 			
 			logger.debug(sData);
 			*/
+			
+			String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+			
+			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+			
+			if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
+				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			
 			Gson gson=new Gson();
 			
 			java.lang.reflect.Type type=new com.google.gson.reflect.TypeToken<Data>(){}.getType();
@@ -556,6 +564,9 @@ public class DataController {
 					
 					sVals += "ST_GeomFromText('POLYGON(("+sPoint+"))'),'"+sPoint+"',";
 				}
+				
+				sCols += "owner,";
+				sVals += "'"+userId+"',";
 				
 				if(sCols != null && sCols.endsWith(","))
 					sCols = sCols.substring(0,sCols.length() - 1);

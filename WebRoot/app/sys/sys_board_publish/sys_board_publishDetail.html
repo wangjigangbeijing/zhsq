@@ -39,24 +39,6 @@
  						</div>
  					</div>
 					<div class='form-group row'>
-						<label class='col-md-2 control-label'>布告栏设施</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='facilities'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>正文</label>
-  				<div class='col-md-9'>
-					<textarea class='form-control ckeditor field' name='content' id='content' rows='6'></textarea>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>附件</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='attachment'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
 						<label class='col-md-2 control-label'>上架时间</label>
   				<div class='col-md-9'>
 					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
@@ -76,6 +58,30 @@
 							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
 						</span>
 					</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>布告栏设施</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='facilities'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>正文</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='content' id='content' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>附件</label>
+  				<div class='col-md-9'>
+<div id='attachmentdiv' class='wu-example'>
+<input type='text' class='form-control field' name='attachment' id='attachment' style='display:none;'>
+<table class='table' id='attachmentpicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='attachmentpick'>选择文件</div>
+</div>
+</div>
  						</div>
  					</div>
 
@@ -122,24 +128,6 @@
  						</div>
  					</div>
 					<div class='form-group row'>
-						<label class='col-md-2 control-label'>布告栏设施</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='facilities'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>正文</label>
-  				<div class='col-md-9'>
-					<textarea class='form-control ckeditor field' name='content' id='content' rows='6'></textarea>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>附件</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='attachment'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
 						<label class='col-md-2 control-label'>上架时间</label>
   				<div class='col-md-9'>
 					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
@@ -159,6 +147,30 @@
 							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
 						</span>
 					</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>布告栏设施</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='facilities'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>正文</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='content' id='content' rows='6'></textarea>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>附件</label>
+  				<div class='col-md-9'>
+<div id='attachmentdiv' class='wu-example'>
+<input type='text' class='form-control field' name='attachment' id='attachment' style='display:none;'>
+<table class='table' id='attachmentpicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='attachmentpick'>选择文件</div>
+</div>
+</div>
  						</div>
  					</div>
 
@@ -182,6 +194,32 @@
 	
 <script>
 
+var uploaderattachment = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#attachmentpick',
+formData:{
+attributeName:'attachment'
+}
+});
+uploaderattachment.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderattachment.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderattachment.on( 'uploadError', function( file,response ) {
+});	
 
 
 </script>

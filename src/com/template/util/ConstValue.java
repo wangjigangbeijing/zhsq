@@ -111,10 +111,11 @@ public class ConstValue {
 	public final static String SESSION_USER_TYPE = "USER_TYPE";
 	public final static String SESSION_USER_STREET = "USER_STREET";
 	public final static String SESSION_USER_NAME = "USER_NAME";
-	
+	public final static String SESSION_USER_ORG = "USER_ORG";
 	//0 采集人员 1 web街道，具备数据审核功能   2 web客户 3 web系统管理员  4 采集管理员,可以补采
 	public final static int USER_TYPE_ADMIN = 0;
-	public final static int USER_TYPE_PM = 1;
+	public final static int USER_TYPE_STREET = 0;
+	public final static int USER_TYPE_COMMUNITY = 1;
 	
 	public final static String DB_TYPE_STRING = "字符串";
 	public final static String DB_TYPE_NUMBER = "数字";
@@ -176,6 +177,8 @@ public class ConstValue {
 	
 	
 	public static HashMap<String,String> userMap = new HashMap<String,String>();
+	
+	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
 	
 	
 }

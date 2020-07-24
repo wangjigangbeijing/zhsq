@@ -23,6 +23,9 @@ import com.template.util.EncryptUtil;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.template.model.SysUser;
+import com.template.model.SysUserOrganization;
+import com.template.service.SysOrganizationService;
+import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
@@ -39,6 +42,12 @@ public class LoginController {
 	@Autowired
 	private SysUserService userService;
 	
+	@Autowired
+	private SysUserOrganizationService userOrganizationService;
+	
+	@Autowired
+	private SysOrganizationService organizationService;
+	
 	@RequestMapping(value=ConstValue.LOGIN_CONTROLLER_LOGIN,method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String login(String username,String password)
@@ -52,6 +61,8 @@ public class LoginController {
 				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
 				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, "admin");
+				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, "");
+				
 				jsonObj.put("userType", ConstValue.USER_TYPE_ADMIN);	
 				jsonObj.put("userName", "管理员");	
 				jsonObj.put("success", true);	
@@ -59,7 +70,6 @@ public class LoginController {
 				
 				return jsonObj.toString();
 			}
-			
 			
 			HqlFilter hqlFilter = new HqlFilter();
 			hqlFilter.addQryCond("loginid", HqlFilter.Operator.EQ, username);
@@ -106,11 +116,27 @@ public class LoginController {
 				//jsonObj.put("mobile", sysUser.getMobile());
 				//jsonObj.put("nickName", sysUser.getUsername());
 				
+				HqlFilter hqlFilterOrganzation = new HqlFilter();
+				hqlFilterOrganzation.addQryCond("user", HqlFilter.Operator.EQ, sysUser.getId());
+				
+				List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
+
+				String organizations = "";
+				
+				for(int i=0;i<userOrgList.size();i++)
+				{
+					organizations += userOrgList.get(i).getorganization()+",";
+				}
+				
+				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, organizations);
+				
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, userInfoList.get(0).getId());
 				
 				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
 				
 				String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+				
+				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
 				
 				if(sSource != null && sSource.equalsIgnoreCase(ConstValue.HTTP_HEADER_SOURCE_APP))//用户从APP端登陆
 				{

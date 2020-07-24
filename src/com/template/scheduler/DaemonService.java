@@ -14,9 +14,11 @@ import org.springframework.stereotype.Component;
 
 import com.template.model.SysDictionary;
 import com.template.model.SysUser;
+import com.template.model.SysUserOrganization;
 import com.template.model.jcsqsj.Resident;
 import com.template.model.jcsqsj.Room;
 import com.template.service.DictionaryService;
+import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.service.jcsqsj.ResidentService;
 import com.template.service.jcsqsj.RoomService;
@@ -43,6 +45,10 @@ public class DaemonService
 
 	@Autowired
 	private SysUserService userService;
+	
+
+	@Autowired
+	private SysUserOrganizationService userOrganizationService;
 	
 	/*
 	 * @Desc	
@@ -171,6 +177,22 @@ public class DaemonService
 				String name = sysUser.getname();
 				
 				ConstValue.userMap.put(id,name);
+				
+				
+				
+				HqlFilter hqlFilterOrganzation = new HqlFilter();
+				hqlFilterOrganzation.addQryCond("user", HqlFilter.Operator.EQ, sysUser.getId());
+				
+				List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
+
+				String organizations = "";
+				
+				for(int j=0;j<userOrgList.size();j++)
+				{
+					organizations += userOrgList.get(j).getorganization()+",";
+				}
+				
+				ConstValue.userToOrgMap.put(id,organizations);
 			}
 		}
 		catch(Exception e)

@@ -30,12 +30,11 @@ function viewDetail(id)
 				
 								$('#title').val(obj.title);
 				$('#category').val(obj.category);
-				$('#facilities').val(obj.facilities);
-				$('#content').val(obj.content);
-				$('#attachment').val(obj.attachment);
 				$('#starttime').val(obj.starttime);
 				$('#endtime').val(obj.endtime);
-
+				$('#facilities').val(obj.facilities);
+				$('#content').val(obj.content);
+				var attachmentArr = obj.attachment.split(VALUE_SPLITTER);				for(var j=0;j<attachmentArr.length;j++)				{					if(attachmentArr[j] != '')					{						$('#attachmentpicktable').append('<tr><td>'+attachmentArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+attachmentArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}
 					
 			}
 		});
@@ -71,11 +70,11 @@ function addOrUpdate()
 		id:curId,
 				title:$('#title').val(),
 		category:$('#category').val(),
+		starttime:$('#starttime').val(),
+		endtime:$('#endtime').val(),
 		facilities:$('#facilities').val(),
 		content:$('#content').val(),
-		attachment:$('#attachment').val(),
-		starttime:$('#starttime').val(),
-		endtime:$('#endtime').val()
+		attachment:$('#attachment').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
