@@ -266,7 +266,7 @@ $(function ()
 								}
 								else if(data.type == 'Point')
 								{
-									var iconFeature = new ol.Feature({
+									/*var iconFeature = new ol.Feature({
 										geometry: new ol.geom.Point(data.coordinates),
 										weight:1,
 										population: 4000,
@@ -275,6 +275,24 @@ $(function ()
 									
 									iconFeature.setId(data.id);
 									dataLayer.getSource().addFeature(iconFeature);	
+									*/
+									
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.Point(data.coordinates),			
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									
+									iconFeature.setStyle(new ol.style.Style({
+										image: new ol.style.Icon({
+											src: '../icons/point.png'
+										})
+									}));
+									
+									iconFeature.setId(data.id);
+									dataLayer.getSource().addFeature(iconFeature);	
+									
 								}
 								else if(data.type == 'MultiPolygon')
 								{
@@ -338,12 +356,29 @@ $(function ()
 								}
 								else if(data.type == 'Point')
 								{
-									var iconFeature = new ol.Feature({
-										geometry: data.coordinates,			
+									/*var iconFeature = new ol.Feature({
+										geometry: new ol.geom.Point(data.coordinates),
 										weight:1,
 										population: 4000,
 										rainfall: 500
 									});
+									
+									iconFeature.setId(data.id);
+									dataLayer.getSource().addFeature(iconFeature);	
+									*/
+									
+									var iconFeature = new ol.Feature({
+										geometry: new ol.geom.Point(data.coordinates),			
+										weight:1,
+										population: 4000,
+										rainfall: 500
+									});
+									
+									iconFeature.setStyle(new ol.style.Style({
+										image: new ol.style.Icon({
+											src: '../icons/point.png'
+										})
+									}));
 									
 									iconFeature.setId(data.id);
 									dataLayer.getSource().addFeature(iconFeature);	
