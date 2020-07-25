@@ -100,7 +100,9 @@ function load()
 						
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-flask\"></i>业务流</a>";
 						
 						return btn;
 					}
@@ -236,10 +238,15 @@ function deleteData(id)
 
 
 function openResidentDialog()
-{
+{	
+	$('#residentDialog').show();	
+}
+
+function enterFlow(id){
+	curId = id;
 	
-	$('#residentDialog').show();
-	
-	
+	$('#main-content').load("./nfw/jsjbfwFlowDetail.html", function () {
+		
+    });
 	
 }

@@ -1,4 +1,5 @@
 package com.template.busi.controller.nfw;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -166,28 +167,14 @@ public class JSJBFWController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			JSJBFW jsjbfw = jsjbfwService.getById(id);
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from kz_jsjbfw a where id=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(id);
+			List<HashMap> list = this.jsjbfwService.findBySql(sql, params);
 			
-			if(jsjbfw != null)
+			if(list != null && list.size() > 0)
 			{
-				jsonObj.put("id",jsjbfw.getId());
-				jsonObj.put("bz",jsjbfw.getbz());
-				jsonObj.put("cljzsj",jsjbfw.getcljzsj());
-				jsonObj.put("clsx",jsjbfw.getclsx());
-				jsonObj.put("dsr",jsjbfw.getdsr());
-				jsonObj.put("dsrdh",jsjbfw.getdsrdh());
-				jsonObj.put("fj",jsjbfw.getfj());
-				jsonObj.put("fsdz",jsjbfw.getfsdz());
-				jsonObj.put("pdsj",jsjbfw.getpdsj());
-				jsonObj.put("sfyqhf",jsjbfw.getsfyqhf());
-				jsonObj.put("sjbt",jsjbfw.getsjbt());
-				jsonObj.put("sjfl",jsjbfw.getsjfl());
-				jsonObj.put("sjjjcd",jsjbfw.getsjjjcd());
-				jsonObj.put("sjly",jsjbfw.getsjly());
-				jsonObj.put("sjlybh",jsjbfw.getsjlybh());
-				jsonObj.put("sjlyjb",jsjbfw.getsjlyjb());
-				jsonObj.put("sjnr",jsjbfw.getsjnr());
-				jsonObj.put("wtfl",jsjbfw.getwtfl());
+				jsonObj.put("data",list.get(0));
 				jsonObj.put("success", true);
 			}
 			else

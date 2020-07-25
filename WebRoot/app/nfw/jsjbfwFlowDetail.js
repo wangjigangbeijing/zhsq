@@ -17,9 +17,7 @@ $(document).ready(function (){
 	if(curId != '')
 		viewDetail(curId);
 	
-	if(curId == ''){
-		loadTemplateProcess();
-	}
+	loadTemplateProcess(curId);
 	
 	var pdsj = $('#pdsj').datepicker({
 			format: 'yyyy-mm-dd',
@@ -62,18 +60,36 @@ $(document).ready(function (){
 });
 
 //加载流程节点信息
-function loadTemplateProcess(){
-	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?dataid=",
+function loadTemplateProcess(id){
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?dataid=" + id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
+				console.log(obj);
 				if(obj.isfinish){
-					
+					$("#btn_back").hide();
+					$("#btn_goon").hide();
 				}
 				else {
 					curnodeprocess = obj.data;
+					
+					if(obj.data.prevlabel != null && obj.data.prevlabel != ''){
+						$("#btn_back").html(obj.data.prevlabel);
+					}
+					else {
+						$("#btn_back").hide();
+					}
+					
+					if(obj.data.nextlabel != null && obj.data.nextlabel != ''){
+						$("#btn_goon").text(obj.data.nextlabel);
+					}
+					else {
+						$("#btn_goon").hide();
+					}
 				}
+				
+				$("#curnode").html(obj.data.nodename);
 			}
 			else {
 				jError("获取业务流程数据失败!",{
@@ -92,9 +108,7 @@ function viewDetail(id)
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				//$('#modalDetail').show();
-				
-				//$('#name').val(),
+				/*
 				$('#sjbt').val(obj.sjbt);
 				$('#sjjjcd').val(obj.sjjjcd);
 				$('#sjlyjb').val(obj.sjlyjb);
@@ -119,7 +133,10 @@ function viewDetail(id)
 					{						
 						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
 					}
-				}				
+				}	
+				*/			
+
+				$("#showstatus").html(obj.data.status);
 				
 				//$('#pictures').val(obj.pictures);
 			}
@@ -226,6 +243,8 @@ function saveProcessInfo(dataid, stat){
 function backData(){
 	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
 	{
+		desc: $("#desc").val(),
+		type: 1,
 		dataid:curId,
 		processid:curnodeprocess.id,
 		stat:curnodeprocess.prevstatus
@@ -234,11 +253,45 @@ function backData(){
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{			
+			jSuccess("业务处理成功!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
 			gobackPage();
 		}
 		else
 		{
-			jError("保存流程数据失败!",{
+			jError("业务处理失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	});
+}
+
+//同意业务
+function goondata(){
+	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
+	{
+		desc: $("#desc").val(),
+		type: 2,
+		dataid:curId,
+		processid:curnodeprocess.id,
+		stat:curnodeprocess.nextstatus
+	},
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{			
+			jSuccess("业务处理成功!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+			gobackPage();
+		}
+		else
+		{
+			jError("业务处理失败!",{
 				VerticalPosition : 'center',
 				HorizontalPosition : 'center'
 			});

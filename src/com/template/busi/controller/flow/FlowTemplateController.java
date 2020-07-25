@@ -299,13 +299,15 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="saveprocessdata",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String saveProcessData(String dataid, Integer processid, String stat)//,String duoxuan)Integer longitude,Integer latitude,
+	public String saveProcessData(String desc, int type, String dataid, Integer processid, String stat)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("saveprocessdata");
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("result", type);
+			map.put("flowdesc", desc);
 			map.put("dataid", dataid);
 			map.put("processid", processid);
 			map.put("status", stat);
@@ -393,7 +395,7 @@ public class FlowTemplateController {
 						else {
 							int nextnodeid = (int) dataprocesslist.get(0).get("nextnodeid");
 							System.out.println("NextNodeID：" + nextnodeid);
-							sql = "select * from fw_flowprocessinfo where templateid=? and nodeid=?";
+							sql = "select a.*, (select nodename from fw_nodeinfo where id=a.nodeid) as nodename from fw_flowprocessinfo a where a.templateid=? and a.nodeid=?";
 							params.clear();
 							params.add(templateid);
 							params.add(nextnodeid);
