@@ -215,6 +215,8 @@ $(function ()
 	dataLayer.getSource().addFeature(iconFeature);	*/
 	map.addLayer(dataLayer);
 	
+	var layerStyleMap = {};
+	
 	$.get(getContextPath()+"/gismapController/getMapByName?name=社区概况图",
 			function(response)
 			{	
@@ -244,8 +246,9 @@ $(function ()
 					
 					var layerStyle = layer.layerstyle;
 					
-					//if(layerName != 'jc_community')
-					//	continue;
+					var layerStyleObj = jQuery.parseJSON(layerStyle); 
+					
+					layerStyleMap[layerId] = layerStyleObj;
 					
 					$.ajax({
 						type: "GET",
@@ -287,15 +290,15 @@ $(function ()
 									*/
 									
 									var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Point(data.coordinates),			
+										geometry: new ol.geom.Point(data.coordinates)/*,			
 										weight:1,
 										population: 4000,
-										rainfall: 500
+										rainfall: 500*/
 									});
 									
 									iconFeature.setStyle(new ol.style.Style({
 										image: new ol.style.Icon({
-											src: '../icons/point.png'
+											src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
 										})
 									}));
 									
@@ -317,20 +320,21 @@ $(function ()
 									
 									
 									var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Polygon(data.coordinates),
+										geometry: new ol.geom.Polygon(data.coordinates)/*,
 										weight:1,
 										population: 4000,
-										rainfall: 500
+										rainfall: 500*/
 									});
 									iconFeature.setId(data.info);
 									
 									iconFeature.setStyle(new ol.style.Style({
 										stroke: new ol.style.Stroke({       // 线样式
-											color: 'blue',
-											width: 3
+											color: layerStyleObj.style['stroke-color'],//'blue',
+											width: layerStyleObj.style['stroke-width']
 										}),
 										fill: new ol.style.Fill({           // 填充样式
-											color: 'orange'
+											color: layerStyleObj.style['fill-color'],//'orange'
+											opacity: layerStyleObj.style['fill-opacity']
 										})
 									}));
 									
@@ -366,7 +370,9 @@ $(function ()
 							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 							{
 								var data = dataList.features[p];
-								
+							
+								layerStyleObj = layerStyleMap[data.layerId];
+							
 								if(data.type == 'MultiLineString')
 								{
 									var iconFeature = new ol.Feature({
@@ -402,7 +408,7 @@ $(function ()
 									
 									iconFeature.setStyle(new ol.style.Style({
 										image: new ol.style.Icon({
-											src: '../icons/point.png'
+											src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
 										})
 									}));
 									
@@ -419,6 +425,18 @@ $(function ()
 										population: 4000,
 										rainfall: 500
 									});
+									
+									iconFeature.setStyle(new ol.style.Style({
+										stroke: new ol.style.Stroke({       // 线样式
+											color: layerStyleObj.style['stroke-color'],//'blue',
+											width: layerStyleObj.style['stroke-width']
+										}),
+										fill: new ol.style.Fill({           // 填充样式
+											color: layerStyleObj.style['fill-color'],//'orange'
+											opacity: layerStyleObj.style['fill-opacity']
+										})
+									}));
+									
 									iconFeature.setId(data.info);
 									
 									dataLayer.getSource().addFeature(iconFeature);	

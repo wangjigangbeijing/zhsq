@@ -72,38 +72,46 @@ function ShowAddModal()
 	
 }
 */
+
+var sleep = function(time) {
+    var startTime = new Date().getTime() + parseInt(time, 10);
+    while(new Date().getTime() < startTime) {}
+};
+
+
+
+
+
+var curPlayInprogress = false;
+
 function addOrUpdate()
 {
+	var target = $('#target').val();
 	
+	var audioLocalPath = $('#audioLocalPath').val();
 	
+	var targetArr = target.split(',');
 	
+	for(var i=0;i<targetArr.length;i++)
+	{
+		for(var k=0;k<60;k++)//最多等待1分钟
+		{
+			sleep(1000);
+			
+			if(curPlayInprogress == false)
+				break;
+		}
+		
+		TV_StartDial(0,targetArr[i]);
 	
-	
-	
-	TV_StartDial(0,'13311189721');
-	
-	
-	
-	
-	TV_StartPlayFile(0,'文件路径');
-	
-	
-	
-	
-	
-	
-	TV_StopPlayFile(0);
-	
-	
-	
-	
-	
-	TV_HangUpCtrl(0);
-	
-	
-	
-	
-	
+		TV_StartPlayFile(0,audioLocalPath);
+		
+		curPlayInprogress = true;
+		
+		//TV_StopPlayFile(0);
+		
+		TV_HangUpCtrl(0);
+	}
 	
 	$.post(getContextPath()+"/sysTelPublishController/addOrUpdate",
 	{
@@ -150,22 +158,6 @@ function downloadAttach(fileName)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function  T_GetEvent(uID,uEventType,uHandle,uResult,szdata)
 {
 	//var vValueArray=qnviccub.QNV_Event(0,2,0,"","",1024);
@@ -197,6 +189,7 @@ function  T_GetEvent(uID,uEventType,uHandle,uResult,szdata)
 		AppendStatusEx(uID,"调用开始拨号后，全部号码拨号结束"+vValue);
 	break;
 	case BriEvent_PlayFileEnd:// 播放文件结束事件
+		curPlayInprogress = false;
 		AppendStatusEx(uID,"播放文件结束事件"+vValue);
 	break;
 	case BriEvent_PlayMultiFileEnd:// 多文件连播结束事件

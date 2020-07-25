@@ -289,6 +289,8 @@ var curMap = '';
 var baseLayer = null;
 var dataLayer = null;
 
+var layerStyleMap = {};
+
 function loadMap(mapName)
 {
 	curMap = 'mapName';
@@ -321,6 +323,10 @@ function loadMap(mapName)
 					var layerType = layer.layertype;
 					
 					var layerStyle = layer.layerstyle;
+					
+					var layerStyleObj = jQuery.parseJSON(layerStyle); 
+					
+					layerStyleMap[layerId] = layerStyleObj;
 					
 					$.ajax({
 						type: "GET",
@@ -369,7 +375,7 @@ function loadMap(mapName)
 									
 									iconFeature.setStyle(new ol.style.Style({
 										image: new ol.style.Icon({
-											src: '../icons/point.png'
+											src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
 										})
 									}));
 									
@@ -394,6 +400,17 @@ function loadMap(mapName)
 										rainfall: 500
 									});
 									iconFeature.setId(data.info);
+									
+									iconFeature.setStyle(new ol.style.Style({
+										stroke: new ol.style.Stroke({       // 线样式
+											color: layerStyleObj.style['stroke-color'],//'blue',
+											width: layerStyleObj.style['stroke-width']
+										}),
+										fill: new ol.style.Fill({           // 填充样式
+											color: layerStyleObj.style['fill-color'],//'orange'
+											opacity: layerStyleObj.style['fill-opacity']
+										})
+									}));
 									
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
@@ -429,6 +446,8 @@ function loadMap(mapName)
 							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 							{
 								var data = dataList.features[p];
+								
+								layerStyleObj = layerStyleMap[data.layerId];
 								
 								if(data.type == 'MultiLineString')
 								{
@@ -483,6 +502,17 @@ function loadMap(mapName)
 										rainfall: 500
 									});
 									iconFeature.setId(data.info);
+									
+									iconFeature.setStyle(new ol.style.Style({
+										stroke: new ol.style.Stroke({       // 线样式
+											color: layerStyleObj.style['stroke-color'],//'blue',
+											width: layerStyleObj.style['stroke-width']
+										}),
+										fill: new ol.style.Fill({           // 填充样式
+											color: layerStyleObj.style['fill-color'],//'orange'
+											opacity: layerStyleObj.style['fill-opacity']
+										})
+									}));
 									
 									dataLayer.getSource().addFeature(iconFeature);	
 								}

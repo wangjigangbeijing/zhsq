@@ -211,6 +211,8 @@ $(function ()
 	dataLayer.getSource().addFeature(iconFeature);	*/
 	map.addLayer(dataLayer);
 	
+	var layerStyleMap = {};
+	
 	$.get(getContextPath()+"/gismapController/getMapByName?name=社区民情图",
 			function(response)
 			{	
@@ -237,6 +239,10 @@ $(function ()
 					var layerType = layer.layertype;
 					
 					var layerStyle = layer.layerstyle;
+					
+					var layerStyleObj = jQuery.parseJSON(layerStyle); 
+					
+					layerStyleMap[layerId] = layerStyleObj;
 					
 					$.ajax({
 						type: "GET",
@@ -286,7 +292,7 @@ $(function ()
 									
 									iconFeature.setStyle(new ol.style.Style({
 										image: new ol.style.Icon({
-											src: '../icons/point.png'
+											src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
 										})
 									}));
 									
@@ -305,6 +311,17 @@ $(function ()
 										rainfall: 500
 									});
 									iconFeature.setId(data.info);
+									
+									iconFeature.setStyle(new ol.style.Style({
+										stroke: new ol.style.Stroke({       // 线样式
+											color: layerStyleObj.style['stroke-color'],//'blue',
+											width: layerStyleObj.style['stroke-width']
+										}),
+										fill: new ol.style.Fill({           // 填充样式
+											color: layerStyleObj.style['fill-color'],//'orange'
+											opacity: layerStyleObj.style['fill-opacity']
+										})
+									}));
 									
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
@@ -341,6 +358,8 @@ $(function ()
 							{
 								var data = dataList.features[p];
 								
+								layerStyleObj = layerStyleMap[data.layerId];
+								
 								if(data.type == 'MultiLineString')
 								{
 									var iconFeature = new ol.Feature({
@@ -376,7 +395,7 @@ $(function ()
 									
 									iconFeature.setStyle(new ol.style.Style({
 										image: new ol.style.Icon({
-											src: '../icons/point.png'
+											src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
 										})
 									}));
 									
@@ -395,6 +414,17 @@ $(function ()
 									});
 									iconFeature.setId(data.info);
 									
+									iconFeature.setStyle(new ol.style.Style({
+										stroke: new ol.style.Stroke({       // 线样式
+											color: layerStyleObj.style['stroke-color'],//'blue',
+											width: layerStyleObj.style['stroke-width']
+										}),
+										fill: new ol.style.Fill({           // 填充样式
+											color: layerStyleObj.style['fill-color'],//'orange'
+											opacity: layerStyleObj.style['fill-opacity']
+										})
+									}));
+									
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
 							}
@@ -402,17 +432,6 @@ $(function ()
 					});
 					
 				});
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			}
 	);
 	

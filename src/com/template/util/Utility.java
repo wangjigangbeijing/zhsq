@@ -13,14 +13,26 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class Utility 
 {
 	public static Logger logger = Logger.getLogger(Utility.class);
 	
-
+	public static Utility utility;
+	
+	public synchronized static Utility getInstance()
+	{
+		if(utility == null)
+			utility = new Utility();
+		
+		return utility;
+	}
+	
 	/*
 	@desc	获得当前系统时间
 	@return	返回的时间格式为：20050105090212	
@@ -205,6 +217,31 @@ public class Utility
 		}
 	    
 	    return true;  
-	}  
+	}
+	
+	
+
+	@Autowired
+	private HttpServletRequest request;
+	
+	public String getOrganization()
+	{
+		String organization = "";
+		
+		String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+		
+		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+		
+		if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
+			userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		//String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		
+		return organization;
+	}
+	
+	
 	
 }

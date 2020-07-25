@@ -128,10 +128,39 @@ public class DataController {
 			
 			String sTableName = layer.getTableENName();			
 			
-			String sSql = "SELECT "+sFieldNames+" FROM "+sTableName;
+			String sSql = "SELECT "+sFieldNames+" FROM "+sTableName+" WHERE 1 = 1 ";
 			
 			if(queryStr != null && queryStr.equalsIgnoreCase("") == false)
-				sSql += " WHERE "+queryStr;
+				sSql += " AND "+queryStr;
+			
+			String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+			
+			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+			
+			if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
+				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			
+			String organization = "";
+			if(ConstValue.userToOrgMap.containsKey(userId))
+				organization = ConstValue.userToOrgMap.get(userId);
+			
+			if(organization != null)
+			{
+				String [] organizationArr = organization.split(",");
+				
+				String ownerCond = "";
+				
+				for(int i=0;i<organizationArr.length;i++)
+				{
+					ownerCond += " OWNER LIKE '%"+organizationArr[i]+"%' OR ";
+				}
+				
+				if(ownerCond.endsWith(" OR "))
+					ownerCond = ownerCond.substring(0, ownerCond.length() - 4);
+				
+				if(ownerCond.equalsIgnoreCase("") == false)
+					sSql += " AND ("+ownerCond+") ";
+			}
 			
 			logger.debug(sSql);
 			
@@ -430,6 +459,10 @@ public class DataController {
 			if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
 				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 			
+			String organization = "";
+			if(ConstValue.userToOrgMap.containsKey(userId))
+				organization = ConstValue.userToOrgMap.get(userId);
+			
 			Gson gson=new Gson();
 			
 			java.lang.reflect.Type type=new com.google.gson.reflect.TypeToken<Data>(){}.getType();
@@ -566,7 +599,7 @@ public class DataController {
 				}
 				
 				sCols += "owner,";
-				sVals += "'"+userId+"',";
+				sVals += "'"+organization+"',";
 				
 				if(sCols != null && sCols.endsWith(","))
 					sCols = sCols.substring(0,sCols.length() - 1);
@@ -1004,6 +1037,7 @@ public class DataController {
 					JSONObject jsonTmp = new JSONObject();
 					
 					jsonTmp.put("info", info);
+					jsonTmp.put("layerId", layerId);
 					jsonTmp.put("type", sLayerType);
 					jsonTmp.put("id", sTableName+"."+gid);
 					if(sLayerType.equalsIgnoreCase("Point"))

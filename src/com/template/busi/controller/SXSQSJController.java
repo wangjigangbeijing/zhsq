@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -76,6 +77,8 @@ public class SXSQSJController {
 		logger.debug("addOrUpdate");
     	JSONObject jsonObj = new JSONObject();
     	
+    	String organization = Utility.getInstance().getOrganization();
+    	
 		try
 		{
 			SXSQSJ sxsqsj = new SXSQSJ();
@@ -108,6 +111,7 @@ public class SXSQSJController {
 			sxsqsj.setSXZT(sxzt);
 			sxsqsj.setFJ(fj);
 			sxsqsj.setSXJBR(sxjbr);
+			sxsqsj.setOWNER(organization);
 			
 			sxsqsjService.saveOrUpdate(sxsqsj);
 			
@@ -163,6 +167,25 @@ public class SXSQSJController {
 			HqlFilter hqlFilter = new HqlFilter();
 			if(sxdl != null && sxdl.equalsIgnoreCase("") == false)
 				hqlFilter.addQryCond("SXDL", HqlFilter.Operator.EQ, sxdl);
+			
+	    	String organization = Utility.getInstance().getOrganization();
+	    	
+			String [] organizationArr = organization.split(",");
+			
+			ArrayList<String> alStr = new ArrayList<String>();
+			
+			//String ownerCond = "";
+			
+			for(int i=0;i<organizationArr.length;i++)
+			{
+				//ownerCond += " OWNER LIKE '%"+organizationArr[i]+"%' OR ";
+				
+				//hqlFilter.addOrCondGroup("OWNER", HqlFilter.Operator.LIKE, "%"+organizationArr[i]+"%");
+				
+				alStr.add("%"+organizationArr[i]+"%");
+			}
+			
+			hqlFilter.addOrCondGroup("OWNER", HqlFilter.Operator.LIKE, alStr);
 			
 	        List<SXSQSJ> listObj = sxsqsjService.findByFilter(hqlFilter);
 			

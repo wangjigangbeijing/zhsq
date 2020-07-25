@@ -249,4 +249,16 @@ public class SXSQSJ implements java.io.Serializable {
 		this.SXJBR = SXJBR;
 	}
 	
+
+	@Column(name = "OWNER", nullable = true)
+	public String OWNER;
+	
+	public String getOWNER()
+	{
+		return OWNER;
+	}
+	public void setOWNER(String OWNER)
+	{
+		this.OWNER = OWNER;
+	}
 }
