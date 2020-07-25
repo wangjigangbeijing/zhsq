@@ -49,6 +49,7 @@ function loadnodes()
 				"columns": [
 					{ "data": "nodename" ,"sClass":"text-center"},
 					{ "data": "node_category" ,"sClass":"text-center"},
+					{ "data": "nodetype" ,"sClass":"text-center"},
 					{ "data": "canback" ,"sClass":"text-center",
 						mRender : function(data,type,full){
 							if(full.canback == 0) return "否";
@@ -67,7 +68,7 @@ function loadnodes()
 				{
 					className: 'control',
 					orderable: false,
-					targets:   4,//从0开始
+					targets:   5,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 

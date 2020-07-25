@@ -28,7 +28,8 @@ function viewDetail(id)
 					var v = categories[i];
 					$("input:checkbox[value=" + v + "]").attr('checked','true');
 				}
-				//$('#node_category').val(obj.data.node_category);
+				
+				$('#nodetype').val(obj.data.nodetype);
 				$("input[name='canback'][value='"+obj.data.canback+"']").attr("checked",true);
 				$("input[name='cangoon'][value='"+obj.data.cangoon+"']").attr("checked",true);
 					
@@ -69,6 +70,7 @@ function addOrUpdate()
 		id:curId,
 		nodename:$('#nodename').val(),
 		node_category:categories,
+		nodetype: $("#nodetype").val(),
 		canback:$("input[name='canback']:checked").val(),//$('#buildtype').val(),
 		cangoon:$("input[name='cangoon']:checked").val()//$('#buildtype').val(),
 	},
