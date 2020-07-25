@@ -1,24 +1,23 @@
 package com.template.busi.controller.nfw;
-import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.template.model.nfw.JSJBFW;
-import com.template.model.nfw.Xgyqinfo;
-import com.template.service.nfw.JSJBFWService;
-import com.template.service.nfw.XgyqinfoService;
-import com.template.util.HqlFilter;
-import com.template.util.ConstValue;
-import com.template.util.Utility;
-import com.template.util.TimeUtil;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Date;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.template.model.nfw.JSJBFW;
+import com.template.service.nfw.JSJBFWService;
+import com.template.util.HqlFilter;
+import com.template.util.Utility;
 @Controller
 @RequestMapping("jsjbfwController")
 public class JSJBFWController {
@@ -144,76 +143,13 @@ public class JSJBFWController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			HqlFilter hqlFilter = new HqlFilter();/*
-	if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
-	}
-	if(mobile != null && mobile.equalsIgnoreCase("") == false && mobile.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
-	}
-	if(address != null && address.equalsIgnoreCase("") == false && address.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("address", HqlFilter.Operator.LIKE, "%"+address+"%");
-	}
-	if(quezhen != null && quezhen.equalsIgnoreCase("") == false && quezhen.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("quezhen", HqlFilter.Operator.LIKE, "%"+quezhen+"%");
-	}
-	if(qzdate != null && qzdate.equalsIgnoreCase("") == false && qzdate.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("qzdate", HqlFilter.Operator.LIKE, "%"+qzdate+"%");
-	}
-	if(yisi != null && yisi.equalsIgnoreCase("") == false && yisi.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("yisi", HqlFilter.Operator.LIKE, "%"+yisi+"%");
-	}
-	if(mijie != null && mijie.equalsIgnoreCase("") == false && mijie.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("mijie", HqlFilter.Operator.LIKE, "%"+mijie+"%");
-	}
-	if(hsjc != null && hsjc.equalsIgnoreCase("") == false && hsjc.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("hsjc", HqlFilter.Operator.LIKE, "%"+hsjc+"%");
-	}
-	if(hsjcjieguo != null && hsjcjieguo.equalsIgnoreCase("") == false && hsjcjieguo.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("hsjcjieguo", HqlFilter.Operator.LIKE, "%"+hsjcjieguo+"%");
-	}
-		*/
-        List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);
-        net.sf.json.JSONArray jsonArr = net.sf.json.JSONArray.fromObject(listObj);
-//        JSONArray jsonArr = new JSONArray();
-//        int iTotalCnt = 0;
-//		for(int i=0;i<listObj.size();i++)
-//		{
-//			JSJBFW jsjbfw = listObj.get(i);
-//			JSONObject jsonTmp = new JSONObject();
-//			jsonObj.put("id",jsjbfw.getId());
-//			jsonObj.put("bz",jsjbfw.getbz());
-//			jsonObj.put("cljzsj",jsjbfw.getcljzsj());
-//			jsonObj.put("clsx",jsjbfw.getclsx());
-//			jsonObj.put("dsr",jsjbfw.getdsr());
-//			jsonObj.put("dsrdh",jsjbfw.getdsrdh());
-//			jsonObj.put("fj",jsjbfw.getfj());
-//			jsonObj.put("fsdz",jsjbfw.getfsdz());
-//			jsonObj.put("pdsj",jsjbfw.getpdsj());
-//			jsonObj.put("sfyqhf",jsjbfw.getsfyqhf());
-//			jsonObj.put("sjbt",jsjbfw.getsjbt());
-//			jsonObj.put("sjfl",jsjbfw.getsjfl());
-//			jsonObj.put("sjjjcd",jsjbfw.getsjjjcd());
-//			jsonObj.put("sjly",jsjbfw.getsjly());
-//			jsonObj.put("sjlybh",jsjbfw.getsjlybh());
-//			jsonObj.put("sjlyjb",jsjbfw.getsjlyjb());
-//			jsonObj.put("sjnr",jsjbfw.getsjnr());
-//			jsonObj.put("wtfl",jsjbfw.getwtfl());
-//
-//       		jsonArr.put(jsonTmp);
-//        	iTotalCnt++;
-//		}
-        jsonObj.put("totalCount", jsonArr.size());
-        jsonObj.put("list", jsonArr);
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from kz_jsjbfw a";
+			List<HashMap> list = this.jsjbfwService.findBySql(sql);
+//			HqlFilter hqlFilter = new HqlFilter();
+//        List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);
+        //net.sf.json.JSONArray jsonArr = net.sf.json.JSONArray.fromObject(list);
+        jsonObj.put("totalCount", list.size());
+        jsonObj.put("list", list);
         jsonObj.put("success", true);
 	}
 	catch(Exception e)
@@ -231,28 +167,14 @@ public class JSJBFWController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			JSJBFW jsjbfw = jsjbfwService.getById(id);
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from kz_jsjbfw a where id=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(id);
+			List<HashMap> list = this.jsjbfwService.findBySql(sql, params);
 			
-			if(jsjbfw != null)
+			if(list != null && list.size() > 0)
 			{
-				jsonObj.put("id",jsjbfw.getId());
-				jsonObj.put("bz",jsjbfw.getbz());
-				jsonObj.put("cljzsj",jsjbfw.getcljzsj());
-				jsonObj.put("clsx",jsjbfw.getclsx());
-				jsonObj.put("dsr",jsjbfw.getdsr());
-				jsonObj.put("dsrdh",jsjbfw.getdsrdh());
-				jsonObj.put("fj",jsjbfw.getfj());
-				jsonObj.put("fsdz",jsjbfw.getfsdz());
-				jsonObj.put("pdsj",jsjbfw.getpdsj());
-				jsonObj.put("sfyqhf",jsjbfw.getsfyqhf());
-				jsonObj.put("sjbt",jsjbfw.getsjbt());
-				jsonObj.put("sjfl",jsjbfw.getsjfl());
-				jsonObj.put("sjjjcd",jsjbfw.getsjjjcd());
-				jsonObj.put("sjly",jsjbfw.getsjly());
-				jsonObj.put("sjlybh",jsjbfw.getsjlybh());
-				jsonObj.put("sjlyjb",jsjbfw.getsjlyjb());
-				jsonObj.put("sjnr",jsjbfw.getsjnr());
-				jsonObj.put("wtfl",jsjbfw.getwtfl());
+				jsonObj.put("data",list.get(0));
 				jsonObj.put("success", true);
 			}
 			else

@@ -74,7 +74,12 @@ function load()
 					{ 'data': 'sjlybh' ,'sClass':'text-center'},
 					{ 'data': 'pdsj' ,'sClass':'text-center'},
 					{ 'data': 'cljzsj' ,'sClass':'text-center'},
-					{ 'data': 'bz' ,'sClass':'text-center'},
+					{ 'data': 'status' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							var btn = "<span style='color: blue;'>"+full.status+"</span>";
+							return btn;
+						}
+					},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -92,9 +97,12 @@ function load()
 					orderable: false,
 					targets:  8,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
+
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-flask\"></i>业务流</a>";
 						
 						return btn;
 					}
@@ -230,10 +238,15 @@ function deleteData(id)
 
 
 function openResidentDialog()
-{
+{	
+	$('#residentDialog').show();	
+}
+
+function enterFlow(id){
+	curId = id;
 	
-	$('#residentDialog').show();
-	
-	
+	$('#main-content').load("./nfw/jsjbfwFlowDetail.html", function () {
+		
+    });
 	
 }
