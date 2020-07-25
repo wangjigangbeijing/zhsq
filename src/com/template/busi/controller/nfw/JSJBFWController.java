@@ -183,35 +183,36 @@ public class JSJBFWController {
 	}
 		*/
         List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);
-        JSONArray jsonArr = new JSONArray();
-        int iTotalCnt = 0;
-		for(int i=0;i<listObj.size();i++)
-		{
-			JSJBFW jsjbfw = listObj.get(i);
-			JSONObject jsonTmp = new JSONObject();
-			jsonObj.put("id",jsjbfw.getId());
-			jsonObj.put("bz",jsjbfw.getbz());
-			jsonObj.put("cljzsj",jsjbfw.getcljzsj());
-			jsonObj.put("clsx",jsjbfw.getclsx());
-			jsonObj.put("dsr",jsjbfw.getdsr());
-			jsonObj.put("dsrdh",jsjbfw.getdsrdh());
-			jsonObj.put("fj",jsjbfw.getfj());
-			jsonObj.put("fsdz",jsjbfw.getfsdz());
-			jsonObj.put("pdsj",jsjbfw.getpdsj());
-			jsonObj.put("sfyqhf",jsjbfw.getsfyqhf());
-			jsonObj.put("sjbt",jsjbfw.getsjbt());
-			jsonObj.put("sjfl",jsjbfw.getsjfl());
-			jsonObj.put("sjjjcd",jsjbfw.getsjjjcd());
-			jsonObj.put("sjly",jsjbfw.getsjly());
-			jsonObj.put("sjlybh",jsjbfw.getsjlybh());
-			jsonObj.put("sjlyjb",jsjbfw.getsjlyjb());
-			jsonObj.put("sjnr",jsjbfw.getsjnr());
-			jsonObj.put("wtfl",jsjbfw.getwtfl());
-
-       		jsonArr.put(jsonTmp);
-        	iTotalCnt++;
-		}
-        jsonObj.put("totalCount", iTotalCnt);
+        net.sf.json.JSONArray jsonArr = net.sf.json.JSONArray.fromObject(listObj);
+//        JSONArray jsonArr = new JSONArray();
+//        int iTotalCnt = 0;
+//		for(int i=0;i<listObj.size();i++)
+//		{
+//			JSJBFW jsjbfw = listObj.get(i);
+//			JSONObject jsonTmp = new JSONObject();
+//			jsonObj.put("id",jsjbfw.getId());
+//			jsonObj.put("bz",jsjbfw.getbz());
+//			jsonObj.put("cljzsj",jsjbfw.getcljzsj());
+//			jsonObj.put("clsx",jsjbfw.getclsx());
+//			jsonObj.put("dsr",jsjbfw.getdsr());
+//			jsonObj.put("dsrdh",jsjbfw.getdsrdh());
+//			jsonObj.put("fj",jsjbfw.getfj());
+//			jsonObj.put("fsdz",jsjbfw.getfsdz());
+//			jsonObj.put("pdsj",jsjbfw.getpdsj());
+//			jsonObj.put("sfyqhf",jsjbfw.getsfyqhf());
+//			jsonObj.put("sjbt",jsjbfw.getsjbt());
+//			jsonObj.put("sjfl",jsjbfw.getsjfl());
+//			jsonObj.put("sjjjcd",jsjbfw.getsjjjcd());
+//			jsonObj.put("sjly",jsjbfw.getsjly());
+//			jsonObj.put("sjlybh",jsjbfw.getsjlybh());
+//			jsonObj.put("sjlyjb",jsjbfw.getsjlyjb());
+//			jsonObj.put("sjnr",jsjbfw.getsjnr());
+//			jsonObj.put("wtfl",jsjbfw.getwtfl());
+//
+//       		jsonArr.put(jsonTmp);
+//        	iTotalCnt++;
+//		}
+        jsonObj.put("totalCount", jsonArr.size());
         jsonObj.put("list", jsonArr);
         jsonObj.put("success", true);
 	}
