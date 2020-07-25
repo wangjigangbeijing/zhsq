@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.template.service.SysUserService;
 import com.template.util.TimeUtil;
+import com.template.util.Utility;
 
 @Controller
 @RequestMapping("flowtemplateController")
@@ -296,6 +297,37 @@ public class FlowTemplateController {
 	    return jsonObj.toString();
 	}
 	
+	@RequestMapping(value="saveprocessdata",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String saveProcessData(String dataid, Integer processid, String stat)//,String duoxuan)Integer longitude,Integer latitude,
+	{
+		logger.info("saveprocessdata");
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("dataid", dataid);
+			map.put("processid", processid);
+			map.put("status", stat);
+			map.put("inserttime", Utility.getSystemTime());
+			
+			int ret = this.userService.addData(map, "fw_flowdatainfo");
+			if(ret > 0) {
+				jsonObj.put("success", true);
+			}
+			else {
+				jsonObj.put("success", false);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", e.getMessage());
+		}
+	    return jsonObj.toString();
+	}
+	
 	@RequestMapping(value="deleteprocess",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String deleteProcess(int id)
@@ -329,12 +361,14 @@ public class FlowTemplateController {
 	public String getCurDataTemplateProcessInfo(String dataid) {
 		logger.info("getdatatemplateprocessinfo");
 		
+		int templateid = 6;
+		
 		JSONObject jsonObj = new JSONObject();
 		try {
 			
 			String sql = "select * from fw_flowprocessinfo where templateid=?";
 			List<Object> params = new ArrayList<Object>();
-			params.add(6);
+			params.add(templateid);
 			List<HashMap> templateprocesslist = this.userService.findBySql(sql, params);
 			if(templateprocesslist == null || templateprocesslist.size() == 0) {
 				jsonObj.put("success", false);
@@ -358,8 +392,10 @@ public class FlowTemplateController {
 						}
 						else {
 							int nextnodeid = (int) dataprocesslist.get(0).get("nextnodeid");
-							sql = "select * from fw_flowprocessinfo where nodeid=?";
+							System.out.println("NextNodeID：" + nextnodeid);
+							sql = "select * from fw_flowprocessinfo where templateid=? and nodeid=?";
 							params.clear();
+							params.add(templateid);
 							params.add(nextnodeid);
 							List<HashMap> templateprocesslist2 = this.userService.findBySql(sql, params);
 							if(templateprocesslist2 == null || templateprocesslist2.size() == 0) {

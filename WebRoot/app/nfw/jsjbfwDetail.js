@@ -61,9 +61,10 @@ $(document).ready(function (){
 
 //加载流程节点信息
 function loadTemplateProcess(id){
-	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?id="+id,
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?dataid="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
 			if(obj.success)
 			{
 				if(obj.isfinish){
@@ -191,13 +192,9 @@ function addOrUpdate()
 				HorizontalPosition : 'center'
 			});
 			
-			//存储业务流信息
-			
-			var dataid = obj.dataid;
-			
-			gobackPage();
-			
-			//load();
+			console.log(obj);
+			//存储业务流信息			
+			saveProcessInfo(obj.dataid, curnodeprocess.nextstatus);
 		}
 		else
 		{
@@ -211,33 +208,46 @@ function addOrUpdate()
 
 
 //保存业务流程信息
-function saveProcessInfo(dataid){
-	$.post(getContextPath()+"/flowtemplateController/saveprocess",
+function saveProcessInfo(dataid, stat){
+	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
 	{
 		dataid:dataid,
 		processid:curnodeprocess.id,
-		opertype:2
+		stat:stat
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
-		{
-			jSuccess("数据修改成功!",{
-				VerticalPosition : 'center',
-				HorizontalPosition : 'center'
-			});
-			
-			//存储业务流信息
-			
-			var dataid = obj.dataid;
-			
+		{			
 			gobackPage();
-			
-			//load();
 		}
 		else
 		{
-			jError("数据修改失败!",{
+			jError("保存流程数据失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	});
+}
+
+//回退业务
+function backData(){
+	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
+	{
+		dataid:curId,
+		processid:curnodeprocess.id,
+		stat:curnodeprocess.prevstatus
+	},
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{			
+			gobackPage();
+		}
+		else
+		{
+			jError("保存流程数据失败!",{
 				VerticalPosition : 'center',
 				HorizontalPosition : 'center'
 			});
