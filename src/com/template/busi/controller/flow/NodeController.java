@@ -48,7 +48,7 @@ public class NodeController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id,String nodename,String node_category,Integer canback,Integer cangoon)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id,String nodename,String node_category, String nodetype, Integer canback,Integer cangoon)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate");
 		JSONObject jsonObj = new JSONObject();
@@ -64,6 +64,7 @@ public class NodeController {
 					//新增
 					map.put("nodename", nodename);
 					map.put("node_category", node_category);
+					map.put("nodetype", nodetype);
 					map.put("canback", canback);
 					map.put("cangoon", cangoon);
 					
@@ -83,6 +84,7 @@ public class NodeController {
 					
 					map.put("nodename", nodename);
 					map.put("node_category", node_category);
+					map.put("nodetype", nodetype);
 					map.put("canback", canback);
 					map.put("cangoon", cangoon);
 					
@@ -99,6 +101,7 @@ public class NodeController {
 			else {
 				map.put("nodename", nodename);
 				map.put("node_category", node_category);
+				map.put("nodetype", nodetype);
 				map.put("canback", canback);
 				map.put("cangoon", cangoon);
 				
