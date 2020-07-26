@@ -19,6 +19,8 @@ import com.template.service.SysUserService;
 import com.template.util.TimeUtil;
 import com.template.util.Utility;
 
+import net.openmob.mobileimsdk.java.utils.Log;
+
 @Controller
 @RequestMapping("flowtemplateController")
 public class FlowTemplateController {
@@ -362,7 +364,7 @@ public class FlowTemplateController {
     @ResponseBody
 	public String getCurDataTemplateProcessInfo(String dataid) {
 		logger.info("getdatatemplateprocessinfo");
-		
+				
 		int templateid = 6;
 		
 		JSONObject jsonObj = new JSONObject();
@@ -382,18 +384,25 @@ public class FlowTemplateController {
 					jsonObj.put("data", templateprocesslist.get(0));
 				}
 				else {
-					sql = "select b.* from fw_flowdatainfo a, fw_flowprocessinfo b where a.processid=b.id and a.dataid=? order by a.inserttime desc";
+					sql = "select a.result, b.* from fw_flowdatainfo a, fw_flowprocessinfo b where a.processid=b.id and a.dataid=? order by a.inserttime desc";
 					params.clear();
 					params.add(dataid);
 					List<HashMap> dataprocesslist = this.userService.findBySql(sql, params);
 					if(dataprocesslist != null && dataprocesslist.size() > 0) {
-						if(dataprocesslist.get(0).get("nextnodeid") == null) {
+						String result = (String) dataprocesslist.get(0).get("result");
+						if(("2".equals(result) && dataprocesslist.get(0).get("nextnodeid") == null) || ("1".equals(result) && dataprocesslist.get(0).get("prevnodeid") == null)) {
 							//最终节点
 							jsonObj.put("success", true);
 							jsonObj.put("finish", true);
 						}
 						else {
-							int nextnodeid = (int) dataprocesslist.get(0).get("nextnodeid");
+							int nextnodeid = 0;
+							if("1".equals(result)) {
+								nextnodeid = (int) dataprocesslist.get(0).get("prevnodeid");
+							}
+							else {
+								nextnodeid = (int) dataprocesslist.get(0).get("nextnodeid");
+							}
 							System.out.println("NextNodeID：" + nextnodeid);
 							sql = "select a.*, (select nodename from fw_nodeinfo where id=a.nodeid) as nodename from fw_flowprocessinfo a where a.templateid=? and a.nodeid=?";
 							params.clear();
