@@ -203,6 +203,7 @@ function addOrUpdate()
 function saveProcessInfo(dataid, stat){
 	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
 	{
+		attach: '',
 		desc: '',
 		type: 2,
 		dataid:dataid,

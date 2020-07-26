@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
+import com.mysql.cj.util.StringUtils;
+import com.template.model.SysUser;
 import com.template.service.SysUserService;
+import com.template.util.ConstValue;
+import com.template.util.HqlFilter;
 import com.template.util.TimeUtil;
 import com.template.util.Utility;
-
-import net.openmob.mobileimsdk.java.utils.Log;
 
 @Controller
 @RequestMapping("flowtemplateController")
@@ -29,6 +33,9 @@ public class FlowTemplateController {
 	
 	@Autowired
 	private SysUserService userService;
+	
+	@Autowired
+	private  HttpServletRequest request;
 	
 	@RequestMapping(value="gettemplatelist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
@@ -264,6 +271,28 @@ public class FlowTemplateController {
 		return jsonObj.toString();
 	}
 	
+	@RequestMapping(value="getcuruser",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String getCurUser() {
+		logger.info("getcuruser");
+		
+		JSONObject jsonObj = new JSONObject();
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		HqlFilter hqlFilter = new HqlFilter();
+		hqlFilter.addQryCond("id", HqlFilter.Operator.EQ, userid);
+		
+		List<SysUser> userInfoList = userService.findByFilter(hqlFilter);
+		if(userInfoList == null || userInfoList.size() == 0) {
+			jsonObj.put("success", false);
+		}
+		else {
+			jsonObj.put("success", true);
+			jsonObj.put("data", userInfoList.get(0).getname());
+		}
+		
+		return jsonObj.toString();
+	}
+	
 	@RequestMapping(value="addtemplateprocess",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String addTemplateProcess(String templateid, Integer nodeid, Integer prevnode, String prevlabel, String prevstatus, Integer nextnode, String nextlabel, String nextstatus)//,String duoxuan)Integer longitude,Integer latitude,
@@ -301,19 +330,24 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="saveprocessdata",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String saveProcessData(String desc, Integer type, String dataid, Integer processid, String stat)//,String duoxuan)Integer longitude,Integer latitude,
+	public String saveProcessData(String attach, String desc, Integer type, String dataid, Integer processid, String stat)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("saveprocessdata");
+		
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);		
+		
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("attach", attach);
 			map.put("result", type);
 			map.put("flowdesc", desc);
 			map.put("dataid", dataid);
 			map.put("processid", processid);
 			map.put("status", stat);
 			map.put("inserttime", Utility.getSystemTime());
+			map.put("insertuser", userid);
 			
 			int ret = this.userService.addData(map, "fw_flowdatainfo");
 			if(ret > 0) {
@@ -413,8 +447,13 @@ public class FlowTemplateController {
 								jsonObj.put("success", false);
 							}
 							else {
+								if(templateprocesslist2.get(0).get("prevnodeid") == null && templateprocesslist2.get(0).get("nextnodeid") == null) {
+									jsonObj.put("finish", true);
+								}
+								else {
+									jsonObj.put("finish", false);
+								}
 								jsonObj.put("success", true);
-								jsonObj.put("finish", false);
 								jsonObj.put("data", templateprocesslist2.get(0));
 							}
 							
@@ -424,6 +463,39 @@ public class FlowTemplateController {
 						jsonObj.put("success", false);
 					}
 				}
+			}		
+			
+		} catch(Exception e) {
+			jsonObj.put("success", false);
+		}
+		
+		return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadprocessdata",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String loadProcessDataList(String dataid) {
+		logger.info("loadprocessdata");
+				
+		int templateid = 6;
+		
+		JSONObject jsonObj = new JSONObject();
+		try {
+			
+			String sql = "select * from fw_flowprocessinfo where templateid=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(templateid);
+			List<HashMap> templateprocesslist = this.userService.findBySql(sql, params);
+			if(templateprocesslist == null || templateprocesslist.size() == 0 || StringUtils.isNullOrEmpty(dataid)) {
+				jsonObj.put("success", false);
+			}
+			else {
+				sql = "select a.*, b.nodeid, b.prevlabel, b.nextlabel, c.nodename, (select name from sys_user where id=a.insertuser) as name from fw_flowdatainfo a, fw_flowprocessinfo b, fw_nodeinfo c where a.processid=b.id and b.nodeid=c.id and a.dataid=? order by a.inserttime";
+				params.clear();
+				params.add(dataid);
+				List<HashMap> dataprocesslist = this.userService.findBySql(sql, params);
+				jsonObj.put("success", true);
+				jsonObj.put("list", dataprocesslist);
 			}		
 			
 		} catch(Exception e) {

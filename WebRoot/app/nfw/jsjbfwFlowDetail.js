@@ -19,6 +19,10 @@ $(document).ready(function (){
 	
 	loadTemplateProcess(curId);
 	
+	loadprocessdata(curId);
+	
+	loadcuruser();
+	
 	var pdsj = $('#pdsj').datepicker({
 			format: 'yyyy-mm-dd',
 			todayBtn: 'linked',
@@ -66,10 +70,12 @@ function loadTemplateProcess(id){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				console.log(obj);
-				if(obj.isfinish){
+				//console.log(obj);
+				if(obj.finish){
 					$("#btn_back").hide();
 					$("#btn_goon").hide();
+					
+					$("#resultdiv").hide();
 				}
 				else {
 					curnodeprocess = obj.data;
@@ -100,6 +106,69 @@ function loadTemplateProcess(id){
 		});
 }
 
+//加载所有的业务操作流程
+function loadprocessdata(id){
+	$.get(getContextPath()+"/flowtemplateController/loadprocessdata?dataid=" + id,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				//console.log(obj);
+				
+				for(var i = 0; i < obj.list.length; i++){
+					
+					var content = "<div>" +
+						"<i class='fas fa-envelope bg-primary'></i>" +
+							"<div class='timeline-item'>" + 
+								"<span class='time'><i class='far fa-user'></i>" + obj.list[i].name + "</span>" +
+								"<h3 class='timeline-header'><a href='#'>" + obj.list[i].nodename + "</a> </h3>" +
+								"<div class='timeline-body'>";
+								if(obj.list[i].result == '2'){
+									content += "操作： " + obj.list[i].nextlabel;
+								}
+								else {
+									content += "操作： " + obj.list[i].prevlabel;
+								}
+								if(obj.list[i].flowdesc != null && obj.list[i].flowdesc != ''){
+									content += "<br> 意见： " + obj.list[i].flowdesc;
+								}
+								if(obj.list[i].attach != null){
+									content += "<br> 附件：" + obj.list[i].attach;
+								}
+								content += "</div>" +
+								"<div class='timeline-footer'>" +
+								"<span class='time'><i class='far fa-clock'></i>" + obj.list[i].inserttime + "</span>" +
+								"</div>" +
+							"</div>"
+						"</div>"
+					$(".timeline").append(content);					
+				}
+				
+				var footer = "<div><i class='far fa-clock bg-gray'></i></div>";
+				$(".timeline").append(footer);	
+				
+			}
+			else {
+				jError("获取业务流程数据失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+			}
+		});
+}
+
+//获取当前用户
+function loadcuruser(){
+	$.get(getContextPath()+"/flowtemplateController/getcuruser",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#curuser").html(obj.data);
+			}
+		});
+}
+
 
 function viewDetail(id)
 {
@@ -108,23 +177,24 @@ function viewDetail(id)
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
+				console.log(obj);
+				$('#sjbt').html(obj.data.sjbt);				
+				$('#sjjjcd').html(obj.data.sjjjcd);
+				$('#sjlyjb').html(obj.data.sjlyjb);
+				$('#sjly').html(obj.data.sjly);
+				$('#sjlybh').html(obj.data.sjlybh);
+				$('#sjfl').html(obj.data.sjfl);
+				$('#wtfl').html(obj.data.wtfl);
+				$('#fsdz').html(obj.data.fsdz);
+				$('#dsr').html(obj.data.dsr);
+				$('#dsrdh').html(obj.data.dsrdh);
+				$('#sfyqhf').html(obj.data.sfyqhf);
+				$('#pdsj').html(obj.data.pdsj);
+				$('#clsx').html(obj.data.clsx);
+				$('#cljzsj').html(obj.data.cljzsj);
+				$('#sjnr').html(obj.data.sjnr);
+				$('#bz').html(obj.data.bz);
 				/*
-				$('#sjbt').val(obj.sjbt);
-				$('#sjjjcd').val(obj.sjjjcd);
-				$('#sjlyjb').val(obj.sjlyjb);
-				$('#sjly').val(obj.sjly);
-				$('#sjlybh').val(obj.sjlybh);
-				$('#sjfl').val(obj.sjfl);
-				$('#wtfl').val(obj.wtfl);
-				$('#fsdz').val(obj.fsdz);
-				$('#dsr').val(obj.dsr);
-				$('#dsrdh').val(obj.dsrdh);
-				$('#sfyqhf').val(obj.sfyqhf);
-				$('#pdsj').val(obj.pdsj);
-				$('#clsx').val(obj.clsx);
-				$('#cljzsj').val(obj.cljzsj);
-				$('#sjnr').val(obj.sjnr);
-				$('#bz').val(obj.bz);
 				
 				var picturesArr = obj.fj.split(VALUE_SPLITTER);				
 				for(var j=0;j<picturesArr.length;j++)				
@@ -152,17 +222,7 @@ function gobackPage()
     });
 	
 }
-/*
-function ShowAddModal()
-{
-	$('#modalDetail').show();
-	
-	$('#modalTitle').text('新增');
-	
-	$('#addOrUpdateBtn').text('确定');
-	
-}
-*/
+
 function addOrUpdate()
 {
 	$.post(getContextPath()+"/jsjbfwController/addOrUpdate",
@@ -243,6 +303,7 @@ function saveProcessInfo(dataid, stat){
 function backData(){
 	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
 	{
+		attach: $("#attach").val(),
 		desc: $("#desc").val(),
 		type: 1,
 		dataid:curId,
@@ -273,6 +334,7 @@ function backData(){
 function goondata(){
 	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
 	{
+		attach: $("#attach").val(),
 		desc: $("#desc").val(),
 		type: 2,
 		dataid:curId,
