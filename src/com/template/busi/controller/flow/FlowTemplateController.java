@@ -299,7 +299,7 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="saveprocessdata",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String saveProcessData(String desc, int type, String dataid, Integer processid, String stat)//,String duoxuan)Integer longitude,Integer latitude,
+	public String saveProcessData(String desc, Integer type, String dataid, Integer processid, String stat)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("saveprocessdata");
 		JSONObject jsonObj = new JSONObject();

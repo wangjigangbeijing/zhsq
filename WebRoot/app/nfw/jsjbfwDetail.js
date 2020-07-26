@@ -178,6 +178,7 @@ function addOrUpdate()
 				HorizontalPosition : 'center'
 			});
 			
+			console.log(curId);
 			console.log(obj);
 			//存储业务流信息		
 			if(curId == ''){
@@ -202,6 +203,8 @@ function addOrUpdate()
 function saveProcessInfo(dataid, stat){
 	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
 	{
+		desc: '',
+		type: 2,
 		dataid:dataid,
 		processid:curnodeprocess.id,
 		stat:stat
