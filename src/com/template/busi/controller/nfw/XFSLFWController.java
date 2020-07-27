@@ -20,24 +20,24 @@ import com.template.service.SysUserService;
 import com.template.util.Utility;
 
 @Controller
-@RequestMapping("sqcsfwController")
-public class SQCSFWController {
+@RequestMapping("xfslfwController")
+public class XFSLFWController {
 
-	private static Logger logger = Logger.getLogger(SQCSFWController.class);
+	private static Logger logger = Logger.getLogger(XFSLFWController.class);
 	@Autowired
 	private  HttpServletRequest request;
 	
 	@Autowired
 	private SysUserService userService;
 	
-	@RequestMapping(value="getsqcsdatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@RequestMapping(value="getxfsldatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String getDataList() {
-		logger.info("getsqcsdatalist");
+		logger.info("getxfsldatalist");
 		
 		JSONObject jsonObj = new JSONObject();
 		try {
-			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_sqcsfw a";
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_xfslfw a";
 			List<HashMap> nodelist = this.userService.findBySql(sql);
 			
 			jsonObj.put("success", true);
@@ -51,7 +51,7 @@ public class SQCSFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id, String sjbt,String sjcd, String sjdl, String sjxl,String dsr, String dsrlxdh, String sjxq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id,String bt,String lb, String cd, String fkr,String lxdh, String xq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate");
 		JSONObject jsonObj = new JSONObject();
@@ -59,24 +59,23 @@ public class SQCSFWController {
 		{
 			Map<String, Object> map = new HashMap<String, Object>();
 			if(id != null && id.length() > 0) {
-				String sql = "select * from nfw_sqcsfw where id=?";
+				String sql = "select * from nfw_xfslfw where id=?";
 				List<Object> vals = new ArrayList<Object>();
 				vals.add(id);
 				List list = this.userService.findBySql(sql, vals);
 				if(list == null || list.size() == 0) {
 					//新增
 					map.put("id", Utility.getUniStr());
-					map.put("sjbt", sjbt);
-					map.put("sjcd", sjcd);
-					map.put("sjdl", sjdl);
-					map.put("sjxl", sjxl);
-					map.put("dsr", dsr);
-					map.put("dsrlxdh", dsrlxdh);
-					map.put("sjxq", sjxq);
+					map.put("bt", bt);
+					map.put("lb", lb);
+					map.put("cd", cd);
+					map.put("fkr", fkr);
+					map.put("lxdh", lxdh);
+					map.put("xq", xq);
 					map.put("bz", bz);
 					map.put("fj", fj);
 					
-					int ret = this.userService.addData(map, "nfw_sqcsfw");
+					int ret = this.userService.addData(map, "nfw_xfslfw");
 					if(ret > 0) {
 						jsonObj.put("dataid", map.get("id"));
 						jsonObj.put("success", true);
@@ -91,17 +90,16 @@ public class SQCSFWController {
 					Map<String, Object> kvs = new HashMap<String, Object>();
 					kvs.put("id", id);
 					
-					map.put("sjbt", sjbt);
-					map.put("sjcd", sjcd);
-					map.put("sjdl", sjdl);
-					map.put("sjxl", sjxl);
-					map.put("dsr", dsr);
-					map.put("dsrlxdh", dsrlxdh);
-					map.put("sjxq", sjxq);
+					map.put("bt", bt);
+					map.put("lb", lb);
+					map.put("cd", cd);
+					map.put("fkr", fkr);
+					map.put("lxdh", lxdh);
+					map.put("xq", xq);
 					map.put("bz", bz);
 					map.put("fj", fj);
 					
-					int ret = this.userService.updateData(map, kvs, "nfw_sqcsfw");
+					int ret = this.userService.updateData(map, kvs, "nfw_xfslfw");
 					if(ret > 0) {
 						jsonObj.put("dataid", id);
 						jsonObj.put("success", true);
@@ -114,17 +112,16 @@ public class SQCSFWController {
 			}
 			else {
 				map.put("id", Utility.getUniStr());
-				map.put("sjbt", sjbt);
-				map.put("sjcd", sjcd);
-				map.put("sjdl", sjdl);
-				map.put("sjxl", sjxl);
-				map.put("dsr", dsr);
-				map.put("dsrlxdh", dsrlxdh);
-				map.put("sjxq", sjxq);
+				map.put("bt", bt);
+				map.put("lb", lb);
+				map.put("cd", cd);
+				map.put("fkr", fkr);
+				map.put("lxdh", lxdh);
+				map.put("xq", xq);
 				map.put("bz", bz);
 				map.put("fj", fj);
 				
-				int ret = this.userService.addData(map, "nfw_sqcsfw");
+				int ret = this.userService.addData(map, "nfw_xfslfw");
 				if(ret > 0) {
 					jsonObj.put("dataid", map.get("id"));
 					jsonObj.put("success", true);
@@ -151,7 +148,7 @@ public class SQCSFWController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			String sql = "delete from nfw_sqcsfw where id=?";
+			String sql = "delete from nfw_xfslfw where id=?";
 			List<Object> params = new ArrayList<Object>();
 			params.add(id);
 			int ret = this.userService.executeSql(sql, params);
@@ -178,7 +175,7 @@ public class SQCSFWController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_sqcsfw a where a.id=?";
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_xfslfw a where a.id=?";
 			List<Object> params = new ArrayList<Object>();
 			params.add(id);
 			List<HashMap> nodelist = this.userService.findBySql(sql, params);

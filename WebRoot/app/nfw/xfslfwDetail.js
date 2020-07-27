@@ -18,30 +18,31 @@ $(document).ready(function (){
 		loadTemplateProcess();
 	}
 	
+	
 });
 
 function viewDetail(id)
 {
-	$.get(getContextPath()+"/sqcsfwController/get?id="+id,
+	$.get(getContextPath()+"/xfslfwController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				$('#sjbt').val(obj.data.sjbt);
+				$('#bt').val(obj.data.bt);
 				
-				$('#sjcd').val(obj.data.sjcd);
+				$('#lb').val(obj.data.lb);
 				
-				$('#sjdl').val(obj.data.sjdl);
+				$('#cd').val(obj.data.cd);
 				
-				$('#sjxl').val(obj.data.sjxl);
+				$('#fkr').val(obj.data.fkr);
 				
-				$('#dsr').val(obj.data.dsr);
+				$('#lxdh').val(obj.data.lxdh);
 				
-				$('#dsrlxdh').val(obj.data.dsrlxdh);
-				
-				$('#sjxq').val(obj.data.sjxq);
+				$('#xq').val(obj.data.xq);
 				
 				$('#bz').val(obj.data.bz);
+				
+				$('#yjflfgmc').val(obj.yjflfgmc);
 				
 				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				
 				for(var j=0;j<picturesArr.length;j++)				
@@ -57,7 +58,7 @@ function viewDetail(id)
 
 //加载流程节点信息
 function loadTemplateProcess(){
-	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=sqcs&dataid=",
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=xfsl&dataid=",
 		function(result){
 			var obj = jQuery.parseJSON(result); 
 			//console.log(obj);
@@ -81,16 +82,15 @@ function loadTemplateProcess(){
 
 function addOrUpdate()
 {
-	$.post(getContextPath()+"/sqcsfwController/addOrUpdate",
+	$.post(getContextPath()+"/xfslfwController/addOrUpdate",
 	{
 		id:curId,
-		sjbt:$('#sjbt').val(),
-		sjcd:$('#sjcd').val(),
-		sjdl:$('#sjdl').val(),
-		sjxl:$('#sjxl').val(),
-		dsr:$('#dsr').val(),
-		dsrlxdh:$('#dsrlxdh').val(),
-		sjxq: $('#sjxq').val(),
+		bt:$('#bt').val(),
+		lb:$('#lb').val(),
+		cd:$('#cd').val(),
+		fkr:$('#fkr').val(),
+		lxdh:$('#lxdh').val(),
+		xq: $('#xq').val(),
 		bz: $('#bz').val(),
 		fj:$('#pictures').val()
 	},
@@ -103,6 +103,7 @@ function addOrUpdate()
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'});
 						
+			console.log("curId:" + curId);
 			//存储业务流信息		
 			if(curId == ''){
 				saveProcessInfo(obj.dataid, curnodeprocess.nextstatus);
@@ -152,7 +153,7 @@ function gobackPage()
 {
 	curId = '';
 	
-	$('#main-content').load("./nfw/sqcsfw.html", function () {
+	$('#main-content').load("./nfw/xfslfw.html", function () {
 		
 	});
 }

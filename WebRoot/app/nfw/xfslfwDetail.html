@@ -1,11 +1,11 @@
 ﻿
-		<script src="./nfw/sqcsfwDetail.js"></script>
+		<script src="./nfw/xfslfwDetail.js"></script>
 		
 		<section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>添加社区吹哨事项</h1>
+            <h1>添加信访受理事项</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -26,61 +26,55 @@
 			 <div class="card">
               <div class="card card-info">
               <form class="form-horizontal">
-                <div class="card-body">
-					
-					<div class="form-group">
-                      <label>事件标题</label>
-                      <input type="" class="form-control" id="sjbt" placeholder="">
-                    </div>
-					
+               <div class="card-body">
+                 
+
 
                     <div class="form-group">
-                      <label>事件渠道</label>
-                      <select class="form-control" id="sjcd">
-                        <option>办事大厅</option>
-                        <option>社区热线</option>
+                      <label>标题</label>
+                      <input type="" class="form-control" id="bt" placeholder="">
+                    </div>
+
+               
+
+                    <div class="form-group">
+                      <label>类别</label>
+                      <select class="form-control" id="lb">
+                        <option>文化教育</option>
+                        <option>民主自治</option>
+                        <option>社区服务</option>
+                        <option>平安建设</option>
+                        <option>文化教育</option>
+                        <option>社区环境</option>
+                        <option>卫生健康</option>
+                        <option>社区组织</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label>渠道</label>
+                      <select class="form-control" id="cd">
                         <option>微信平台</option>
+                        <option>社区办事大厅</option>
+                        <option>社区民意热线</option>
                         <option>其他</option>
                       </select>
                     </div>
 
                     <div class="form-group">
-                      <label>事件大类</label>
-                      <select class="form-control" id="sjdl">
-                        <option>社区环境</option>
-                        <option>xxx</option>
-                        <option>xxx</option>
-                        <option>xxx</option>
-                        <option>xxx</option>
-                        <option>xxx</option>
-                      </select>
-                    </div>
-					
-				<div class="form-group">
-                      <label>事件小类</label>
-                      <select class="form-control" id="sjxl">
-                        <option>噪声扰民</option>
-                        <option>噪声扰民</option>
-                        <option>噪声扰民</option>
-                      </select>
-                    </div>
+                      <label>反馈人</label>
+                      <input type="" class="form-control" id="fkr" placeholder="">
+                    </div>   
 
-					<div class="form-group">
-                      <label>当事人（可从居民列表里选择）</label>
-                      <input type="" class="form-control" id="dsr" placeholder="">
-                    </div>
-					
-					<div class="form-group">
-                      <label>当事人联系电话</label>
-                      <input type="" class="form-control" id="dsrlxdh" placeholder="">
-                    </div>
-             
+                    <div class="form-group">
+                      <label>联系电话</label>
+                      <input type="" class="form-control" id="lxdh" placeholder="">
+                    </div>    
 
                        <div class="form-group">
-                          <label>事件详情</label>
-                          <textarea class="form-control" rows="3" placeholder="" id="sjxq"></textarea>
+                          <label>详情</label>
+                          <textarea class="form-control" rows="3" placeholder="" id="xq"></textarea>
                         </div>
-
                         <div class="form-group">
                           <label>备注</label>
                           <textarea class="form-control" rows="3" placeholder="" id="bz"></textarea>
@@ -98,11 +92,11 @@
 						</div>
  						</div>
  					</div>
-					
+    
                 </div>
                 <div class="card-footer">
 				
-				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">保存</button>
                   <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
 				  
                 </div>
@@ -141,4 +135,5 @@
 		});
 		uploaderpictures.on( 'uploadError', function( file,response ) {
 		});	
-	</script>	
+	</script>
+		

@@ -403,8 +403,11 @@ public class FlowTemplateController {
 		if("jsjb".equals(service)) {
 			templateid = 6;
 		}
-		else if("mysl".equals(service)) {
+		else if("mysl".equals(service) || "xfsl".equals(service)) {
 			templateid = 7;
+		}
+		else if("sqcs".equals(service)) {
+			templateid = 8;
 		}
 		
 		JSONObject jsonObj = new JSONObject();
@@ -487,8 +490,11 @@ public class FlowTemplateController {
 		if("jsjb".equals(service)) {
 			templateid = 6;
 		}
-		else if("mysl".equals(service)) {
+		else if("mysl".equals(service) || "xfsl".equals(service)) {
 			templateid = 7;
+		}
+		else if("sqcs".equals(service)) {
+			templateid = 8;
 		}
 		
 		JSONObject jsonObj = new JSONObject();
