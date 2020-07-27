@@ -113,7 +113,7 @@ function loadprocessdata(id){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				//console.log(obj);
+				console.log(obj);
 				
 				for(var i = 0; i < obj.list.length; i++){
 					
@@ -132,8 +132,22 @@ function loadprocessdata(id){
 								if(obj.list[i].flowdesc != null && obj.list[i].flowdesc != ''){
 									content += "<br> 意见： " + obj.list[i].flowdesc;
 								}
-								if(obj.list[i].attach != null){
-									content += "<br> 附件：" + obj.list[i].attach;
+								if(obj.list[i].attach != null && obj.list[i].attach != ''){
+									
+									var txt = '';
+									var picturesArr = obj.list[i].attach.split(VALUE_SPLITTER);	
+									console.log("size: " + picturesArr.length);
+									for(var j=0;j<picturesArr.length;j++)				
+									{					
+										if(picturesArr[j] != '')					
+										{		
+											txt += "<a href='#' onclick='javascript:downloadAttach(\"" + picturesArr[j]+ "\");return false;' style='margin-right:10px;'>" + picturesArr[j] + "</a>";
+										}
+									}	
+				
+									if(txt.length > 0){
+										content += "<br> 附件：" + txt;
+									}
 								}
 								content += "</div>" +
 								"<div class='timeline-footer'>" +
