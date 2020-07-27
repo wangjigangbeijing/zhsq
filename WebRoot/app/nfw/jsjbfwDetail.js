@@ -63,7 +63,7 @@ $(document).ready(function (){
 
 //加载流程节点信息
 function loadTemplateProcess(){
-	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?dataid=",
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=jsjb&dataid=",
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -179,8 +179,6 @@ function addOrUpdate()
 				HorizontalPosition : 'center'
 			});
 			
-			console.log(curId);
-			console.log(obj);
 			//存储业务流信息		
 			if(curId == ''){
 				saveProcessInfo(obj.dataid, curnodeprocess.nextstatus);

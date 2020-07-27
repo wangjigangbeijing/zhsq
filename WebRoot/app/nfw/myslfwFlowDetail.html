@@ -1,0 +1,314 @@
+﻿
+
+<script src="./nfw/myslfwFlowDetail.js"></script>
+
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+         
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">事件处理</a></li>
+                
+                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">流程图</a></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+
+                <div class="invoice p-3 mb-3">
+                  <!-- title row -->
+                  <div class="row">
+                    <div class="col-12">
+                      <h4>
+                        <i class="fas fa-globe"></i> <span id="bt"></span>
+                      </h4>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- info row -->
+                  <div class="row invoice-info">
+					<table width="100%" border="0" cellspacing="0" cellpadding="3">
+						<tr>
+							<td style="width: 25%;"><b>类别:</b> <span id="lb"></span></td>
+							<td style="width: 25%"><b>渠道:</b> <span id="cd"></span></td>
+							<td style="width: 25%"><b>反馈人:</b> <span id="fkr"></span></td>
+							<td style="width: 25%"><b>联系电话:</b> <span id="lxdh"></span></td>
+						</tr>
+						<tr>
+							<td colspan="4"><b>详情:</b> <span id="xq"></span></td>
+						</tr>
+						<tr>
+							<td colspan="4"><b>备注:</b> <span id="bz"></span></td>
+						</tr>
+					</table>
+                    
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+    
+
+    
+           
+                  <!-- /.row -->
+    
+                  <!-- this row will not appear when printing -->
+          
+                </div>
+
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                      
+                 
+
+                   
+
+         
+                    </div>
+                    <!-- /.post -->
+
+                    <!-- Post -->
+                    <div class="post clearfix">
+                      
+
+                      <form id="flowfrm" class="form-horizontal">
+               
+                     <h4>当前节点：<span id="curnode">社区处理</span></h4>
+                     <br>
+                     <div id="resultdiv">      
+                        <div class="form-group row">
+                          <label for="inputName2" class="col-sm-2 col-form-label">选择部门</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputName2" placeholder="选择部门">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputExperience" class="col-sm-2 col-form-label">办理意见</label>
+                          <div class="col-sm-10">
+                            <textarea class="form-control" id="desc" name="desc" placeholder="办理意见"></textarea>
+                          </div>
+                        </div>
+                        <div class='form-group row'>
+								<label class='col-md-2 control-label'>附件</label>
+								<div class='col-md-9'>
+									<div id='picturesdiv' class='wu-example'>
+										<input type='text' class='form-control field' name='attach' id='attach' style='display:none;'>
+										<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+										<div class='btns'>
+											<div id='picturespick'>选择文件</div>
+										</div>
+									</div>
+								</div>
+							</div>
+                   
+						</div>
+                        <div class="form-group row">
+                          <div class="offset-sm-2 col-sm-10">
+                            <button type="button" class="btn btn-danger" id="btn_back" onclick="backData()">回退</button>
+						  
+						  <button type="button" class="btn btn-success" style="margin-left:10px;" id="btn_goon" onclick="goondata()">同意</button>
+						  
+						  <button type="button" class="btn btn-default float-right" style="margin-left:10px;" id="btn_back" onclick="gobackPage()">返回</button>
+                          </div>
+                        </div>
+						
+                      </form>
+
+                    </div>
+                    <!-- /.post -->
+
+                
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="timeline">
+                    <!-- The timeline -->
+                    <div class="timeline timeline-inverse">
+                      <!-- timeline time label -->
+                     
+                 
+                  
+                      <!-- END timeline item -->
+                      <!-- timeline time label -->
+                    
+                      <!-- /.timeline-label -->
+                      <!-- timeline item -->
+              
+                      <!-- END timeline item -->
+                      <div>
+                       这里放流程图的图片，可以在数据库里定义图片URL
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.tab-pane -->
+
+                  <div class="tab-pane" id="settings">
+
+                    <h4>
+                      当前节点：社区初审
+                    </h4>
+
+                    <form class="form-horizontal">
+               
+                     
+                     
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">操作</label>
+                        <div class="col-sm-10">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio1">
+                            <label class="form-check-label">同意</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio1">
+                            <label class="form-check-label">退回</label>
+                          </div>
+                        </div>
+                      </div>
+                  
+                      <div class="form-group row">
+                        <label for="inputName2" class="col-sm-2 col-form-label">选择部门</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputName2" placeholder="Name">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputExperience" class="col-sm-2 col-form-label">办理意见</label>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputSkills" class="col-sm-2 col-form-label">附件</label>
+                        <div class="col-sm-10">
+                    
+                        
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="exampleInputFile2">
+                                <label class="custom-file-label" for="exampleInputFile2">Choose file</label>
+                              </div>
+                              <div class="input-group-append">
+                                <span class="input-group-text" id="">上传</span>
+                              </div>
+                            </div>
+                         
+                        </div>
+                      </div>
+                 
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button type="submit" class="btn btn-warn">回退</button>
+						  
+						  <button type="submit" class="btn btn-primary">同意</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+
+          <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+               <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>当前状态</b> <a class="float-right" id="showstatus"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>当前处理部门</b> <a class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>当前操作人</b> <a class="float-right" id="curuser"></a>
+                  </li>
+                </ul>
+
+              
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- About Me Box -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">处理过程</h3>
+              </div>
+              <!-- /.card-header -->
+              <br>
+              <div class="timeline timeline-inverse">
+                <!-- timeline time label -->
+             
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                
+                <!-- END timeline item -->
+                <!-- timeline item -->
+                
+                <!-- END timeline item -->
+                <!-- timeline item -->
+                
+                <!-- END timeline item -->
+                <!-- timeline time label -->
+             
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                
+                <!-- END timeline item -->
+                
+              </div>
+        
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+	
+<script>
+
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'attach'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+</script>
