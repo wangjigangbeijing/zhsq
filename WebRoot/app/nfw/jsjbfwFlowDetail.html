@@ -24,34 +24,40 @@
                   <div class="row">
                     <div class="col-12">
                       <h4>
-                        <i class="fas fa-globe"></i> 张三办理老年证
-                        <small class="float-right">编号：1213345</small>
+                        <i class="fas fa-globe"></i> <span id="sjbt"></span>
                       </h4>
                     </div>
                     <!-- /.col -->
                   </div>
                   <!-- info row -->
                   <div class="row invoice-info">
-                    <div class="col-sm-4 invoice-col">
-                      <b>Invoice #007612</b><br>
-                      <b>Order ID:</b> 4F3S8J<br>
-                      <b>Payment Due:</b> 2/22/2014<br>
-                      <b>Account:</b> 968-34567
+                    <div class="col-sm-3 invoice-col">
+                      <b>事件紧急程度:</b> <span id="sjjjcd"></span><br>
+                      <b>事件来源级别:</b> <span id="sjlyjb"></span><br>
+                      <b>事件来源:</b> <span id="sjly"></span><br>
+					  <b>事件来源编号:</b><span id="sjlybh"></span>
                     </div>
 
-                    <div class="col-sm-4 invoice-col">
-                      <b>Invoice #007612</b><br>
-                      <b>Order ID:</b> 4F3S8J<br>
-                      <b>Payment Due:</b> 2/22/2014<br>
-                      <b>Account:</b> 968-34567
+                    <div class="col-sm-3 invoice-col">                      
+                      <b>事件分类:</b> <span id="sjfl"></span><br>
+                      <b>问题分类:</b> <span id="wtfl"></span><br>
+                      <b>发生地址:</b> <span id="fsdz"></span><br>
+					  <b>当事人:</b><span id="dsr"></span><br>
                     </div>
                 
                     <!-- /.col -->
-                    <div class="col-sm-4 invoice-col">
-                      <b>Invoice #007612</b><br>
-                      <b>Order ID:</b> 4F3S8J<br>
-                      <b>Payment Due:</b> 2/22/2014<br>
-                      <b>Account:</b> 968-34567
+                    <div class="col-sm-3 invoice-col">                      
+                      <b>当事人电话:</b> <span id="dsrdh"></span><br>
+                      <b>是否要求回访:</b> <span id="sfyqhf"></span><br>
+                      <b>派单时间:</b> <span id="pdsj"></span><br>
+					  <b>处理时限:</b><span id="clsx"></span>
+                    </div>
+					
+					<div class="col-sm-3 invoice-col">
+                      
+                      <b>处理截止时间:</b> <span id="cljzsj"></span><br>
+                      <b>事件内容:</b> <span id="sjnr"></span><br>
+                      <b>备注:</b> <span id="bz"></span>
                     </div>
                     <!-- /.col -->
                   </div>
@@ -87,7 +93,7 @@
                
                      <h4>当前节点：<span id="curnode">社区处理</span></h4>
                      <br>
-                                 
+                     <div id="resultdiv">      
                         <div class="form-group row">
                           <label for="inputName2" class="col-sm-2 col-form-label">选择部门</label>
                           <div class="col-sm-10">
@@ -100,31 +106,30 @@
                             <textarea class="form-control" id="desc" name="desc" placeholder="办理意见"></textarea>
                           </div>
                         </div>
-                        <div class="form-group row">
-                          <label for="inputSkills" class="col-sm-2 col-form-label">附件</label>
-                          <div class="col-sm-10">
-                      
-                          
-                              <div class="input-group">
-                                <div class="custom-file">
-                                  <input type="file" class="custom-file-input" id="exampleInputFile">
-                                  <label class="custom-file-label" for="exampleInputFile">选择附件</label>
-                                </div>
-                                <div class="input-group-append">
-                                  <span class="input-group-text" id="">上传</span>
-                                </div>
-                              </div>
-                           
-                          </div>
-                        </div>
+                        <div class='form-group row'>
+								<label class='col-md-2 control-label'>附件</label>
+								<div class='col-md-9'>
+									<div id='picturesdiv' class='wu-example'>
+										<input type='text' class='form-control field' name='attach' id='attach' style='display:none;'>
+										<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+										<div class='btns'>
+											<div id='picturespick'>选择文件</div>
+										</div>
+									</div>
+								</div>
+							</div>
                    
+						</div>
                         <div class="form-group row">
                           <div class="offset-sm-2 col-sm-10">
                             <button type="button" class="btn btn-danger" id="btn_back" onclick="backData()">回退</button>
 						  
 						  <button type="button" class="btn btn-success" style="margin-left:10px;" id="btn_goon" onclick="goondata()">同意</button>
+						  
+						  <button type="button" class="btn btn-default float-right" style="margin-left:10px;" id="btn_back" onclick="gobackPage()">返回</button>
                           </div>
                         </div>
+						
                       </form>
 
                     </div>
@@ -197,8 +202,8 @@
                         
                             <div class="input-group">
                               <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="exampleInputFile">
-                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                <input type="file" class="custom-file-input" id="exampleInputFile2">
+                                <label class="custom-file-label" for="exampleInputFile2">Choose file</label>
                               </div>
                               <div class="input-group-append">
                                 <span class="input-group-text" id="">上传</span>
@@ -232,13 +237,13 @@
               <div class="card-body box-profile">
                <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
-                    <b>当前状态</b> <a class="float-right" id="showstatus">待处理</a>
+                    <b>当前状态</b> <a class="float-right" id="showstatus"></a>
                   </li>
                   <li class="list-group-item">
-                    <b>当前处理部门</b> <a class="float-right">aaa社区</a>
+                    <b>当前处理部门</b> <a class="float-right"></a>
                   </li>
                   <li class="list-group-item">
-                    <b>当前操作人</b> <a class="float-right">张三</a>
+                    <b>当前操作人</b> <a class="float-right" id="curuser"></a>
                   </li>
                 </ul>
 
@@ -260,95 +265,21 @@
              
                 <!-- /.timeline-label -->
                 <!-- timeline item -->
-                <div>
-                  <i class="fas fa-envelope bg-primary"></i>
-
-                  <div class="timeline-item">
-                    <span class="time"><i class="far fa-user"></i> 张三</span>
-
-                    <h3 class="timeline-header"><a href="#">事件登记</a> </h3>
-
-                    <div class="timeline-body">
-                     操作： 同意 
-                     <br> 意见： 撒打发手动阀手动阀手动阀asdfasdfasdf啊手动阀手动阀手动阀手动阀手动阀萨芬大是大非手动阀
-                     <br> 附件：xxxx.jpg 
-                     
-                    </div>
-                    <div class="timeline-footer">
-                      <span class="time"><i class="far fa-clock"></i> 2020-10-01 12:05:21</span>
-                     </div>
-                  </div>
-                </div>
+                
                 <!-- END timeline item -->
                 <!-- timeline item -->
-                <div>
-                  <i class="fas fa-user bg-info"></i>
-
-                  <div class="timeline-item">
-                    <span class="time"><i class="far fa-user"></i> 张三</span>
-
-                    <h3 class="timeline-header"><a href="#">事件登记</a> </h3>
-
-                    <div class="timeline-body">
-                     操作： 同意 
-                     <br> 意见： 撒打发手动阀手动阀手动阀asdfasdfasdf啊手动阀手动阀手动阀手动阀手动阀萨芬大是大非手动阀
-                     <br> 附件：xxxx.jpg 
-                     
-                    </div>
-                    <div class="timeline-footer">
-                      <span class="time"><i class="far fa-clock"></i> 2020-10-01 12:05:21</span>
-                     </div>
-                  </div>
-                </div>
+                
                 <!-- END timeline item -->
                 <!-- timeline item -->
-                <div>
-                  <i class="fas fa-comments bg-warning"></i>
-
-                  <div class="timeline-item">
-                    <span class="time"><i class="far fa-user"></i> 张三</span>
-
-                    <h3 class="timeline-header"><a href="#">事件登记</a> </h3>
-
-                    <div class="timeline-body">
-                     操作： 同意 
-                     <br> 意见： 撒打发手动阀手动阀手动阀asdfasdfasdf啊手动阀手动阀手动阀手动阀手动阀萨芬大是大非手动阀
-                     <br> 附件：xxxx.jpg 
-                     
-                    </div>
-                    <div class="timeline-footer">
-                      <span class="time"><i class="far fa-clock"></i> 2020-10-01 12:05:21</span>
-                     </div>
-                  </div>
-                </div>
+                
                 <!-- END timeline item -->
                 <!-- timeline time label -->
              
                 <!-- /.timeline-label -->
                 <!-- timeline item -->
-                <div>
-                  <i class="fas fa-camera bg-purple"></i>
-
-                  <div class="timeline-item">
-                    <span class="time"><i class="far fa-user"></i> 张三</span>
-
-                    <h3 class="timeline-header"><a href="#">事件登记</a> </h3>
-
-                    <div class="timeline-body">
-                     操作： 同意 
-                     <br> 意见： 撒打发手动阀手动阀手动阀asdfasdfasdf啊手动阀手动阀手动阀手动阀手动阀萨芬大是大非手动阀
-                     <br> 附件：xxxx.jpg 
-                     
-                    </div>
-                    <div class="timeline-footer">
-                      <span class="time"><i class="far fa-clock"></i> 2020-10-01 12:05:21</span>
-                     </div>
-                  </div>
-                </div>
+                
                 <!-- END timeline item -->
-                <div>
-                  <i class="far fa-clock bg-gray"></i>
-                </div>
+                
               </div>
         
               <!-- /.card-body -->
@@ -376,7 +307,7 @@ server: getContextPath()+'/fileController/upload',
 // 内部根据当前运行是创建，可能是input元素，也可能是flash.
 pick: '#picturespick',
 formData:{
-attributeName:'pictures'
+attributeName:'attach'
 }
 });
 uploaderpictures.on( 'fileQueued', function( file ) {
@@ -392,75 +323,5 @@ uploaderpictures.on( 'uploadSuccess', function( file,response ) {
 });
 uploaderpictures.on( 'uploadError', function( file,response ) {
 });	
-
-
-
-function searchResident()
-{
-	var residentName = $('#residentNameQry').val();
-	
-	$.get(getContextPath()+'/residentController/load?name='+residentName,
-	function(result){
-		$('#btnSearch').removeAttr('disabled');
-		var obj = jQuery.parseJSON(result);  
-		if(obj.success)
-		{
-			dataTable = $('#dataTable').dataTable( {
-				"processing": true,
-				"bJQueryUI": false,
-				"bFilter": false,
-				"bStateSave":true,
-				"bAutoWidth": false, //自适应宽度 
-				iDisplayLength: 10,
-				lengthChange: false,
-				"bProcessing": true, 
-				"bDestroy":true,
-				"bSort": false, //是否使用排序 		
-				/*"oLanguage": { 
-					"sProcessing": "正在加载中......", 
-					"sLengthMenu": "每页显示 _MENU_ 条记录", 
-					"sZeroRecords": "对不起，查询不到相关数据！", 
-					"sInfoEmpty":"",
-					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
-					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
-					"sSearch": "搜索", 
-					"oPaginate":  
-					{ 
-						"sFirst": "首页", 
-						"sPrevious": "上一页", 
-						"sNext": "下一页", 
-						"sLast": "末页" 
-					}
-				}, *///多语言配置					
-				"data":obj.list,
-				"columns": [
-					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'idnumber' ,'sClass':'text-center'},
-					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'}
-				],
-				columnDefs: [
-					{
-					className: 'control',
-					orderable: false,
-					targets:  0,//从0开始
-					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"selectUser('"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
-						return btn;
-					}
-					}
-				]
-			} );
-		}
-	});
-}
-
-function selectUser(name,idnumber,mobile,address)
-{
-	$('#name').val(name);
-	$('#idnumber').val(idnumber);
-	$('#mobile').val(mobile);
-	$('#address').val(address);
-}
 
 </script>
