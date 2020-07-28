@@ -396,10 +396,19 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="getdatatemplateprocessinfo",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String getCurDataTemplateProcessInfo(String dataid) {
+	public String getCurDataTemplateProcessInfo(String service, String dataid) {
 		logger.info("getdatatemplateprocessinfo");
 				
 		int templateid = 6;
+		if("jsjb".equals(service)) {
+			templateid = 6;
+		}
+		else if("mysl".equals(service) || "xfsl".equals(service)) {
+			templateid = 7;
+		}
+		else if("sqcs".equals(service)) {
+			templateid = 8;
+		}
 		
 		JSONObject jsonObj = new JSONObject();
 		try {
@@ -474,10 +483,19 @@ public class FlowTemplateController {
 	
 	@RequestMapping(value="loadprocessdata",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String loadProcessDataList(String dataid) {
+	public String loadProcessDataList(String service, String dataid) {
 		logger.info("loadprocessdata");
 				
 		int templateid = 6;
+		if("jsjb".equals(service)) {
+			templateid = 6;
+		}
+		else if("mysl".equals(service) || "xfsl".equals(service)) {
+			templateid = 7;
+		}
+		else if("sqcs".equals(service)) {
+			templateid = 8;
+		}
 		
 		JSONObject jsonObj = new JSONObject();
 		try {

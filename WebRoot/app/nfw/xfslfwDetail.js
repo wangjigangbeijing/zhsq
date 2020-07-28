@@ -23,7 +23,7 @@ $(document).ready(function (){
 
 function viewDetail(id)
 {
-	$.get(getContextPath()+"/myslfwController/get?id="+id,
+	$.get(getContextPath()+"/xfslfwController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -58,7 +58,7 @@ function viewDetail(id)
 
 //加载流程节点信息
 function loadTemplateProcess(){
-	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=mysl&dataid=",
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=xfsl&dataid=",
 		function(result){
 			var obj = jQuery.parseJSON(result); 
 			//console.log(obj);
@@ -82,7 +82,7 @@ function loadTemplateProcess(){
 
 function addOrUpdate()
 {
-	$.post(getContextPath()+"/myslfwController/addOrUpdate",
+	$.post(getContextPath()+"/xfslfwController/addOrUpdate",
 	{
 		id:curId,
 		bt:$('#bt').val(),
@@ -153,7 +153,7 @@ function gobackPage()
 {
 	curId = '';
 	
-	$('#main-content').load("./nfw/myslfw.html", function () {
+	$('#main-content').load("./nfw/xfslfw.html", function () {
 		
 	});
 }

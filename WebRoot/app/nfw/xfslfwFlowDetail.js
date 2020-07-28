@@ -2,15 +2,9 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
-	
-	$('.dpYears').datepicker({
-		autoclose: true
-	});
-	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	//$('#btnSearch').click(load);
 	
 	//load();
 	
@@ -22,50 +16,12 @@ $(document).ready(function (){
 	loadprocessdata(curId);
 	
 	loadcuruser();
-	
-	var pdsj = $('#pdsj').datepicker({
-			format: 'yyyy-mm-dd',
-			todayBtn: 'linked',
-			onRender: function(date) {
-				console.log('onRender startDate');
-				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
-			}
-		}).on('changeDate', function(ev) {
-				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
-					var newDate = new Date(ev.date)
-					newDate.setDate(newDate.getDate() + 1);
-					checkout.setValue(newDate);
-				}*/
-				//checkin.hide();
-				//$('.dpd2')[0].focus();
-				
-				console.log('time Change');
-			}).data('datepicker');
-			
-	var pdsj = $('#cljzsj').datepicker({
-			format: 'yyyy-mm-dd',
-			todayBtn: 'linked',
-			onRender: function(date) {
-				console.log('onRender startDate');
-				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
-			}
-		}).on('changeDate', function(ev) {
-				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
-					var newDate = new Date(ev.date)
-					newDate.setDate(newDate.getDate() + 1);
-					checkout.setValue(newDate);
-				}*/
-				//checkin.hide();
-				//$('.dpd2')[0].focus();
-				
-				console.log('time Change');
-			}).data('datepicker');
 
 });
 
 //加载流程节点信息
 function loadTemplateProcess(id){
-	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=jsjb&dataid=" + id,
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=xfsl&dataid=" + id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -108,7 +64,7 @@ function loadTemplateProcess(id){
 
 //加载所有的业务操作流程
 function loadprocessdata(id){
-	$.get(getContextPath()+"/flowtemplateController/loadprocessdata?service=jsjb&dataid=" + id,
+	$.get(getContextPath()+"/flowtemplateController/loadprocessdata?service=xfsl&dataid=" + id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -186,27 +142,18 @@ function loadcuruser(){
 
 function viewDetail(id)
 {
-	$.get(getContextPath()+"/jsjbfwController/get?id="+id,
+	$.get(getContextPath()+"/xfslfwController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
 				console.log(obj);
-				$('#sjbt').html(obj.data.sjbt);				
-				$('#sjjjcd').html(obj.data.sjjjcd);
-				$('#sjlyjb').html(obj.data.sjlyjb);
-				$('#sjly').html(obj.data.sjly);
-				$('#sjlybh').html(obj.data.sjlybh);
-				$('#sjfl').html(obj.data.sjfl);
-				$('#wtfl').html(obj.data.wtfl);
-				$('#fsdz').html(obj.data.fsdz);
-				$('#dsr').html(obj.data.dsr);
-				$('#dsrdh').html(obj.data.dsrdh);
-				$('#sfyqhf').html(obj.data.sfyqhf);
-				$('#pdsj').html(obj.data.pdsj);
-				$('#clsx').html(obj.data.clsx);
-				$('#cljzsj').html(obj.data.cljzsj);
-				$('#sjnr').html(obj.data.sjnr);
+				$('#bt').html(obj.data.bt);				
+				$('#lb').html(obj.data.lb);
+				$('#cd').html(obj.data.cd);
+				$('#fkr').html(obj.data.fkr);
+				$('#lxdh').html(obj.data.lxdh);
+				$('#xq').html(obj.data.xq);
 				$('#bz').html(obj.data.bz);
 				/*
 				
@@ -231,7 +178,7 @@ function gobackPage()
 {
 	curId = '';
 	
-	$('#main-content').load("./nfw/jsjbfw.html", function () {
+	$('#main-content').load("./nfw/xfslfw.html", function () {
 		
     });
 	
@@ -239,7 +186,7 @@ function gobackPage()
 
 function addOrUpdate()
 {
-	$.post(getContextPath()+"/jsjbfwController/addOrUpdate",
+	$.post(getContextPath()+"/xfslfwController/addOrUpdate",
 	{
 		id:curId,
 		sjbt:$('#sjbt').val(),

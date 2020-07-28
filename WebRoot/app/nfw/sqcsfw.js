@@ -1,9 +1,11 @@
-
+﻿
 var curUserType = -1;
 
 $(document).ready(function (){
 	
 	$('#btnAdd').click(addsqcsfw);
+	
+	loadsqcsfw();
 	
 });
 
@@ -14,7 +16,7 @@ function loadsqcsfw()
 	$('#btnSearch').attr('disabled','disabled');
 	var tableName = $('#tableNameQry').val();
 	
-	$.get(getContextPath()+"/tableController/loadTable?tableName="+tableName,
+	$.get(getContextPath()+"/sqcsfwController/getsqcsdatalist",
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -48,11 +50,21 @@ function loadsqcsfw()
 						"sLast": "末页" 
 					}
 				}, //多语言配置					
-				"data":obj.tableList,
+				"data":obj.list,
 				"columns": [
-					{ "data": "tableZHName" ,"sClass":"text-center"},
-					{ "data": "status" ,"sClass":"text-center"},
-					{ "data": "" ,"sClass":"text-center"}
+					{ 'data': 'sjbt' ,'sClass':'text-center'},
+					{ 'data': 'sjcd' ,'sClass':'text-center'},
+					{ 'data': 'sjdl' ,'sClass':'text-center'},
+					{ 'data': 'sjxl' ,'sClass':'text-center'},
+					{ 'data': 'dsr' ,'sClass':'text-center'},
+					{ 'data': 'dsrlxdh' ,'sClass':'text-center'},
+					{ 'data': 'status' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							var btn = "<span style='color: blue;'>"+full.status+"</span>";
+							return btn;
+						}
+					},
+					{ 'data': '' ,'sClass':'text-center'}
 				],
 				columnDefs: [ /*{
 					className: 'control',
@@ -66,38 +78,19 @@ function loadsqcsfw()
 					{
 					className: 'control',
 					orderable: false,
-					targets:   2,//从0开始
+					targets:   7,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"tableManagement('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>管理</a>";
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"tableData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>数据</a>&nbsp;";
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteTable('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
-						
-						btn += "<a href=\"#\" onclick=\"generateCode('"+full.id+"')\"  class=\"btn btn-info btn-xs\"><i class=\"fa fa-trash-o\"></i>生成代码</a>&nbsp;";
-						
-						//<a href=\"#\" onclick=\"viewDetail('"+full.id+"',true)\" class=\"btn btn-info btn-xs\">编辑</a>&nbsp;
-						
-						//var btn = '<button class="btn btn-success btn-xs" onclick="tableManagement(\''+full.id+'\');return false;"><i class="fa fa-pencil"></i></button>';
-						
-						//var btn = '<a id="inspectorAnchor" class="btn-primary" href=""><i class="fa fa-pencil"></i></a>';
+						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn btn-primary btn-xs\"><i class=\"fa fa-flask\"></i>业务流</a>";
 						
 						return btn;
 					}
 					}
 				]
 			} );
-			
-			$('#tableSelect').html('');
-			var userArr = [];
-			
-			for(var i=0;i<obj.tableList.length;i++)
-			{
-				var table = obj.tableList[i];
-				
-				userArr[i] = "<option value='" + table.id + "'>" + table.tableName + "</option>";						
-			}
-			$('#tableSelect').html(userArr.join(''));
 	
 		}
 		else
@@ -109,6 +102,62 @@ function loadsqcsfw()
 	});
 }
 
+function editData(id)
+{
+	curId = id;
+	$('#main-content').load("./nfw/sqcsfwDetail.html", function () {
+		
+    });
+}
+
+function deleteData(id)
+{
+	$.confirm({
+		title:"删除确认",
+		text:"确认删除数据?",
+		confirm: function(button) {
+			
+			$.post(getContextPath()+"/sqcsfwController/delete",
+			{
+				id:id
+			},
+			function(result){
+				var obj = jQuery.parseJSON(result);  
+				if(obj.success)
+				{
+					jSuccess("数据删除成功!",{
+						VerticalPosition : 'center',
+						HorizontalPosition : 'center'
+					});
+					
+					loadmyslfw();
+				}
+				else
+				{
+					jError(obj.errMsg,{
+						VerticalPosition : 'center',
+						HorizontalPosition : 'center'
+					});
+				}
+			});
+			
+		},
+		cancel: function(button) {
+			//alert("You aborted the operation.");
+		},
+		confirmButton: "删除",
+		cancelButton: "放弃"
+	});
+}
+
+function enterFlow(id){
+	curId = id;
+	
+	$('#main-content').load("./nfw/sqcsfwFlowDetail.html", function () {
+		
+    });
+	
+}
 var uuid = '';
 function addsqcsfw()
 {

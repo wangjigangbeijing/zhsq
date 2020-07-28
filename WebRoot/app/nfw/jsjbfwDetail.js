@@ -63,7 +63,7 @@ $(document).ready(function (){
 
 //加载流程节点信息
 function loadTemplateProcess(){
-	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?dataid=",
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=jsjb&dataid=",
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -90,29 +90,30 @@ function viewDetail(id)
 	$.get(getContextPath()+"/jsjbfwController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
 			if(obj.success)
 			{
 				//$('#modalDetail').show();
 				
 				//$('#name').val(),
-				$('#sjbt').val(obj.sjbt);
-				$('#sjjjcd').val(obj.sjjjcd);
-				$('#sjlyjb').val(obj.sjlyjb);
-				$('#sjly').val(obj.sjly);
-				$('#sjlybh').val(obj.sjlybh);
-				$('#sjfl').val(obj.sjfl);
-				$('#wtfl').val(obj.wtfl);
-				$('#fsdz').val(obj.fsdz);
-				$('#dsr').val(obj.dsr);
-				$('#dsrdh').val(obj.dsrdh);
-				$('#sfyqhf').val(obj.sfyqhf);
-				$('#pdsj').val(obj.pdsj);
-				$('#clsx').val(obj.clsx);
-				$('#cljzsj').val(obj.cljzsj);
-				$('#sjnr').val(obj.sjnr);
-				$('#bz').val(obj.bz);
+				$('#sjbt').val(obj.data.sjbt);
+				$('#sjjjcd').val(obj.data.sjjjcd);
+				$('#sjlyjb').val(obj.data.sjlyjb);
+				$('#sjly').val(obj.data.sjly);
+				$('#sjlybh').val(obj.data.sjlybh);
+				$('#sjfl').val(obj.data.sjfl);
+				$('#wtfl').val(obj.data.wtfl);
+				$('#fsdz').val(obj.data.fsdz);
+				$('#dsr').val(obj.data.dsr);
+				$('#dsrdh').val(obj.data.dsrdh);
+				$('#sfyqhf').val(obj.data.sfyqhf);
+				$('#pdsj').val(obj.data.pdsj);
+				$('#clsx').val(obj.data.clsx);
+				$('#cljzsj').val(obj.data.cljzsj);
+				$('#sjnr').val(obj.data.sjnr);
+				$('#bz').val(obj.data.bz);
 				
-				var picturesArr = obj.fj.split(VALUE_SPLITTER);				
+				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				
 				for(var j=0;j<picturesArr.length;j++)				
 				{					
 					if(picturesArr[j] != '')					
@@ -178,8 +179,6 @@ function addOrUpdate()
 				HorizontalPosition : 'center'
 			});
 			
-			console.log(curId);
-			console.log(obj);
 			//存储业务流信息		
 			if(curId == ''){
 				saveProcessInfo(obj.dataid, curnodeprocess.nextstatus);
