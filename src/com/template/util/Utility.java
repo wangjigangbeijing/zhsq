@@ -228,16 +228,35 @@ public class Utility
 	{
 		String organization = "";
 		
-		String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+		try
+		{
+			String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+			
+			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+			
+			if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
+				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			
+			//String organization = "";
+			if(ConstValue.userToOrgMap.containsKey(userId))
+				organization = ConstValue.userToOrgMap.get(userId);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
 		
-		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
-		
-		if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
-			userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
-		
-		//String organization = "";
-		if(ConstValue.userToOrgMap.containsKey(userId))
-			organization = ConstValue.userToOrgMap.get(userId);
+		try
+		{
+			if(organization.equalsIgnoreCase(""))
+			{
+				organization = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ORG);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
 		
 		return organization;
 	}

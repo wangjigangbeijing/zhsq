@@ -577,4 +577,7 @@ function getCurrentLoginUserInfo()
 	});
 }
 
-
+function logout()
+{
+	
+}

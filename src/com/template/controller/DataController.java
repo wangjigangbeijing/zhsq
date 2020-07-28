@@ -581,21 +581,24 @@ public class DataController {
 
 				if(sGisType.equalsIgnoreCase("点"))
 				{
-					sCols += "geom,point,";
-					
-					sVals += "ST_GeomFromText('POINT("+sPoint+")'),'"+sPoint+"',";
+					//sCols += "geom,point,";
+					sCols += "point,";
+					//sVals += "ST_GeomFromText('POINT("+sPoint+")'),'"+sPoint+"',";
+					sVals += "'"+sPoint+"',";
 				}
 				else if(sGisType.equalsIgnoreCase("线"))
 				{
-					sCols += "geom,point,";
-					
-					sVals += "ST_GeomFromText('LINESTRING("+sPoint+")'),'"+sPoint+"',";
+					//sCols += "geom,point,";
+					sCols += "point,";
+					//sVals += "ST_GeomFromText('LINESTRING("+sPoint+")'),'"+sPoint+"',";
+					sVals += "'"+sPoint+"',";
 				}
 				else if(sGisType.equalsIgnoreCase("面"))
 				{
-					sCols += "geom,point,";
-					
-					sVals += "ST_GeomFromText('POLYGON(("+sPoint+"))'),'"+sPoint+"',";
+					//sCols += "geom,point,";
+					sCols += "point,";
+					//sVals += "ST_GeomFromText('POLYGON(("+sPoint+"))'),'"+sPoint+"',";
+					sVals += "'"+sPoint+"',";
 				}
 				
 				sCols += "owner,";
@@ -984,11 +987,16 @@ public class DataController {
 				
 				String infoFields = mapLayer.getinfofields();
 				
+				if(layerId.equalsIgnoreCase("layer49"))
+					infoFields += ",type as facilitytype";
+				
 				String sTableName = mapLayer.getlayersource();
 				
 				String [] infoFieldArr = infoFields.split(",");
 				
-				String sSql = "select id,st_astext(geom) as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
+				//String sSql = "select id,st_astext(geom) as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
+				
+				String sSql = "select id,point as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
 				
 				String sCond = "";
 				
@@ -1018,75 +1026,98 @@ public class DataController {
 					HashMap hm = listObj.get(i);
 					
 					String sGeom = (String)hm.get("geom");
+
+					if(sGeom == null)
+					{
+						logger.error("geom is null");
+						continue;
+					}
+
 					String gid = (String)hm.get("id");
-					
-					String info = "";
-					for(int j=0;j<infoFieldArr.length;j++)
+
+					try
 					{
-						String field = infoFieldArr[j];
-						
-						String val = "";
-						if(hm.containsKey(field) && hm.get(field) != null)
-							val = hm.get(field).toString();
-						
-						info += val + "\r\n";
-					}
-					
-					sGeom = sGeom.replaceAll("\\ ", ",").replaceAll("POINT", "").replaceAll("POLYGON", "").replaceAll("MULTIPOLYGON", "").replaceAll("MULTILINESTRING", "").replaceAll(",,", " ").trim();
-					
-					JSONObject jsonTmp = new JSONObject();
-					
-					jsonTmp.put("info", info);
-					jsonTmp.put("layerId", layerId);
-					jsonTmp.put("type", sLayerType);
-					jsonTmp.put("id", sTableName+"."+gid);
-					if(sLayerType.equalsIgnoreCase("Point"))
-					{
-						sGeom = sGeom.replaceAll("\\(", "").replaceAll("\\)", "");
-						
-						String [] coorArr = sGeom.split(",");
-						
-						jsonTmp.put("coordinates", coorArr);
-					}
-					else if(sLayerType.equalsIgnoreCase("MultiLineString"))
-					{
-						sGeom = sGeom.replaceAll("\\(", "").replaceAll("\\)", "");
-						
-						String [] coorArr = sGeom.split(",");
-						
-						String [][] aArr = new String[coorArr.length/2][2];
-						
-						for(int j=0;j<coorArr.length;j = j+2)
+						JSONObject jsonTmp = new JSONObject();
+
+						if(layerId.equalsIgnoreCase("layer49"))					
 						{
-							aArr[j/2][0] =  coorArr[j];
-							aArr[j/2][1] =  coorArr[j+1];
+							String facilitytype = (String)hm.get("facilitytype");
+							jsonTmp.put("facilitytype", facilitytype);
 						}
 						
-						String [][][] lineArr = {aArr};
-						
-						jsonTmp.put("coordinates", lineArr);
-					}
-					else if(sLayerType.equalsIgnoreCase("MultiPolygon"))
-					{
-						sGeom = sGeom.replaceAll("\\(", "").replaceAll("\\)", "");
-						
-						String [] coorArr = sGeom.split(",");
-	
-						String [][] aArr = new String[coorArr.length/2][2];
-						
-						for(int j=0;j<coorArr.length;j = j+2)
+						String info = "";
+						for(int j=0;j<infoFieldArr.length;j++)
 						{
-							aArr[j/2][0] =  coorArr[j];
-							aArr[j/2][1] =  coorArr[j+1];
+							String field = infoFieldArr[j];
+							
+							String val = "";
+							if(hm.containsKey(field) && hm.get(field) != null)
+								val = hm.get(field).toString();
+							
+							info += val + "\r\n";
+							
+							jsonTmp.put(field, val);
 						}
 						
-						String [][][] lineArr = {aArr};
+						//sGeom = sGeom.replaceAll("\\ ", ",").replaceAll("POINT", "").replaceAll("POLYGON", "").replaceAll("MULTIPOLYGON", "").replaceAll("MULTILINESTRING", "").replaceAll(",,", " ").trim();
 						
-						jsonTmp.put("coordinates", lineArr);
+						jsonTmp.put("info", info);
+						jsonTmp.put("layerId", layerId);
+						jsonTmp.put("type", sLayerType);
+						jsonTmp.put("id", sTableName+"."+gid);
+						
+						sGeom = sGeom.trim();
+						
+						if(sLayerType.equalsIgnoreCase("Point"))
+						{
+							String [] coorArr = sGeom.split(",");
+							
+							jsonTmp.put("coordinates", coorArr);
+						}
+						else if(sLayerType.equalsIgnoreCase("MultiLineString"))
+						{
+							String [] coorArr = sGeom.split(" ");//点位之间以空格分隔吧
+							
+							String [][] aArr = new String[coorArr.length][2];
+							
+							for(int j=0;j<coorArr.length;j = j+1)
+							{
+								String coor = coorArr[j];
+								
+								aArr[j][0] =  coor.split(",")[0];
+								aArr[j][1] =  coor.split(",")[1];
+							}
+							
+							String [][][] lineArr = {aArr};
+							
+							jsonTmp.put("coordinates", lineArr);
+						}
+						else if(sLayerType.equalsIgnoreCase("MultiPolygon"))
+						{
+							
+							String [] coorArr = sGeom.split(" ");//点位之间以空格分隔吧
+		
+							String [][] aArr = new String[coorArr.length][2];
+							
+							for(int j=0;j<coorArr.length;j = j+1)
+							{
+								String coor = coorArr[j];
+								
+								aArr[j][0] =  coor.split(",")[0];
+								aArr[j][1] =  coor.split(",")[1];
+							}
+							
+							String [][][] lineArr = {aArr};
+							
+							jsonTmp.put("coordinates", lineArr);
+						}
+						
+						jsonFeatures.put(jsonTmp);
 					}
-					
-					jsonFeatures.put(jsonTmp);
-					
+					catch(Exception e)
+					{
+						logger.error(gid + "	" + sGeom+"\n"+e.getMessage());
+					}
 				}
 				jsonObj.put("features",jsonFeatures);
 			}
@@ -1101,9 +1132,12 @@ public class DataController {
 			
 			return jsonObj.toString();
 		}
+		
+		logger.debug(jsonObj.toString());
+		
         return jsonObj.toString();
     }
-
+/*
 	@RequestMapping(value="webwfs",method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String webwfs(String layerId)
@@ -1124,7 +1158,7 @@ public class DataController {
 			
 			String [] infoFieldArr = infoFields.split(",");
 			
-			String sSql = "select id,st_astext(geom) as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
+			String sSql = "select id,point as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
 			
 			String sCond = "";
 			
@@ -1156,6 +1190,12 @@ public class DataController {
 				HashMap hm = listObj.get(i);
 				
 				String sGeom = (String)hm.get("geom");
+				
+				if(sGeom == null)
+				{
+					logger.error("geom is null");
+					continue;
+				}
 				String gid = (String)hm.get("id");
 				
 				String info = "";
@@ -1163,12 +1203,14 @@ public class DataController {
 				{
 					String field = infoFieldArr[j];
 					
-					String val = hm.get(field).toString();
+					String val = "";
+					if(hm.containsKey(field) && hm.get(field) != null)
+						val = hm.get(field).toString();
 					
 					info += val + "\r\n";
 				}
 				
-				sGeom = sGeom.replaceAll("\\ ", ",").replaceAll("POINT", "").replaceAll("POLYGON", "").replaceAll("MULTIPOLYGON", "").replaceAll("MULTILINESTRING", "").replaceAll(",,", " ").trim();
+				//sGeom = sGeom.replaceAll("\\ ", ",").replaceAll("POINT", "").replaceAll("POLYGON", "").replaceAll("MULTIPOLYGON", "").replaceAll("MULTILINESTRING", "").replaceAll(",,", " ").trim();
 				
 				JSONObject jsonTmp = new JSONObject();
 				
@@ -1191,7 +1233,7 @@ public class DataController {
 					
 					String [][] aArr = new String[coorArr.length/2][2];
 					
-					for(int j=0;j<coorArr.length;j = j+2)
+					for(int j=0;j<coorArr.length && j+1<coorArr.length;j = j+2)
 					{
 						aArr[j/2][0] =  coorArr[j];
 						aArr[j/2][1] =  coorArr[j+1];
@@ -1209,7 +1251,7 @@ public class DataController {
 
 					String [][] aArr = new String[coorArr.length/2][2];
 					
-					for(int j=0;j<coorArr.length;j = j+2)
+					for(int j=0;j<coorArr.length && j+1<coorArr.length;j = j+2)
 					{
 						aArr[j/2][0] =  coorArr[j];
 						aArr[j/2][1] =  coorArr[j+1];
@@ -1237,7 +1279,7 @@ public class DataController {
 		}
         return jsonObj.toString();
     }
-	
+*/	
 	
 	@XmlRootElement
 	class Data implements java.io.Serializable {

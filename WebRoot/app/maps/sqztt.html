@@ -15,7 +15,7 @@
           <div class="col-sm-6">
             <h1>社区专题图</h1>
           </div>
-           <div class="col-sm-6 pull-right">
+           <!--div class="col-sm-6 pull-right">
 				<form class="form-horizontal">
 				
 				<div class='form-group row pull-right' id="layerDiv">
@@ -23,7 +23,7 @@
 				</div>
 				</form>
 				
-			  </div>
+			  </div-->
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -199,10 +199,10 @@
               <div class="card-header">
                 <h3 class="card-title" id="mapTitle">先锋党建图</h3>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                <div class="card-tools" id="layerDiv">
+                  <!--button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button-->
                 </div>
               </div>
          	 <div class="card-body" id="sqzttDiv" style="height:700px;">
@@ -304,6 +304,8 @@ function loadMap(mapName)
 
 				var geoServerURL = respObj.mapurl;
 				
+				$('#layerDiv').empty();	
+				
 				for(var i=0;i<respObj.list.length;i++)
 				{
 					var layer = respObj.list[i];
@@ -312,11 +314,10 @@ function loadMap(mapName)
 					
 					var layerId = layer.id;
 					
+					var checkboxWidth = layer.note.length * 22;
 					//图层列表
-					var layerCtl = '<div class="form-check">' + 
-                          '<input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
-                          '<label class="form-check-label">'+layer.note+'</label>' + 
-                        '</div>';
+					var layerCtl = '<input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
+                          '<label class="form-check-label" style="width:'+checkboxWidth+'px;">'+layer.note+'</label>';
 					
 					$('#layerDiv').append(layerCtl);
 					
@@ -326,20 +327,32 @@ function loadMap(mapName)
 					
 					var layerStyleObj = jQuery.parseJSON(layerStyle); 
 					
+					//[{"type": "上水井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0101_ssjg.png"}},{"type": "污水井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0102_wsjg.png"}},{"type": "雨水井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0103_ysjg.png"}},{"type": "雨水箅子","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0104_ysbz.png"}},{"type": "电力井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0105_dljg.png"}},{"type": "路灯井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0106_ldjg.png"}},{"type": "通信井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0107_txjg.png"}},{"type": "电视井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0108_dsjg.png"}},{"type": "网络井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0109_wljg.png"}},{"type": "热力井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0110_rljg.png"}},{"type": "燃气井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0111_rqjg.png"}},{"type": "公安井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0112_gajg.png"}},{"type": "消防设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0113_xfss.png"}},{"type": "园林井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0114_yljg.png"}},{"type": "信号灯电源井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0115_xhddyjg.png"}},{"type": "邮政井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0116_yzjg.png"}},{"type": "电缆井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0117_dlanjg.png"}},{"type": "化粪池井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0118_hfcjg.png"}},{"type": "中水井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0119_zsjg.png"}},{"type": "公交井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0120_gjjg.png"}},{"type": "输油（气）井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0121_syqjg.png"}},{"type": "特殊井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0122_tsjg.png"}},{"type": "不明井盖","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0123_bmjg.png"}},{"type": "水井","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0124_sj.png"}},{"type": "供水器","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0125_gsq.png"}},{"type": "沟槽厕所盖板","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0126_gccsgb.png"}},{"type": "通信交接箱","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0127_txjjx.png"}},{"type": "电力设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0128_dlss.png"}},{"type": "电力设施标识牌","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0129_dlssbsp.png"}},{"type": "电力立杆","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0130_dllg.png"}},{"type": "通信立杆","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0131_txlg.png"}},{"type": "公交立杆","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0132_gjlg.png"}},{"type": "特殊立杆","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0133_tslg.png"}},{"type": "不明立杆","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0134_bmlg.png"}},{"type": "旗杆","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0135_qg.png"}},{"type": "输油（气）标志","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0136_syqbz.png"}},{"type": "路灯","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0137_ld.png"}},{"type": "地灯","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0138_dd.png"}},{"type": "景观灯","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0139_jgd.png"}},{"type": "报刊亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0140_bkt.png"}},{"type": "电话亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0141_dht.png"}},{"type": "邮筒","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0142_yt.png"}},{"type": "信息亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0143_xxt.png"}},{"type": "售货亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0144_sht.png"}},{"type": "自动售货机","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0145_zdshj.png"}},{"type": "户外健身设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0146_hwjsss.png"}},{"type": "高压线铁塔","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0147_gyxtt.png"}},{"type": "变压器（箱）","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0148_byqx.png"}},{"type": "燃气调压站（箱）","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0149_rqdyzx.png"}},{"type": "监控电子眼","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0150_jkdzy.png"}},{"type": "治安岗亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0151_zagt.png"}},{"type": "休息亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0152_xxit.png"}},{"type": "自助缴费机","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0153_zzjfj.png"}},{"type": "充电桩","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0154_cdz.png"}},{"type": "防蚊闸","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0155_fwz.png"}},{"type": "跨河管道","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0156_khgd.png"}},{"type": "露天燃气管道","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0157_ltrqgd.png"}},{"type": "晒衣架","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0158_syj.png"}},{"type": "停车场","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0201_tcc.png"}},{"type": "立体车库","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0202_ltck.png"}},{"type": "停车咪表","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0203_tcmb.png"}},{"type": "公交站亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0204_gjzt.png"}},{"type": "出租车站牌","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0205_czczp.png"}},{"type": "过街天桥","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0206_gjtq.png"}},{"type": "地下通道","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0207_dxtd.png"}},{"type": "立交桥","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0208_ljq.png"}},{"type": "跨河桥","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0209_khq.png"}},{"type": "交通标志牌","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0210_jtbzp.png"}},{"type": "限高架标志","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0211_xgjbz.png"}},{"type": "路名牌","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0212_lmp.png"}},{"type": "地名牌","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0213_dmp.png"}},{"type": "交通信号灯","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0214_jtxhd.png"}},{"type": "交通信号设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0215_jtxhss.png"}},{"type": "交通岗亭","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0216_jtgt.png"}},{"type": "交通护栏","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0217_jthl.png"}},{"type": "防撞桶","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0218_fzt.png"}},{"type": "安全岛","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0219_aqd.png"}},{"type": "人行横道桩","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0220_rxhdz.png"}},{"type": "便道桩","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0221_bdz.png"}},{"type": "柔性隔离体","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0222_rxglt.png"}},{"type": "道路信息显示屏","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0223_dlxxxsp.png"}},{"type": "道路隔音屏","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0224_dlgyp.png"}},{"type": "非机动车停放点","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0225_fjdctfd.png"}},{"type": "自行车租赁点","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0226_zxczld.png"}},{"type": "存车支架","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0227_cczj.png"}},{"type": "铁道口设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0228_tdkss.png"}},{"type": "栈桥","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0229_zq1.png"}},{"type": "水域标示牌","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0230_sybsp.png"}},{"type": "港监设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0231_gjss.png"}},{"type": "公共厕所","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0301_ggcs.png"}},{"type": "公厕指示牌","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0302_gczsp.png"}},{"type": "化粪池","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0303_hfc.png"}},{"type": "垃圾间（楼）","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0304_ljjl.png"}},{"type": "垃圾箱","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0305_ljx.png"}},{"type": "户外广告","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0306_hwgg.png"}},{"type": "牌匾标识","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0307_pbbs.png"}},{"type": "宣传栏","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0308_xcl.png"}},{"type": "气象监测站","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0309_qxjcz.png"}},{"type": "环保监测站","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0310_hbjcz.png"}},{"type": "污水口监测站","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0311_wskjcz.png"}},{"type": "污水监测器","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0312_wsjcq.png"}},{"type": "噪声显示屏","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0313_zsxsp.png"}},{"type": "古树名木","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0401_gsmm.png"}},{"type": "行树","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0402_xs.png"}},{"type": "独立树","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0403_dls.png"}},{"type": "护树设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0404_hsss.png"}},{"type": "花架花钵","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0405_hjhb.png"}},{"type": "雕塑","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0406_ds.png"}},{"type": "街头坐椅","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0407_jtzy.png"}},{"type": "绿地护栏","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0408_ldhl.png"}},{"type": "绿地附属设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0409_ldfsss.png"}},{"type": "喷泉","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0410_pq.png"}},{"type": "人防工事","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0501_rfgs.png"}},{"type": "公房地下室","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0502_gfdxs.png"}},{"type": "车辆加油（气、电）站","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0503_cljyqdz.png"}},{"type": "液化气站","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0504_yhqz.png"}},{"type": "重大危险源","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0505_zdwxy.png"}},{"type": "水域附属设施","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0506_syfsss.png"}},{"type": "水域护栏","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0507_syhl.png"}},{"type": "防汛墙","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0508_fxq.png"}},{"type": "文物古迹","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0509_wwgj.png"}},{"type": "兴趣点","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0605_xqd.png"}},{"type": "门牌号","style": {"iconurl": "gisicon/jc_publicfacilities/bj_0606_mph.png"}}]
 					layerStyleMap[layerId] = layerStyleObj;
+					
+					if(layerId == 'layer49')
+					{
+						for(var k=0;k<layerStyleObj.length;k++)
+						{
+							layerStyleMap[layerStyleObj[k].type] = layerStyleObj[k].style;
+						}
+					}
 					
 					$.ajax({
 						type: "GET",
-						url: getContextPath()+"/dataController/webwfs?layerId="+layerId,
+						url: getContextPath()+"/dataController/wfs?layerIds="+layerId,
 						contentType: "application/json; charset=utf-8",
 						dataType: "json",
 						success: function (dataList) {
-							
-							for(var p=0;p < dataList.features.length;p++)
+						
+							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 							{
 								var data = dataList.features[p];
 								
-								console.log(data.type);
+								var layerId = data.layerId;
+								
+								layerStyleObj = layerStyleMap[layerId];
+								
 								if(data.type == 'MultiLineString')
 								{
 									var iconFeature = new ol.Feature({
@@ -365,17 +378,25 @@ function loadMap(mapName)
 									iconFeature.setId(data.id);
 									dataLayer.getSource().addFeature(iconFeature);	
 									*/
-									
 									var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Point(data.coordinates),			
+										geometry: new ol.geom.Point(data.coordinates),//(["116.37970237","39.83650525"]),//(data.coordinates),//			
 										weight:1,
 										population: 4000,
 										rainfall: 500
 									});
 									
+									var iconurl = '';
+									if(layerStyleObj.style != null)
+										layerStyleObj.style.iconurl;
+										
+									if(layerId == 'layer49')
+										iconurl = layerStyleMap[data.facilitytype].iconurl;
+									
+									//console.log("http://localhost:8080"+getContextPath()+"/fileController/downloadIcon?fileName="+iconurl);
+									
 									iconFeature.setStyle(new ol.style.Style({
 										image: new ol.style.Icon({
-											src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
+											src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
 										})
 									}));
 									
@@ -386,12 +407,12 @@ function loadMap(mapName)
 								{
 									var pointArr = data.coordinates;
 									
-									var transferedArr = [];//data.coordinates;
+									/*var transferedArr = [];//data.coordinates;
 									
 									for(var q=0;q<pointArr.length;q++)
 									{
 										transferedArr[q] = ol.proj.transform(pointArr[q], 'EPSG:4326', 'EPSG:3857');
-									}
+									}*/
 									
 									var iconFeature = new ol.Feature({
 										geometry: new ol.geom.Polygon(data.coordinates),
@@ -401,13 +422,21 @@ function loadMap(mapName)
 									});
 									iconFeature.setId(data.info);
 									
+									var strokeColor = '#1E90FF';
+									if(layerStyleObj.style != null)
+										strokeColor = layerStyleObj.style['stroke-color'];
+										
+									var strokeWidth = 1; 
+									if(layerStyleObj.style != null)
+										strokeWidth = layerStyleObj.style['stroke-width'];
+									
 									iconFeature.setStyle(new ol.style.Style({
 										stroke: new ol.style.Stroke({       // 线样式
-											color: layerStyleObj.style['stroke-color'],//'blue',
-											width: layerStyleObj.style['stroke-width']
+											color: strokeColor,
+											width: strokeWidth
 										}),
 										fill: new ol.style.Fill({           // 填充样式
-											color: layerStyleObj.style['fill-color'],//'orange'
+											color: layerStyleObj.style['fill-color-rgb'],
 											opacity: layerStyleObj.style['fill-opacity']
 										})
 									}));
@@ -503,13 +532,22 @@ function loadMap(mapName)
 									});
 									iconFeature.setId(data.info);
 									
+									var strokeColor = '#1E90FF';
+									if(layerStyleObj.style != null)
+										strokeColor = layerStyleObj.style['stroke-color'];
+										
+									var strokeWidth = 1; 
+									if(layerStyleObj.style != null)
+										strokeWidth = layerStyleObj.style['stroke-width'];
+									
+									
 									iconFeature.setStyle(new ol.style.Style({
 										stroke: new ol.style.Stroke({       // 线样式
-											color: layerStyleObj.style['stroke-color'],//'blue',
-											width: layerStyleObj.style['stroke-width']
+											color: strokeColor,
+											width: strokeWidth
 										}),
 										fill: new ol.style.Fill({           // 填充样式
-											color: layerStyleObj.style['fill-color'],//'orange'
+											color: layerStyleObj.style['fill-color-rgb'],//'orange'
 											opacity: layerStyleObj.style['fill-opacity']
 										})
 									}));

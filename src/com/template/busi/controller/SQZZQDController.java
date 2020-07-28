@@ -123,7 +123,7 @@ public class SQZZQDController {
 		try
 		{
 			HqlFilter hqlFilter = new HqlFilter();
-			if(zzy != null && zzy.equalsIgnoreCase("") == false)
+			if(gzzz != null && gzzz.equalsIgnoreCase("") == false)
 				hqlFilter.addQryCond("gzzz", HqlFilter.Operator.LIKE, "%"+gzzz+"%");
 			
 			if(zzy != null && zzy.equalsIgnoreCase("") == false)

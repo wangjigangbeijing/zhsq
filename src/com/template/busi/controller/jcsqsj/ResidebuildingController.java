@@ -55,7 +55,7 @@ public String addOrUpdate(String id,String dataid,String name,String address,
 		residebuilding.setdataid(dataid);
 		residebuilding.setname(name);
 		residebuilding.setaddress(address);
-		residebuilding.setyear(TimeUtil.parseDate(year, "yyyy-MM-dd"));
+		residebuilding.setyear(year);
 		residebuilding.setpropertyyears(propertyyears);
 		residebuilding.setpropertyrights(propertyrights);
 		residebuilding.setheatingsystem(heatingsystem);
@@ -173,10 +173,7 @@ public String load(String name,String address,String propertyyears,String proper
 			jsonTmp.put("dataid",residebuilding.getdataid());
 			jsonTmp.put("name",residebuilding.getname());
 			jsonTmp.put("address",residebuilding.getaddress());
-			if(residebuilding.getyear() != null)
-				jsonTmp.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
-			else
-				jsonTmp.put("year","");
+			jsonTmp.put("year",residebuilding.getyear());
 			jsonTmp.put("propertyyears",residebuilding.getpropertyyears());
 			jsonTmp.put("propertyrights",residebuilding.getpropertyrights());
 			jsonTmp.put("heatingsystem",residebuilding.getheatingsystem());
@@ -232,11 +229,7 @@ public String load(String name,String address,String propertyyears,String proper
 				jsonObj.put("dataid",residebuilding.getdataid());
 				jsonObj.put("name",residebuilding.getname());
 				jsonObj.put("address",residebuilding.getaddress());
-				if(residebuilding.getyear() != null)
-					jsonObj.put("year",TimeUtil.formatDate(residebuilding.getyear(),"yyyy-MM-dd"));
-				else
-					jsonObj.put("year","-");
-				
+				jsonObj.put("year",residebuilding.getyear());
 				jsonObj.put("propertyyears",residebuilding.getpropertyyears());
 				jsonObj.put("propertyrights",residebuilding.getpropertyrights());
 				jsonObj.put("heatingsystem",residebuilding.getheatingsystem());
@@ -292,9 +285,17 @@ public String load(String name,String address,String propertyyears,String proper
 			{
 				String units = residebuilding.getunits();
 				
+				if(units == null)
+					units = "";
+				
 				String [] unitArr = units.split(",");
 				
 				JSONArray jsonUnitArr = new JSONArray();
+				
+				int maxRoomNum = 0;
+				int curRoomNum = 0;
+				
+				String curLevel = "1";
 				
 				for(int i=0;i<unitArr.length;i++)
 				{
@@ -308,7 +309,9 @@ public String load(String name,String address,String propertyyears,String proper
 					
 					hqlFilter.addQryCond("ofresidebuilding", HqlFilter.Operator.EQ, residebuilding.getId());
 					
-					hqlFilter.setSort("level");
+					hqlFilter.setSort("number");
+					
+					//hqlFilter.setOrder("desc");
 					
 					JSONArray jsonRoomArr = new JSONArray();
 					
@@ -322,6 +325,18 @@ public String load(String name,String address,String propertyyears,String proper
 
 						jsonRoom.put("number", room.getnumber());
 						
+						jsonRoom.put("level", room.getlevel());
+						
+						if(curLevel.equalsIgnoreCase(room.getlevel()))
+							curRoomNum ++;
+						else
+						{
+							if(curRoomNum > maxRoomNum)
+								maxRoomNum = curRoomNum;
+							
+							curRoomNum = 0;
+						}
+						
 						jsonRoom.put("peoplecharacteristics", room.getpeoplecharacteristics());
 						
 						String residentNames = room.getresidentname();
@@ -333,6 +348,7 @@ public String load(String name,String address,String propertyyears,String proper
 						
 						jsonRoomArr.put(jsonRoom);
 					}
+					
 					jsonUnit.put("rooms", jsonRoomArr);
 					jsonUnit.put("name", unit);
 					
@@ -341,7 +357,7 @@ public String load(String name,String address,String propertyyears,String proper
 				
 				jsonObj.put("units", jsonUnitArr);
 				jsonObj.put("name", residebuilding.getofcommunity()+residebuilding.getname());
-				
+				jsonObj.put("maxRoomNum", maxRoomNum);
 				jsonObj.put("success", true);
 			}
 			else

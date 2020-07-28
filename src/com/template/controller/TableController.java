@@ -287,7 +287,8 @@ public class TableController {
 				String sCreateTable = "CREATE TABLE "+tableENName + "(";//页面上保证至少有一个采集属性
 				
 				sCreateTable += "id varchar(64),";
-				sCreateTable += "created_by varchar(6),";
+				sCreateTable += "created_by varchar(64),";
+				sCreateTable += "owner varchar(64),";
 				sCreateTable += "point text,";
 				sCreateTable += "created_at timestamp,";
 				

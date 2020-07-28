@@ -55,12 +55,12 @@ public void setaddress(String address)
 	this.address = address;
 }
 @Column(name = "year", nullable = true)
-public Date year;
-public Date getyear()
+public String year;
+public String getyear()
 {
 	return year;
 }
-public void setyear(Date year)
+public void setyear(String year)
 {
 	this.year = year;
 }
