@@ -398,9 +398,11 @@ public class FlowTemplateController {
     @ResponseBody
 	public String getCurDataTemplateProcessInfo(String service, String dataid) {
 		logger.info("getdatatemplateprocessinfo");
+		
+		logger.info(service + ":" + dataid);
 				
 		int templateid = 6;
-		if("sqbs".equals(service)) {
+		if("sqbs".equals(service) || "zmbl".equals(service)) {
 			templateid = 5;
 		}
 		else if("jsjb".equals(service)) {
@@ -490,7 +492,7 @@ public class FlowTemplateController {
 		logger.info("loadprocessdata");
 				
 		int templateid = 6;
-		if("sqbs".equals(service)) {
+		if("sqbs".equals(service) || "zmbl".equals(service)) {
 			templateid = 5;
 		}
 		else if("jsjb".equals(service)) {
