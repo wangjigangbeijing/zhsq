@@ -344,15 +344,16 @@ function TV_EnablePhoneRing(uID,bEnable)
 	}
 }
 
-function TV_StartPlayFile(uID,szFile)
+function TV_StartPlayFile(uID,vFilePath)
 {
-	vFilePath ="c:\\test.wav";
-	alert("播放文件路径为:"+vFilePath);
+	//vFilePath ="c:\\test.wav";
+	//alert("播放文件路径为:"+vFilePath);
 	if(vFilePath.length > 0)
 	{
 //    AppendStatus("选择文件:"+vFilePath);
 	 //   TV_StopPlayFile(uID);//先停止上次播放的句柄
-		var vmask=PLAYFILE_MASK_REPEAT;//循环播放
+		//var vmask=PLAYFILE_MASK_REPEAT;//循环播放
+		var vmask=0;//单次播放
 		PlayFile(uID,QNV_PLAY_FILE_START,0,vmask,vFilePath,function(id){
 			uPlayFileID[uID]=id;
 			if(id<=0)

@@ -14,6 +14,31 @@ $(document).ready(function (){
 	
 	//load();
 	
+	$("#role").select2({	 
+		multiple: true
+	});
+	
+	$.get(getContextPath()+"/sysRoleController/load",
+		function(result){
+			
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$('#role').html('');
+				
+				var roleArr = [];
+				
+				for(var i=0;i<obj.list.length;i++)
+				{
+					var role = obj.list[i];
+					
+					roleArr[i] = "<option value='" + role.id + "'>" + role.name + "</option>";						
+				}
+				$('#role').html(roleArr.join(''));
+			}
+		}
+	);
+	
 	if(curId != '')
 		viewDetail(curId);
 });
@@ -40,10 +65,12 @@ function viewDetail(id)
 				$('#mobile').val(obj.mobile);
 				$('#department').val(obj.department);
 				$('#job').val(obj.job);
-				$('#role').val(obj.role);
+				//$('#role').val(obj.role);
+				
+				if(obj.role != null && obj.role != undefined)							
+					$("#role").val(obj.role.split(',')).trigger("change");
+						
 				$('#status').val(obj.status);
-
-					
 			}
 		});
 }
@@ -71,12 +98,12 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
-	
+	var roleArr = $('#role').val();
 	
 	$.post(getContextPath()+"/sysUserController/addOrUpdate",
 	{
 		id:curId,
-				name:$('#name').val(),
+		name:$('#name').val(),
 		loginid:$('#loginid').val(),
 		password:$('#password').val(),
 		gender:$("input[name='gender']:checked").val(),//$('#gender').val(),
@@ -85,7 +112,7 @@ function addOrUpdate()
 		mobile:$('#mobile').val(),
 		department:$('#department').val(),
 		job:$('#job').val(),
-		role:$('#role').val(),
+		role:roleArr.join(','),
 		status:$('#status').val()
 	},
 	function(result){
