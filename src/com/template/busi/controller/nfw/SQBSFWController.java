@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,21 +50,13 @@ public class SQBSFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String addOrUpdate(String id,String sxbm,
-			String sxmc,
-			String sxdl,
-			String sxxl,
-			String sxxq,
-			String sxdd,
-			String sxdsr, 
-			String sxkssj,	
-			String sxjssj,
-			String sxzj, 
-			String sxzp,
-			String sxfj, 
-			String sxjf, 
-			String sxbz, 
-			String sxzt)
+	public String addOrUpdate(String id,String blr,
+			String lxdh,
+			String blqd,
+			String blsxdl,
+			String blsxxl,
+			String xq,
+			String bz)
 	{
 		logger.debug("addOrUpdate");
     	JSONObject jsonObj = new JSONObject();
@@ -81,27 +74,18 @@ public class SQBSFWController {
 				sqbsfw.setId(Utility.getUniStr());
 			}
 			
-			/*sqbsfw.setSXBM(sxbm);
-			sqbsfw.setSXMC(sxmc);
-			sqbsfw.setSXDL(sxdl);
-			sqbsfw.setSXXL(sxxl);
-			sqbsfw.setSXXQ(sxxq);
-			sqbsfw.setSXDD(sxdd);
-			sqbsfw.setSXDSR(sxdsr);
-			sqbsfw.setSXKSSJ(sxkssj);
-			sqbsfw.setSXJSSJ(sxjssj);
-			sqbsfw.setSXZJ(sxzj);
-			sqbsfw.setSXZP(sxzp);
-			sqbsfw.setSXFJ(sxfj);
-			sqbsfw.setSXKSSJ(sxkssj);
-			sqbsfw.setSXJSSJ(sxjssj);
-			//sqbsfw.setSXJF(Double.valueOf(sxjf));
-			sqbsfw.setSXBZ(sxbz);
-			sqbsfw.setSXZT(sxzt);*/
+			sqbsfw.setblr(blr);
+			sqbsfw.setlxdh(lxdh);
+			sqbsfw.setblqd(blqd);
+			sqbsfw.setblsxdl(blsxdl);
+			sqbsfw.setblsxxl(blsxxl);
+			sqbsfw.setxq(xq);
+			sqbsfw.setbz(bz);
 			
 			sqbsfwService.saveOrUpdate(sqbsfw);
 			
 			jsonObj.put("success", true);
+			jsonObj.put("dataid", sqbsfw.getId());
 		}
 		catch(Exception e)
 		{
@@ -147,56 +131,23 @@ public class SQBSFWController {
 		logger.info("load sxdl:"+sxdl);
 		
 		JSONObject jsonObj = new JSONObject();
-    	
 		try
 		{
-			HqlFilter hqlFilter = new HqlFilter();
-			if(sxdl != null && sxdl.equalsIgnoreCase("") == false)
-				hqlFilter.addQryCond("SXDL", HqlFilter.Operator.EQ, sxdl);
-			
-	        List<SQBSFW> listObj = sqbsfwService.findByFilter(hqlFilter);
-			
-	        JSONArray jsonArr = new JSONArray();
-	        
-	        int iTotalCnt = 0;
-			for(int i=0;i<listObj.size();i++)
-			{
-				SQBSFW sqbsfw = listObj.get(i);
-				
-				JSONObject jsonTmp = new JSONObject();
-				
-				jsonTmp.put("id", sqbsfw.getId());
-				/*jsonTmp.put("sxbm", sqbsfw.getSXBM());
-				jsonTmp.put("sxbz", sqbsfw.getSXBZ());
-				jsonTmp.put("sxdd", sqbsfw.getSXDD());
-				jsonTmp.put("sxdl", sqbsfw.getSXDL());
-				jsonTmp.put("sxdsr", sqbsfw.getSXDSR());
-				jsonTmp.put("sxfj", sqbsfw.getSXFJ());
-				jsonTmp.put("sxjf", sqbsfw.getSXJF());
-				jsonTmp.put("sxjssj", sqbsfw.getSXJSSJ());
-				jsonTmp.put("sxkssj", sqbsfw.getSXKSSJ());
-				jsonTmp.put("sxmc", sqbsfw.getSXMC());
-				jsonTmp.put("sxxl", sqbsfw.getSXXL());
-				jsonTmp.put("sxxq", sqbsfw.getSXXQ());
-				jsonTmp.put("sxzj", sqbsfw.getSXZJ());
-				jsonTmp.put("sxzp", sqbsfw.getSXZP());
-				jsonTmp.put("sxzt", sqbsfw.getSXZT());*/
-	        	jsonArr.put(jsonTmp);
-	        	
-	        	iTotalCnt++;
-			}
-	        
-	        jsonObj.put("totalCount", iTotalCnt);
-	        jsonObj.put("list", jsonArr);
-	        
-	        jsonObj.put("success", true);
-		}
-		catch(Exception e)
-		{
-			logger.error(e.getMessage(),e);
-			jsonObj.put("success", false);
-		}
-        return jsonObj.toString();
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_sqbsfw a";
+			List<HashMap> list = this.sqbsfwService.findBySql(sql);
+//			HqlFilter hqlFilter = new HqlFilter();
+//        List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);
+        //net.sf.json.JSONArray jsonArr = net.sf.json.JSONArray.fromObject(list);
+        jsonObj.put("totalCount", list.size());
+        jsonObj.put("list", list);
+        jsonObj.put("success", true);
+	}
+	catch(Exception e)
+	{
+		logger.error(e.getMessage(),e);
+		jsonObj.put("success", false);
+	}
+    return jsonObj.toString();
     }
 	
 	@RequestMapping(value="get",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
@@ -204,44 +155,33 @@ public class SQBSFWController {
 	public String get(String id)
 	{
 		logger.debug("get");
-    	JSONObject jsonObj = new JSONObject();
-    	
+		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			SQBSFW sqbsfw = sqbsfwService.getById(id);
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_sqbsfw a where id=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(id);
+			List<HashMap> list = this.sqbsfwService.findBySql(sql, params);
 			
-			if(sqbsfw != null)
+			if(list != null && list.size() > 0)
 			{
+				jsonObj.put("data",list.get(0));
 				jsonObj.put("success", true);
-				jsonObj.put("id", sqbsfw.getId());
-				/*jsonObj.put("sxbm", sqbsfw.getSXBM());
-				jsonObj.put("sxbz", sqbsfw.getSXBZ());
-				jsonObj.put("sxdd", sqbsfw.getSXDD());
-				jsonObj.put("sxdl", sqbsfw.getSXDL());
-				jsonObj.put("sxdsr", sqbsfw.getSXDSR());
-				jsonObj.put("sxfj", sqbsfw.getSXFJ());
-				jsonObj.put("sxjf", sqbsfw.getSXJF());
-				jsonObj.put("sxjssj", sqbsfw.getSXJSSJ());
-				jsonObj.put("sxkssj", sqbsfw.getSXKSSJ());
-				jsonObj.put("sxmc", sqbsfw.getSXMC());
-				jsonObj.put("sxxl", sqbsfw.getSXXL());
-				jsonObj.put("sxxq", sqbsfw.getSXXQ());
-				jsonObj.put("sxzj", sqbsfw.getSXZJ());
-				jsonObj.put("sxzp", sqbsfw.getSXZP());
-				jsonObj.put("sxzt", sqbsfw.getSXZT());*/
 			}
 			else
 			{
+				logger.error("object is not found...");
 				jsonObj.put("success", false);
-				jsonObj.put("errMsg", "未找到社区职责清单...");
+				jsonObj.put("errMsg", "Object can not found...");
 			}
+				   
 		}
 		catch(Exception e)
 		{
 			logger.error(e.getMessage(),e);
 			jsonObj.put("success", false);
 		}
-        return jsonObj.toString();
+	    return jsonObj.toString();
     }
 	
 	

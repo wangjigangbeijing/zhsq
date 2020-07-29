@@ -1,22 +1,31 @@
-
+﻿
 var curUserType = -1;
 
 $(document).ready(function (){
 	
 	$('#btnAdd').click(addsqbsfw);
 	
-	$('#sqbssxqdAnchor').click(sqbssxqd);
+	load();
 	
 });
 
 var dataTable;
 
-function loadsqbsfw()
+function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	var tableName = $('#tableNameQry').val();
+	 var name = $('#nameQuery').val();
+	 var mobile = $('#mobileQuery').val();
+	 var address = $('#addressQuery').val();
+	 var quezhen = $('#quezhenQuery').val();
+	 var qzdate = $('#qzdateQuery').val();
+	 var yisi = $('#yisiQuery').val();
+	 var mijie = $('#mijieQuery').val();
+	 var hsjc = $('#hsjcQuery').val();
+	 var hsjcjieguo = $('#hsjcjieguoQuery').val();
+
 	
-	$.get(getContextPath()+"/tableController/loadTable?tableName="+tableName,
+	$.get(getContextPath()+'/sqbsfwController/load?sxdl=',
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -50,65 +59,106 @@ function loadsqbsfw()
 						"sLast": "末页" 
 					}
 				}, //多语言配置					
-				"data":obj.tableList,
+				"data":obj.list,
 				"columns": [
-					{ "data": "tableZHName" ,"sClass":"text-center"},
-					{ "data": "status" ,"sClass":"text-center"},
-					{ "data": "" ,"sClass":"text-center"}
+					{ 'data': 'blsx' ,'sClass':'text-center'},
+					{ 'data': 'blr' ,'sClass':'text-center'},
+					{ 'data': 'lxdh' ,'sClass':'text-center'},
+					{ 'data': 'blqd' ,'sClass':'text-center'},
+					{ 'data': 'status' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							var btn = "<span style='color: blue;'>"+full.status+"</span>";
+							return btn;
+						}
+					},
+					{ 'data': '' ,'sClass':'text-center'}
+
 				],
 				columnDefs: [ /*{
 					className: 'control',
 					orderable: false,
 					targets:   0,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.tableName+"</a>";
+						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
 						return btn;
 					}
 					},*/
 					{
 					className: 'control',
 					orderable: false,
-					targets:   2,//从0开始
+					targets:  5,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"tableManagement('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>管理</a>";
+						
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"tableData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>数据</a>&nbsp;";
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteTable('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
-						
-						btn += "<a href=\"#\" onclick=\"generateCode('"+full.id+"')\"  class=\"btn btn-info btn-xs\"><i class=\"fa fa-trash-o\"></i>生成代码</a>&nbsp;";
-						
-						//<a href=\"#\" onclick=\"viewDetail('"+full.id+"',true)\" class=\"btn btn-info btn-xs\">编辑</a>&nbsp;
-						
-						//var btn = '<button class="btn btn-success btn-xs" onclick="tableManagement(\''+full.id+'\');return false;"><i class="fa fa-pencil"></i></button>';
-						
-						//var btn = '<a id="inspectorAnchor" class="btn-primary" href=""><i class="fa fa-pencil"></i></a>';
+						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn btn-primary btn-xs\"><i class=\"fa fa-flask\"></i>业务流</a>";
 						
 						return btn;
 					}
 					}
 				]
 			} );
-			
-			$('#tableSelect').html('');
-			var userArr = [];
-			
-			for(var i=0;i<obj.tableList.length;i++)
-			{
-				var table = obj.tableList[i];
-				
-				userArr[i] = "<option value='" + table.id + "'>" + table.tableName + "</option>";						
-			}
-			$('#tableSelect').html(userArr.join(''));
-	
-		}
-		else
-		{
-			jError(obj.errMsg,{
-						VerticalPosition : 'center',
-						HorizontalPosition : 'center'});
 		}
 	});
+}
+
+function editData(id)
+{
+	curId = id;
+	$('#main-content').load("./nfw/sqbsfwDetail.html", function () {
+		
+    });
+}
+
+function deleteData(id)
+{
+	$.confirm({
+		title:"删除确认",
+		text:"确认删除数据?",
+		confirm: function(button) {
+			
+			$.post(getContextPath()+"/sqbsfwController/delete",
+			{
+				id:id
+			},
+			function(result){
+				var obj = jQuery.parseJSON(result);  
+				if(obj.success)
+				{
+					jSuccess("数据删除成功!",{
+						VerticalPosition : 'center',
+						HorizontalPosition : 'center'
+					});
+					
+					load();
+				}
+				else
+				{
+					jError(obj.errMsg,{
+						VerticalPosition : 'center',
+						HorizontalPosition : 'center'
+					});
+				}
+			});
+			
+		},
+		cancel: function(button) {
+			//alert("You aborted the operation.");
+		},
+		confirmButton: "删除",
+		cancelButton: "放弃"
+	});
+}
+
+function enterFlow(id){
+	curId = id;
+	
+	$('#main-content').load("./nfw/sqbsfwFlowDetail.html", function () {
+		
+    });
+	
 }
 
 var uuid = '';
