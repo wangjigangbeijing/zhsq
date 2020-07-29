@@ -400,7 +400,10 @@ public class FlowTemplateController {
 		logger.info("getdatatemplateprocessinfo");
 				
 		int templateid = 6;
-		if("jsjb".equals(service)) {
+		if("sqbs".equals(service)) {
+			templateid = 5;
+		}
+		else if("jsjb".equals(service)) {
 			templateid = 6;
 		}
 		else if("mysl".equals(service) || "xfsl".equals(service)) {
@@ -487,7 +490,10 @@ public class FlowTemplateController {
 		logger.info("loadprocessdata");
 				
 		int templateid = 6;
-		if("jsjb".equals(service)) {
+		if("sqbs".equals(service)) {
+			templateid = 5;
+		}
+		else if("jsjb".equals(service)) {
 			templateid = 6;
 		}
 		else if("mysl".equals(service) || "xfsl".equals(service)) {

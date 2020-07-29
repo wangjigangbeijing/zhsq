@@ -1,4 +1,4 @@
-
+﻿
 //获取地址栏参数，name:参数名称
  function getUrlParms(name){
    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -10,43 +10,90 @@
 
 $(document).ready(function (){
 	
+	$(".select2").select2();
 	
+	if(curId != ''){
+		get(curId);
+	}
 	
 });
 
-function get()
+function get(id)
 {
-	$.get(getContextPath()+"/sqzzqdController/get?id="+curId,
+	$.get(getContextPath()+"/wwzffwController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				$('#bh').val(obj.bh);
+				$('#wwzfdx').val(obj.data.wwzfdx);
 				
-				$('#gzzz').val(obj.gzzz);
+				$('#wwdxlx').val(obj.data.wwdxlx);
 				
-				$('#zzly').val(obj.zzly);
+				$('#wwlx').val(obj.data.wwlx);
 				
-				$('#zzy').val(obj.zzy);
+				$('#wwpwwjqk').val(obj.data.wwpwwjqk);
 				
-				$('#lb').val(obj.lb);
+				$('#wwpwwjly').val(obj.data.wwpwwjly);
 				
-				$('#yjflfgmc').val(obj.yjflfgmc);
+				
+				
+				$('#qtcywwry').val(obj.data.qtcywwry);
+				
+				$('#wwzfxq').val(obj.data.wwzfxq);
+				
+				$('#bz').val(obj.data.bz);
+				
+				if(obj.data.sqcywwry != ''){
+					var sub = obj.data.sqcywwry.split(",")
+					var arr = new Array();
+					for(var i = 0; i < sub.length; i++){
+						arr.push(sub[i]);
+					}
+					$('#sqcywwry').val(arr).trigger('change');
+				}
+				if(obj.data.wwfs != ''){
+					var arr = obj.data.wwfs.split(",");
+					$("input[type=checkbox]").val(arr);
+				}
+				
+				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				
+				for(var j=0;j<picturesArr.length;j++)				
+				{					
+					if(picturesArr[j] != '')					
+					{						
+						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+					}
+				}
 			}
 		});
 }
 
 function addOrUpdate()
 {
-	$.post(getContextPath()+"/sqzzqdController/addOrUpdate",
+	var wwfs = '';
+	$.each($('input:checkbox:checked'),function(){
+		if(wwfs == '') wwfs = $(this).val();
+		else wwfs += "," + $(this).val();
+	});
+	var sqcywwry = '';
+	var arr = $('#sqcywwry').val();
+	if(arr.length > 0){
+		sqcywwry = arr.join(',');
+	}
+	$.post(getContextPath()+"/wwzffwController/addOrUpdate",
 	{
 		id:curId,
-		bh:$('#bh').val(),
-		gzzz:$('#gzzz').val(),
-		zzly:$('#zzly').val(),
-		zzy:$('#zzy').val(),
-		lb:$('#lb').val(),
-		yjflfgmc:$('#yjflfgmc').val()
+		wwzfdx:$('#wwzfdx').val(),
+		wwdxlx:$('#wwdxlx').val(),
+		wwlx:$('#wwlx').val(),
+		wwfs:wwfs,
+		wwpwwjqk:$('#wwpwwjqk').val(),
+		wwpwwjly:$('#wwpwwjly').val(),
+		sqcywwry:sqcywwry,
+		qtcywwry:$('#qtcywwry').val(),
+		wwzfxq:$('#wwzfxq').val(),
+		bz:$('#bz').val(),
+		fj:$('#pictures').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
@@ -187,7 +234,8 @@ function addOrUpdate()
 
 function gobackPage()
 {
-	$('#main-content').load("./sqzzqd/sqzzqd.html", function () {
+	curId = '';
+	$('#main-content').load("./nfw/wwzffw.html", function () {
 		
 	});
 }
