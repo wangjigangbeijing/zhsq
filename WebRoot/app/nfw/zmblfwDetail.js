@@ -1,3 +1,4 @@
+﻿var curnodeprocess;
 
 //获取地址栏参数，name:参数名称
  function getUrlParms(name){
@@ -10,43 +11,112 @@
 
 $(document).ready(function (){
 	
+	if(curId != '')
+		viewDetail(curId);
 	
+	if(curId == ''){
+		loadTemplateProcess();
+	}
 	
 });
 
-function get()
+function viewDetail(id)
 {
-	$.get(getContextPath()+"/sqzzqdController/get?id="+curId,
+	$.get(getContextPath()+"/zmblfwController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				$('#bh').val(obj.bh);
+				$('#blr').val(obj.data.blr);
 				
-				$('#gzzz').val(obj.gzzz);
+				$('#lxdh').val(obj.data.lxdh);
 				
-				$('#zzly').val(obj.zzly);
+				$('#blqd').val(obj.data.blqd);
 				
-				$('#zzy').val(obj.zzy);
+				$('#zmsxdl').val(obj.data.zmsxdl);
 				
-				$('#lb').val(obj.lb);
+				$('#zmsxxl').val(obj.data.zmsxxl);
 				
-				$('#yjflfgmc').val(obj.yjflfgmc);
+				$('#xq').val(obj.data.xq);
+				
+				$('#bz').val(obj.data.bz);
+				
+				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				
+				for(var j=0;j<picturesArr.length;j++)				
+				{					
+					if(picturesArr[j] != '')					
+					{						
+						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+					}
+				}	
 			}
 		});
 }
 
+//加载流程节点信息
+function loadTemplateProcess(){
+	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=zmbl&dataid=",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				if(obj.isfinish){
+					
+				}
+				else {
+					curnodeprocess = obj.data;
+				}
+			}
+			else {
+				jError("获取业务流程数据失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+			}
+		});
+}
+
+
+//保存业务流程信息
+function saveProcessInfo(dataid, stat){
+	$.post(getContextPath()+"/flowtemplateController/saveprocessdata",
+	{
+		attach: '',
+		desc: '',
+		type: 2,
+		dataid:dataid,
+		processid:curnodeprocess.id,
+		stat:stat
+	},
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{			
+			gobackPage();
+		}
+		else
+		{
+			jError("保存流程数据失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	});
+}
+
 function addOrUpdate()
 {
-	$.post(getContextPath()+"/sqzzqdController/addOrUpdate",
+	$.post(getContextPath()+"/zmblfwController/addOrUpdate",
 	{
 		id:curId,
-		bh:$('#bh').val(),
-		gzzz:$('#gzzz').val(),
-		zzly:$('#zzly').val(),
-		zzy:$('#zzy').val(),
-		lb:$('#lb').val(),
-		yjflfgmc:$('#yjflfgmc').val()
+		blr:$('#blr').val(),
+		lxdh:$('#lxdh').val(),
+		blqd:$('#blqd').val(),
+		zmsxdl:$('#zmsxdl').val(),
+		zmsxxl:$('#zmsxxl').val(),
+		xq: $('#xq').val(),
+		bz:$('#bz').val(),
+		fj:$('#pictures').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
@@ -56,11 +126,17 @@ function addOrUpdate()
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'});
 						
-			gobackPage();
+			//存储业务流信息		
+			if(curId == ''){
+				saveProcessInfo(obj.dataid, curnodeprocess.nextstatus);
+			}
+			else {
+				gobackPage();
+			}
 		}
 		else
 		{
-			jError("事项创建失败!"+data.errMsg,{
+			jError("事项创建失败!",{
 				VerticalPosition : 'center',
 				HorizontalPosition : 'center'});
 			return ;
@@ -187,7 +263,7 @@ function addOrUpdate()
 
 function gobackPage()
 {
-	$('#main-content').load("./sqzzqd/sqzzqd.html", function () {
+	$('#main-content').load("./nfw/zmblfw.html", function () {
 		
 	});
 }
