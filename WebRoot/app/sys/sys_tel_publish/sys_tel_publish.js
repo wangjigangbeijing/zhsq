@@ -60,7 +60,7 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'title' ,'sClass':'text-center'},
+					{ 'data': 'title' ,'sClass':'text-center'},
 					{ 'data': 'category' ,'sClass':'text-center'},
 					{ 'data': 'content' ,'sClass':'text-center'},
 					{ 'data': 'target' ,'sClass':'text-center'},
@@ -69,23 +69,34 @@ function load()
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ /*{
+				columnDefs: [ {
 					className: 'control',
 					orderable: false,
-					targets:   0,//从0开始
+					targets:   2,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
+						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.content+"\">"+full.contentShort+"</a>";
 						return btn;
 					}
-					},*/
+					},
+					{
+					className: 'control',
+					orderable: false,
+					targets:   3,//从0开始
+					mRender : function(data,type,full){
+						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.target+"\">"+full.targetShort+"</a>";
+						return btn;
+					}
+					},
 					{
 					className: 'control',
 					orderable: false,
 					targets:  6,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">编辑</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\">删除</a>";
+						//btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\"  class=\"btn btn-primary btn-xs\"><i class=\"fa fa-trash-o\"></i>编辑</a>&nbsp;";
+						
+						//btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\">删除</a>";
 						
 						return btn;
 					}
@@ -144,6 +155,22 @@ function editData(id)
     });
 }
 
+
+function view(id)
+{
+	curId = id;
+	
+	$('#main-content').load("./sys/sys_tel_publish/sys_tel_publishDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
+}
 
 function ShowAddModal()
 {

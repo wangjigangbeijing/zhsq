@@ -9,6 +9,8 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,184 +176,204 @@ public String delete(String id)
 }
 @RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String load(String name,String identitytype,String idnumber,String characteristics,String ofcommunity,String ofresidebuilding,String ofunit,String ofroom,String offamily,String sex,String residencestatus,String ishouseholder,String relationshiphouseholder,String registrationcategory,String birthday,String age,String nation,String politicalstatus,String education,String professionstatus,String professiontype,String issocialsecurity,String tel,String mobile,String marriage,String isforeignmarriage,String health,String blood,String custodianincommunity,String dy_partymembertype,String dy_of_partyorganization,String dy_joinpartydate,String dy_membership,String dy_islost,String dy_movemember,String zdr_type,String jzr_correctioncontent,String sy_unemployedreemployment,String lnr_economicsources,String lnr_livingconditions,String cj_disabilitytype,String cj_disabilitylevel,String jsb_type)
+public String load(String name,String identitytype,String idnumber,String characteristics,String ofcommunity,String ofresidebuilding,
+		String ofunit,String ofroom,String offamily,String sex,String residencestatus,String ishouseholder,String relationshiphouseholder,
+		String registrationcategory,String birthday,String age,String nation,String politicalstatus,String education,String professionstatus,
+		String professiontype,String issocialsecurity,String tel,String mobile,String marriage,String isforeignmarriage,String health,String blood,
+		String custodianincommunity,String dy_partymembertype,String dy_of_partyorganization,String dy_joinpartydate,String dy_membership,String dy_islost,
+		String dy_movemember,String zdr_type,String jzr_correctioncontent,String sy_unemployedreemployment,String lnr_economicsources,String lnr_livingconditions,
+		String cj_disabilitytype,String cj_disabilitylevel,String jsb_type)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
-}
-if(identitytype != null && identitytype.equalsIgnoreCase("") == false && identitytype.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("identitytype", HqlFilter.Operator.EQ, identitytype);
-}
-if(idnumber != null && idnumber.equalsIgnoreCase("") == false && idnumber.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("idnumber", HqlFilter.Operator.LIKE, "%"+idnumber+"%");
-}
-if(characteristics != null && characteristics.equalsIgnoreCase("") == false && characteristics.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("characteristics", HqlFilter.Operator.EQ, characteristics);
-}
-if(ofcommunity != null && ofcommunity.equalsIgnoreCase("") == false && ofcommunity.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("ofcommunity", HqlFilter.Operator.LIKE, "%"+ofcommunity+"%");
-}
-if(ofresidebuilding != null && ofresidebuilding.equalsIgnoreCase("") == false && ofresidebuilding.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("ofresidebuilding", HqlFilter.Operator.LIKE, "%"+ofresidebuilding+"%");
-}
-if(ofunit != null && ofunit.equalsIgnoreCase("") == false && ofunit.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("ofunit", HqlFilter.Operator.LIKE, "%"+ofunit+"%");
-}
-if(ofroom != null && ofroom.equalsIgnoreCase("") == false && ofroom.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("ofroom", HqlFilter.Operator.LIKE, "%"+ofroom+"%");
-}
-if(offamily != null && offamily.equalsIgnoreCase("") == false && offamily.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("offamily", HqlFilter.Operator.LIKE, "%"+offamily+"%");
-}
-if(sex != null && sex.equalsIgnoreCase("") == false && sex.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("sex", HqlFilter.Operator.LIKE, "%"+sex+"%");
-}
-if(residencestatus != null && residencestatus.equalsIgnoreCase("") == false && residencestatus.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("residencestatus", HqlFilter.Operator.EQ, residencestatus);
-}
-if(ishouseholder != null && ishouseholder.equalsIgnoreCase("") == false && ishouseholder.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("ishouseholder", HqlFilter.Operator.LIKE, "%"+ishouseholder+"%");
-}
-if(relationshiphouseholder != null && relationshiphouseholder.equalsIgnoreCase("") == false && relationshiphouseholder.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("relationshiphouseholder", HqlFilter.Operator.EQ, relationshiphouseholder);
-}
-if(registrationcategory != null && registrationcategory.equalsIgnoreCase("") == false && registrationcategory.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("registrationcategory", HqlFilter.Operator.EQ, registrationcategory);
-}
-if(birthday != null && birthday.equalsIgnoreCase("") == false && birthday.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("birthday", HqlFilter.Operator.LIKE, "%"+birthday+"%");
-}
-if(age != null && age.equalsIgnoreCase("") == false && age.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("age", HqlFilter.Operator.LIKE, "%"+age+"%");
-}
-if(nation != null && nation.equalsIgnoreCase("") == false && nation.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("nation", HqlFilter.Operator.LIKE, "%"+nation+"%");
-}
-if(politicalstatus != null && politicalstatus.equalsIgnoreCase("") == false && politicalstatus.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("politicalstatus", HqlFilter.Operator.LIKE, "%"+politicalstatus+"%");
-}
-if(education != null && education.equalsIgnoreCase("") == false && education.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("education", HqlFilter.Operator.EQ, education);
-}
-if(professionstatus != null && professionstatus.equalsIgnoreCase("") == false && professionstatus.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("professionstatus", HqlFilter.Operator.EQ, professionstatus);
-}
-if(professiontype != null && professiontype.equalsIgnoreCase("") == false && professiontype.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("professiontype", HqlFilter.Operator.EQ, professiontype);
-}
-if(issocialsecurity != null && issocialsecurity.equalsIgnoreCase("") == false && issocialsecurity.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("issocialsecurity", HqlFilter.Operator.LIKE, "%"+issocialsecurity+"%");
-}
-if(tel != null && tel.equalsIgnoreCase("") == false && tel.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("tel", HqlFilter.Operator.LIKE, "%"+tel+"%");
-}
-if(mobile != null && mobile.equalsIgnoreCase("") == false && mobile.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
-}
-if(marriage != null && marriage.equalsIgnoreCase("") == false && marriage.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("marriage", HqlFilter.Operator.LIKE, "%"+marriage+"%");
-}
-if(isforeignmarriage != null && isforeignmarriage.equalsIgnoreCase("") == false && isforeignmarriage.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("isforeignmarriage", HqlFilter.Operator.LIKE, "%"+isforeignmarriage+"%");
-}
-if(health != null && health.equalsIgnoreCase("") == false && health.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("health", HqlFilter.Operator.LIKE, "%"+health+"%");
-}
-if(blood != null && blood.equalsIgnoreCase("") == false && blood.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("blood", HqlFilter.Operator.LIKE, "%"+blood+"%");
-}
-if(custodianincommunity != null && custodianincommunity.equalsIgnoreCase("") == false && custodianincommunity.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("custodianincommunity", HqlFilter.Operator.LIKE, "%"+custodianincommunity+"%");
-}
-if(dy_partymembertype != null && dy_partymembertype.equalsIgnoreCase("") == false && dy_partymembertype.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("dy_partymembertype", HqlFilter.Operator.LIKE, "%"+dy_partymembertype+"%");
-}
-if(dy_of_partyorganization != null && dy_of_partyorganization.equalsIgnoreCase("") == false && dy_of_partyorganization.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("dy_of_partyorganization", HqlFilter.Operator.LIKE, "%"+dy_of_partyorganization+"%");
-}
-if(dy_joinpartydate != null && dy_joinpartydate.equalsIgnoreCase("") == false && dy_joinpartydate.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("dy_joinpartydate", HqlFilter.Operator.LIKE, "%"+dy_joinpartydate+"%");
-}
-if(dy_membership != null && dy_membership.equalsIgnoreCase("") == false && dy_membership.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("dy_membership", HqlFilter.Operator.EQ, dy_membership);
-}
-if(dy_islost != null && dy_islost.equalsIgnoreCase("") == false && dy_islost.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("dy_islost", HqlFilter.Operator.LIKE, "%"+dy_islost+"%");
-}
-if(dy_movemember != null && dy_movemember.equalsIgnoreCase("") == false && dy_movemember.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("dy_movemember", HqlFilter.Operator.LIKE, "%"+dy_movemember+"%");
-}
-if(zdr_type != null && zdr_type.equalsIgnoreCase("") == false && zdr_type.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("zdr_type", HqlFilter.Operator.EQ, zdr_type);
-}
-if(jzr_correctioncontent != null && jzr_correctioncontent.equalsIgnoreCase("") == false && jzr_correctioncontent.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("jzr_correctioncontent", HqlFilter.Operator.LIKE, "%"+jzr_correctioncontent+"%");
-}
-if(sy_unemployedreemployment != null && sy_unemployedreemployment.equalsIgnoreCase("") == false && sy_unemployedreemployment.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("sy_unemployedreemployment", HqlFilter.Operator.LIKE, "%"+sy_unemployedreemployment+"%");
-}
-if(lnr_economicsources != null && lnr_economicsources.equalsIgnoreCase("") == false && lnr_economicsources.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("lnr_economicsources", HqlFilter.Operator.EQ, lnr_economicsources);
-}
-if(lnr_livingconditions != null && lnr_livingconditions.equalsIgnoreCase("") == false && lnr_livingconditions.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("lnr_livingconditions", HqlFilter.Operator.EQ, lnr_livingconditions);
-}
-if(cj_disabilitytype != null && cj_disabilitytype.equalsIgnoreCase("") == false && cj_disabilitytype.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("cj_disabilitytype", HqlFilter.Operator.EQ, cj_disabilitytype);
-}
-if(cj_disabilitylevel != null && cj_disabilitylevel.equalsIgnoreCase("") == false && cj_disabilitylevel.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("cj_disabilitylevel", HqlFilter.Operator.EQ, cj_disabilitylevel);
-}
-if(jsb_type != null && jsb_type.equalsIgnoreCase("") == false && jsb_type.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("jsb_type", HqlFilter.Operator.EQ, jsb_type);
-}
+		if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+		}
+		if(identitytype != null && identitytype.equalsIgnoreCase("") == false && identitytype.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("identitytype", HqlFilter.Operator.EQ, identitytype);
+		}
+		if(idnumber != null && idnumber.equalsIgnoreCase("") == false && idnumber.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("idnumber", HqlFilter.Operator.LIKE, "%"+idnumber+"%");
+		}
+		if(characteristics != null && characteristics.equalsIgnoreCase("") == false && characteristics.equalsIgnoreCase("null") == false)
+		{
+			//hqlFilter.addQryCond("characteristics", HqlFilter.Operator.EQ, characteristics);
+			
+			String [] charArr = characteristics.split(",");
+			
+			//ArrayList<String> charArrList = (ArrayList<String>) Arrays.asList(charArr);
+			
+			ArrayList<String> charArrList = new ArrayList<String>();
+			
+			for(int i=0;i<charArr.length;i++)
+			{
+				if(charArr[i].equalsIgnoreCase("") == false)				
+					charArrList.add("%"+charArr[i]+"%");
+			}
+			
+			hqlFilter.addOrCondGroup("characteristics", HqlFilter.Operator.LIKE, charArrList);
+		}
+		if(ofcommunity != null && ofcommunity.equalsIgnoreCase("") == false && ofcommunity.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("ofcommunity", HqlFilter.Operator.LIKE, "%"+ofcommunity+"%");
+		}
+		if(ofresidebuilding != null && ofresidebuilding.equalsIgnoreCase("") == false && ofresidebuilding.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("ofresidebuilding", HqlFilter.Operator.LIKE, "%"+ofresidebuilding+"%");
+		}
+		if(ofunit != null && ofunit.equalsIgnoreCase("") == false && ofunit.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("ofunit", HqlFilter.Operator.LIKE, "%"+ofunit+"%");
+		}
+		if(ofroom != null && ofroom.equalsIgnoreCase("") == false && ofroom.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("ofroom", HqlFilter.Operator.LIKE, "%"+ofroom+"%");
+		}
+		if(offamily != null && offamily.equalsIgnoreCase("") == false && offamily.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("offamily", HqlFilter.Operator.LIKE, "%"+offamily+"%");
+		}
+		if(sex != null && sex.equalsIgnoreCase("") == false && sex.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("sex", HqlFilter.Operator.LIKE, "%"+sex+"%");
+		}
+		if(residencestatus != null && residencestatus.equalsIgnoreCase("") == false && residencestatus.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("residencestatus", HqlFilter.Operator.EQ, residencestatus);
+		}
+		if(ishouseholder != null && ishouseholder.equalsIgnoreCase("") == false && ishouseholder.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("ishouseholder", HqlFilter.Operator.LIKE, "%"+ishouseholder+"%");
+		}
+		if(relationshiphouseholder != null && relationshiphouseholder.equalsIgnoreCase("") == false && relationshiphouseholder.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("relationshiphouseholder", HqlFilter.Operator.EQ, relationshiphouseholder);
+		}
+		if(registrationcategory != null && registrationcategory.equalsIgnoreCase("") == false && registrationcategory.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("registrationcategory", HqlFilter.Operator.EQ, registrationcategory);
+		}
+		if(birthday != null && birthday.equalsIgnoreCase("") == false && birthday.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("birthday", HqlFilter.Operator.LIKE, "%"+birthday+"%");
+		}
+		if(age != null && age.equalsIgnoreCase("") == false && age.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("age", HqlFilter.Operator.LIKE, "%"+age+"%");
+		}
+		if(nation != null && nation.equalsIgnoreCase("") == false && nation.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("nation", HqlFilter.Operator.LIKE, "%"+nation+"%");
+		}
+		if(politicalstatus != null && politicalstatus.equalsIgnoreCase("") == false && politicalstatus.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("politicalstatus", HqlFilter.Operator.LIKE, "%"+politicalstatus+"%");
+		}
+		if(education != null && education.equalsIgnoreCase("") == false && education.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("education", HqlFilter.Operator.EQ, education);
+		}
+		if(professionstatus != null && professionstatus.equalsIgnoreCase("") == false && professionstatus.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("professionstatus", HqlFilter.Operator.EQ, professionstatus);
+		}
+		if(professiontype != null && professiontype.equalsIgnoreCase("") == false && professiontype.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("professiontype", HqlFilter.Operator.EQ, professiontype);
+		}
+		if(issocialsecurity != null && issocialsecurity.equalsIgnoreCase("") == false && issocialsecurity.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("issocialsecurity", HqlFilter.Operator.LIKE, "%"+issocialsecurity+"%");
+		}
+		if(tel != null && tel.equalsIgnoreCase("") == false && tel.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("tel", HqlFilter.Operator.LIKE, "%"+tel+"%");
+		}
+		if(mobile != null && mobile.equalsIgnoreCase("") == false && mobile.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
+		}
+		if(marriage != null && marriage.equalsIgnoreCase("") == false && marriage.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("marriage", HqlFilter.Operator.LIKE, "%"+marriage+"%");
+		}
+		if(isforeignmarriage != null && isforeignmarriage.equalsIgnoreCase("") == false && isforeignmarriage.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("isforeignmarriage", HqlFilter.Operator.LIKE, "%"+isforeignmarriage+"%");
+		}
+		if(health != null && health.equalsIgnoreCase("") == false && health.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("health", HqlFilter.Operator.LIKE, "%"+health+"%");
+		}
+		if(blood != null && blood.equalsIgnoreCase("") == false && blood.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("blood", HqlFilter.Operator.LIKE, "%"+blood+"%");
+		}
+		if(custodianincommunity != null && custodianincommunity.equalsIgnoreCase("") == false && custodianincommunity.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("custodianincommunity", HqlFilter.Operator.LIKE, "%"+custodianincommunity+"%");
+		}
+		if(dy_partymembertype != null && dy_partymembertype.equalsIgnoreCase("") == false && dy_partymembertype.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("dy_partymembertype", HqlFilter.Operator.LIKE, "%"+dy_partymembertype+"%");
+		}
+		if(dy_of_partyorganization != null && dy_of_partyorganization.equalsIgnoreCase("") == false && dy_of_partyorganization.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("dy_of_partyorganization", HqlFilter.Operator.LIKE, "%"+dy_of_partyorganization+"%");
+		}
+		if(dy_joinpartydate != null && dy_joinpartydate.equalsIgnoreCase("") == false && dy_joinpartydate.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("dy_joinpartydate", HqlFilter.Operator.LIKE, "%"+dy_joinpartydate+"%");
+		}
+		if(dy_membership != null && dy_membership.equalsIgnoreCase("") == false && dy_membership.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("dy_membership", HqlFilter.Operator.EQ, dy_membership);
+		}
+		if(dy_islost != null && dy_islost.equalsIgnoreCase("") == false && dy_islost.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("dy_islost", HqlFilter.Operator.LIKE, "%"+dy_islost+"%");
+		}
+		if(dy_movemember != null && dy_movemember.equalsIgnoreCase("") == false && dy_movemember.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("dy_movemember", HqlFilter.Operator.LIKE, "%"+dy_movemember+"%");
+		}
+		if(zdr_type != null && zdr_type.equalsIgnoreCase("") == false && zdr_type.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("zdr_type", HqlFilter.Operator.EQ, zdr_type);
+		}
+		if(jzr_correctioncontent != null && jzr_correctioncontent.equalsIgnoreCase("") == false && jzr_correctioncontent.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("jzr_correctioncontent", HqlFilter.Operator.LIKE, "%"+jzr_correctioncontent+"%");
+		}
+		if(sy_unemployedreemployment != null && sy_unemployedreemployment.equalsIgnoreCase("") == false && sy_unemployedreemployment.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("sy_unemployedreemployment", HqlFilter.Operator.LIKE, "%"+sy_unemployedreemployment+"%");
+		}
+		if(lnr_economicsources != null && lnr_economicsources.equalsIgnoreCase("") == false && lnr_economicsources.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("lnr_economicsources", HqlFilter.Operator.EQ, lnr_economicsources);
+		}
+		if(lnr_livingconditions != null && lnr_livingconditions.equalsIgnoreCase("") == false && lnr_livingconditions.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("lnr_livingconditions", HqlFilter.Operator.EQ, lnr_livingconditions);
+		}
+		if(cj_disabilitytype != null && cj_disabilitytype.equalsIgnoreCase("") == false && cj_disabilitytype.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("cj_disabilitytype", HqlFilter.Operator.EQ, cj_disabilitytype);
+		}
+		if(cj_disabilitylevel != null && cj_disabilitylevel.equalsIgnoreCase("") == false && cj_disabilitylevel.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("cj_disabilitylevel", HqlFilter.Operator.EQ, cj_disabilitylevel);
+		}
+		if(jsb_type != null && jsb_type.equalsIgnoreCase("") == false && jsb_type.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("jsb_type", HqlFilter.Operator.EQ, jsb_type);
+		}
 
         List<Resident> listObj = residentService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

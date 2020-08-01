@@ -60,6 +60,7 @@ public class SMSController {
 			smsMessage.setTargetCnt(iTargetCnt);
 			smsMessage.setSender(userName);
 			smsMessage.setTimerSend(new Date());
+			smsMessage.setTarget(mobileList);
 			
 			String msgId = Utility.getUniStr();
 			smsMessage.setId(msgId);
@@ -151,12 +152,23 @@ public class SMSController {
 				
 				String messageContent = message.getMessageContent();
 				
+				String messageContentShort = messageContent;
+				
 				if(messageContent.length() > 50)
-					messageContent += messageContent.substring(0, 50)+"...";
+					messageContentShort =messageContentShort.substring(0, 50)+"...";
 				
 				jsonTmp.put("messageContent", messageContent);
+				jsonTmp.put("messageContentShort", messageContentShort);
 				jsonTmp.put("successCnt", message.getSuccessCnt());
 				jsonTmp.put("failCnt", message.getFailCnt());
+				jsonTmp.put("mobileList", message.getTarget());
+				
+				String mobileListShort = message.getTarget();
+				if(mobileListShort != null && mobileListShort.length() > 20)
+					mobileListShort = mobileListShort.substring(0, 20) + "...";
+				
+				jsonTmp.put("mobileListShort", mobileListShort);
+				
 				jsonTmp.put("sendStatus", message.getSendStatus());
 	
 	       		jsonArr.put(jsonTmp);
@@ -178,6 +190,8 @@ public class SMSController {
 	@ResponseBody
 	public String get(String msgId)
 	{
+		logger.debug("get:"+msgId);
+		
 		JSONObject jsonObj = new JSONObject();
 		try
 		{

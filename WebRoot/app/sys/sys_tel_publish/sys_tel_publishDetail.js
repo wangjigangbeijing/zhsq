@@ -14,10 +14,23 @@ $(document).ready(function (){
 	
 	//load();
 	
+	$("#characterQry").select2({	 
+		multiple: true
+	});
+	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
+	
 	if(curId != '')
 		viewDetail(curId);
 	
-	TV_Initialize();
+	try{
+		TV_Initialize();
+	}
+	catch(Exception e)
+	{
+		console.log('Failed to initialize...');
+	}
+	
 	getEvent(T_GetEvent);
 });
 
@@ -186,6 +199,9 @@ function telPublish()
 	var target = targetArr[curTargetIndex];
 	
 	curTargetIndex ++;
+	
+	if(target.indexOf('-') != -1)
+		target = target.substring(target.indexOf('-') + 1);
 	
 	TV_StartDial(0,target);
 }

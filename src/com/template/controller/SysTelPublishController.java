@@ -46,7 +46,7 @@ public String addOrUpdate(String id,String title,String category,String content,
 		sys_tel_publish.setcontent(content);
 		sys_tel_publish.setaudio(audio);
 		sys_tel_publish.settarget(target);
-		sys_tel_publish.setpublishtime(publishtime);
+		sys_tel_publish.setpublishtime(TimeUtil.formatDate(new Date(),"yyyy-MM-dd HH:mm"));
 		sys_tel_publish.setstatus(status);
 
         sys_tel_publishService.save(sys_tel_publish);
@@ -108,8 +108,22 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			jsonTmp.put("title",sys_tel_publish.gettitle());
 			jsonTmp.put("category",sys_tel_publish.getcategory());
 			jsonTmp.put("content",sys_tel_publish.getcontent());
+			
+			String contentShort = sys_tel_publish.getcontent();
+			if(contentShort != null && contentShort.length() > 10)
+				contentShort = contentShort.substring(0, 10) + "...";
+			
+			jsonTmp.put("contentShort", contentShort);
+			
 			jsonTmp.put("audio",sys_tel_publish.getaudio());
 			jsonTmp.put("target",sys_tel_publish.gettarget());
+			
+			String targetShort = sys_tel_publish.gettarget();
+			if(targetShort != null && targetShort.length() > 21)
+				targetShort = targetShort.substring(0, 21) + "...";
+			
+			jsonTmp.put("targetShort", targetShort);
+			
 			jsonTmp.put("publishtime",sys_tel_publish.getpublishtime());
 			jsonTmp.put("status",sys_tel_publish.getstatus());
 
