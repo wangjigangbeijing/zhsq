@@ -27,12 +27,9 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#name').val(obj.name);
+				$('#name').val(obj.name);
 				$('#code').val(obj.code);
 				$('#note').val(obj.note);
-
-					
 			}
 		});
 }

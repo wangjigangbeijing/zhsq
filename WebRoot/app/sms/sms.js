@@ -66,7 +66,15 @@ function load()
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ 
+				columnDefs: [ {
+					className: 'control',
+					orderable: false,
+					targets:   1,//从0开始
+					mRender : function(data,type,full){
+						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.messageContent+"\">"+full.messageContentShort+"</a>";
+						return btn;
+					}
+					},
 					{
 					className: 'control',
 					orderable: false,

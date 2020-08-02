@@ -144,5 +144,31 @@ public void setnote(String note)
 {
 	this.note = note;
 }
+
+
+@Column(name = "sms_account", nullable = true)
+public String sms_account;
+public String getsms_account()
+{
+	return sms_account;
+}
+public void setsms_account(String sms_account)
+{
+	this.sms_account = sms_account;
+}
+
+@Column(name = "sms_password", nullable = true)
+public String sms_password;
+public String getsms_password()
+{
+	return sms_password;
+}
+public void setsms_password(String sms_password)
+{
+	this.sms_password = sms_password;
+}
+
+
+
 }
 

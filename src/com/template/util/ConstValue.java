@@ -149,15 +149,6 @@ public class ConstValue {
 	public final static String VALUE_SPLITTER = ",";
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public final static String SMS_STATUS_INITIAL = "等待发送";
 	public final static String SMS_STATUS_SUBMIT_SUCCESS = "提交成功";
 	public final static String SMS_STATUS_SEND_SUCCESS = "发送成功";
@@ -174,9 +165,9 @@ public class ConstValue {
 	public static HashMap<String,String> residentMap = new HashMap<String,String>();
 	
 	
-	
-	
 	public static HashMap<String,String> userMap = new HashMap<String,String>();
+	
+	public static HashMap<String,String> roleMap = new HashMap<String,String>();
 	
 	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
 	

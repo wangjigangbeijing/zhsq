@@ -127,7 +127,29 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			//jsonTmp.put("department",sys_user.getdepartment());
 			jsonTmp.put("job",sys_user.getjob());
 			jsonTmp.put("role",sys_user.getrole());
+			
+			String roleTxt = "";
+			
+			if(sys_user.getrole() != null)
+			{
+				String [] roleArr = sys_user.getrole().split(",");
+				
+				for(int j=0;j<roleArr.length;j++)
+				{
+					String roleId = roleArr[j];
+					
+					if(ConstValue.roleMap.containsKey(roleId))
+					{
+						roleTxt += ConstValue.roleMap.get(roleId)+",";
+					}
+				}
+			}
+			
+			if(roleTxt.endsWith(","))
+				roleTxt = roleTxt.substring(0, roleTxt.length() - 1);
+			
 			jsonTmp.put("status",sys_user.getstatus());
+			jsonTmp.put("roleTxt",roleTxt);
 
        		jsonArr.put(jsonTmp);
         	iTotalCnt++;

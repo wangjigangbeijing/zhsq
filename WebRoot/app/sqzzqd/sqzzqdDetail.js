@@ -10,7 +10,8 @@
 
 $(document).ready(function (){
 	
-	
+	if(curId != '')
+		get();
 	
 });
 

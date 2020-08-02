@@ -36,7 +36,7 @@ $(document).ready(function (){
 
 function get()
 {
-	$.get(getContextPath()+"/smsController/get?id="+curId,
+	$.get(getContextPath()+"/smsController/get?msgId="+curId,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -51,7 +51,7 @@ function get()
 			}
 		});
 }
-
+/*
 function addOrUpdate()
 {
 	$.post(getContextPath()+"/smsController/addOrUpdate",
@@ -80,7 +80,7 @@ function addOrUpdate()
 		}
 	});
 }
-
+*/
 function gobackPage()
 {
 	$('#main-content').load("./sms/sms.html", function () {

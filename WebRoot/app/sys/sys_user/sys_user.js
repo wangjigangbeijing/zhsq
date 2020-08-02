@@ -72,7 +72,7 @@ function load()
 					{ 'data': 'mobile' ,'sClass':'text-center'},
 					{ 'data': 'department' ,'sClass':'text-center'},
 					{ 'data': 'job' ,'sClass':'text-center'},
-					{ 'data': 'role' ,'sClass':'text-center'},
+					{ 'data': 'roleTxt' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 

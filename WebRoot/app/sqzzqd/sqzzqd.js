@@ -89,6 +89,8 @@ function loadsqzzqd()
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"lk-a\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 
+						btn += "<a href=\"#\" onclick=\"edit('"+full.id+"')\"  class=\"lk-c\"><i class=\"fa fa-trash-o\"></i>编辑</a>&nbsp;";
+
 						btn += "<a href=\"#\" onclick=\"deleteObj('"+full.id+"')\"  class=\"lk-b\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
@@ -172,6 +174,23 @@ function view(id)
 	curId = id;
 	
 	$('#main-content').load("./sqzzqd/sqzzqdDetail.html", function () {
-		get();
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
+}
+
+
+function edit(id)
+{
+	curId = id;
+	
+	$('#main-content').load("./sqzzqd/sqzzqdDetail.html", function () {
+		
     });
 }

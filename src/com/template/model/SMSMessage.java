@@ -41,18 +41,18 @@ public class SMSMessage implements java.io.Serializable {
 	{
 		this.messageContent = messageContent;
 	}
-	/*
-	@Column(name = "SEND_TO", nullable = false)
-	public String sendTo;
-	public String getSendTo()
+	
+	@Column(name = "TARGET", nullable = false)
+	public String target;
+	public String getTarget()
 	{
-		return sendTo;
+		return target;
 	}
-	public void setSendTo(String sendTo)
+	public void setTarget(String target)
 	{
-		this.sendTo = sendTo;
+		this.target = target;
 	}
-	*/
+	
 	@Column(name = "SEND_STATUS", nullable = false)
 	public String sendStatus;
 	public String getSendStatus()

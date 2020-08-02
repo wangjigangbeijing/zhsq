@@ -30,6 +30,11 @@ $(document).ready(function (){
 		}
 	);
 	*/
+	$("#characterQry").select2({	 
+		multiple: true
+	});
+	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
 	
 	$('#userName').val(curUserName); 
 	

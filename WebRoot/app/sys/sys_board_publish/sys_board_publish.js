@@ -60,29 +60,29 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'title' ,'sClass':'text-center'},
+					{ 'data': 'title' ,'sClass':'text-center'},
 					{ 'data': 'category' ,'sClass':'text-center'},
 					{ 'data': 'facilities' ,'sClass':'text-center'},
-					{ 'data': 'content' ,'sClass':'text-center'},
-					{ 'data': 'attachment' ,'sClass':'text-center'},
+					{ 'data': 'contentShort' ,'sClass':'text-center'},
+					//{ 'data': 'attachment' ,'sClass':'text-center'},
 					{ 'data': 'starttime' ,'sClass':'text-center'},
 					{ 'data': 'endtime' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ /*{
+				columnDefs: [ {
 					className: 'control',
 					orderable: false,
-					targets:   0,//从0开始
+					targets:   3,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
+						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.content+"\">"+full.contentShort+"</a>";
 						return btn;
 					}
-					},*/
+					},
 					{
 					className: 'control',
 					orderable: false,
-					targets:  7,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">编辑</a>&nbsp;";
 						

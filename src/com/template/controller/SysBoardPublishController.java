@@ -109,6 +109,13 @@ if(category != null && category.equalsIgnoreCase("") == false && category.equals
 			jsonTmp.put("category",sys_board_publish.getcategory());
 			jsonTmp.put("facilities",sys_board_publish.getfacilities());
 			jsonTmp.put("content",sys_board_publish.getcontent());
+			
+			String contentShort = sys_board_publish.getcontent();
+			if(contentShort.length() > 50)
+				contentShort += contentShort.substring(0, 50)+"...";
+			
+			jsonTmp.put("contentShort", contentShort);
+			
 			jsonTmp.put("attachment",sys_board_publish.getattachment());
 			jsonTmp.put("starttime",sys_board_publish.getstarttime());
 			jsonTmp.put("endtime",sys_board_publish.getendtime());

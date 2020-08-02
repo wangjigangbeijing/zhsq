@@ -13,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.template.model.SysDictionary;
+import com.template.model.SysRole;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
 import com.template.model.jcsqsj.Resident;
 import com.template.model.jcsqsj.Room;
 import com.template.service.DictionaryService;
+import com.template.service.SysRoleService;
 import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.service.jcsqsj.ResidentService;
@@ -33,7 +35,6 @@ public class DaemonService
 {
 	public static Logger logger = Logger.getLogger(DaemonService.class);
 	
-	
 	@Autowired
 	private DictionaryService dictionaryService;
 	
@@ -46,7 +47,9 @@ public class DaemonService
 	@Autowired
 	private SysUserService userService;
 	
-
+	@Autowired
+	private SysRoleService roleService;
+	
 	@Autowired
 	private SysUserOrganizationService userOrganizationService;
 	
@@ -62,6 +65,8 @@ public class DaemonService
 			loadDictionaryInfo();
 			
 			loadResidentInfo();
+			
+			loadRoleInfo();
 			
 			loadUserInfo();
 			
@@ -163,6 +168,29 @@ public class DaemonService
 		}
 	}
 
+
+	public void loadRoleInfo()
+	{
+		try
+		{
+			List<SysRole> roleList = roleService.findByFilter(new HqlFilter());
+			
+			for(int i=0;i<roleList.size();i++)
+			{
+				SysRole sysRole = roleList.get(i);
+				
+				String id = sysRole.getId();
+				String name = sysRole.getname();
+				
+				ConstValue.roleMap.put(id,name);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+	}
+	
 	public void loadUserInfo()
 	{
 		try
@@ -177,8 +205,6 @@ public class DaemonService
 				String name = sysUser.getname();
 				
 				ConstValue.userMap.put(id,name);
-				
-				
 				
 				HqlFilter hqlFilterOrganzation = new HqlFilter();
 				hqlFilterOrganzation.addQryCond("user", HqlFilter.Operator.EQ, sysUser.getId());

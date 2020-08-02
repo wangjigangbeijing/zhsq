@@ -14,10 +14,23 @@ $(document).ready(function (){
 	
 	//load();
 	
+	$("#characterQry").select2({	 
+		multiple: true
+	});
+	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
+	
 	if(curId != '')
 		viewDetail(curId);
 	
-	TV_Initialize();
+	try{
+		TV_Initialize();
+	}
+	catch(Exception e)
+	{
+		console.log('Failed to initialize...');
+	}
+	
 	getEvent(T_GetEvent);
 });
 
@@ -38,8 +51,7 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#title').val(obj.title);
+				$('#title').val(obj.title);
 				$('#category').val(obj.category);
 				$('#content').val(obj.content);
 				var audioArr = obj.audio.split(VALUE_SPLITTER);				for(var j=0;j<audioArr.length;j++)				{					if(audioArr[j] != '')					{						$('#audiopicktable').append('<tr><td>'+audioArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+audioArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#target').val(obj.target);
@@ -53,7 +65,6 @@ function viewDetail(id)
 
 function gobackPage()
 {
-	
 	curId = '';
 	
 	$('#main-content').load("./sys/sys_tel_publish/sys_tel_publish.html", function () {
@@ -84,39 +95,66 @@ var sleep = function(time) {
 
 var curPlayInprogress = false;
 
+var canPlay = false;
+
+var audioLocalPath = '';
+
+var targetArr = [];
+
+var curTargetIndex = 0;
+
 function addOrUpdate()
 {
 	var target = $('#target').val();
 	
-	var audioLocalPath = $('#audioLocalPath').val();
+	audioLocalPath = $('#audioLocalPath').val();
 	
-	var targetArr = target.split(',');
+	targetArr = target.split(',');
 	
+	/*
 	for(var i=0;i<targetArr.length;i++)
 	{
+		canPlay = false;
+		
+		TV_StartDial(0,targetArr[i]);
+	
+		for(var k=0;k<60;k++)//接通等待60秒,通常运营商设置的超期时间为45秒
+		{
+			console.log('wait for end user to pick up');
+			sleep(1000);
+			
+			if(canPlay == true)
+				break;
+		}
+	
+		TV_StartPlayFile(0,audioLocalPath);
+		
+		curPlayInprogress = true;
+		
 		for(var k=0;k<60;k++)//最多等待1分钟
 		{
+			console.log('wait for the audio to play');
 			sleep(1000);
 			
 			if(curPlayInprogress == false)
 				break;
 		}
 		
-		TV_StartDial(0,targetArr[i]);
-	
-		TV_StartPlayFile(0,audioLocalPath);
-		
-		curPlayInprogress = true;
-		
 		//TV_StopPlayFile(0);
 		
 		TV_HangUpCtrl(0);
 	}
+	*/
 	
+	telPublish();
+}
+
+function postDataToServer()
+{
 	$.post(getContextPath()+"/sysTelPublishController/addOrUpdate",
 	{
 		id:curId,
-				title:$('#title').val(),
+		title:$('#title').val(),
 		category:$('#category').val(),
 		content:$('#content').val(),
 		audio:$('#audio').val(),
@@ -147,6 +185,26 @@ function addOrUpdate()
 	});
 }
 
+function telPublish()
+{
+	if(curTargetIndex == targetArr.length)
+	{
+		TV_Disable();
+		
+		postDataToServer();
+		
+		return ;
+	}
+	
+	var target = targetArr[curTargetIndex];
+	
+	curTargetIndex ++;
+	
+	if(target.indexOf('-') != -1)
+		target = target.substring(target.indexOf('-') + 1);
+	
+	TV_StartDial(0,target);
+}
 
 function downloadAttach(fileName)
 {
@@ -189,7 +247,11 @@ function  T_GetEvent(uID,uEventType,uHandle,uResult,szdata)
 		AppendStatusEx(uID,"调用开始拨号后，全部号码拨号结束"+vValue);
 	break;
 	case BriEvent_PlayFileEnd:// 播放文件结束事件
-		curPlayInprogress = false;
+		
+		TV_HangUpCtrl(0);
+		
+		telPublish();
+		
 		AppendStatusEx(uID,"播放文件结束事件"+vValue);
 	break;
 	case BriEvent_PlayMultiFileEnd:// 多文件连播结束事件
@@ -214,16 +276,28 @@ function  T_GetEvent(uID,uEventType,uHandle,uResult,szdata)
 		AppendStatusEx(uID,"通话时检测到一定时间的静音"+vValue);
 	break;
 	case BriEvent_GetDTMFChar:// 线路接通时收到DTMF码事件
+		//canPlay = true;
+		//TV_StartPlayFile(0,audioLocalPath);
 		AppendStatusEx(uID,"线路接通时收到DTMF码事件"+vValue);
 	break;
 	case BriEvent_RemoteHook:// 拨号后,被叫方摘机事件
+	
+		TV_StartPlayFile(0,audioLocalPath);
+	
 		AppendStatusEx(uID,"拨号后,被叫方摘机事件"+vValue);
 	break;
 	case BriEvent_RemoteHang://对方挂机事件
 		TV_HangUpCtrl(uID);
+		
+		telPublish();
+		
 		AppendStatusEx(uID,"对方挂机事件"+vValue);
 	break;
 	case BriEvent_Busy:// 检测到忙音事件,表示PSTN线路已经被断开
+		TV_HangUpCtrl(uID);
+		
+		telPublish();
+		
 		AppendStatusEx(uID,"检测到忙音事件,表示PSTN线路已经被断开"+vValue);
 	break;
 	case BriEvent_DialTone:// 本地摘机后检测到拨号音
