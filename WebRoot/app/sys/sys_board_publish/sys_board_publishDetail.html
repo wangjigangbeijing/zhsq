@@ -1,102 +1,5 @@
 
-
 <script src="./sys/sys_board_publish/sys_board_publishDetail.js"></script>
-
-
-
-
-
-<!--section class="wrapper">
-
-			<div class="row">
-                  <div class="col-lg-12">
-					  <section class="panel">
-                          <header class="panel-heading">
-                              
-                          </header>
-						  
-                          <div class="panel-body">
-                              <form role="form" class="form-horizontal tasi-form" id="submitLayerForm">
-                                  
-																<div class='form-group row'>
-						<label class='col-md-2 control-label'>信息标题</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='title'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>信息类型</label>
-  				<div class='col-md-9'>
-						<select class='form-control field' name='category' id='category'>
- 						<option value='社区党建'>社区党建</option>
- 						<option value='民主自治'>民主自治</option>
- 						<option value='社区服务'>社区服务</option>
- 						<option value='平安建设'>平安建设</option>
- 						<option value='文化教育'>文化教育</option>
- 						<option value='社区环境'>社区环境</option>
- 						<option value='卫生健康'>卫生健康</option>
-						</select>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>上架时间</label>
-  				<div class='col-md-9'>
-					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
-						<input type='text' size='16' class='form-control' id='starttime'>
-						<span class='input-group-btn add-on'>
-							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
-						</span>
-					</div>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>下架时间</label>
-  				<div class='col-md-9'>
-					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
-						<input type='text' size='16' class='form-control' id='endtime'>
-						<span class='input-group-btn add-on'>
-							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
-						</span>
-					</div>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>布告栏设施</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='facilities'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>正文</label>
-  				<div class='col-md-9'>
-					<textarea class='form-control ckeditor field' name='content' id='content' rows='6'></textarea>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>附件</label>
-  				<div class='col-md-9'>
-<div id='attachmentdiv' class='wu-example'>
-<input type='text' class='form-control field' name='attachment' id='attachment' style='display:none;'>
-<table class='table' id='attachmentpicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
-<div class='btns'>
-<div id='attachmentpick'>选择文件</div>
-</div>
-</div>
- 						</div>
- 					</div>
-
-									  <div class="modal-footer">
-										  <button class="btn btn-success pull-left" type="button" id="addOrUpdateBtn" onclick="addOrUpdate();">确定</button>							  
-										  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
-									  </div>
-								  
-                              </form>
-                          </div>
-                      </section>
-                  </div>
-              </div>
-	
-</section-->		  
 
 <section class="content">
       <div class="container-fluid">
@@ -107,7 +10,7 @@
               <form class="form-horizontal">
                 <div class="card-body">
                     
-										<div class='form-group row'>
+					<div class='form-group row'>
 						<label class='col-md-2 control-label'>信息标题</label>
   				<div class='col-md-9'>
  					<input type='text' class='form-control' id='title'>
@@ -152,7 +55,11 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>布告栏设施</label>
   				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='facilities'>
+ 					<!--input type='text' class='form-control' id='facilities'-->
+					<select class='form-control field select2' name='facilities' id='facilities'>
+ 						
+						</select>
+						
  						</div>
  					</div>
 					<div class='form-group row'>
@@ -173,13 +80,25 @@
 </div>
  						</div>
  					</div>
-
+					
+					
+				<div class='form-group row'>
+						<label class='col-md-2 control-label'>状态</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='status' id='status'>
+ 						<option value='计划'>计划</option>
+ 						<option value='已上架'>已上架</option>
+ 						<option value='已下架'>已下架</option>
+						</select>
+ 						</div>
+ 					</div>	
+					
 					
                 </div>
                 <div class="card-footer">
 				
-				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
-                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				 <button class="btn btn-info" type="button" id="confirmBtn" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" id="cancelBtn" onclick="gobackPage();">取消</button>
 				  
                 </div>
               </form>

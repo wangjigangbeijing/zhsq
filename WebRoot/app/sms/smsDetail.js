@@ -66,6 +66,7 @@ function addOrUpdate()
 	{
 		id:curId,
 		smsContent:$('#smsContent').val(),
+		smsType:$('#smsType').val(),
 		mobileList:$('#mobileList').val()
 	},
 	function(result){

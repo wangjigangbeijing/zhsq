@@ -14,6 +14,33 @@ $(document).ready(function (){
 	
 	//load();
 	
+	
+	$("#facilities").select2({	 
+		multiple: true
+	});
+	
+	$.get(getContextPath()+"/culturefacilitiesController/load?tpye=布告栏设施",//tpye拼写的时候有错误
+		function(result){
+			
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$('#facilities').html('');
+				
+				var roleArr = [];
+				
+				for(var i=0;i<obj.list.length;i++)
+				{
+					var role = obj.list[i];
+					
+					roleArr[i] = "<option value='" + role.id + "'>" + role.name + "</option>";						
+				}
+				$('#facilities').html(roleArr.join(''));
+			}
+		}
+	);
+	
+	
 	if(curId != '')
 		viewDetail(curId);
 });
@@ -27,52 +54,49 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#title').val(obj.title);
+				$('#title').val(obj.title);
 				$('#category').val(obj.category);
 				$('#starttime').val(obj.starttime);
 				$('#endtime').val(obj.endtime);
-				$('#facilities').val(obj.facilities);
+				//$('#facilities').val(obj.facilities);
+				
+				if(obj.facilities != null && obj.facilities != undefined)							
+					$("#facilities").val(obj.facilities.split(',')).trigger("change");
+
 				$('#content').val(obj.content);
-				var attachmentArr = obj.attachment.split(VALUE_SPLITTER);				for(var j=0;j<attachmentArr.length;j++)				{					if(attachmentArr[j] != '')					{						$('#attachmentpicktable').append('<tr><td>'+attachmentArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+attachmentArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}
-					
+				var attachmentArr = obj.attachment.split(VALUE_SPLITTER);
+
+				for(var j=0;j<attachmentArr.length;j++)				
+				{					
+					if(attachmentArr[j] != '')					
+					{						
+						$('#attachmentpicktable').append('<tr><td>'+attachmentArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+attachmentArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+					}
+				}	
 			}
 		});
 }
 
 function gobackPage()
 {
-	
 	curId = '';
 	
 	$('#main-content').load("./sys/sys_board_publish/sys_board_publish.html", function () {
 		
     });
-	
 }
-/*
-function ShowAddModal()
-{
-	$('#modalDetail').show();
-	
-	$('#modalTitle').text('新增');
-	
-	$('#addOrUpdateBtn').text('确定');
-	
-}
-*/
+
 function addOrUpdate()
 {
-	
-	
+	var facilities = $('#facilities').val().join(',');
 	$.post(getContextPath()+"/sysBoardPublishController/addOrUpdate",
 	{
 		id:curId,
-				title:$('#title').val(),
+		title:$('#title').val(),
 		category:$('#category').val(),
 		starttime:$('#starttime').val(),
 		endtime:$('#endtime').val(),
-		facilities:$('#facilities').val(),
+		facilities:facilities,
 		content:$('#content').val(),
 		attachment:$('#attachment').val()
 	},

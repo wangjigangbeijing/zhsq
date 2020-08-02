@@ -22,7 +22,7 @@ function load()
 	
 	var smsContent = $('#smsContentQry').val();
 	
-	$.get(getContextPath()+'/smsController/load?sms_zhname='+smsContent,
+	$.get(getContextPath()+'/smsController/load?smsContent='+smsContent,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  

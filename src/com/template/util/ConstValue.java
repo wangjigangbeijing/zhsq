@@ -5,16 +5,11 @@ import java.util.HashMap;
 
 public class ConstValue {
 	
-	
-	
 	public final static String TABLE_CONTROLLER = "tableController";
 	public final static String TABLE_CONTROLLER_ADD_OR_UPDATE_TABLE = "addOrUpdateTable";
 	public final static String TABLE_CONTROLLER_DELETE_TABLE = "deleteTable";
 	public final static String TABLE_CONTROLLER_GET_TABLE = "getTable";
 	public final static String TABLE_CONTROLLER_LOAD_TABLE = "loadTable";
-	
-	
-	
 	
 	public final static String USER_CONTROLLER = "userController";
 	public final static String USER_CONTROLLER_ADD_OR_UPDATE_USER = "addOrUpdateUser";
@@ -22,17 +17,11 @@ public class ConstValue {
 	public final static String USER_CONTROLLER_GET_USER = "getUser";
 	public final static String USER_CONTROLLER_LOAD_USER = "loadUser";
 	
-	
-	
-	
-	
-	
 	public final static String ATTRIBUTE_CONTROLLER = "attributeController";
 	public final static String ATTRIBUTE_CONTROLLER_LOAD_ATTRIBUTE = "loadAttribute";
 	public final static String ATTRIBUTE_CONTROLLER_GET_ATTRIBUTE = "getAttribute";
 	public final static String ATTRIBUTE_CONTROLLER_ADD_OR_UPDATE_ATTRIBUTE = "addOrUpdateAttribute";
 	public final static String ATTRIBUTE_CONTROLLER_DELETE_ATTRIBUTE = "deleteAttribute";
-	
 	
 	public final static String DATA_CONTROLLER = "dataController";
 	public final static String DATA_CONTROLLER_LOAD_DATA_OF_TABLE = "loadDataOfTable";
@@ -40,23 +29,11 @@ public class ConstValue {
 	public final static String DATA_CONTROLLER_ADD_OR_UPDATE_DATA = "addOrUpdateData";
 	public final static String DATA_CONTROLLER_DELETE_DATA = "deleteData";
 	
-	
 	public final static String TEMPLATE_CONTROLLER = "templateController";
 	public final static String TEMPLATE_CONTROLLER_LOAD_DATA_OF_LAYER = "loadData";
 	public final static String TEMPLATE_CONTROLLER_GET_DATA = "getData";
 	public final static String TEMPLATE_CONTROLLER_ADD_OR_UPDATE_DATA = "addOrUpdateData";
 	public final static String TEMPLATE_CONTROLLER_GENERATE_CODE = "generateCode";
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public final static String FILE_CONTROLLER = "fileController";
 	public final static String FILE_UPLOAD = "upload";
@@ -67,20 +44,11 @@ public class ConstValue {
 	public final static String LOGIN_CONTROLLER_LOGOUT = "logout";
 	public final static String LOGIN_CONTROLLER_GET_CURRENT_LOGIN_USER_INFO = "getCurrentLoginUserInfo";
 	
-	
-	
-	
-
 	public final static String ORGANIZATION_CONTROLLER = "organizationController";
 	public final static String ORGANIZATION_CONTROLLER_LOAD_ORGANIZATION = "loadOrganization";
 	public final static String ORGANIZATION_CONTROLLER_GET_ORGANIZATION = "getOrganization";
 	public final static String ORGANIZATION_CONTROLLER_ADD_OR_UPDATE_ORGANIZATION = "addOrUpdateOrganization";
 	public final static String ORGANIZATION_CONTROLLER_DELETE_ORGANIZATION = "deleteOrganization";
-	
-	
-	
-	
-	
 	
 	//public final static String DIRECTORY_CONTROLLER = "directoryController";
 	//public final static String DIRECTORY_CONTROLLER_LOAD_DIRECTORIES = "loadDirectories";
@@ -139,15 +107,12 @@ public class ConstValue {
 	public final static String HTTP_HEADER_USERID = "userId";
 	public final static String HTTP_HEADER_SOURCE_APP = "app";
 	
-	
 	//public static HashMap<String,String> hmOrgId2OrgName = new HashMap<String,String>();
 	
 	public static String MASTER_SECRET = "d0125ef24923e68a39ab59c9";
 	public static String APP_KEY = "92c1c083b7fcea14a5cf79e4";
 	
-	
 	public final static String VALUE_SPLITTER = ",";
-	
 	
 	public final static String SMS_STATUS_INITIAL = "等待发送";
 	public final static String SMS_STATUS_SUBMIT_SUCCESS = "提交成功";
@@ -155,15 +120,11 @@ public class ConstValue {
 	public final static String SMS_STATUS_PARTIAL_SUCCESS = "部分成功";
 	public final static String SMS_STATUS_FAILED = "失败";
 	
-	
-
 	public static ArrayList<String> dicList = new ArrayList<String>();
 	
 	public static HashMap<String,String> hmDicMap = new HashMap<String,String>();
 	
-	
 	public static HashMap<String,String> residentMap = new HashMap<String,String>();
-	
 	
 	public static HashMap<String,String> userMap = new HashMap<String,String>();
 	
@@ -171,5 +132,5 @@ public class ConstValue {
 	
 	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
 	
-	
+	public static HashMap<String,String> orgMap = new HashMap<String,String>();
 }

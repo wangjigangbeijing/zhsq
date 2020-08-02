@@ -39,7 +39,7 @@ public class SMSController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST)
 	@ResponseBody
-	public String addOrUpdate(String id,String smsContent,String mobileList)
+	public String addOrUpdate(String id,String smsContent,String smsType,String mobileList)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -61,6 +61,7 @@ public class SMSController {
 			smsMessage.setSender(userName);
 			smsMessage.setTimerSend(new Date());
 			smsMessage.setTarget(mobileList);
+			smsMessage.setSMSType(smsType);
 			
 			String msgId = Utility.getUniStr();
 			smsMessage.setId(msgId);
@@ -125,17 +126,17 @@ public class SMSController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String load(String msgContent)
+	public String load(String smsContent)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
 			HqlFilter hqlFilter = new HqlFilter();
 			
-			/*if(menu_zhname != null && menu_zhname.equalsIgnoreCase("") == false)
+			if(smsContent != null && smsContent.equalsIgnoreCase("") == false)
 			{
-				hqlFilter.addQryCond("menu_zhname", HqlFilter.Operator.LIKE, "%"+menu_zhname+"%");
-			}*/
+				hqlFilter.addQryCond("messageContent", HqlFilter.Operator.LIKE, "%"+smsContent+"%");
+			}
 			
 	        List<SMSMessage> listObj = smsService.findByFilter(hqlFilter);
 	        
@@ -162,6 +163,7 @@ public class SMSController {
 				jsonTmp.put("successCnt", message.getSuccessCnt());
 				jsonTmp.put("failCnt", message.getFailCnt());
 				jsonTmp.put("mobileList", message.getTarget());
+				jsonTmp.put("messageType", message.getSMSType());
 				
 				String mobileListShort = message.getTarget();
 				if(mobileListShort != null && mobileListShort.length() > 20)
@@ -195,6 +197,12 @@ public class SMSController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
+			SMSMessage smsMessage = smsService.getById(msgId);
+			
+			smsMessage.getMessageContent();
+			smsMessage.getTarget();
+			smsMessage.getSender();
+			
 			HqlFilter hqlFilter = new HqlFilter();
 			
 			if(msgId != null && msgId.equalsIgnoreCase("") == false)
@@ -222,7 +230,7 @@ public class SMSController {
 					jsonTmp.put("sendTime", "-");
 				
 				jsonTmp.put("status", messageStatus.getStatus());
-	
+				
 	       		jsonArr.put(jsonTmp);
 	        	iTotalCnt++;
 			}

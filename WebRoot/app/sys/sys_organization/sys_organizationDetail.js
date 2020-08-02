@@ -85,6 +85,8 @@ function addOrUpdate()
 	});
 	var valtype = valtypeArr.join(VALUE_SPLITTER);//将数组元素连接起来以构建一个字符串
 
+	$("input[name='buildtype']:checked").val()
+
 	$.post(getContextPath()+"/sysOrganizationController/addOrUpdate",
 	{
 		id:curId,
@@ -132,4 +134,91 @@ function downloadAttach(fileName)
 	window.open(encodeURI(url));
 	
 	//window.open(getContextPath()+"/fileController/downLoad/"+encodeURI(obj.fileName));
+}
+
+
+
+var setting = {
+	view: {
+		dblClickExpand: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeClick: beforeClick,
+		onClick: onClick
+	}
+};
+
+function beforeClick(treeId, treeNode) {
+	/*var check = (treeNode && !treeNode.isParent);
+	if (!check) alert("只能选择城市...");
+	return check;*/
+}
+
+function onClick(e, treeId, treeNode) {
+	//var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+	/*
+	debugger;
+	nodes = orgTree.getSelectedNodes(),
+	v = "";
+	nodes.sort(function compare(a,b){return a.id-b.id;});
+	for (var i=0, l=nodes.length; i<l; i++) {
+		v += nodes[i].name + ",";
+	}
+	if (v.length > 0 ) v = v.substring(0, v.length-1);*/
+
+	$("#parentOrgNameInput").val(treeNode.name);
+	
+	 $("#parentOrgInput").val(treeNode.id);
+}
+		 
+		 
+function showMenu() {	
+	$("#menuContent").slideDown("fast");
+
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideMenu();
+	}
+}
+	
+var orgTree;
+
+function initialOrganizationTree(selectedOrgId)
+{
+	$.get(getContextPath()+"/addressBookController/loadOrganizationTree",
+		function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			orgTree = $.fn.zTree.init($("#treeDemo"), setting, obj.organizationList);
+			if(selectedOrgId != null && selectedOrgId != '')
+			{
+				var nodes = orgTree.getNodesByParam("id", selectedOrgId, null);
+				if (nodes.length > 0)
+				{
+					orgTree.selectNode(nodes[0]);
+					
+					$("#parentOrgNameInput").val(nodes[0].name);
+					$("#parentOrgInput").val(selectedOrgId);
+				}
+			}
+			else{
+				var node = orgTree.getNodesByFilter(function (node) { return node.level == 0 }, true);  
+				$("#parentOrgNameInput").val(node.name);
+				$("#parentOrgInput").val(node.id);
+				//$("#parentOrgNameInput").val('丰台区');
+			}
+		}
+	});
 }

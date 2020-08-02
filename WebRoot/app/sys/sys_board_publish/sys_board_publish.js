@@ -67,6 +67,7 @@ function load()
 					//{ 'data': 'attachment' ,'sClass':'text-center'},
 					{ 'data': 'starttime' ,'sClass':'text-center'},
 					{ 'data': 'endtime' ,'sClass':'text-center'},
+					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -82,11 +83,17 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  6,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">编辑</a>&nbsp;";
+						//var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">编辑</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\">删除</a>";
+						//btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\">删除</a>";
+						
+						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"edit('"+full.id+"')\"  class=\"btn btn-primary btn-xs\"><i class=\"fa fa-trash-o\"></i>编辑</a>&nbsp;";
+
+						btn += "<a href=\"#\" onclick=\"deleteObj('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
@@ -98,7 +105,7 @@ function load()
 }
 
 
-function editData(id)
+function edit(id)
 {
 	curId = id;
 	$('#main-content').load("./sys/sys_board_publish/sys_board_publishDetail.html", function () {
@@ -106,6 +113,22 @@ function editData(id)
     });
 }
 
+
+function view(id)
+{
+	curId = id;
+	
+	$('#main-content').load("./sys/sys_board_publish/sys_board_publishDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#attachmentpick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
+}
 
 function ShowAddModal()
 {
@@ -122,7 +145,7 @@ function ShowAddModal()
 	
 }
 
-function deleteData(id)
+function deleteObj(id)
 {
 	$.confirm({
 		title:"删除确认",

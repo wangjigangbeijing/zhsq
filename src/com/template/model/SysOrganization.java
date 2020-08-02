@@ -168,7 +168,16 @@ public void setsms_password(String sms_password)
 	this.sms_password = sms_password;
 }
 
-
+@Column(name = "parent_id", nullable = true)
+public String parent_id;
+public String getparentid()
+{
+	return parent_id;
+}
+public void setparentid(String parent_id)
+{
+	this.parent_id = parent_id;
+}
 
 }
 

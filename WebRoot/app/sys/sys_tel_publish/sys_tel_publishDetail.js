@@ -26,8 +26,9 @@ $(document).ready(function (){
 	try{
 		TV_Initialize();
 	}
-	catch(Exception e)
+	catch(error)
 	{
+		debugger;
 		console.log('Failed to initialize...');
 	}
 	
