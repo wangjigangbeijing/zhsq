@@ -1,4 +1,4 @@
-
+﻿
 var curUserType = -1;
 
 var curType = '';
