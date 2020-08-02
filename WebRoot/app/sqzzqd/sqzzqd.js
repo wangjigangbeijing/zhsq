@@ -1,4 +1,4 @@
-
+﻿
 var curUserType = -1;
 
 $(document).ready(function (){
@@ -87,9 +87,9 @@ function loadsqzzqd()
 					orderable: false,
 					targets:   6,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"lk-a\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"deleteObj('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						btn += "<a href=\"#\" onclick=\"deleteObj('"+full.id+"')\"  class=\"lk-b\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
