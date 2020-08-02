@@ -259,10 +259,12 @@ function loadDynamicPage(menu_type,table_id,file_name,external_url)
 function updateActiveMenu(activeObj) {
     $('.nav-link').each(function () {
 		
-        $(this).removeClass('active');
+		//$(this).removeClass('active');
+        $(this).closest("li").removeClass('tj-fux');
     });
 	
-    $('#'+activeObj).addClass('active');
+	//$('#'+activeObj).parents("li").addClass('active');
+    $('#'+activeObj).closest("li").addClass('tj-fux');
 }
 
 function loadDashboardPage()
