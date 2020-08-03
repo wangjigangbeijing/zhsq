@@ -278,6 +278,8 @@ public class DaemonService
 				
 				String residentnames = "";
 				
+				String residentids = "";
+				
 				for(int i=0;i<residentList.size();i++)
 				{
 					try
@@ -303,13 +305,15 @@ public class DaemonService
 						
 						//==========================  人员名称刷新
 						String name = resident.getname();
+						String id = resident.getId();
 	
 						if(name == null || name.equalsIgnoreCase(""))
 							continue;
 						
-						if(residentnames.indexOf(name) == -1)
+						if(residentids.indexOf(id) == -1)
 						{
 							residentnames = residentnames + name + ",";
+							residentids = residentids + id + ",";
 						}
 					}
 					catch(Exception e)
@@ -319,9 +323,15 @@ public class DaemonService
 				}
 				
 				room.setpeoplecharacteristics(characteristics);
+				
+				if(residentnames.endsWith(","))
+					residentnames = residentnames.substring(0,residentnames.length() - 1);
+				
+				if(residentids.endsWith(","))
+					residentids = residentids.substring(0,residentids.length() - 1);
 
 				room.setresidentname(residentnames);
-				
+				room.setresidentids(residentids);				
 				roomService.save(room);
 			}
 		}

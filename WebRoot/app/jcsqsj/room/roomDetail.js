@@ -2,17 +2,9 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
-	
 	$('.dpYears').datepicker({
 		autoclose: true
 	});
-	
-	//$('#btnReset').click(Reset);
-	
-	$('#btnSearch').click(load);
-	
-	//load();
 	
 	$.ajax({
 	  type: 'POST',

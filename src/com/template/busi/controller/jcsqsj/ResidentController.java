@@ -590,7 +590,10 @@ public String get(String id)
 			jsonObj.put("registrationcategory",resident.getregistrationcategory());
 			jsonObj.put("nationality",resident.getnationality());
 			jsonObj.put("homeplace",resident.gethomeplace());
-			jsonObj.put("birthday",TimeUtil.formatDate(resident.getbirthday(),"yyyy-MM-dd"));
+			if(resident.getbirthday() != null)
+				jsonObj.put("birthday",TimeUtil.formatDate(resident.getbirthday(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("birthday","-");
 			jsonObj.put("age",resident.getage());
 			jsonObj.put("nation",resident.getnation());
 			jsonObj.put("politicalstatus",resident.getpoliticalstatus());
@@ -624,11 +627,25 @@ public String get(String id)
 			jsonObj.put("note",resident.getnote());
 			jsonObj.put("dy_partymembertype",resident.getdy_partymembertype());
 			jsonObj.put("dy_of_partyorganization",resident.getdy_of_partyorganization());
-			jsonObj.put("dy_joinpartydate",TimeUtil.formatDate(resident.getdy_joinpartydate(),"yyyy-MM-dd"));
-			jsonObj.put("dy_inpartydate",TimeUtil.formatDate(resident.getdy_inpartydate(),"yyyy-MM-dd"));
+			
+			if(resident.getbirthday() != null)
+				jsonObj.put("dy_joinpartydate",TimeUtil.formatDate(resident.getdy_joinpartydate(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("dy_joinpartydate","-");
+			
+			if(resident.getdy_inpartydate() != null)
+				jsonObj.put("dy_inpartydate",TimeUtil.formatDate(resident.getdy_inpartydate(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("dy_inpartydate","-");
+			
 			jsonObj.put("dy_membership",resident.getdy_membership());
 			jsonObj.put("dy_islost",resident.getdy_islost());
-			jsonObj.put("dy_lostdate",TimeUtil.formatDate(resident.getdy_lostdate(),"yyyy-MM-dd"));
+			
+			if(resident.getdy_lostdate() != null)
+				jsonObj.put("dy_lostdate",TimeUtil.formatDate(resident.getdy_lostdate(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("dy_lostdate","-");
+			
 			jsonObj.put("dy_movemember",resident.getdy_movemember());
 			jsonObj.put("dy_moveto",resident.getdy_moveto());
 			jsonObj.put("zdr_type",resident.getzdr_type());
@@ -636,17 +653,36 @@ public String get(String id)
 			jsonObj.put("zdr_custodian",resident.getzdr_custodian());
 			jsonObj.put("zdr_custodiantel",resident.getzdr_custodiantel());
 			jsonObj.put("jzr_correctioncontent",resident.getjzr_correctioncontent());
-			jsonObj.put("jzr_correctiondate",TimeUtil.formatDate(resident.getjzr_correctiondate(),"yyyy-MM-dd"));
+			
+			if(resident.getjzr_correctiondate() != null)
+				jsonObj.put("jzr_correctiondate",TimeUtil.formatDate(resident.getjzr_correctiondate(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("jzr_correctiondate","-");
+			
 			jsonObj.put("jzr_correctionaddress",resident.getjzr_correctionaddress());
 			jsonObj.put("sy_unemployedreason",resident.getsy_unemployedreason());
 			jsonObj.put("sy_unemployedreemployment",resident.getsy_unemployedreemployment());
 			jsonObj.put("sy_reemploymentunit",resident.getsy_reemploymentunit());
-			jsonObj.put("ylfn_firstmarriagedate",TimeUtil.formatDate(resident.getylfn_firstmarriagedate(),"yyyy-MM-dd"));
+			
+			if(resident.getylfn_firstmarriagedate() != null)
+				jsonObj.put("ylfn_firstmarriagedate",TimeUtil.formatDate(resident.getylfn_firstmarriagedate(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("ylfn_firstmarriagedate","-");
+			
 			jsonObj.put("ylfn_children",resident.getylfn_children());
 			jsonObj.put("ylfn_bornchildren",resident.getylfn_bornchildren());
 			jsonObj.put("ylfn_pregnancy",resident.getylfn_pregnancy());
-			jsonObj.put("ylfn_lastmenstruation",TimeUtil.formatDate(resident.getylfn_lastmenstruation(),"yyyy-MM-dd"));
-			jsonObj.put("ylfn_terminationpregnancy",TimeUtil.formatDate(resident.getylfn_terminationpregnancy(),"yyyy-MM-dd"));
+			
+			if(resident.getylfn_lastmenstruation() != null)
+				jsonObj.put("ylfn_lastmenstruation",TimeUtil.formatDate(resident.getylfn_lastmenstruation(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("ylfn_lastmenstruation","-");
+			
+			if(resident.getylfn_terminationpregnancy() != null)
+				jsonObj.put("ylfn_terminationpregnancy",TimeUtil.formatDate(resident.getylfn_terminationpregnancy(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("ylfn_terminationpregnancy","-");
+			
 			jsonObj.put("lnr_oldid",resident.getlnr_oldid());
 			jsonObj.put("lnr_economicsources",resident.getlnr_economicsources());
 			jsonObj.put("lnr_livingconditions",resident.getlnr_livingconditions());
@@ -668,8 +704,17 @@ public String get(String id)
 			jsonObj.put("zyz_certificate_id",resident.getzyz_certificate_id());
 			jsonObj.put("zyz_special_skill",resident.getzyz_special_skill());
 			jsonObj.put("jmdb_representative_level",resident.getjmdb_representative_level());
-			jsonObj.put("jmdb_startofterm",TimeUtil.formatDate(resident.getjmdb_startofterm(),"yyyy-MM-dd"));
-			jsonObj.put("jmdb_endofterm",TimeUtil.formatDate(resident.getjmdb_endofterm(),"yyyy-MM-dd"));
+
+			if(resident.getjmdb_startofterm() != null)
+				jsonObj.put("jmdb_startofterm",TimeUtil.formatDate(resident.getjmdb_startofterm(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("jmdb_startofterm","-");
+
+			if(resident.getjmdb_endofterm() != null)
+				jsonObj.put("jmdb_endofterm",TimeUtil.formatDate(resident.getjmdb_endofterm(),"yyyy-MM-dd"));
+			else
+				jsonObj.put("jmdb_endofterm","-");
+			
 			jsonObj.put("wtgg_skill_type",resident.getwtgg_skill_type());
 			jsonObj.put("wtgg_special_skill",resident.getwtgg_special_skill());
 

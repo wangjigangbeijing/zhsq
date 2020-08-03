@@ -214,4 +214,40 @@ public String get(String id)
 	}
     return jsonObj.toString();
 }
+
+
+@RequestMapping(value="getRoomIdByBuildingIdAndRoomNum",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+@ResponseBody
+public String getRoomIdByBuildingIdAndRoomNum(String residentBuildingId,String roomNum)
+{
+	JSONObject jsonObj = new JSONObject();
+	try
+	{
+		HqlFilter hqlFilter = new HqlFilter();
+		
+		hqlFilter.addQryCond("ofresidebuilding", HqlFilter.Operator.EQ, residentBuildingId);
+		
+		hqlFilter.addQryCond("number", HqlFilter.Operator.EQ, roomNum);
+		
+		Room room = roomService.getByFilter(hqlFilter);
+		if(room != null)
+		{
+			jsonObj.put("id", room.getId());
+			jsonObj.put("success", true);
+		}
+		else
+		{
+			logger.error("object is not found...");
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", "Object can not found...");
+		}
+	}
+	catch(Exception e)
+	{
+		logger.error(e.getMessage(),e);
+		jsonObj.put("success", false);
+	}
+    return jsonObj.toString();
+}
+
 }

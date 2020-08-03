@@ -41,7 +41,7 @@ $(document).ready(function (){
 	if(curId != null && curId != '')
 		get();
 });
-
+/*
 function get()
 {
 	$.get(getContextPath()+"/smsController/get?id="+curId,
@@ -59,7 +59,7 @@ function get()
 			}
 		});
 }
-
+*/
 function addOrUpdate()
 {
 	$.post(getContextPath()+"/smsController/addOrUpdate",

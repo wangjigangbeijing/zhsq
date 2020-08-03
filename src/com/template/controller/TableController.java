@@ -192,6 +192,8 @@ public class TableController {
 	        	jsonTmp.put("tableZHName", sysTable.getTableZHName());
 	        	jsonTmp.put("status", sysTable.getId());
 	        	jsonTmp.put("gisType", sysTable.getGisType());
+	        	jsonTmp.put("dataType", sysTable.getDataType());
+	        	jsonTmp.put("dataSubType", sysTable.getDataSubType());
 	        	jsonTmp.put("icon", sysTable.getIcon());
 	        	jsonArr.put(jsonTmp);
 	        	

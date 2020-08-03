@@ -109,4 +109,17 @@ public class SysTable implements java.io.Serializable {
 	{
 		this.data_type = data_type;
 	}
+	
+
+	@Column(name = "data_sub_type", nullable = true)
+	public String data_sub_type;
+	
+	public String getDataSubType()
+	{
+		return data_sub_type;
+	}
+	public void setDataSubType(String data_sub_type)
+	{
+		this.data_sub_type = data_sub_type;
+	}
 }

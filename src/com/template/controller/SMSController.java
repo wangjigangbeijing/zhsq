@@ -199,9 +199,13 @@ public class SMSController {
 		{
 			SMSMessage smsMessage = smsService.getById(msgId);
 			
-			smsMessage.getMessageContent();
-			smsMessage.getTarget();
-			smsMessage.getSender();
+			jsonObj.put("messageContent", smsMessage.getMessageContent());
+			jsonObj.put("mobileList", smsMessage.getTarget());
+			
+			String sender = smsMessage.getSender();
+			if(ConstValue.userMap.containsKey(smsMessage.getSender()))
+				sender = ConstValue.userMap.get(smsMessage.getSender());
+			jsonObj.put("sender", sender);
 			
 			HqlFilter hqlFilter = new HqlFilter();
 			
@@ -222,7 +226,17 @@ public class SMSController {
 				
 				jsonTmp.put("id", messageStatus.getId());
 				
-				jsonTmp.put("mobile", messageStatus.getMobile());
+				String mobile = messageStatus.getMobile();
+				
+				String name = "";
+				
+				if(mobile.indexOf("-") != -1)
+				{
+					name = mobile.substring(0,mobile.indexOf("-"));
+					mobile = mobile.substring(mobile.indexOf("-") + 1);
+				}
+				jsonTmp.put("name", name);
+				jsonTmp.put("mobile", mobile);
 				
 				if(messageStatus.getSendTime() != null)
 					jsonTmp.put("sendTime", TimeUtil.formatDate(messageStatus.getSendTime(),"yyyy-MM-dd HH:mm:ss"));
@@ -246,4 +260,34 @@ public class SMSController {
 		}
 	    return jsonObj.toString();
 	}
+	
+	@RequestMapping(value="resend",method = RequestMethod.POST)
+	@ResponseBody
+	public String resend(String id)
+	{
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			String userName = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_NAME);
+			
+			SMSMessageStatus msgStatus = smsStatusService.getById(id);
+			
+			if(msgStatus != null)
+			{
+				msgStatus.setStatus(ConstValue.SMS_STATUS_INITIAL);
+				
+				smsStatusService.save(msgStatus);
+			}
+			
+	        jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", e.getMessage());
+		}
+	    return jsonObj.toString();
+	}
+	
 }

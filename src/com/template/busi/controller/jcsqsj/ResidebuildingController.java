@@ -323,6 +323,8 @@ public String load(String name,String address,String propertyyears,String proper
 						
 						JSONObject jsonRoom = new JSONObject();
 
+						jsonRoom.put("roomId", room.getId());
+						
 						jsonRoom.put("number", room.getnumber());
 						
 						jsonRoom.put("level", room.getlevel());
@@ -340,11 +342,11 @@ public String load(String name,String address,String propertyyears,String proper
 						jsonRoom.put("peoplecharacteristics", room.getpeoplecharacteristics());
 						
 						String residentNames = room.getresidentname();
-						
-						if(residentNames.endsWith(","))
-							residentNames = residentNames.substring(0,residentNames.length() - 1);
+						String residentIds = room.getresidentids();
 						
 						jsonRoom.put("residentNames", residentNames);
+						
+						jsonRoom.put("residentIds", residentIds);
 						
 						jsonRoomArr.put(jsonRoom);
 					}

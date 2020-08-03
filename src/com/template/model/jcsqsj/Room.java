@@ -188,16 +188,27 @@ public void setnote(String note)
 		this.residentname = residentname;
 	}
 	
+	
+	@Column(name = "residentids", nullable = true)
+	public String residentids;
+	public String getresidentids()
+	{
+		return residentids;
+	}
+	public void setresidentids(String residentids)
+	{
+		this.residentids = residentids;
+	}
 
-@Column(name = "owner", nullable = true)
-public String owner;
-public String getowner()
-{
-	return owner;
-}
-public void setowner(String owner)
-{
-	this.owner = owner;
-}
+	@Column(name = "owner", nullable = true)
+	public String owner;
+	public String getowner()
+	{
+		return owner;
+	}
+	public void setowner(String owner)
+	{
+		this.owner = owner;
+	}
 }
 

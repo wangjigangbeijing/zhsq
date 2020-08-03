@@ -31,7 +31,7 @@
                     
 					<label class='col-md-2 col-form-label'>发送人</label>
 					<div class='col-md-9'>
-						<input type='text' class='form-control' id='menu_zhname' readonly>
+						<input type='text' class='form-control' id='sender' readonly>
 					</div>
                   
                   </div>
@@ -40,16 +40,16 @@
 				  <div class="form-group row">
                     <label class='col-md-2 col-form-label'>短信内容</label>
 					<div class='col-md-9'>
-						<textarea class="form-control" name="smsContent" rows="6" id="smsContent"></textarea>
+						<textarea class="form-control" name="smsContent" rows="6" id="smsContent" readonly></textarea>
 					</div>
                   </div>
 				  
-				  <div class="form-group row">
+				  <!--div class="form-group row">
                     <label class='col-md-2 col-form-label'>发送目标(逗号分隔手机号码列表)</label>
 						<div class='col-md-9'>
-							<textarea class="form-control" name="mobileList" rows="6" id="mobileList"></textarea>
+							<textarea class="form-control" name="mobileList" rows="6" id="mobileList" readonly></textarea>
  						</div>
-                  </div>
+                  </div-->
 				  
 					
                 </div>
@@ -59,11 +59,10 @@
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>创建时间</th>
-					<th style='text-align:center;'>发送内容</th>
-					<th style='text-align:center;'>成功</th>
-					<th style='text-align:center;'>失败</th>
-					<th style='text-align:center;'>发送状态</th>
+					<th style='text-align:center;'>用户姓名</th>
+					<th style='text-align:center;'>用户号码</th>
+					<th style='text-align:center;'>发送时间</th>
+                    <th style='text-align:center;'>发送状态</th>
 					<th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>
