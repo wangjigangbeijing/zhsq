@@ -344,6 +344,12 @@ public String load(String name,String address,String propertyyears,String proper
 						String residentNames = room.getresidentname();
 						String residentIds = room.getresidentids();
 						
+						if(residentNames == null)
+							residentNames = "";
+						
+						if(residentIds == null)
+							residentIds = "";
+						
 						jsonRoom.put("residentNames", residentNames);
 						
 						jsonRoom.put("residentIds", residentIds);

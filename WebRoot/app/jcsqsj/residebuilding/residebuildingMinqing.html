@@ -247,7 +247,8 @@ $(document).ready(function ()
 				
 				var divWidth = $('#minqingDiv').width();
 				
-				var roomWidth = (divWidth - 50)/obj.maxRoomNum;
+				debugger;
+				var roomWidth = (divWidth - 200)/obj.maxRoomNum;
 				
 				if(roomWidth > 200)
 					roomWidth = 200;
@@ -316,13 +317,15 @@ $(document).ready(function ()
 						
 						for(var k=0;k<residentNameArr.length;k++)
 						{
-							residentStr += '<a href="javascript:clickResident(\''+residentIdArr[k]+'\')" >'+residentNameArr[k]+'</a>,';
+							if(residentNameArr[k] != '')
+								residentStr += '<a href="javascript:clickResident(\''+residentIdArr[k]+'\')" >'+residentNameArr[k]+'</a>,';
 						}
 						  
-						  levelDiv += "<div class='tj-lc'>" +
+						  levelDiv += "<div class='tj-lc' style='width:"+roomWidth+"px;'>" +
 							"<div class='tj-dei'>" +
 								"<div style='height: 30px;'>" +
-								"<div class='tj-lcph'>" + room.number + "</div>" +
+								//"<div class='tj-lcph'>" + room.number + "</div>" +
+								"<div class='tj-lcph'><a href=\"javascript:clickRoom('"+room.roomId+"')\" >"+room.number+"</a></div>" +
 								"<div class='tj-rhce'>" + characteristics + "</div>" +
 								"</div>" +
 								"<div class='tj-yttw'><span>" + residentStr + "</span></div>" +
@@ -349,7 +352,7 @@ $(document).ready(function ()
 
 function clickRoom(roomId)
 {
-	window.open('./roomDetailPopup.html?roomId='+roomId+'&roomNum='+roomNum+'&residentBuildingId='+curId, 
+	window.open('./roomDetailPopup.html?roomId='+roomId, 
 						'newwindow', 'fullscreen=1, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
 }
 
