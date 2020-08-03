@@ -430,10 +430,19 @@ function loadShelter()
 }
 
 
-
-
-
-
+function forkme(){
+	if($('#card-body').is(':hidden')){
+		$("#showicon").attr("class", "fas fa-chevron-up");
+		$("#showicon").html("收起");
+		$("#card-body").show();
+	}
+	else {
+		$("#showicon").attr("class", "fas fa-chevron-down");
+		$("#card-body").hide();
+		$("#showicon").html("展开");
+	}
+	
+}
 
 
 
