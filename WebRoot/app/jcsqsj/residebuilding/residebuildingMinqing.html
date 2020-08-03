@@ -248,7 +248,7 @@ $(document).ready(function ()
 				var divWidth = $('#minqingDiv').width();
 				
 				debugger;
-				var roomWidth = (divWidth - 200)/obj.maxRoomNum;
+				var roomWidth = (divWidth - 150)/obj.maxRoomNum;
 				
 				if(roomWidth > 200)
 					roomWidth = 200;
@@ -306,7 +306,7 @@ $(document).ready(function ()
 							for(var k=0;k<characteristicsArr.length;k++)
 							{
 								if(characteristicsArr[k] != '')
-									characteristics += '<img src="../images/icon/mqicon/'+characteristicsArr[k]+'.png" alt="'+characteristicsArr[k]+'" width="28px"  />';	
+									characteristics += '<img src="../images/icon/mqicon/'+characteristicsArr[k]+'.png" alt="'+characteristicsArr[k]+'" width="22px"  />';	
 							}
 						}
 						
@@ -325,7 +325,7 @@ $(document).ready(function ()
 							"<div class='tj-dei'>" +
 								"<div style='height: 30px;'>" +
 								//"<div class='tj-lcph'>" + room.number + "</div>" +
-								"<div class='tj-lcph'><a href=\"javascript:clickRoom('"+room.roomId+"')\" >"+room.number+"</a></div>" +
+								"<div class='tj-lcph'><a href=\"javascript:clickRoom('"+room.roomId+"')\" style='color:white;'>"+room.number+"</a></div>" +
 								"<div class='tj-rhce'>" + characteristics + "</div>" +
 								"</div>" +
 								"<div class='tj-yttw'><span>" + residentStr + "</span></div>" +
