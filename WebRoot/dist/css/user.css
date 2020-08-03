@@ -32,6 +32,7 @@ border-radius: 5px;}
 .btn-info:hover{background-color:#F44336;border-color: #e4660e;}
 label:not(.form-check-label):not(.custom-file-label){    font-weight: normal;font-size: 14px; text-align: right;}
 .form-control {margin:3px !important;}
+.control-label {vertical-align:middle;display:inline-block; padding-top:12px; }
 .btn{    font-size: 14px; padding: 8px 20px;}
 .mbx{background: #fda568; color: #fff; padding: 3px 10px; border-radius: 5px;}
 .wh-200{/*width: 200px;*/overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
@@ -50,9 +51,9 @@ label:not(.form-check-label):not(.custom-file-label){    font-weight: normal;fon
 /*.tj-zk{ width: 80px; border-radius: 0 0 10px 10px; background: #fff;padding: 5px;position: absolute;bottom: -30px;
      border-radius: 0 0 8px 8px;  left: 50%; margin-left: -50px;   border: 1px solid #ddd; border-top: none; text-align: center; font-size: 13px;}*/
 /*.tj-zk{background: url(img/bg-1.png);position: absolute;bottom: -18px; border-radius: 0 0 8px 8px;  left: 50%; margin-left: -50px;text-align: center; font-size: 12px; width: 92px; height: 18px; }*/
-.tj-lc{ width: 188px; height: 87px; background: #f1f4f6; border-radius: 5px;}
+.tj-lc{ width: 188px; height: 87px; background: #f1f4f6; border-radius: 5px; margin: 10px 0 0 10px}
 .tj-dei{ border-left: 2px solid #ff6900; height: 87px;padding: 10px 10px 10px 0;}
 .tj-lcph{ background: #ff6900; color: #fff;font-size: 14px; height: 25px; line-height: 25px; width: 60px; border-radius: 0 50px 50px 0; text-align: center; float: left;}
-.tj-rhce{float:left; margin-left: 8px;}
+.tj-rhce{float:left; margin-left: 2px;}
 .tj-yttw{ font-size: 14px; color: #333; margin-left: 15px; margin-top: 10px; display: block;}
 .tj-yttw span{ margin-right: 10px;}

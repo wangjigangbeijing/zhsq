@@ -1,4 +1,4 @@
-
+﻿
 //获取地址栏参数，name:参数名称
  function getUrlParms(name){
    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");

@@ -276,7 +276,7 @@ $(document).ready(function ()
 								
 							curLevel = room.level;
 							
-							unitDiv += '<div class="row">';//每一层增加一个divrow
+							unitDiv += '<div class="row" style="margin:0px; background-color:white;">';//每一层增加一个divrow
 						}
 						
 						var characteristics = '';
@@ -290,7 +290,7 @@ $(document).ready(function ()
 							for(var k=0;k<characteristicsArr.length;k++)
 							{
 								if(characteristicsArr[k] != '')
-									characteristics += '<i><img src="../images/icon/mqicon/'+characteristicsArr[k]+'.png" alt="'+characteristicsArr[k]+'" width="28px"  /></i>';	
+									characteristics += '<img src="../images/icon/mqicon/'+characteristicsArr[k]+'.png" alt="'+characteristicsArr[k]+'" width="28px"  />';	
 							}
 						}
 						
@@ -303,23 +303,17 @@ $(document).ready(function ()
 						if(room.peoplecharacteristics.indexOf('') != -1)
 							characteristics += '<i class="fas fa-user" style="color:orange"></i>';
 						*/
-						unitDiv += '<div class="" style="padding-top:10px;padding-left:5px;width:'+roomWidth+'px;">'+
-							'<div class="position-relative p-3 " style="height: 75px; background:#ececec">'+
-							  '<div class="ribbon-wrapper">'+
-								'<div class="ribbon bg-primary">'+
-								  room.number+
-								'</div>'+
-							  '</div><small>'+
-							  room.residentNames+'</small><br />'+
-							  '<small>'+
-								//'<i class="fas fa-heart" style="color:orange"  ></i>'+								
-								characteristics+
-								//<i class="fas fa-wheelchair" style="color:orange"></i>
-								//<i class="fas fa-star" style="color:orange" ></i>
-								//<i class="fas fa-user" style="color:orange" ></i>
-							  '</small>'+
-							'</div>'+
-						  '</div>';
+						unitDiv += "<div class='tj-lc'>" +
+							"<div class='tj-dei'>" +
+								"<div style='height: 30px;'>" +
+								"<div class='tj-lcph'>" + room.number + "</div>" +
+								"<div class='tj-rhce'>" + characteristics + "</div>" +
+								"</div>" +
+								"<div class='tj-yttw'><span>" + room.residentNames + "</span></div>" +
+							"</div>" +
+						  "</div>";
+				  
+						
 					}
 					
 					
