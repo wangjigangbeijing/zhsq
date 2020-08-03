@@ -18,6 +18,8 @@ $(document).ready(function (){
 		loadTemplateProcess();
 	}
 	
+	loadsxxl();
+	
 });
 
 
@@ -91,6 +93,23 @@ function addOrUpdate()
 			return ;
 		}
 	});
+}
+
+function loadsxxl(){
+	$.get(getContextPath()+"/sqbsfwController/loadsxxl",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxlb + "'>" + obj.list[i].sxlb + "</option>"
+					$("#blsxxl").append(content);
+				}
+				
+				
+			}
+			
+		});
 }
 
 //加载流程节点信息

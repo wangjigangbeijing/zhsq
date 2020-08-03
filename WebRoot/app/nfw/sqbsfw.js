@@ -5,6 +5,8 @@ $(document).ready(function (){
 	
 	$('#btnAdd').click(addsqbsfw);
 	
+	$('#sqbssxqdAnchor').click(sqbssxqd);
+	
 	load();
 	
 });
@@ -164,6 +166,7 @@ function enterFlow(id){
 var uuid = '';
 function addsqbsfw()
 {
+	curId = '';
 	//uuid = guid();
 	$('#main-content').load("./nfw/sqbsfwDetail.html", function () {
 		//EditableTable.init();

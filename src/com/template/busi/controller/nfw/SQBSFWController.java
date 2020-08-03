@@ -150,6 +150,32 @@ public class SQBSFWController {
     return jsonObj.toString();
     }
 	
+	@RequestMapping(value="loadsxxl",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String loadSxxl()
+	{
+		logger.info("load sxxl");
+		
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			String sql = "select a.* from nfw_sqbsfw_qd a";
+			List<HashMap> list = this.sqbsfwService.findBySql(sql);
+//			HqlFilter hqlFilter = new HqlFilter();
+//        List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);
+        //net.sf.json.JSONArray jsonArr = net.sf.json.JSONArray.fromObject(list);
+        jsonObj.put("totalCount", list.size());
+        jsonObj.put("list", list);
+        jsonObj.put("success", true);
+	}
+	catch(Exception e)
+	{
+		logger.error(e.getMessage(),e);
+		jsonObj.put("success", false);
+	}
+    return jsonObj.toString();
+    }
+	
 	@RequestMapping(value="get",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String get(String id)
