@@ -19,10 +19,9 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	/*$('#btnSearch').attr('disabled','disabled');
 	 var name = $('#nameQuery').val();
 
-	
 	$.get(getContextPath()+'/sysOrganizationController/load?name='+name+'&',
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
@@ -74,15 +73,7 @@ function load()
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ /*{
-					className: 'control',
-					orderable: false,
-					targets:   0,//从0开始
-					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
-						return btn;
-					}
-					},*/
+				columnDefs: [
 					{
 					className: 'control',
 					orderable: false,
@@ -97,6 +88,82 @@ function load()
 					}
 				]
 			} );
+		}
+	});*/
+	
+	
+	
+	var tableHtml = '<thead><th>组织名称</th><th>上级组织</th><th>地址</th><th>联系电话</th><th>操作</th></thead>';
+	
+				/*<tbody>
+					<tr class="treegrid-1">
+						<td>Root node 1</td><td>Additional info</td>
+					</tr>
+					<tr class="treegrid-2 treegrid-parent-1">
+						<td>Node 1-1</td><td>Additional info</td>
+					</tr>
+					<tr class="treegrid-3 treegrid-parent-1">
+						<td>Node 1-2</td><td>Additional info</td>
+					</tr>
+					<tr class="treegrid-4 treegrid-parent-3">
+						<td>Node 1-2-1</td><td>Additional info</td>
+					</tr>
+					<tr class="treegrid-5">
+						<td>Root node 2</td><td>Additional info</td>
+					</tr>
+					<tr class="treegrid-6 treegrid-parent-5">
+						<td>Node 2-1</td><td>Additional info</td>
+					</tr>
+					<tr class="treegrid-7 treegrid-parent-5">
+						<td>Node 2-2</td><td>Additional info</td>
+					</tr>
+					<tr class="treegrid-8 treegrid-parent-7">
+						<td>Node 2-2-1</td><td>Additional info</td>
+					</tr>				  
+				  </tbody-->*/
+	
+			
+	var name = $('#nameQuery').val();
+	
+	$.get(getContextPath()+"/sysOrganizationController/load?name="+name,
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			var tableData = '';
+			
+			for(var i=0;i<obj.list.length;i++)
+			{
+				var org = obj.list[i];
+				
+				var trData = '<tr class="treegrid-'+org.id;
+				
+				if(org.parentOrgId != '')
+					trData += ' treegrid-parent-'+org.parentid;
+				
+				trData += '">';
+				trData += '<td>'+org.name+'</td><td>'+org.parentName+'</td><td>'+org.address+'</td><td>'+org.telphone+'</td>';
+				
+				var btn = "<a href=\"#\" onclick=\"editOrganizaiton('"+org.id+"')\" data-toggle=\"tooltip\"><i class=\"fa fa-edit text-blue\"></i></a>&nbsp;&nbsp;";						
+				//用户不能删除自己归属的组织
+				/*if(curUserOrgId != org.id)
+				{					
+					btn += "<a href=\"#\" onclick=\"deleteOrganizaiton('"+org.id+"')\" data-toggle=\"tooltip\"><i class=\"fa fa-trash text-red\"></i></a>&nbsp;&nbsp;";
+				}*/
+				
+				trData += '<td>'+btn+'</td>';
+				
+				trData += '</tr>';
+				
+				tableData += trData;
+			}
+			
+			tableHtml += '<tbody>'+tableData+'</tbody>';
+			
+			$('#dataTable').html(tableHtml);			
+			$('#dataTable').treegrid({initialState:'collapsed'});
+			
+			$('#progressbar').hide();
 		}
 	});
 }

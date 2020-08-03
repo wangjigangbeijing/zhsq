@@ -44,16 +44,16 @@
 					</div>
                   </div>
 				  
-				  <!--div class="form-group row">
-                    <label class='col-md-2 col-form-label'>菜单类型</label>
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>短信类别</label>
 					<div class='col-md-9'>
-						<select class='form-control field' name='menu_type' id='menu_type'>
-						<option value='表单' selected>表单</option>
-						<option value='文件'>文件</option>
-						<option value='外部URL'>外部URL</option>
+						<select class='form-control field' name='smsType' id='smsType'>
+						<option value='日常通知' selected>日常通知</option>
+						<option value='党建通知'>党建通知</option>
+						<option value='紧急通知'>紧急通知</option>
 						</select>
 					</div>
-                  </div-->
+                  </div>
 				  
 				  <div class="form-group row">
                     <label class='col-md-2 col-form-label'>发送目标(逗号分隔手机号码列表)</label>
@@ -66,8 +66,8 @@
 						</div>
 						
 						<div class='col-md-2'>
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog">选择居民</button>&nbsp;
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog">选择工作人员</button>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident();">选择居民</button>&nbsp;
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button>
 						</div>
 						
 						</div>

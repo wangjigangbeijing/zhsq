@@ -41,7 +41,7 @@ $(document).ready(function (){
 	if(curId != null && curId != '')
 		get();
 });
-
+/*
 function get()
 {
 	$.get(getContextPath()+"/smsController/get?id="+curId,
@@ -59,13 +59,14 @@ function get()
 			}
 		});
 }
-
+*/
 function addOrUpdate()
 {
 	$.post(getContextPath()+"/smsController/addOrUpdate",
 	{
 		id:curId,
 		smsContent:$('#smsContent').val(),
+		smsType:$('#smsType').val(),
 		mobileList:$('#mobileList').val()
 	},
 	function(result){

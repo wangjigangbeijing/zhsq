@@ -41,24 +41,79 @@ function get()
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				$('#menu_enname').val(obj.menu_enname);
-				$('#menu_zhname').val(obj.menu_zhname);
-				$('#menu_type').val(obj.menu_type);
-				$('#table_id').val(obj.table_id);
-				$('#file_name').val(obj.fifth);
-				$('#external_url').val(obj.external_url);
+				debugger;
+				
+				$('#smsContent').val(obj.messageContent);
+				$('#mobileList').val(obj.mobileList);
+				$('#sender').val(obj.sender);
+				
+				dataTable = $('#dataTable').dataTable( {
+					"processing": true,
+					"bJQueryUI": false,
+					"bFilter": false,
+					"bStateSave":true,
+					"bAutoWidth": false, //自适应宽度 
+					//"sPaginationType": "full_numbers", 
+					iDisplayLength: 10,
+					lengthChange: false,
+					"bProcessing": true, 
+					"bDestroy":true,
+					"bSort": false, //是否使用排序 		
+					"oLanguage": { 
+						"sProcessing": "正在加载中......", 
+						"sLengthMenu": "每页显示 _MENU_ 条记录", 
+						"sZeroRecords": "对不起，查询不到相关数据！", 
+						"sInfoEmpty":"",
+						"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+						"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+						"sSearch": "搜索", 
+						"oPaginate":  
+						{ 
+							"sFirst": "首页", 
+							"sPrevious": "上一页", 
+							"sNext": "下一页", 
+							"sLast": "末页" 
+						}
+					}, //多语言配置					
+					"data":obj.list,
+					"columns": [
+						{ 'data': 'name' ,'sClass':'text-center'},
+						{ 'data': 'mobile' ,'sClass':'text-center'},
+						{ 'data': 'sendTime' ,'sClass':'text-center'},
+						{ 'data': 'status' ,'sClass':'text-center'},
+						{ 'data': '' ,'sClass':'text-center'}
 
+					],
+					columnDefs: [
+						{
+						className: 'control',
+						orderable: false,
+						targets:  4,//从0开始
+						mRender : function(data,type,full){
+							var btn = "<a href=\"#\" onclick=\"resend('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">重新发送</a>&nbsp;";
+							
+							if(full.status != '失败')//如果状态不是失败,则不允许重新发送
+							{
+								btn = full.status;
+							}
+							
+							//btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\">删除</a>";
+							
+							return btn;
+						}
+						}
+					]
+				} );
+				
 			}
 		});
 }
-/*
-function addOrUpdate()
+
+function resend(curId)
 {
-	$.post(getContextPath()+"/smsController/addOrUpdate",
+	$.post(getContextPath()+"/smsController/resend",
 	{
-		id:curId,
-		smsContent:$('#smsContent').val(),
-		mobileList:$('#mobileList').val()
+		id:curId
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
@@ -69,7 +124,7 @@ function addOrUpdate()
 				HorizontalPosition : 'center'
 			});
 			
-			gobackPage();
+			get();
 		}
 		else
 		{
@@ -80,7 +135,7 @@ function addOrUpdate()
 		}
 	});
 }
-*/
+
 function gobackPage()
 {
 	$('#main-content').load("./sms/sms.html", function () {

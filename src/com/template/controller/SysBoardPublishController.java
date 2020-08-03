@@ -26,7 +26,8 @@ public class SysBoardPublishController {
 	private SysBoardPublishService sys_board_publishService;
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String addOrUpdate(String id,String title,String category,String facilities,String content,String attachment,String starttime,String endtime)
+public String addOrUpdate(String id,String title,String category,String facilities,String content,
+		String attachment,String starttime,String endtime,String status)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -48,6 +49,7 @@ public String addOrUpdate(String id,String title,String category,String faciliti
 		sys_board_publish.setattachment(attachment);
 		sys_board_publish.setstarttime(starttime);
 		sys_board_publish.setendtime(endtime);
+		sys_board_publish.setstatus(status);
 
         sys_board_publishService.save(sys_board_publish);
         jsonObj.put("success", true);
@@ -111,14 +113,15 @@ if(category != null && category.equalsIgnoreCase("") == false && category.equals
 			jsonTmp.put("content",sys_board_publish.getcontent());
 			
 			String contentShort = sys_board_publish.getcontent();
-			if(contentShort.length() > 50)
-				contentShort += contentShort.substring(0, 50)+"...";
+			if(contentShort.length() > 20)
+				contentShort = contentShort.substring(0, 20)+"...";
 			
 			jsonTmp.put("contentShort", contentShort);
 			
 			jsonTmp.put("attachment",sys_board_publish.getattachment());
 			jsonTmp.put("starttime",sys_board_publish.getstarttime());
 			jsonTmp.put("endtime",sys_board_publish.getendtime());
+			jsonTmp.put("status",sys_board_publish.getstatus());
 
        		jsonArr.put(jsonTmp);
         	iTotalCnt++;
@@ -151,7 +154,7 @@ public String get(String id)
 			jsonObj.put("attachment",sys_board_publish.getattachment());
 			jsonObj.put("starttime",sys_board_publish.getstarttime());
 			jsonObj.put("endtime",sys_board_publish.getendtime());
-
+			jsonObj.put("status",sys_board_publish.getstatus());
 			jsonObj.put("success", true);
 		}
 		else

@@ -94,5 +94,16 @@ public void setendtime(String endtime)
 {
 	this.endtime = endtime;
 }
+
+@Column(name = "status", nullable = true)
+public String status;
+public String getstatus()
+{
+	return status;
+}
+public void setstatus(String status)
+{
+	this.status = status;
+}
 }
 

@@ -219,7 +219,7 @@
 	  
 	  <div class="card-footer">
 				
-		  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">返回</button>
+		  <button class="btn btn-primary float-right" type="button" onclick="gobackPage();">返回</button>
 		  
 		</div>
     </section>
@@ -249,6 +249,12 @@ $(document).ready(function ()
 				
 				var roomWidth = (divWidth - 50)/obj.maxRoomNum;
 				
+				if(roomWidth > 200)
+					roomWidth = 200;
+					
+				if(roomWidth < 100)
+					roomWidth = 100;	
+					
 				var units = obj.units;
 				
 				var buildingName = obj.name;
@@ -257,7 +263,7 @@ $(document).ready(function ()
 				{
 					var unit = units[i];
 					
-					var unitDiv = '<div class="row"><div class="col-12"><div class="card card-primary"><div class="card-header"><h3 class="card-title">'+buildingName+unit.name+'民情图</h3></div><div class="card-body">';
+					var unitDiv = '<div class="row"><div class="col-12"><div class="card card-primary"><div class="card-header"><h3 class="card-title">'+buildingName+unit.name+'民情图</h3> <button class="btn btn-primary float-right" type="button" onclick="gobackPage();">返回</button></div><div class="card-body">';
 					
 					var rooms = unit.rooms;
 					
@@ -265,18 +271,27 @@ $(document).ready(function ()
 					
 					var endDiv = '';
 					
-					for(var j=rooms.length-1;j>=0;j--)
+					var levelDiv = '';
+					
+					var levelArr = new Array();
+					
+					//for(var j=rooms.length-1;j>=0;j--)
+					for(var j=0;j<rooms.length;j++)
 					{
 						var room = rooms[j];
 						
 						if(curLevel != room.level)
 						{
 							if(j != rooms.length)
-								unitDiv += '</div>';
+							{
+								levelDiv += '</div>';
+								
+								levelArr.push(levelDiv);
+							}
 								
 							curLevel = room.level;
 							
-							unitDiv += '<div class="row" style="margin:0px; background-color:white;">';//每一层增加一个divrow
+							levelDiv = '<div class="row" style="margin:0px; background-color:white;">';//每一层增加一个divrow
 						}
 						
 						var characteristics = '';
@@ -294,31 +309,35 @@ $(document).ready(function ()
 							}
 						}
 						
-						/*if(room.peoplecharacteristics.indexOf('') != -1)
-							characteristics += '<i class="fas fa-heart" style="color:orange"></i>';
-						if(room.peoplecharacteristics.indexOf('') != -1)
-							characteristics += '<i class="fas fa-wheelchair" style="color:orange"></i>';
-						if(room.peoplecharacteristics.indexOf('') != -1)
-							characteristics += '<i class="fas fa-star" style="color:orange"></i>';	
-						if(room.peoplecharacteristics.indexOf('') != -1)
-							characteristics += '<i class="fas fa-user" style="color:orange"></i>';
-						*/
-						unitDiv += "<div class='tj-lc'>" +
+						var residentNameArr = room.residentNames.split(',');
+						var residentIdArr = room.residentIds.split(',');
+						
+						var residentStr = '';
+						
+						for(var k=0;k<residentNameArr.length;k++)
+						{
+							residentStr += '<a href="javascript:clickResident(\''+residentIdArr[k]+'\')" >'+residentNameArr[k]+'</a>,';
+						}
+						  
+						  levelDiv += "<div class='tj-lc'>" +
 							"<div class='tj-dei'>" +
 								"<div style='height: 30px;'>" +
 								"<div class='tj-lcph'>" + room.number + "</div>" +
 								"<div class='tj-rhce'>" + characteristics + "</div>" +
 								"</div>" +
-								"<div class='tj-yttw'><span>" + room.residentNames + "</span></div>" +
+								"<div class='tj-yttw'><span>" + residentStr + "</span></div>" +
 							"</div>" +
 						  "</div>";
-				  
-						
 					}
 					
+					for(var k=levelArr.length-1;k>=0;k--)
+					{
+						var levelDiv = levelArr[k];
 					
+						unitDiv += levelDiv;
+					}
 					
-					unitDiv += '</div>';// 每一层div结束
+					unitDiv += '</div>';
 					
 					unitDiv += '</div></div></div></div>';
 					
@@ -328,4 +347,15 @@ $(document).ready(function ()
 		});
 });
 
+function clickRoom(roomId)
+{
+	window.open('./roomDetailPopup.html?roomId='+roomId+'&roomNum='+roomNum+'&residentBuildingId='+curId, 
+						'newwindow', 'fullscreen=1, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+}
+
+function clickResident(residentId)
+{
+	window.open('./residentDetailPopup.html?residentId='+residentId, 
+						'newwindow', 'fullscreen=1, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+}
 </script>

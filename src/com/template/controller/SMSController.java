@@ -39,7 +39,7 @@ public class SMSController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST)
 	@ResponseBody
-	public String addOrUpdate(String id,String smsContent,String mobileList)
+	public String addOrUpdate(String id,String smsContent,String smsType,String mobileList)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -61,6 +61,7 @@ public class SMSController {
 			smsMessage.setSender(userName);
 			smsMessage.setTimerSend(new Date());
 			smsMessage.setTarget(mobileList);
+			smsMessage.setSMSType(smsType);
 			
 			String msgId = Utility.getUniStr();
 			smsMessage.setId(msgId);
@@ -125,17 +126,17 @@ public class SMSController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String load(String msgContent)
+	public String load(String smsContent)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
 			HqlFilter hqlFilter = new HqlFilter();
 			
-			/*if(menu_zhname != null && menu_zhname.equalsIgnoreCase("") == false)
+			if(smsContent != null && smsContent.equalsIgnoreCase("") == false)
 			{
-				hqlFilter.addQryCond("menu_zhname", HqlFilter.Operator.LIKE, "%"+menu_zhname+"%");
-			}*/
+				hqlFilter.addQryCond("messageContent", HqlFilter.Operator.LIKE, "%"+smsContent+"%");
+			}
 			
 	        List<SMSMessage> listObj = smsService.findByFilter(hqlFilter);
 	        
@@ -162,6 +163,7 @@ public class SMSController {
 				jsonTmp.put("successCnt", message.getSuccessCnt());
 				jsonTmp.put("failCnt", message.getFailCnt());
 				jsonTmp.put("mobileList", message.getTarget());
+				jsonTmp.put("messageType", message.getSMSType());
 				
 				String mobileListShort = message.getTarget();
 				if(mobileListShort != null && mobileListShort.length() > 20)
@@ -195,6 +197,16 @@ public class SMSController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
+			SMSMessage smsMessage = smsService.getById(msgId);
+			
+			jsonObj.put("messageContent", smsMessage.getMessageContent());
+			jsonObj.put("mobileList", smsMessage.getTarget());
+			
+			String sender = smsMessage.getSender();
+			if(ConstValue.userMap.containsKey(smsMessage.getSender()))
+				sender = ConstValue.userMap.get(smsMessage.getSender());
+			jsonObj.put("sender", sender);
+			
 			HqlFilter hqlFilter = new HqlFilter();
 			
 			if(msgId != null && msgId.equalsIgnoreCase("") == false)
@@ -214,7 +226,17 @@ public class SMSController {
 				
 				jsonTmp.put("id", messageStatus.getId());
 				
-				jsonTmp.put("mobile", messageStatus.getMobile());
+				String mobile = messageStatus.getMobile();
+				
+				String name = "";
+				
+				if(mobile.indexOf("-") != -1)
+				{
+					name = mobile.substring(0,mobile.indexOf("-"));
+					mobile = mobile.substring(mobile.indexOf("-") + 1);
+				}
+				jsonTmp.put("name", name);
+				jsonTmp.put("mobile", mobile);
 				
 				if(messageStatus.getSendTime() != null)
 					jsonTmp.put("sendTime", TimeUtil.formatDate(messageStatus.getSendTime(),"yyyy-MM-dd HH:mm:ss"));
@@ -222,7 +244,7 @@ public class SMSController {
 					jsonTmp.put("sendTime", "-");
 				
 				jsonTmp.put("status", messageStatus.getStatus());
-	
+				
 	       		jsonArr.put(jsonTmp);
 	        	iTotalCnt++;
 			}
@@ -238,4 +260,34 @@ public class SMSController {
 		}
 	    return jsonObj.toString();
 	}
+	
+	@RequestMapping(value="resend",method = RequestMethod.POST)
+	@ResponseBody
+	public String resend(String id)
+	{
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			String userName = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_NAME);
+			
+			SMSMessageStatus msgStatus = smsStatusService.getById(id);
+			
+			if(msgStatus != null)
+			{
+				msgStatus.setStatus(ConstValue.SMS_STATUS_INITIAL);
+				
+				smsStatusService.save(msgStatus);
+			}
+			
+	        jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", e.getMessage());
+		}
+	    return jsonObj.toString();
+	}
+	
 }

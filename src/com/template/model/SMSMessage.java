@@ -42,6 +42,18 @@ public class SMSMessage implements java.io.Serializable {
 		this.messageContent = messageContent;
 	}
 	
+	@Column(name = "SMS_TYPE", nullable = true)
+	public String smsType;
+	public String getSMSType()
+	{
+		return smsType;
+	}
+	public void setSMSType(String smsType)
+	{
+		this.smsType = smsType;
+	}
+	
+	
 	@Column(name = "TARGET", nullable = false)
 	public String target;
 	public String getTarget()

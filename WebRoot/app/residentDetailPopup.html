@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>大红门街道社情综合管理服务平台</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  
+  <link rel="stylesheet" href="../plugins/jNotify/jNotify.jquery.css">
+  
+  <link rel="stylesheet" type="text/css" href="../plugins/bootstrap-datepicker/css/datepicker.css" />
+  
+  <link href="../plugins/ol6/ol.css" rel="stylesheet" />
+  <link href='../plugins/ol6/iclient-ol.min.css' rel='stylesheet' />
+  
+  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+  
+  <link rel="stylesheet" href="../plugins/DataTables-1.10.5/css/jquery.dataTables.css">
+  
+  <link rel="stylesheet" type="text/css" href="../plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+
+  <link rel="stylesheet" type="text/css" href="../plugins/webuploader/webuploader.css" />
+  
+  <link rel="stylesheet" type="text/css" href="../plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
+  
+  <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../dist/css/user.css">
+  <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  
+  <link rel="stylesheet" href="../plugins/treegrid/css/jquery.treegrid.css">
+  
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper" id="bodyDiv">
+  
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables >
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script-->
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+
+<script type="text/javascript" src="../plugins/DataTables-1.10.5/js/jquery.dataTables.js"></script>
+
+<script src="../plugins/jNotify/jNotify.jquery.js"></script>
+
+<script src="../plugins/jquery.confirm-master/jquery.confirm.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../plugins/daterangepicker/daterangepicker.js"></script>
+
+<script type="text/javascript" src="../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+
+<script type="text/javascript" src="../plugins/ol6/ol.js"></script>
+<script type="text/javascript" src="../plugins/ol6/iclient-ol.min.js"></script>
+
+<script type="text/javascript" src="../plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+
+<script type="text/javascript" src="../plugins/webuploader/webuploader.js"></script>
+
+
+<script type="text/javascript" src="../plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+
+<!-- Select2 -->
+<script src="../plugins/select2/js/select2.full.min.js"></script>
+  
+<script type="text/javascript" src="../plugins/treegrid/js/jquery.treegrid.min.js"></script>  
+  
+<script src="./common.js"></script>
+
+<!-- page script -->
+<script>
+  
+		var VALUE_SPLITTER = ',';
+		
+		var curId = '';
+		
+		function getUrlParam(name) {               /*?videoId=identification  */
+			var params = decodeURI(window.location.search);        /* 截取？号后面的部分    index.html?act=doctor,截取后的字符串就是?act=doctor  */
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = params.substr(1).match(reg);
+			if (r!=null) return unescape(r[2]); return null;
+		}
+	
+		$(document).ready(function ()
+		{
+			curId = getUrlParam('residentId');
+			
+			$('#bodyDiv').load("./jcsqsj/resident/residentDetail.html", function () {
+				$('#confirmBtn').hide();
+				$('#cancelBtn').hide();
+			});
+			
+			/*
+			$.get(getContextPath()+"/roomController/getRoomIdByBuildingIdAndRoomNum?residentBuildingId="+residentBuildingId+"&roomNum="+roomNum,
+			function(result){
+				var obj = jQuery.parseJSON(result);  
+				if(obj.success)
+				{
+					curId = obj.id;//房屋ID
+					$('#bodyDiv').load("./jcsqsj/room/roomDetail.html", function () {
+						$('#confirmBtn').hide();
+						$('#cancelBtn').hide();
+					});
+				}
+			});
+			*/
+			
+			
+		});
+</script>
+</body>
+</html>
+
