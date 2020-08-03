@@ -1,4 +1,4 @@
-
+﻿
 
 <script src="./jcsqsj/resident/resident.js"></script>
 
@@ -8,41 +8,41 @@
           <div class="col-12">
 			
 			<div class="card">
-			 
-                       <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fas fa-search"></i></button>
-              </div>
+		
 	 
-          <div class="card-body collapse">
+          <div class="card-body">
                 
 				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>姓名</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='nameQuery'>
-</div>
+					
+					<div class="form-group row">
+						<label class='col-md-1 control-label' style='text-align:right;'>姓名</label>
+						<div class='col-sm-2'>
+							<input type='text' class='form-control' id='nameQuery'>
+						</div>
 						<label class='col-md-1 control-label' style='text-align:right;'>身份证件名称</label>
-<div class='col-sm-2'>
-						<select class='form-control field' name='identitytypeQuery' id='identitytypeQuery'>
- 						<option value=''>全部</option>
- 						<option value='居民身份证'>居民身份证</option>
-						<option value='军官证'>军官证</option>
-						<option value='机动车驾驶证'>机动车驾驶证</option>
-						<option value='护照'>护照</option>
-						<option value='港澳通行证'>港澳通行证</option>
-						<option value='台胞证'>台胞证</option>
-						</select>
-</div>
+						<div class='col-sm-2'>
+							<select class='form-control field' name='identitytypeQuery' id='identitytypeQuery'>
+							<option value=''>全部</option>
+							<option value='居民身份证'>居民身份证</option>
+							<option value='军官证'>军官证</option>
+							<option value='机动车驾驶证'>机动车驾驶证</option>
+							<option value='护照'>护照</option>
+							<option value='港澳通行证'>港澳通行证</option>
+							<option value='台胞证'>台胞证</option>
+							</select>
+						</div>
 						<label class='col-md-1 control-label' style='text-align:right;'>身份证件号码</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='idnumberQuery'>
-</div>
+						<div class='col-sm-2'>
+							<input type='text' class='form-control' id='idnumberQuery'>
+						</div>
 						<label class='col-md-1 control-label' style='text-align:right;'>居民特征</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='characteristicsQuery'>
-</div>
+						<div class='col-sm-2'>
+							<input type='text' class='form-control' id='characteristicsQuery'>
+						</div>
+					</div>
+			
+                  <div class="form-group row" id="card-body" style="display:none;">
+                    
 						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
 <div class='col-sm-2'>
 					<select class='form-control field' name='ofcommunity' id='ofcommunityQuery'> 						
@@ -313,9 +313,14 @@
 					
                   </div>
 				  
-                </div>
-              </form>
+                
+              </form>		  
 				
+              </div>
+			  
+			  <div class="card-tools" style="text-align:center;">
+                <button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+                  <i id="showicon" class="fas fa-chevron-down">展开</i></button>
               </div>
 			  
 			   </div>
