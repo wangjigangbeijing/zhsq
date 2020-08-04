@@ -9,7 +9,10 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -185,4 +188,88 @@ public class SysOrganizationController {
 		}
 	    return jsonObj.toString();
 	}
+	
+	@RequestMapping(value="loadOrganizationTree",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String loadOrganizationTree()
+	{
+		logger.debug("loadOrganizationTree");
+    	JSONObject jsonObj = new JSONObject();
+    	
+		try
+		{
+			//int iUserType = ConstValue.getCurrentUsertype();
+			
+			String sSql = "SELECT * FROM SYS_ORGANIZATION ";
+
+			JSONArray jsonArr = new JSONArray();
+			
+			/*if(iUserType == ConstValue.USER_TYPE_ORG_ADMIN) JiGang  在公共通讯录处应该看到全部组织
+			{
+				String sOrgId = ConstValue.getCurrentUserOrgId();
+				
+				if(sOrgId.length() > 4)
+					sOrgId = sOrgId.substring(0, 4);
+				
+				sSql += " WHERE ORG_ID LIKE '"+sOrgId+"%' ";
+			}
+			else
+			{*/
+				JSONObject jsonRoot = new JSONObject();
+				jsonRoot.put("id", "0");
+				jsonRoot.put("pId", "");
+				jsonRoot.put("name", "大红门街道");
+				jsonRoot.put("open", true);
+				jsonArr.put(jsonRoot);
+			//}
+			
+			//sSql += "ORDER BY SEQ,ORG_ID";
+			
+			ArrayList<String> alOrg = new ArrayList<String>();
+			
+			List<HashMap> listObj = organizationService.findBySql(sSql);
+			
+			for(int i=0;i<listObj.size();i++)
+			{
+				HashMap hmRec = listObj.get(i);
+				
+				String sOrgId = (String)hmRec.get("id");
+				String sParentOrgId = (String)hmRec.get("parent_id");
+				String sOrgName = (String)hmRec.get("name");
+				
+				//checkAndAddPrantOrg(sOrgId,jsonArr,alOrg);
+				
+				//id  pId   name
+				
+				if(alOrg.contains(sOrgId) == false)
+				{
+					JSONObject jsonTmp = new JSONObject();
+					
+					jsonTmp.put("id", sOrgId);
+					
+					if(sParentOrgId == null || sParentOrgId.equalsIgnoreCase(""))
+						sParentOrgId = "0";
+					
+					jsonTmp.put("pId", sParentOrgId);
+					jsonTmp.put("name", sOrgName);
+					if(i == 0)
+					{
+						jsonTmp.put("open", true);
+					}
+					jsonArr.put(jsonTmp);
+					
+					alOrg.add(sOrgId);
+				}
+			}
+			
+			jsonObj.put("organizationList", jsonArr);			
+	        jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+        return jsonObj.toString();
+    }
 }
