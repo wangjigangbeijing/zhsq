@@ -1,0 +1,106 @@
+
+
+<script src="./jcsqsj/jc_tc_fjdctcw/jc_tc_fjdctcw.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>停车场名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='parkNameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>停放类型</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='parkTypeQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>主管单位</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='adminDepQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>权属部门</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='ownerDepQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>养护单位</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='maintDepQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>停车场编号</th>
+<th style='text-align:center;'>停车场名称</th>
+<th style='text-align:center;'>停放类型</th>
+<th style='text-align:center;'>主管单位</th>
+<th style='text-align:center;'>权属部门</th>
+<th style='text-align:center;'>养护单位</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturepick',
+formData:{
+attributeName:'picture'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

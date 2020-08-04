@@ -1,0 +1,136 @@
+
+
+<script src="./jcsqsj/jc_advertisement/jc_advertisementDetail.js"></script>
+
+
+
+
+	  
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+										<div class='form-group row'>
+						<label class='col-md-2 control-label'>设施名称</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='name'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>设施类型</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='type' id='type'>
+ 						<option value='橱窗布告栏'>橱窗布告栏</option>
+ 						<option value='电梯间宣传栏'>电梯间宣传栏</option>
+ 						<option value='单立柱广告牌'>单立柱广告牌</option>
+ 						<option value='灯箱'>灯箱</option>
+ 						<option value='电子显示屏'>电子显示屏</option>
+ 						<option value='宣传横幅'>宣传横幅</option>
+ 						<option value='文化墙'>文化墙</option>
+ 						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>设施地点</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='address'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>级别</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='level' id='level'>
+ 						<option value='市级'>市级</option>
+ 						<option value='区级'>区级</option>
+ 						<option value='街道级'>街道级</option>
+ 						<option value='社区村级'>社区村级</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>设置单位</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='unit'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>联系电话</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='tel'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>照片</label>
+  				<div class='col-md-9'>
+<div id='picturediv' class='wu-example'>
+<input type='text' class='form-control field' name='picture' id='picture' style='display:none;'>
+<table class='table' id='picturepicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='picturepick'>选择文件</div>
+</div>
+</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>备注</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
+ 						</div>
+ 					</div>
+
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+	
+	
+<script>
+
+var uploaderpicture = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturepick',
+formData:{
+attributeName:'picture'
+}
+});
+uploaderpicture.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpicture.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpicture.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

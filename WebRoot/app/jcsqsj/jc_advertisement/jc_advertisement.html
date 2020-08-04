@@ -1,0 +1,118 @@
+
+
+<script src="./jcsqsj/jc_advertisement/jc_advertisement.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>设施名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>设施类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='typeQuery' id='typeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='橱窗布告栏'>橱窗布告栏</option>
+ 						<option value='电梯间宣传栏'>电梯间宣传栏</option>
+ 						<option value='单立柱广告牌'>单立柱广告牌</option>
+ 						<option value='灯箱'>灯箱</option>
+ 						<option value='电子显示屏'>电子显示屏</option>
+ 						<option value='宣传横幅'>宣传横幅</option>
+ 						<option value='文化墙'>文化墙</option>
+ 						<option value='其他'>其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>级别</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='levelQuery' id='levelQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='市级'>市级</option>
+ 						<option value='区级'>区级</option>
+ 						<option value='街道级'>街道级</option>
+ 						<option value='社区村级'>社区村级</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>设置单位</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='unitQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>设施名称</th>
+<th style='text-align:center;'>设施类型</th>
+<th style='text-align:center;'>设施地点</th>
+<th style='text-align:center;'>级别</th>
+<th style='text-align:center;'>设置单位</th>
+<th style='text-align:center;'>联系电话</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturepick',
+formData:{
+attributeName:'picture'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

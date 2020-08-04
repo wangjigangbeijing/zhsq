@@ -1,0 +1,184 @@
+
+
+<script src="./jcsqsj/jc_pubfacilities_lh/jc_pubfacilities_lhDetail.js"></script>
+
+
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+										<div class='form-group row'>
+						<label class='col-md-2 control-label'>数据编码</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='dateid'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>部件类别</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='type' id='type'>
+ 						<option value='古树名木'>古树名木</option>
+ 						<option value='行树'>行树</option>
+ 						<option value='独立树'>独立树</option>
+ 						<option value='护树设施'>护树设施</option>
+ 						<option value='花架花钵'>花架花钵</option>
+ 						<option value='雕塑'>雕塑</option>
+ 						<option value='街头坐椅'>街头坐椅</option>
+ 						<option value='绿地护栏'>绿地护栏</option>
+ 						<option value='绿地附属设施'>绿地附属设施</option>
+ 						<option value='喷泉'>喷泉</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>部件编号</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='objid'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>部件名称</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='objname'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>部件位置</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='locatedsc'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>主管部门</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='deptname1'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>权属单位</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='deptname2'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>养护单位</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='deptname3'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>是否小区内</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='isincommunity' value='是'> 是
+						<input type='radio' name='isincommunity' value='否'> 否
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>材质</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='material' id='material'>
+ 						<option value='铸铁'>铸铁</option>
+ 						<option value='混凝土'>混凝土</option>
+ 						<option value='复合材料'>复合材料</option>
+ 						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>形状</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='form' id='form'>
+ 						<option value='方'>方</option>
+ 						<option value='圆'>圆</option>
+ 						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>状态</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='objState' id='objState'>
+ 						<option value='完好'>完好</option>
+ 						<option value='破损'>破损</option>
+ 						<option value='丢失'>丢失</option>
+ 						<option value='废弃'>废弃</option>
+ 						<option value='移除'>移除</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>照片</label>
+  				<div class='col-md-9'>
+<div id='picturesdiv' class='wu-example'>
+<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
+<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='picturespick'>选择文件</div>
+</div>
+</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>备注</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
+ 						</div>
+ 					</div>
+
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+	
+	
+<script>
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

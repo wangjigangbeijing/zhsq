@@ -1,0 +1,138 @@
+
+
+<script src="./jcsqsj/jc_xfss/jc_xfss.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>部件类别</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='typeQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>部件名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='objnameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>主管部门</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='deptname1Query'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否小区内</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='isincommunityQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>材质</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='materialQuery' id='materialQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='铸铁'>铸铁</option>
+ 						<option value='混凝土'>混凝土</option>
+ 						<option value='复合材料'>复合材料</option>
+ 						<option value='其他'>其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>形状</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='formQuery' id='formQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='方'>方</option>
+ 						<option value='圆'>圆</option>
+ 						<option value='其他'>其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='objStateQuery' id='objStateQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='完好'>完好</option>
+ 						<option value='破损'>破损</option>
+ 						<option value='丢失'>丢失</option>
+ 						<option value='废弃'>废弃</option>
+ 						<option value='移除'>移除</option>
+						</select>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>数据编码</th>
+<th style='text-align:center;'>部件类别</th>
+<th style='text-align:center;'>部件编号</th>
+<th style='text-align:center;'>部件名称</th>
+<th style='text-align:center;'>主管部门</th>
+<th style='text-align:center;'>权属单位</th>
+<th style='text-align:center;'>养护单位</th>
+<th style='text-align:center;'>是否小区内</th>
+<th style='text-align:center;'>材质</th>
+<th style='text-align:center;'>形状</th>
+<th style='text-align:center;'>状态</th>
+<th style='text-align:center;'>部件位置</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

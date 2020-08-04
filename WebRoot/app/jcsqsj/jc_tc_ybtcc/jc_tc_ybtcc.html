@@ -1,0 +1,146 @@
+
+
+<script src="./jcsqsj/jc_tc_ybtcc/jc_tc_ybtcc.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>车场业态类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='tradeNameQuery' id='tradeNameQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='居住类停车场'>居住类停车场</option>
+ 						<option value='机关企事业单位配建停车场'>机关企事业单位配建停车场</option>
+ 						<option value='公共设施配建停车场'>公共设施配建停车场</option>
+ 						<option value='公共停车场'>公共停车场</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>建筑类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='jztypeQuery' id='jztypeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='地面停车场'>地面停车场</option>
+ 						<option value='地下停车库'>地下停车库</option>
+ 						<option value='地上停车楼'>地上停车楼</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>小区或单位地址</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='unitAddresQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>主管单位</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='adminDepQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>权属部门</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='ownerDepQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>养护单位</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='maintDepQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>收费类型</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='ChargetypeQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否有动态数据</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='DyDataQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>停车场库编号</th>
+<th style='text-align:center;'>停车场名称</th>
+<th style='text-align:center;'>车场业态类型</th>
+<th style='text-align:center;'>建筑类型</th>
+<th style='text-align:center;'>小区或单位名称</th>
+<th style='text-align:center;'>小区或单位地址</th>
+<th style='text-align:center;'>停车场面积</th>
+<th style='text-align:center;'>主管单位</th>
+<th style='text-align:center;'>权属部门</th>
+<th style='text-align:center;'>养护单位</th>
+<th style='text-align:center;'>泊位数</th>
+<th style='text-align:center;'>地下泊位数</th>
+<th style='text-align:center;'>地面泊位数</th>
+<th style='text-align:center;'>停车楼泊位数</th>
+<th style='text-align:center;'>对外开放泊位数</th>
+<th style='text-align:center;'>允许停放时间</th>
+<th style='text-align:center;'>充电桩停车泊位数量</th>
+<th style='text-align:center;'>无障碍泊位数量</th>
+<th style='text-align:center;'>机械车位数量</th>
+<th style='text-align:center;'>收费类型</th>
+<th style='text-align:center;'>长租收费标准</th>
+<th style='text-align:center;'>短租收费标准</th>
+<th style='text-align:center;'>是否有动态数据</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturepick',
+formData:{
+attributeName:'picture'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

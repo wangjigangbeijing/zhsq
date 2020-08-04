@@ -14,8 +14,20 @@ $(document).ready(function (){
 	
 	//load();
 	
+	initialOrganizationTree('');
+	
 	if(curId != '')
 		viewDetail(curId);
+	
+	
+	$('input[type=radio][name=orgtype]').change(function() {
+         if (this.value == '社区') {
+             $('.community').show();
+         }
+         else if (this.value == '部门') {
+             $('.community').hide();
+         }
+     });
 });
 
 
@@ -179,7 +191,7 @@ function onClick(e, treeId, treeNode) {
 		 
 function showMenu() {	
 	$("#menuContent").slideDown("fast");
-
+	
 	$("body").bind("mousedown", onBodyDown);
 }
 function hideMenu() {
@@ -196,7 +208,7 @@ var orgTree;
 
 function initialOrganizationTree(selectedOrgId)
 {
-	$.get(getContextPath()+"/addressBookController/loadOrganizationTree",
+	$.get(getContextPath()+"/sysOrganizationController/loadOrganizationTree",
 		function(result){
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)

@@ -1,0 +1,176 @@
+
+
+<script src="./jcsqsj/jc_partymember/jc_partymember.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+			 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    						<label class='col-md-1 control-label' style='text-align:right;'>姓名</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>身份证件号码</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='idnumberQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>性别</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='sexQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>出生日期</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='birthdayQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>年龄</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='ageQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>移动电话号码</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='mobileQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>居民文化程度</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='educationQuery' id='educationQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='高中以下'>高中以下</option>
+ 						<option value='高中'>高中</option>
+ 						<option value='大专'>大专</option>
+ 						<option value='本科'>本科</option>
+ 						<option value='硕士'>硕士</option>
+ 						<option value='博士'>博士</option>
+ 						<option value='其他'>其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>党员类型</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='partymembertypeQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所属党支部</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='of_partyorganizationQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否居住本社区</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='isincommunityQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>入党时间</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='joinpartydateQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>党龄</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='dyageQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>党籍状态</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='membershipQuery' id='membershipQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='刚入党'>刚入党</option>
+ 						<option value='转正'>转正</option>
+ 						<option value='出党'>出党</option>
+ 						<option value='停止党籍'>停止党籍</option>
+ 						<option value='死亡'>死亡</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否为失联党员</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='islostQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>是否为流动党员</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='movememberQuery'>
+</div>
+
+					
+					<button id="btnSearch" class="btn btn-success">查询</button>
+					
+					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+                  </div>
+				  
+                </div>
+              </form>
+				
+              </div>
+			  
+			   </div>
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>姓名</th>
+<th style='text-align:center;'>身份证件号码</th>
+<th style='text-align:center;'>性别</th>
+<th style='text-align:center;'>出生日期</th>
+<th style='text-align:center;'>年龄</th>
+<th style='text-align:center;'>移动电话号码</th>
+<th style='text-align:center;'>居民文化程度</th>
+<th style='text-align:center;'>党员类型</th>
+<th style='text-align:center;'>所属党支部</th>
+<th style='text-align:center;'>是否居住本社区</th>
+<th style='text-align:center;'>家庭住址</th>
+<th style='text-align:center;'>党内职务</th>
+<th style='text-align:center;'>入党时间</th>
+<th style='text-align:center;'>转入时间</th>
+<th style='text-align:center;'>党龄</th>
+<th style='text-align:center;'>党籍状态</th>
+<th style='text-align:center;'>是否为失联党员</th>
+<th style='text-align:center;'>失去联系日期</th>
+<th style='text-align:center;'>是否为流动党员</th>
+<th style='text-align:center;'>外出流向</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>
