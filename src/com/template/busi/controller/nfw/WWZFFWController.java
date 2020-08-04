@@ -51,7 +51,7 @@ public class WWZFFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id,String wwzfdx,String wwdxlx, String wwlx, String wwfs,String wwpwwjqk, String wwpwwjly, String sqcywwry, String qtcywwry, String wwzfxq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id,String wwzfdx, String wwzfdxname, String wwdxlx, String wwlx, String wwfs,String wwpwwjqk, String wwpwwjly, String sqcywwry, String qtcywwry, String wwzfxq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate:" + id);
 		JSONObject jsonObj = new JSONObject();
@@ -67,6 +67,7 @@ public class WWZFFWController {
 					//新增
 					map.put("id", Utility.getUniStr());
 					map.put("wwzfdx", wwzfdx);
+					map.put("wwzfdxname", wwzfdxname);
 					map.put("wwdxlx", wwdxlx);
 					map.put("wwlx", wwlx);
 					map.put("wwfs", wwfs);
@@ -94,6 +95,7 @@ public class WWZFFWController {
 					kvs.put("id", id);
 					
 					map.put("wwzfdx", wwzfdx);
+					map.put("wwzfdxname", wwzfdxname);
 					map.put("wwdxlx", wwdxlx);
 					map.put("wwlx", wwlx);
 					map.put("wwfs", wwfs);
@@ -119,6 +121,7 @@ public class WWZFFWController {
 			else {
 				map.put("id", Utility.getUniStr());
 				map.put("wwzfdx", wwzfdx);
+				map.put("wwzfdxname", wwzfdxname);
 				map.put("wwdxlx", wwdxlx);
 				map.put("wwlx", wwlx);
 				map.put("wwfs", wwfs);

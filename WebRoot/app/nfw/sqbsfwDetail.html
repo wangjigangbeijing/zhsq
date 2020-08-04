@@ -30,7 +30,8 @@
 					
 					<div class="form-group">
                       <label>办理人（可从居民档案中选择或录入）<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident(); return false;">选择</button></label>
-                      <input type="" class="form-control" id="blr" placeholder="">
+                      <input type="hidden" class="form-control" id="blr" placeholder="">
+					  <input type="text" class="form-control" id="blrname" >
 					  
                     </div>
 					
@@ -42,11 +43,11 @@
                     <div class="form-group">
                       <label>办理渠道</label>
                       <select class="form-control" id="blqd">
-                        <option>办事大厅</option>
-                        <option>社区热线</option>
-                        <option>微信平台</option>
-                        <option>智能办事终端</option>
-                        <option>其他</option>
+                        <option value="办事大厅">办事大厅</option>
+                        <option value="社区热线">社区热线</option>
+                        <option value="微信平台">微信平台</option>
+                        <option value="智能办事终端">智能办事终端</option>
+                        <option value="其他">其他</option>
                       </select>
                     </div>
 
@@ -288,7 +289,8 @@
 			//$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
 			//意思是选择被选中的checkbox
 			var users = '', phones = '';
-			$.each($('input:checkbox:checked'),function(){
+			var ids = '';
+			$('input:checkbox[name=resid]:checked').each(function (i) {
 				var val = $(this).val();
 				for(var i=0;i<userList.length;i++)
 				{
@@ -300,12 +302,16 @@
 						else users += ", " + name;
 						if(phones == '') phones = phone;
 						else phones += ", " + phone;
+						
+						if(ids == '') ids = val;
+						else ids += ", " + val;
 					}
 				}
 				
 			});
 			
-			$('#blr').val(users);
+			$('#blrname').val(users);
+			$('#blr').val(ids);
 			$('#lxdh').val(phones);
 		}
 		
@@ -329,3 +335,5 @@
 			});
 			
 		});
+		
+		</script>

@@ -52,7 +52,7 @@ function loadwwzffw()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-					{ 'data': 'wwzfdx' ,'sClass':'text-center'},
+					{ 'data': 'wwzfdxname' ,'sClass':'text-center'},
 					{ 'data': 'wwdxlx' ,'sClass':'text-center'},
 					{ 'data': 'wwlx' ,'sClass':'text-center'},
 					{ 'data': 'wwfs' ,'sClass':'text-center'},

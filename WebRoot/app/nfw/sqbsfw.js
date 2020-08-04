@@ -63,8 +63,8 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-					{ 'data': 'blsx' ,'sClass':'text-center'},
-					{ 'data': 'blr' ,'sClass':'text-center'},
+					{ 'data': 'blsxdl' ,'sClass':'text-center'},
+					{ 'data': 'blrname' ,'sClass':'text-center'},
 					{ 'data': 'lxdh' ,'sClass':'text-center'},
 					{ 'data': 'blqd' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center',

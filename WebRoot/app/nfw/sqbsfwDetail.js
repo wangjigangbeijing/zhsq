@@ -47,6 +47,8 @@ function viewDetail(id)
 			{
 				$('#blr').val(obj.data.blr);
 				
+				$('#blrname').val(obj.data.blrname);
+				
 				$('#lxdh').val(obj.data.lxdh);
 				
 				$('#blqd').val(obj.data.blqd);
@@ -68,6 +70,7 @@ function addOrUpdate()
 	{
 		id:curId,
 		blr:$('#blr').val(),
+		blrname:$('#blrname').val(),
 		lxdh:$('#lxdh').val(),
 		blqd:$('#blqd').val(),
 		blsxdl:$('#blsxdl').val(),

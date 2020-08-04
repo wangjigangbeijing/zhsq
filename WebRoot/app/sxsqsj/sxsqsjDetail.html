@@ -364,7 +364,7 @@ function addAllRes()
 	//意思是选择被选中的checkbox
 	var users = '';
 	var ids = '';
-	$.each($('input:checkbox:checked'),function(){
+	$('input:checkbox[name=resid]:checked').each(function (i) {
 		var val = $(this).val();
 		for(var i=0;i<userList.length;i++)
 		{

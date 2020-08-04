@@ -51,7 +51,7 @@ public class ZMBLFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id, String blr,String lxdh, String blqd, String zmsxdl,String zmsxxl, String xq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id, String blr, String blrname, String lxdh, String blqd, String zmsxdl,String zmsxxl, String xq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate");
 		JSONObject jsonObj = new JSONObject();
@@ -67,6 +67,7 @@ public class ZMBLFWController {
 					//新增
 					map.put("id", Utility.getUniStr());
 					map.put("blr", blr);
+					map.put("blrname", blrname);
 					map.put("lxdh", lxdh);
 					map.put("blqd", blqd);
 					map.put("zmsxdl", zmsxdl);
@@ -91,6 +92,7 @@ public class ZMBLFWController {
 					kvs.put("id", id);
 					
 					map.put("blr", blr);
+					map.put("blrname", blrname);
 					map.put("lxdh", lxdh);
 					map.put("blqd", blqd);
 					map.put("zmsxdl", zmsxdl);
@@ -114,6 +116,7 @@ public class ZMBLFWController {
 			else {
 				map.put("id", Utility.getUniStr());
 				map.put("blr", blr);
+				map.put("blrname", blrname);
 				map.put("lxdh", lxdh);
 				map.put("blqd", blqd);
 				map.put("zmsxdl", zmsxdl);
