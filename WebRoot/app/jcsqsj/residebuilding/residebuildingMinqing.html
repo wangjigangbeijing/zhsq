@@ -247,8 +247,7 @@ $(document).ready(function ()
 				
 				var divWidth = $('#minqingDiv').width();
 				
-				debugger;
-				var roomWidth = (divWidth - 150)/obj.maxRoomNum;
+				var roomWidth = (divWidth - obj.maxRoomNum*30)/obj.maxRoomNum;  //Div宽度减去最大数量的间隔
 				
 				if(roomWidth > 200)
 					roomWidth = 200;
