@@ -23,7 +23,7 @@ border-radius: 5px;}
 .sidebar{padding: 0px;   font-size: 14px;}
 .sidebar a{ color: #333 !important;}
 .content-header .breadcrumb{ font-size: 14px;}
-.card-body{padding: 30px;}
+.card-body{padding: 10px;}
 .card-body1{padding: 0px;}
 .form-group{ margin: 5px;}
 .btn-success {color: #fff;background-color: #64c8bc; border-color: #29988b; box-shadow: none;}
@@ -42,7 +42,7 @@ label:not(.form-check-label):not(.custom-file-label){    font-weight: normal;fon
 .lk-a{color: #fff;background-color: #64c8bc; border-color: #29988b; box-shadow: none; color: #fff;font-size: 12px;    padding: 3px 10px;    border-radius: 5px;}
 .lk-b{color: #fff;background-color: #dc3545; border-color: #dc3545; box-shadow: none; color: #fff;font-size: 12px;    padding: 3px 10px;    border-radius: 5px;}
 .lk-c{color: #fff;background-color: #0062cc; border-color: #0062cc; box-shadow: none; color: #fff;font-size: 12px;    padding: 3px 10px;    border-radius: 5px;}
-.btn {padding: 3px 10px !important;    border-radius: 5px; box-shadow: none; color: black;}
+.btn {padding: 3px 10px !important;    border-radius: 5px; box-shadow: none; color: black; }
 .btn-xs {line-height: 1 !important;}
 .navbar-dark .btn-navbar, .navbar-dark .form-control-navbar{ border:1px solid #f2f4f6; background: #fbfdff; color: #333;border-right: none;}
 .navbar-dark .form-control-navbar+.input-group-append>.btn-navbar{ color: #666;border-left: none;}

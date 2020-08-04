@@ -703,10 +703,14 @@ function forkme(){
 	if($('#card-body').is(':hidden')){
 		$("#showicon").attr("class", "fas fa-chevron-up");
 		$("#card-body").show();
+		$("#firstshow").hide();
+		$("#searchtype").val(2);
 	}
 	else {
 		$("#showicon").attr("class", "fas fa-chevron-down");
 		$("#card-body").hide();
+		$("#firstshow").show();
+		$("#searchtype").val(1);
 	}
 	
 }

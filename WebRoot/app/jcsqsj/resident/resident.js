@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +11,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 	
@@ -217,10 +219,21 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
  var identitytype = $('#identitytypeQuery').val();
  var idnumber = $('#idnumberQuery').val();
+ if(searchtype == 2){
+	 name = $('#nameQuery2').val();
+	 identitytype = $('#identitytypeQuery2').val();
+	 idnumber = $('#idnumberQuery2').val();
+ }
  var characteristics = $('#characteristicsQuery').val();
  var ofcommunity = $('#ofcommunityQuery').val();
  var ofresidebuilding = $('#ofresidebuildingQuery').val();
@@ -265,7 +278,13 @@ function load()
 	
 	$.get(getContextPath()+'/residentController/load?name='+name+'&identitytype='+identitytype+'&idnumber='+idnumber+'&characteristics='+characteristics+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&ofroom='+ofroom+'&offamily='+offamily+'&sex='+sex+'&residencestatus='+residencestatus+'&ishouseholder='+ishouseholder+'&relationshiphouseholder='+relationshiphouseholder+'&registrationcategory='+registrationcategory+'&birthday='+birthday+'&age='+age+'&nation='+nation+'&politicalstatus='+politicalstatus+'&education='+education+'&professionstatus='+professionstatus+'&professiontype='+professiontype+'&issocialsecurity='+issocialsecurity+'&tel='+tel+'&mobile='+mobile+'&marriage='+marriage+'&isforeignmarriage='+isforeignmarriage+'&health='+health+'&blood='+blood+'&custodianincommunity='+custodianincommunity+'&dy_partymembertype='+dy_partymembertype+'&dy_of_partyorganization='+dy_of_partyorganization+'&dy_joinpartydate='+dy_joinpartydate+'&dy_membership='+dy_membership+'&dy_islost='+dy_islost+'&dy_movemember='+dy_movemember+'&zdr_type='+zdr_type+'&jzr_correctioncontent='+jzr_correctioncontent+'&sy_unemployedreemployment='+sy_unemployedreemployment+'&lnr_economicsources='+lnr_economicsources+'&lnr_livingconditions='+lnr_livingconditions+'&cj_disabilitytype='+cj_disabilitytype+'&cj_disabilitylevel='+cj_disabilitylevel+'&jsb_type='+jsb_type+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		
+		if(searchtype == 1){
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
