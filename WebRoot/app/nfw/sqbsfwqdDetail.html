@@ -145,7 +145,7 @@
                 <div class="card-footer">
 				
 				 <button type="button" class="btn btn-info" onclick="addOrUpdate();">确定</button>
-                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage2();">取消</button>
 				  
                 </div>
               </form>
@@ -271,11 +271,8 @@ function addOrUpdate()
 				HorizontalPosition : 'center'
 			});
 			
-			//gobackPage();
-			$('#main-content').load("./nfw/sqbsfwqd.html", function () {
-				//EditableTable.init();
-				//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况
-			});
+			gobackPage2();
+			
 			
 			//load();
 		}
@@ -286,6 +283,13 @@ function addOrUpdate()
 				HorizontalPosition : 'center'
 			});
 		}
+	});
+}
+
+function gobackPage2(){
+	$('#main-content').load("./nfw/sqbsfwqd.html", function () {
+		//EditableTable.init();
+		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况
 	});
 }
 </script>

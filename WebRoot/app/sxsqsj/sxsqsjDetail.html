@@ -75,10 +75,10 @@
                     <label for="inputEmail3" class="col-sm-2 col-form-label">事项当事人</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control" id="sxdsrname" readonly>
-					  <input type="text" class="form-control" id="sxdsr" style="display:none;">
+					  <input type="hidden" class="form-control" id="sxdsr">
                     </div>
 					<div class='col-md-3' id="selectResidentDiv">
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog">选择</button>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident()">选择</button>
 						
 					</div>
                   </div>
@@ -87,10 +87,10 @@
                     <label for="inputEmail3" class="col-sm-2 col-form-label">事项经办人</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control" id="sxjbrname" readonly>
-					  <input type="text" class="form-control" id="sxjbr" style="display:none;">
+					  <input type="hidden" class="form-control" id="sxjbr">
                     </div>
 					<div class='col-md-3' id="selectUserDiv">
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog">选择</button>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择</button>
 						
 					</div>
                   </div>
@@ -177,6 +177,7 @@
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
+					<th style='text-align:center;'><input type="checkbox" class="checkall"/></th>
                     <th style='text-align:center;'>姓名</th>
 					<th style='text-align:center;'>身份证号</th>
 					<th style='text-align:center;'>手机号</th>
@@ -189,6 +190,7 @@
 			  
             </div>
             <div class="modal-footer justify-content-between">
+			  <button type="button" class="btn btn-default" onclick="javascript:addAllRes();">添加选中</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
               <!--button type="button" class="btn btn-primary">关闭</button-->
             </div>
@@ -229,6 +231,7 @@
                 <table class="table table-bordered table-striped" id="userDataTable">
                   <thead>
                   <tr>
+					<th style='text-align:center;'><input type="checkbox" class="checkall2"/></th>
                     <th style='text-align:center;'>姓名</th>
 					<th style='text-align:center;'>部门</th>
 					<th style='text-align:center;'>手机号</th>
@@ -241,6 +244,7 @@
 			  
             </div>
             <div class="modal-footer justify-content-between">
+			  <button type="button" class="btn btn-default" onclick="javascript:addAllUsers();">添加选中</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
           </div>
@@ -282,6 +286,7 @@ uploaderpictures.on( 'uploadSuccess', function( file,response ) {
 uploaderpictures.on( 'uploadError', function( file,response ) {
 });	
 
+var userList = null;
 
 function searchResident()
 {
@@ -291,8 +296,10 @@ function searchResident()
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
+		console.log(obj);
 		if(obj.success)
 		{
+			userList = obj.list;
 			dataTable = $('#dataTable').dataTable( {
 				"processing": true,
 				"bJQueryUI": false,
@@ -322,12 +329,20 @@ function searchResident()
 				}, *///多语言配置					
 				"data":obj.list,
 				"columns": [
+					{
+								"sClass": "text-center",
+								"data": "id",
+								"render": function (data, type, row, meta) {
+									return '<input type="checkbox" name="resid" value="' + data + '"/>';
+								},
+							},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'idnumber' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
 					{ 'data': 'address' ,'sClass':'text-center'}
 				],
 				columnDefs: [
+					/*
 					{
 					className: 'control',
 					orderable: false,
@@ -336,23 +351,76 @@ function searchResident()
 						var btn = "<a href=\"#\" onclick=\"selectResident('"+full.id+"','"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
 						return btn;
 					}
-					}
+					}*/
 				]
 			} );
 		}
 	});
 }
 
-function selectResident(id,name,idnumber,mobile,address)
+function addAllRes()
 {
-	$('#name').val(name);
-	$('#idnumber').val(idnumber);
-	$('#mobile').val(mobile);
-	$('#address').val(address);
+	//$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
+	//意思是选择被选中的checkbox
+	var users = '';
+	var ids = '';
+	$.each($('input:checkbox:checked'),function(){
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var name = '';
+				if(typeof(userList[i].name)!="undefined") name = userList[i].name;
+				if(users == '') users = name;
+				else users += ", " + name;
+				if(ids == '') ids = val;
+				else ids += ", " + val;
+			}
+		}
+		
+	});
 	
-	$('#sxdsr').val(id);
-	$('#sxdsrname').val(name);
+	$('#sxdsrname').val(users);
+	$('#sxdsr').val(ids);
 }
+
+$(document).ready(function (){
+	//使用live绑定数据，因为checkAll还没有加载好
+	$(".checkall").on("click", function () {
+		if (this.checked) {
+			$(this).attr('checked', 'checked')
+			$("input[name='resid']").each(function () {
+				this.checked = true;
+			});
+
+		   
+		} else {
+			$(this).removeAttr('checked')
+			$("input[name='resid']").each(function () {
+				this.checked = false;
+			   
+			});
+		}
+	});
+	
+	$(".checkall2").on("click", function () {
+		if (this.checked) {
+			$(this).attr('checked', 'checked')
+			$("input[name='userid']").each(function () {
+				this.checked = true;
+			});
+
+		   
+		} else {
+			$(this).removeAttr('checked')
+			$("input[name='userid']").each(function () {
+				this.checked = false;
+			   
+			});
+		}
+	});
+	
+});
 
 
 
@@ -364,13 +432,15 @@ function selectResident(id,name,idnumber,mobile,address)
 function searchUser()
 {
 	var userName = $('#userNameQry').val();
+	//var characteristics = $('#characterQry').val();
 	
-	$.get(getContextPath()+'/userController/loadUser?name='+userName,
+	$.get(getContextPath()+'/sysUserController/load?name='+userName,
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		$('#btnSearchUser').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
+			userList = obj.list;
 			dataTable = $('#userDataTable').dataTable( {
 				"processing": true,
 				"bJQueryUI": false,
@@ -400,30 +470,58 @@ function searchUser()
 				}, *///多语言配置					
 				"data":obj.list,
 				"columns": [
+					{
+						"sClass": "text-center",
+						"data": "id",
+						"render": function (data, type, row, meta) {
+							return '<input type="checkbox" name="userid" value="' + data + '"/>';
+						},
+					},
 					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'organization' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'}
+					{ 'data': 'roleTxt' ,'sClass':'text-center'},
+					{ 'data': 'mobile' ,'sClass':'text-center'},
+					{ 'data': 'job' ,'sClass':'text-center'}
 				],
 				columnDefs: [
-					{
+					/*{
 					className: 'control',
 					orderable: false,
 					targets:  0,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"selectUser('"+full.id+"','"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
+						var btn = "<a href=\"#\" onclick=\"selectUser('"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
 						return btn;
 					}
-					}
+					}*/
 				]
 			} );
 		}
 	});
 }
 
-function selectUser(id,name,idnumber,mobile,address)
+function addAllUsers()
 {
-	$('#sxjbr').val(id);
-	$('#sxjbrname').val(name);
+	//$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
+	//意思是选择被选中的checkbox
+	var users = '';
+	var ids = '';
+	$('input:checkbox[name=userid]:checked').each(function (i) {
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var name = '';
+				if(typeof(userList[i].name)!="undefined") name = userList[i].name;
+				if(users == '') users = name;
+				else users += ", " + name;
+				if(ids == '') ids = val;
+				else ids += ", " + val;
+			}
+		}
+		
+	});
+	
+	$('#sxjbrname').val(users);
+	$('#sxjbr').val(ids);
 }
 	</script>
 

@@ -11,6 +11,12 @@
 
 $(document).ready(function (){
 	
+	$("#characterQry").select2({	 
+		multiple: true
+	});
+	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
+	
 	if(curId != '')
 		viewDetail(curId);
 	
@@ -102,7 +108,7 @@ function loadsxxl(){
 			if(obj.success)
 			{
 				for(var i = 0; i < obj.list.length; i++){
-					var content = "<option value='" + obj.list[i].sxlb + "'>" + obj.list[i].sxlb + "</option>"
+					var content = "<option value='" + obj.list[i].sxmc + "'>" + obj.list[i].sxmc + "</option>"
 					$("#blsxxl").append(content);
 				}
 				

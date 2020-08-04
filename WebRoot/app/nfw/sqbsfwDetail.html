@@ -29,8 +29,9 @@
                 <div class="card-body">
 					
 					<div class="form-group">
-                      <label>办理人（可从居民档案中选择或录入）</label>
+                      <label>办理人（可从居民档案中选择或录入）<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident(); return false;">选择</button></label>
                       <input type="" class="form-control" id="blr" placeholder="">
+					  
                     </div>
 					
 						<div class="form-group">
@@ -120,6 +121,211 @@
           </div>
         </div>
       </div>
+	  
+	  
+	  <div class="modal fade" id="residentDialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+              <h4 class="modal-title">居民选择</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+			  <form class="form-horizontal">
+                <!--div class="card-body"-->
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">姓名</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="residentNameQry">
+                    </div>
+					
+					
+					 <label for="inputEmail3" class="col-sm-1 col-form-label">居民类别</label>
+                    <div class="col-sm-4">
+                      
+					  <select id="characterQry" class="select2" style="width: 100%;">
+					    <option value=''></option>
+						<option value='中共党员'>中共党员</option>
+						<option value='志愿者'>志愿者</option>
+						<option value='居民代表'>居民代表</option>
+						<option value='楼门长'>楼门长</option>
+						<option value='军人'>军人</option>
+						<option value='文体骨干'>文体骨干</option>
+						<option value='优抚对象'>优抚对象</option>
+						<option value='少数民族'>少数民族</option>
+						<option value='0-6岁儿童'>0-6岁儿童</option>
+						<option value='7-13岁青少年'>7-13岁青少年</option>
+						<option value='13-18岁青少年'>13-18岁青少年</option>
+						<option value='老年人'>老年人</option>
+						<option value='80岁以上老人'>80岁以上老人</option>
+						<option value='90岁以上老人'>90岁以上老人</option>
+						<option value='独居老人'>独居老人</option>
+						<option value='失独老人'>失独老人</option>
+						<option value='空巢老人'>空巢老人</option>
+						<option value='失业人员'>失业人员</option>
+						<option value='待业人员'>待业人员</option>
+						<option value='精神病人'>精神病人</option>
+						<option value='残疾人'>残疾人</option>
+						<option value='重点人员'>重点人员</option>
+						<option value='两劳释放'>两劳释放</option>
+						<option value='在押在教'>在押在教</option>
+						<option value='社区矫正人员'>社区矫正人员</option>
+						</select>
+                    </div>
+					
+					<button id="btnSearch" type="button" class="btn btn-info" onclick="searchResident();">查询</button>
+					
+                  </div>
+              </form>
+			  
+			  <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+					<th style='text-align:center;'><input type="checkbox" class="checkall"/></th>
+                    <th style='text-align:center;'>姓名</th>
+					<th style='text-align:center;'>居民特征</th>
+					<th style='text-align:center;'>手机号</th>
+					<th style='text-align:center;'>居住地</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+			  
+			  
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" onclick="javascript:addAllUser();">添加选中</button>
+              <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
     </section>
 		
+	<script>
+		var userList = null;
+
+		function searchResident()
+		{
+			var residentName = $('#residentNameQry').val();
+			var characteristics = $('#characterQry').val();
+			
+			$.get(getContextPath()+'/residentController/load?name='+residentName+'&characteristics='+characteristics,
+			function(result){
+				//$('#btnSearch').removeAttr('disabled');
+				var obj = jQuery.parseJSON(result);  
+				console.log(obj);
+				if(obj.success)
+				{
+					userList = obj.list;
+					dataTable = $('#dataTable').dataTable( {
+						"processing": true,
+						"bJQueryUI": false,
+						"bFilter": false,
+						"bStateSave":true,
+						"bAutoWidth": false, //自适应宽度 
+						iDisplayLength: 10,
+						lengthChange: false,
+						"bProcessing": true, 
+						"bDestroy":true,
+						"bSort": false, //是否使用排序 		
+						/*"oLanguage": { 
+							"sProcessing": "正在加载中......", 
+							"sLengthMenu": "每页显示 _MENU_ 条记录", 
+							"sZeroRecords": "对不起，查询不到相关数据！", 
+							"sInfoEmpty":"",
+							"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+							"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+							"sSearch": "搜索", 
+							"oPaginate":  
+							{ 
+								"sFirst": "首页", 
+								"sPrevious": "上一页", 
+								"sNext": "下一页", 
+								"sLast": "末页" 
+							}
+						}, *///多语言配置					
+						"data":obj.list,
+						"columns": [
+							
+							{
+								"sClass": "text-center",
+								"data": "id",
+								"render": function (data, type, row, meta) {
+									return '<input type="checkbox" name="resid" value="' + data + '"/>';
+								},
+							},
+							{ 'data': 'name' ,'sClass':'text-center'},
+							{ 'data': 'characteristics' ,'sClass':'text-center'},
+							{ 'data': 'mobile' ,'sClass':'text-center'},
+							{ 'data': 'address' ,'sClass':'text-center'}
+						],
+						columnDefs: [
+							/*{
+							className: 'control',
+							orderable: false,
+							targets:  0,//从0开始
+							mRender : function(data,type,full){
+								var btn = "<a href=\"#\" onclick=\"selectUser('"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
+								return btn;
+							}
+							}*/
+						]
+					} );
+				}
+			});
+		}
 		
+		function addAllUser()
+		{
+			//$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
+			//意思是选择被选中的checkbox
+			var users = '', phones = '';
+			$.each($('input:checkbox:checked'),function(){
+				var val = $(this).val();
+				for(var i=0;i<userList.length;i++)
+				{
+					if(userList[i].id == val){
+						var name = '', phone = '';
+						if(typeof(userList[i].name)!="undefined") name = userList[i].name;
+						if(typeof(userList[i].mobile)!="undefined") phone = userList[i].mobile;
+						if(users == '') users = name;
+						else users += ", " + name;
+						if(phones == '') phones = phone;
+						else phones += ", " + phone;
+					}
+				}
+				
+			});
+			
+			$('#blr').val(users);
+			$('#lxdh').val(phones);
+		}
+		
+		$(document).ready(function (){
+			//使用live绑定数据，因为checkAll还没有加载好
+			$(".checkall").on("click", function () {
+				if (this.checked) {
+					$(this).attr('checked', 'checked')
+					$("input[name='resid']").each(function () {
+						this.checked = true;
+					});
+
+				   
+				} else {
+					$(this).removeAttr('checked')
+					$("input[name='resid']").each(function () {
+						this.checked = false;
+					   
+					});
+				}
+			});
+			
+		});
