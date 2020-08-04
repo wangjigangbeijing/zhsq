@@ -53,7 +53,7 @@ function loadzmblfw()
 				"data":obj.list,
 				"columns": [
 					{ 'data': 'zmsxxl' ,'sClass':'text-center'},
-					{ 'data': 'blr' ,'sClass':'text-center'},
+					{ 'data': 'blrname' ,'sClass':'text-center'},
 					{ 'data': 'lxdh' ,'sClass':'text-center'},
 					{ 'data': 'blqd' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center',

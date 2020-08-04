@@ -27,6 +27,8 @@ function get(id)
 			{
 				$('#wwzfdx').val(obj.data.wwzfdx);
 				
+				$('#wwzfdxname').val(obj.data.wwzfdxname);
+				
 				$('#wwdxlx').val(obj.data.wwdxlx);
 				
 				$('#wwlx').val(obj.data.wwlx);
@@ -71,7 +73,7 @@ function get(id)
 function addOrUpdate()
 {
 	var wwfs = '';
-	$.each($('input:checkbox:checked'),function(){
+	$('input:checkbox[name=wwfs]:checked').each(function (i) {
 		if(wwfs == '') wwfs = $(this).val();
 		else wwfs += "," + $(this).val();
 	});
@@ -84,6 +86,7 @@ function addOrUpdate()
 	{
 		id:curId,
 		wwzfdx:$('#wwzfdx').val(),
+		wwzfdxname:$('#wwzfdxname').val(),
 		wwdxlx:$('#wwdxlx').val(),
 		wwlx:$('#wwlx').val(),
 		wwfs:wwfs,
@@ -107,7 +110,7 @@ function addOrUpdate()
 		}
 		else
 		{
-			jError("事项创建失败!"+data.errMsg,{
+			jError("事项创建失败!",{
 				VerticalPosition : 'center',
 				HorizontalPosition : 'center'});
 			return ;

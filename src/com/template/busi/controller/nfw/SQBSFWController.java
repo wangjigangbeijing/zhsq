@@ -50,7 +50,7 @@ public class SQBSFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String addOrUpdate(String id,String blr,
+	public String addOrUpdate(String id,String blr, String blrname,
 			String lxdh,
 			String blqd,
 			String blsxdl,
@@ -75,6 +75,7 @@ public class SQBSFWController {
 			}
 			
 			sqbsfw.setblr(blr);
+			sqbsfw.setBlrname(blrname);
 			sqbsfw.setlxdh(lxdh);
 			sqbsfw.setblqd(blqd);
 			sqbsfw.setblsxdl(blsxdl);

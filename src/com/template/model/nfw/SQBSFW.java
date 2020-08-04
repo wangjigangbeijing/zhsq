@@ -38,6 +38,16 @@ public class SQBSFW implements java.io.Serializable {
 		this.blr = blr;
 	}
 	
+	@Column(name = "blrname", nullable = false)
+	public String blrname;
+	
+	public String getBlrname() {
+		return blrname;
+	}
+	public void setBlrname(String blrname) {
+		this.blrname = blrname;
+	}
+
 	@Column(name = "lxdh", nullable = true)
 	public String lxdh;
 	
