@@ -2,25 +2,22 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
-	
 	$('.dpYears').datepicker({
 		autoclose: true
 	});
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
-	
-	//load();
-	
-	
 	$("#facilities").select2({	 
 		multiple: true
 	});
 	
-	$.get(getContextPath()+"/culturefacilitiesController/load?tpye=布告栏设施",//tpye拼写的时候有错误
+	debugger;
+	
+	$.get(getContextPath()+"/jc_advertisementController/load",
 		function(result){
+			
+			debugger;
 			
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
