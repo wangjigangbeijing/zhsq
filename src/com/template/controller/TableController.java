@@ -163,7 +163,7 @@ public class TableController {
 	
 	@RequestMapping(value=ConstValue.TABLE_CONTROLLER_LOAD_TABLE,method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String loadTable(String dataType)
+	public String loadTable(String dataType,String tableName)
 	{
 		logger.info("loadTable ");
 		
@@ -176,6 +176,11 @@ public class TableController {
 			if(dataType != null && dataType.equalsIgnoreCase("") == false)
 			{
 				hqlFilter.addQryCond("data_type", HqlFilter.Operator.EQ, dataType);
+			}
+			
+			if(tableName != null && tableName.equalsIgnoreCase("") == false)
+			{
+				hqlFilter.addQryCond("table_zhname", HqlFilter.Operator.LIKE, "%"+tableName+"%");
 			}
 			
 	        List<SysTable> listObj = tableService.findByFilter(hqlFilter);
@@ -194,7 +199,23 @@ public class TableController {
 	        	jsonTmp.put("gisType", sysTable.getGisType());
 	        	jsonTmp.put("dataType", sysTable.getDataType());
 	        	jsonTmp.put("dataSubType", sysTable.getDataSubType());
+	        	jsonTmp.put("seq", sysTable.getseq());
 	        	jsonTmp.put("icon", sysTable.getIcon());
+	        	
+	        	String sSql = "SELECT COUNT(*) CNT FROM "+sysTable.getTableENName();
+				
+	        	List<HashMap> listCnt = tableService.findBySql(sSql);
+				
+	        	if(listCnt.size() != 0)	        		
+	        	{
+	        		HashMap hm = listCnt.get(0);
+	        		jsonTmp.put("cnt", hm.get("CNT"));	
+	        	}
+	        	else
+	        	{
+	        		jsonTmp.put("cnt", 0);
+	        	}
+	        	
 	        	jsonArr.put(jsonTmp);
 	        	
 	        	iTotalCnt++;

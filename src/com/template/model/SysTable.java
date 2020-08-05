@@ -122,4 +122,17 @@ public class SysTable implements java.io.Serializable {
 	{
 		this.data_sub_type = data_sub_type;
 	}
+	
+
+	@Column(name = "seq", nullable = true)
+	public String seq;
+	
+	public String getseq()
+	{
+		return seq;
+	}
+	public void setseq(String seq)
+	{
+		this.seq = seq;
+	}
 }

@@ -21,20 +21,21 @@ function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
 	 var name = $('#nameQuery').val();
-	 var haslicence = $('#haslicenceQuery').val();
-	 var socialcode = $('#socialcodeQuery').val();
-	 var orgtype = $('#orgtypeQuery').val();
-	 var economictype = $('#economictypeQuery').val();
-	 var industry = $('#industryQuery').val();
-	 var subordination = $('#subordinationQuery').val();
-	 var scale = $('#scaleQuery').val();
-	 var officeaddress = $('#officeaddressQuery').val();
-	 var ofbizbuilding = $('#ofbizbuildingQuery').val();
-	 var hasfirefacilities = $('#hasfirefacilitiesQuery').val();
-	 var status = $('#statusQuery').val();
+ var haslicence = $('#haslicenceQuery').val();
+ var socialcode = $('#socialcodeQuery').val();
+ var orgtype = $('#orgtypeQuery').val();
+ var economictype = $('#economictypeQuery').val();
+ var industry = $('#industryQuery').val();
+ var subordination = $('#subordinationQuery').val();
+ var scale = $('#scaleQuery').val();
+ var officeaddress = $('#officeaddressQuery').val();
+ var ofbizbuilding = $('#ofbizbuildingQuery').val();
+ var contacttel = $('#contacttelQuery').val();
+ var hasfirefacilities = $('#hasfirefacilitiesQuery').val();
+ var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/organizationController/load?name='+name+'&haslicence='+haslicence+'&socialcode='+socialcode+'&orgtype='+orgtype+'&economictype='+economictype+'&industry='+industry+'&subordination='+subordination+'&scale='+scale+'&officeaddress='+officeaddress+'&ofbizbuilding='+ofbizbuilding+'&hasfirefacilities='+hasfirefacilities+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_organizationController/load?name='+name+'&haslicence='+haslicence+'&socialcode='+socialcode+'&orgtype='+orgtype+'&economictype='+economictype+'&industry='+industry+'&subordination='+subordination+'&scale='+scale+'&officeaddress='+officeaddress+'&ofbizbuilding='+ofbizbuilding+'&contacttel='+contacttel+'&hasfirefacilities='+hasfirefacilities+'&status='+status+'&',
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -69,16 +70,33 @@ function load()
 					}
 				}, //多语言配置					
 				"data":obj.list,
-				"columns": [					
+				"columns": [
+										{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
+					{ 'data': 'haslicence' ,'sClass':'text-center'},
+					{ 'data': 'socialcode' ,'sClass':'text-center'},
+					{ 'data': 'socialcodedate' ,'sClass':'text-center'},
 					{ 'data': 'orgtype' ,'sClass':'text-center'},
-					
 					{ 'data': 'economictype' ,'sClass':'text-center'},
+					{ 'data': 'industry' ,'sClass':'text-center'},
+					{ 'data': 'subordination' ,'sClass':'text-center'},
+					{ 'data': 'establishdate' ,'sClass':'text-center'},
+					{ 'data': 'capitaltype' ,'sClass':'text-center'},
+					{ 'data': 'capital' ,'sClass':'text-center'},
+					{ 'data': 'businessscope' ,'sClass':'text-center'},
 					{ 'data': 'scale' ,'sClass':'text-center'},
-					
+					{ 'data': 'regaddress' ,'sClass':'text-center'},
+					{ 'data': 'officeaddress' ,'sClass':'text-center'},
+					{ 'data': 'ofbizbuilding' ,'sClass':'text-center'},
+					{ 'data': 'legalname' ,'sClass':'text-center'},
+					{ 'data': 'contactname' ,'sClass':'text-center'},
 					{ 'data': 'contacttel' ,'sClass':'text-center'},
+					{ 'data': 'moveindate' ,'sClass':'text-center'},
+					{ 'data': 'responsibilityplateno' ,'sClass':'text-center'},
+					{ 'data': 'hasfirefacilities' ,'sClass':'text-center'},
+					{ 'data': 'wastedisposal' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					
+					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -94,11 +112,11 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  6,//从0开始
+					targets:  26,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
-
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
+						
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
 						
 						return btn;
 					}
@@ -114,7 +132,7 @@ function viewDetail(id)
 {
 	//$('#modalTitle').text('修改用户信息');
 	curId = id;
-	$.get(getContextPath()+"/organizationController/get?id="+curId,
+	$.get(getContextPath()+"/jc_organizationController/get?id="+curId,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -138,8 +156,6 @@ function viewDetail(id)
 				$('#regaddress').val(obj.regaddress);
 				$('#officeaddress').val(obj.officeaddress);
 				$('#ofbizbuilding').val(obj.ofbizbuilding);
-				$('#longitude').val(obj.longitude);
-				$('#latitude').val(obj.latitude);
 				$('#legalname').val(obj.legalname);
 				$('#contactname').val(obj.contactname);
 				$('#contacttel').val(obj.contacttel);
@@ -177,8 +193,6 @@ function closeModalDetail()
 	$('#regaddress').val('');
 	$('#officeaddress').val('');
 	$('#ofbizbuilding').val('');
-	$('#longitude').val('');
-	$('#latitude').val('');
 	$('#legalname').val('');
 	$('#contactname').val('');
 	$('#contacttel').val('');
@@ -196,7 +210,7 @@ function closeModalDetail()
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/organization/organizationDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_organization/jc_organizationDetail.html", function () {
 		
     });
 }
@@ -207,7 +221,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jcsqsj/organization/organizationDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_organization/jc_organizationDetail.html", function () {
 		
     });
 	
@@ -224,7 +238,7 @@ function deleteData(id)
 		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/organizationController/delete",
+			$.post(getContextPath()+"/jc_organizationController/delete",
 			{
 				id:id
 			},

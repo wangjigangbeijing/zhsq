@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "JC_ORGANIZATION")
 @DynamicInsert(true)
 @DynamicUpdate(true)
-public class Organization implements java.io.Serializable {
+public class Jc_organization implements java.io.Serializable {
 @Id
 @Column(name = "id", nullable = false)
 public String id;
@@ -194,27 +194,6 @@ public void setofbizbuilding(String ofbizbuilding)
 {
 	this.ofbizbuilding = ofbizbuilding;
 }
-/*
-@Column(name = "longitude", nullable = true)
-public Double longitude;
-public Double getlongitude()
-{
-	return longitude;
-}
-public void setlongitude(Double longitude)
-{
-	this.longitude = longitude;
-}
-@Column(name = "latitude", nullable = true)
-public Double latitude;
-public Double getlatitude()
-{
-	return latitude;
-}
-public void setlatitude(Double latitude)
-{
-	this.latitude = latitude;
-}*/
 @Column(name = "legalname", nullable = true)
 public String legalname;
 public String getlegalname()
@@ -314,16 +293,6 @@ public String getnote()
 public void setnote(String note)
 {
 	this.note = note;
-}
-@Column(name = "owner", nullable = true)
-public String owner;
-public String getowner()
-{
-	return owner;
-}
-public void setowner(String owner)
-{
-	this.owner = owner;
 }
 }
 

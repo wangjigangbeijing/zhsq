@@ -21,7 +21,7 @@ $(document).ready(function (){
 
 function viewDetail(id)
 {
-	$.get(getContextPath()+"/organizationController/get?id="+id,
+	$.get(getContextPath()+"/jc_organizationController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -45,8 +45,6 @@ function viewDetail(id)
 				$('#regaddress').val(obj.regaddress);
 				$('#officeaddress').val(obj.officeaddress);
 				$('#ofbizbuilding').val(obj.ofbizbuilding);
-				$('#longitude').val(obj.longitude);
-				$('#latitude').val(obj.latitude);
 				$('#legalname').val(obj.legalname);
 				$('#contactname').val(obj.contactname);
 				$('#contacttel').val(obj.contacttel);
@@ -67,7 +65,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./organization/organization.html", function () {
+	$('#main-content').load("./jcsqsj/jc_organization/jc_organization.html", function () {
 		
     });
 	
@@ -87,7 +85,7 @@ function addOrUpdate()
 {
 	
 	
-	$.post(getContextPath()+"/organizationController/addOrUpdate",
+	$.post(getContextPath()+"/jc_organizationController/addOrUpdate",
 	{
 		id:curId,
 				dataid:$('#dataid').val(),
@@ -107,8 +105,6 @@ function addOrUpdate()
 		regaddress:$('#regaddress').val(),
 		officeaddress:$('#officeaddress').val(),
 		ofbizbuilding:$('#ofbizbuilding').val(),
-		longitude:$('#longitude').val(),
-		latitude:$('#latitude').val(),
 		legalname:$('#legalname').val(),
 		contactname:$('#contactname').val(),
 		contacttel:$('#contacttel').val(),

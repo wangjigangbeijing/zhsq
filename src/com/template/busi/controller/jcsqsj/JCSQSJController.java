@@ -70,7 +70,7 @@ public class JCSQSJController {
 	private VehicleService vehicleService;
 	
 	@Autowired
-	private OrganizationService organizationService;
+	private Jc_organizationService organizationService;
 	
 	@Autowired
 	private UndergroundspaceService undergroundspaceService;
@@ -102,11 +102,53 @@ public class JCSQSJController {
 	@Autowired
 	private Jc_rubbishService jc_rubbishService;
 	
-	@Autowired
-	private PublicfacilitiesService publicfacilitiesService;
+	//@Autowired
+	//private PublicfacilitiesService publicfacilitiesService;
 	
 	@Autowired
-	private ParkingService parkingService;
+	private Jc_partymemberService jc_partymemberService; 
+	
+	@Autowired
+	private Jc_advertisementService jc_advertisementService;
+	
+	@Autowired
+	private Jc_pubfacilities_gyService jc_pubfacilities_gyService;
+	
+	@Autowired
+	private Jc_pubfacilities_jtService jc_pubfacilities_jtService;
+	
+	@Autowired
+	private Jc_pubfacilities_hjService jc_pubfacilities_hjService;
+	
+	@Autowired
+	private Jc_pubfacilities_lhService jc_pubfacilities_lhService;
+	
+	@Autowired
+	private Jc_pubfacilities_qtService jc_pubfacilities_qtService;
+	
+	@Autowired
+	private Jc_xftdService jc_xftdService;
+	
+	@Autowired
+	private Jc_xfssService jc_xfssService;
+	
+	@Autowired
+	private Jc_tc_tcwService jc_tc_tcwService;
+	
+	@Autowired
+	private Jc_tc_tcccrkService jc_tc_tccrkService;
+	
+	@Autowired
+	private Jc_tc_ybtccService jc_tc_ybtccService;
+	
+	@Autowired
+	private Jc_tc_fjdctcwService jc_tc_fjdctcwService;
+	
+	@Autowired
+	private Jc_tc_dltccService jc_tc_dltccService;
+	
+	//@Autowired
+	//private ParkingService parkingService;
 	
 	@RequestMapping(value="get",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
@@ -149,15 +191,43 @@ public class JCSQSJController {
 			
 			long watersystem = watersystemService.countByFilter(hqlFilter);//河湖水系
 			
-			long publicfacilities = publicfacilitiesService.countByFilter(hqlFilter);//市政设施
+			//long publicfacilities = publicfacilitiesService.countByFilter(hqlFilter);//市政设施
 			
 			long culturefacilities = culturefacilitiesService.countByFilter(hqlFilter); //文体设施
 			
-			long parking = parkingService.countByFilter(hqlFilter); //停车资源
+			//long parking = parkingService.countByFilter(hqlFilter); //停车资源
 			
 			long service_store = service_storeService.countByFilter(hqlFilter); //服务网点
 			
 			long ljz = jc_rubbishService.countByFilter(hqlFilter); //垃圾站
+			
+			long dyxx = jc_partymemberService.countByFilter(hqlFilter); //
+			
+			long xcss = jc_advertisementService.countByFilter(hqlFilter); //	
+			
+			long gyszss = jc_pubfacilities_gyService.countByFilter(hqlFilter); //	
+			
+			long jtszss = jc_pubfacilities_jtService.countByFilter(hqlFilter); //	
+			
+			long srhjszss = jc_pubfacilities_hjService.countByFilter(hqlFilter); //
+			
+			long yllhszss = jc_pubfacilities_lhService.countByFilter(hqlFilter); //
+			
+			long qtszss = jc_pubfacilities_qtService.countByFilter(hqlFilter); //	
+			
+			long xftd = jc_xftdService.countByFilter(hqlFilter); //	
+			
+			long xfss = jc_xfssService.countByFilter(hqlFilter); //	
+			
+			long tcwqy = jc_tc_tcwService.countByFilter(hqlFilter); //	
+			
+			long ybtcccrk = jc_tc_tccrkService.countByFilter(hqlFilter); //	
+			
+			long ybtcc = jc_tc_ybtccService.countByFilter(hqlFilter); //	
+			
+			long fjdctcw = jc_tc_fjdctcwService.countByFilter(hqlFilter); //	
+			
+			long dltcc = jc_tc_dltccService.countByFilter(hqlFilter); //	
 			
 			jsonObj.put("success", true);
 			jsonObj.put("community", community);
@@ -176,10 +246,41 @@ public class JCSQSJController {
 			jsonObj.put("watersystem", watersystem);
 			jsonObj.put("culturefacilities", culturefacilities);
 			jsonObj.put("service_store", service_store);
-			jsonObj.put("publicfacilities", publicfacilities);
+			//jsonObj.put("publicfacilities", publicfacilities);
 			jsonObj.put("commercialbuilding", commercialbuilding);
 			jsonObj.put("ljz", ljz);
-			jsonObj.put("parking", parking);
+			//jsonObj.put("parking", parking);
+			
+			jsonObj.put("dyxx", dyxx);			
+			jsonObj.put("xcss", xcss);
+			jsonObj.put("gyszss", gyszss);
+			jsonObj.put("jtszss", jtszss);
+			jsonObj.put("srhjszss", srhjszss);
+			jsonObj.put("yllhszss", yllhszss);
+			jsonObj.put("qtszss", qtszss);
+			jsonObj.put("xftd", xftd);
+			jsonObj.put("xfss", xfss);
+			jsonObj.put("tcwqy", tcwqy);
+			jsonObj.put("ybtcccrk", ybtcccrk);
+			jsonObj.put("ybtcc", ybtcc);
+			jsonObj.put("fjdctcw", fjdctcw);
+			jsonObj.put("dltcc", dltcc);
+			
+			/*dyxx //党员信息 	 	Jc_partymemberService 
+			xcss	//宣传设施					Jc_advertisementService
+			gyszss	//公用市政设施				Jc_pubfacilities_gyService
+			jtszss	//交通市政设施				Jc_pubfacilities_jtService
+			srhjszss	//市容环境市政设施		Jc_pubfacilities_hjService
+			yllhszss	//园林绿化市政设施		Jc_pubfacilities_lhService
+			qtszss		//其他市政设施			Jc_pubfacilities_qtService
+			xftd		//消防通道				Jc_xftdService
+			xfss		//消防设施				Jc_xfssService
+			tcwqy		//停车位区域			Jc_tc_tcwService
+			ybtcccr		//一般停车场出入口		Jc_tc_ybtccrkService
+			ybtcc		//一般停车场			Jc_tc_ybtccService
+			fjdctcw		//非机动车停车位			Jc_tc_fjdctcwService
+			dltcc		//道路停车场			Jc_tc_dltccService
+			*/
 		}
 		catch(Exception e)
 		{

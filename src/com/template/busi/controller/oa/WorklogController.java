@@ -91,34 +91,37 @@ public String load(String title,String date,String type,String hours,String cont
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(title != null && title.equalsIgnoreCase("") == false && title.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("title", HqlFilter.Operator.LIKE, "%"+title+"%");
-}
-if(date != null && date.equalsIgnoreCase("") == false && date.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("date", HqlFilter.Operator.LIKE, "%"+date+"%");
-}
-if(type != null && type.equalsIgnoreCase("") == false && type.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("type", HqlFilter.Operator.LIKE, "%"+type+"%");
-}
-if(hours != null && hours.equalsIgnoreCase("") == false && hours.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("hours", HqlFilter.Operator.LIKE, "%"+hours+"%");
-}
-if(content != null && content.equalsIgnoreCase("") == false && content.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("content", HqlFilter.Operator.LIKE, "%"+content+"%");
-}
-if(files != null && files.equalsIgnoreCase("") == false && files.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("files", HqlFilter.Operator.LIKE, "%"+files+"%");
-}
-if(owner != null && owner.equalsIgnoreCase("") == false && owner.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("owner", HqlFilter.Operator.LIKE, "%"+owner+"%");
-}
+		if(title != null && title.equalsIgnoreCase("") == false && title.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("title", HqlFilter.Operator.LIKE, "%"+title+"%");
+		}
+		if(date != null && date.equalsIgnoreCase("") == false && date.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("date", HqlFilter.Operator.LIKE, "%"+date+"%");
+		}
+		if(type != null && type.equalsIgnoreCase("") == false && type.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("type", HqlFilter.Operator.LIKE, "%"+type+"%");
+		}
+		if(hours != null && hours.equalsIgnoreCase("") == false && hours.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("hours", HqlFilter.Operator.LIKE, "%"+hours+"%");
+		}
+		if(content != null && content.equalsIgnoreCase("") == false && content.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("content", HqlFilter.Operator.LIKE, "%"+content+"%");
+		}
+		if(files != null && files.equalsIgnoreCase("") == false && files.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("files", HqlFilter.Operator.LIKE, "%"+files+"%");
+		}
+		if(owner != null && owner.equalsIgnoreCase("") == false && owner.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("owner", HqlFilter.Operator.LIKE, "%"+owner+"%");
+		}
+
+		hqlFilter.setSort("date");
+		hqlFilter.setOrder("desc");
 
         List<Worklog> listObj = worklogService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

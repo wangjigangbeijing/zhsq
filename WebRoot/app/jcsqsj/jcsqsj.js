@@ -273,10 +273,10 @@ $(document).ready(function (){
     });
 	
 	//一般停车场
-	$('#ybtcccAnchor').click(function () {
+	$('#ybtccAnchor').click(function () {
 		
 		curType = '一般停车场';	
-		loadybtccc();
+		loadybtcc();
 		
     });
 	
@@ -394,7 +394,7 @@ $(document).ready(function (){
 		loadybtcccrk();
 	
 	else if(curType == '一般停车场')
-		loadybtccc();
+		loadybtcc();
 	
 	else if(curType == '非机动车停车位')
 		loadfjdctcw();
@@ -426,24 +426,24 @@ $(document).ready(function (){
 			$('#wtssSpan').html(obj.culturefacilities);//文体设施
 			$('#tczySpan').html(obj.parking);
 			$('#bncsSpan').html(obj.shelter);//避难场所
-			$('#ffwdSpan').html(obj.service_store);//服务网点
+			$('#fwwdSpan').html(obj.service_store);//服务网点
 			$('#ljzSpan').html(obj.ljz);//垃圾站
 			
-			/*dyxxAnchor  党员信息 	loaddyxx
-			xcssAnchor	宣传设施	loadxcss
-			gyszssAnchor	公用市政设施	loadgyszss
-			jtszssAnchor	交通市政设施	loadjtszss
-			srhjszssAnchor	市容环境市政设施	loadsrhjszss
-			yllhszssAnchor	园林绿化市政设施	loadyllhszss
-			qtszssAnchor	其他市政设施	loadqtszss
-			xftdAnchor		消防通道	loadxftd
-			xfssAnchor		消防设施	loadxfss
-			tcwqyAnchor		停车位区域	loadtcwqy
-			ybtcccrkAnchor	一般停车场出入口	loadybtcccrk
-			ybtcccAnchor	一般停车场	loadybtccc
-			fjdctcwAnchor	非机动车停车位	loadfjdctcw
-			dltccAnchor		道路停车场	loaddltcc
-			*/
+			$('#dyxxSpan').html(obj.dyxx);//  党员信息 	
+			$('#xcssSpan').html(obj.xcss);//	宣传设施	
+			$('#gyszssSpan').html(obj.gyszss);//	公用市政设施	
+			$('#jtszssSpan').html(obj.jtszss);//	交通市政设施	
+			$('#srhjszssSpan').html(obj.srhjszss);//	市容环境市政设施	
+			$('#yllhszssSpan').html(obj.yllhszss);//	园林绿化市政设施	
+			$('#qtszssSpan').html(obj.qtszss);//	其他市政设施	
+			$('#xftdSpan').html(obj.xftd);//		消防通道	
+			$('#xfssSpan').html(obj.xfss);//		消防设施	
+			$('#tcwqySpan').html(obj.tcwqy);//		停车位区域	
+			$('#ybtcccrkSpan').html(obj.ybtcccrk);//	一般停车场出入口	
+			$('#ybtccSpan').html(obj.ybtcc);//	一般停车场	
+			$('#fjdctcwSpan').html(obj.fjdctcw);//	非机动车停车位	
+			$('#dltccSpan').html(obj.dltcc);//		道路停车场	
+			
 		}
 	});	
 });
@@ -549,7 +549,7 @@ function loadParking()
 function loadOrganization()
 {
 	
-		$('#jcsqsjDiv').load("./jcsqsj/organization/organization.html", function () {
+		$('#jcsqsjDiv').load("./jcsqsj/jc_organization/jc_organization.html", function () {
         
 		});
 }
@@ -677,7 +677,7 @@ function loadybtcccrk()
 	});
 }
 //一般停车场
-function loadybtccc()
+function loadybtcc()
 {
 	$('#jcsqsjDiv').load("./jcsqsj/jc_tc_ybtcc/jc_tc_ybtcc.html", function () {
 	
