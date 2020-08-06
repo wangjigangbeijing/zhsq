@@ -34,7 +34,7 @@
 				<div class="card-header" style="padding:10px; border:0px;">
 					<ul class="nav nav-tabs tj-nav02" role="tablist" style="border:0px;">
 						<li id="tabs1" class="nav-item"><a href="#tabl_1" data-toggle="tab" aria-expanded="false" role="tab"><i class="fa fa-building fa-lg"></i>&nbsp; 社区基本信息</a></li>
-						<li id="tabs2" class="nav-item"><a href="#tabl_2" data-toggle="tab" aria-expanded="false" role="tab"><i class="fa fa-book fa-fw"></i>&nbsp; 家庭居民信息</a></li>
+						<li id="tabs2" class="nav-item tj-cd"><a href="#tabl_2" data-toggle="tab" aria-expanded="false" role="tab"><i class="fa fa-book fa-fw"></i>&nbsp; 家庭居民信息</a></li>
 						<li id="tabs3" class="nav-item"><a href="#tabl_3" data-toggle="tab" aria-expanded="false" role="tab"><i class="nav-icon fas fa-bookmark" role="tab"></i>&nbsp; 组织信息</a></li>
 						<li id="tabs4" class="nav-item"><a href="#tabl_4" data-toggle="tab" aria-expanded="false" role="tab"><i class="nav-icon fas fa-bookmark" role="tab"></i>&nbsp; 设施类信息</a></li>
 						<li id="tabs5" class="nav-item"><a href="#tabl_5" data-toggle="tab" aria-expanded="false" role="tab"><i class="nav-icon fas fa-bookmark" role="tab"></i>&nbsp; 服务网点信息</a></li>
@@ -56,7 +56,7 @@
 						  </div>
 						<div id="tabl_2" class="tab-pane card-body tj-body" role="tabpanel">
 							 <a href="#" id="jtxxAnchor"><img src="../images/icon/dataicon/家庭信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 家庭信息</a>
-							 <a href="#" id="jmxxAnchor"><img src="../images/icon/dataicon/居民信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 居民信息</a>
+							 <a href="#" id="jmxxAnchor" class="tj-rexz"><img src="../images/icon/dataicon/居民信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 居民信息</a>
 							 <a href="#" id="clxxAnchor"><img src="../images/icon/dataicon/车辆信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 车辆信息</a>							
 						  </div>
 						  <div id="tabl_3" class="tab-pane card-body tj-body" role="tabpanel">
@@ -350,5 +350,78 @@
 			$("#tabs7 a").mousemove(function (e) {  
                 $(this).tab('show');  
             }); 
+			
+			$("#tabl_1 a").click(function (e) {  
+				$("#tabs1").parent('ul').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+				$("#tabs1").attr('class', 'tj-cd');
+				$(this).parent('div').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+                $(this).attr('class', 'tj-rexz'); 					
+            }); 
+			$("#tabl_2 a").click(function (e) {  
+				$("#tabs2").parent('ul').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+				$("#tabs2").attr('class', 'tj-cd');
+				$(this).parent('div').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+                $(this).attr('class', 'tj-rexz'); 					
+            }); 
+			$("#tabl_3 a").click(function (e) {  
+				$("#tabs3").parent('ul').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+				$("#tabs3").attr('class', 'tj-cd');
+				$(this).parent('div').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+                $(this).attr('class', 'tj-rexz'); 					
+            }); 
+			$("#tabl_4 a").click(function (e) {  
+				$("#tabs4").parent('ul').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+				$("#tabs4").attr('class', 'tj-cd');
+				$(this).parent('div').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+                $(this).attr('class', 'tj-rexz'); 					
+            }); 
+			$("#tabl_5 a").click(function (e) {  
+				$("#tabs5").parent('ul').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+				$("#tabs5").attr('class', 'tj-cd');
+				$(this).parent('div').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+                $(this).attr('class', 'tj-rexz'); 					
+            }); 
+			$("#tabl_6 a").click(function (e) {  
+				$("#tabs6").parent('ul').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+				$("#tabs6").attr('class', 'tj-cd');
+				$(this).parent('div').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+                $(this).attr('class', 'tj-rexz'); 					
+            }); 
+			$("#tabl_7 a").click(function (e) {  
+				$("#tabs7").parent('ul').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+				$("#tabs7").attr('class', 'tj-cd');
+				$(this).parent('div').children().each(function(i,n){
+					 $(n).removeAttr('class');
+					});
+                $(this).attr('class', 'tj-rexz'); 					
+            }); 
+			
+			$('#tabl_2').tab('show');
         });  
 	</script>
