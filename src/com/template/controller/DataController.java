@@ -989,6 +989,8 @@ public class DataController {
 				
 				if(layerId.equalsIgnoreCase("layer49"))
 					infoFields += ",type as facilitytype";
+				if(layerId.equalsIgnoreCase("layer50"))
+					infoFields += ",sxxl as facilitytype";
 				
 				String sTableName = mapLayer.getlayersource();
 				
@@ -1039,7 +1041,7 @@ public class DataController {
 					{
 						JSONObject jsonTmp = new JSONObject();
 
-						if(layerId.equalsIgnoreCase("layer49"))					
+						if(layerId.equalsIgnoreCase("layer49") || layerId.equalsIgnoreCase("layer50"))					
 						{
 							String facilitytype = (String)hm.get("facilitytype");
 							jsonTmp.put("facilitytype", facilitytype);
