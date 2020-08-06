@@ -3,6 +3,8 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.template.model.SysUser;
+import com.template.model.SysUserOrganization;
+import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.util.HqlFilter;
 import com.template.util.ConstValue;
@@ -24,9 +26,13 @@ public class SysUserController {
 	private  HttpServletRequest request;
 	@Autowired
 	private SysUserService sys_userService;
+	
+	@Autowired
+	private SysUserOrganizationService sys_userOrgService;
+	
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String addOrUpdate(String id,String name,String loginid,String password,String gender,String birthday,String joinday,String mobile,String department,String job,String role,String status)
+public String addOrUpdate(String id,String name,String loginid,String password,String gender,String birthday,String joinday,String mobile,String department,String job,String role)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -35,23 +41,44 @@ public String addOrUpdate(String id,String name,String loginid,String password,S
 		if(id==null || id.equalsIgnoreCase(""))
 		{
 			sys_user = new SysUser();
-			sys_user.setId(Utility.getUniStr());
+			id = Utility.getUniStr();
+			sys_user.setId(id);
+			sys_user.setstatus("正常");
 		}
 		else
 		{
 			sys_user = sys_userService.getById(id);
+			
+			HqlFilter hqlFilter = new HqlFilter();
+			
+			hqlFilter.addQryCond("user", HqlFilter.Operator.EQ, id);
+			List<SysUserOrganization> userOrgList = sys_userOrgService.findByFilter(hqlFilter);
+			
+			for(int i=0;i<userOrgList.size();i++)
+			{
+				sys_userOrgService.delete(userOrgList.get(i));
+			}
 		}
 		sys_user.setname(name);
 		sys_user.setloginid(loginid);
 		sys_user.setpassword(password);
 		sys_user.setgender(gender);
-		sys_user.setbirthday(TimeUtil.parseDate(birthday, "yyyy-MM-dd"));
-		sys_user.setjoinday(TimeUtil.parseDate(joinday, "yyyy-MM-dd"));
+		
+		if(birthday != null && birthday.equalsIgnoreCase("") == false)
+			sys_user.setbirthday(TimeUtil.parseDate(birthday, "yyyy-MM-dd"));
+		if(joinday != null && joinday.equalsIgnoreCase("") == false)
+			sys_user.setjoinday(TimeUtil.parseDate(joinday, "yyyy-MM-dd"));
 		sys_user.setmobile(mobile);
 		//sys_user.setdepartment(department);
+		
+		SysUserOrganization userOrg = new SysUserOrganization();
+		userOrg.setId(Utility.getUniStr());
+		userOrg.setorganization(department);
+		userOrg.setuser(id);
+		sys_userOrgService.saveOrUpdate(userOrg);
+		
 		sys_user.setjob(job);
 		sys_user.setrole(role);
-		sys_user.setstatus(status);
 
         sys_userService.save(sys_user);
         jsonObj.put("success", true);
@@ -92,14 +119,14 @@ public String load(String name,String status)
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
-}
-if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
-}
+		if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+		}
+		if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
+		}
 
         List<SysUser> listObj = sys_userService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
@@ -150,6 +177,32 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			
 			jsonTmp.put("status",sys_user.getstatus());
 			jsonTmp.put("roleTxt",roleTxt);
+			
+			String orgIds = "";
+			String orgNames = "";
+			HqlFilter hqlFilterUser = new HqlFilter();
+			hqlFilterUser.addQryCond("user", HqlFilter.Operator.EQ, sys_user.getId());
+			List<SysUserOrganization> userOrgList = sys_userOrgService.findByFilter(hqlFilterUser);
+			for(int j=0;j<userOrgList.size();j++)
+			{
+				SysUserOrganization userOrg = userOrgList.get(j);
+				
+				String orgId = userOrg.getorganization();
+				
+				String orgName = ConstValue.orgMap.get(orgId);
+				
+				orgIds += orgId + ",";
+				orgNames += orgName + ",";
+			}
+			
+			if(orgIds.endsWith(","))
+			{
+				orgIds = orgIds.substring(0, orgIds.length() - 1);
+				orgNames = orgNames.substring(0, orgNames.length() - 1);
+			}
+			
+			jsonObj.put("orgIds", orgIds);
+			jsonObj.put("orgNames", orgNames);
 
        		jsonArr.put(jsonTmp);
         	iTotalCnt++;
@@ -181,12 +234,37 @@ public String get(String id)
 			jsonObj.put("gender",sys_user.getgender());
 			jsonObj.put("birthday",TimeUtil.formatDate(sys_user.getbirthday(),"yyyy-MM-dd"));
 			jsonObj.put("joinday",TimeUtil.formatDate(sys_user.getjoinday(),"yyyy-MM-dd"));
-			jsonObj.put("mobile",sys_user.getmobile());
-			//jsonObj.put("department",sys_user.getdepartment());
+			jsonObj.put("mobile",sys_user.getmobile());			
 			jsonObj.put("job",sys_user.getjob());
 			jsonObj.put("role",sys_user.getrole());
 			jsonObj.put("status",sys_user.getstatus());
 
+			String orgIds = "";
+			String orgNames = "";
+			
+			HqlFilter hqlFilter = new HqlFilter();
+			hqlFilter.addQryCond("user", HqlFilter.Operator.EQ, id);
+			List<SysUserOrganization> userOrgList = sys_userOrgService.findByFilter(hqlFilter);
+			for(int i=0;i<userOrgList.size();i++)
+			{
+				SysUserOrganization userOrg = userOrgList.get(i);
+				
+				String orgId = userOrg.getorganization();
+				
+				String orgName = ConstValue.orgMap.get(orgId);
+				
+				orgIds += orgId + ",";
+				orgNames += orgName + ",";
+			}
+			
+			if(orgIds.endsWith(","))
+			{
+				orgIds = orgIds.substring(0, orgIds.length() - 1);
+				orgNames = orgNames.substring(0, orgNames.length() - 1);
+			}
+			
+			jsonObj.put("orgIds", orgIds);
+			jsonObj.put("orgNames", orgNames);
 			jsonObj.put("success", true);
 		}
 		else

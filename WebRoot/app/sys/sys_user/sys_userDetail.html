@@ -29,7 +29,7 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>密码</label>
   				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='password'>
+ 					<input type='password' class='form-control' id='password'>
  						</div>
  					</div>
 					<div class='form-group row'>
@@ -79,17 +79,16 @@
  					</div>
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>所在部门</label>
-  				<div class='col-md-9'>
-				
-				
-				
-				
- 					<input type='text' class='form-control' id='department'>
-					
-					
-					
-					
- 						</div>
+						<div class="col-md-3" id="parentOrgIdSelectDiv">
+						<!--select class="form-control select2" style="width: 100%;" id="parentOrgIdSelect">
+						</select-->
+						<input type="text" class="form-control" id="parentOrgInput" placeholder="" style="display:none;">
+						<input type="text" class="form-control" id="parentOrgNameInput" placeholder="" readonly>
+						<a id="parentOrgSelect" id="menuBtn" href="#" onclick="showMenu(); return false;">选择</a>
+						 <div id="menuContent" class="menuContent" style="display:none; position: absolute;z-index:99;">
+							<ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
+						</div>			
+                      </div>
  					</div>
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>职务</label>
@@ -104,11 +103,6 @@
 						<select id="role" class="select2" data-placeholder="所属角色" style="width: 100%;">
 							
 						  </select>
-						
-				
- 					<!--input type='text' class='form-control' id='role'-->
-					
-					
 					
  						</div>
  					</div>

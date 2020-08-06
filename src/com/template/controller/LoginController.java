@@ -110,7 +110,7 @@ public class LoginController {
 				}
 				*/
 				jsonObj.put("success", true);	
-				jsonObj.put("userId", sysUser.getId());	
+				jsonObj.put(ConstValue.HTTP_HEADER_USERID, sysUser.getId());	
 				jsonObj.put("token", sysUser.getId());	
 				jsonObj.put("homePage", "/app/homepage.html");
 				//jsonObj.put("mobile", sysUser.getMobile());
@@ -127,6 +127,8 @@ public class LoginController {
 				{
 					organizations += userOrgList.get(i).getorganization()+",";
 				}
+				
+				jsonObj.put("organizations", organizations);
 				
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, organizations);
 				

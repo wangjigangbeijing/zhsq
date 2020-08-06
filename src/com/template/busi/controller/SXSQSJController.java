@@ -311,8 +311,8 @@ public class SXSQSJController {
 		{
 	        JSONArray jsonArr = new JSONArray();
 	        
-			String sSql = "SELECT SXSQSJ_FL.SXDL,SXSQSJ_FL.SXXL,ICON,CNT FROM SXSQSJ_FL "
-					+ "LEFT JOIN (SELECT COUNT(*) CNT,SXXL,SXDL FROM SXSQSJ GROUP BY SXDL,SXXL) AS DATA ON SXSQSJ_FL.SXDL = DATA.SXDL AND SXSQSJ_FL.SXXL = DATA.SXXL";
+			String sSql = "SELECT SXSQSJ_FL.SXDL,SXSQSJ_FL.SXXL,ICON FROM SXSQSJ_FL ORDER BY SEQ";
+					//+ "LEFT JOIN (SELECT COUNT(*) CNT,SXXL,SXDL FROM SXSQSJ GROUP BY SXDL,SXXL) AS DATA ON SXSQSJ_FL.SXDL = DATA.SXDL AND SXSQSJ_FL.SXXL = DATA.SXXL ORDER BY SEQ";
 			
 			logger.debug(sSql);
 			
@@ -328,16 +328,54 @@ public class SXSQSJController {
 				jsonTmp.put("sxxl", (String)hm.get("SXXL"));
 				jsonTmp.put("sxdl", (String)hm.get("SXDL"));
 				jsonTmp.put("icon", (String)hm.get("ICON"));
+				jsonTmp.put("cntTotal", 0);
+				jsonTmp.put("cntThisyear", 0);
 				
-				if(hm.containsKey("CNT") && hm.get("CNT") != null)
+				/*if(hm.containsKey("CNT") && hm.get("CNT") != null)
 					jsonTmp.put("cnt", (BigInteger)hm.get("CNT")+"/"+(BigInteger)hm.get("CNT"));
 				else
 					jsonTmp.put("cnt", 0+"/"+0);
-	        	
+	        	*/
 				jsonArr.put(jsonTmp);
 	        	iTotalCnt++;
 			}
-	        
+
+			HqlFilter hqlFilter = new HqlFilter();
+			
+			List<SXSQSJ> listSxsqsj = sxsqsjService.findByFilter(hqlFilter);
+			
+			String thisYear = TimeUtil.getYear(new Date());
+			
+			for(int i=0;i<listSxsqsj.size();i++)
+			{
+				SXSQSJ sxsqsj = listSxsqsj.get(i);
+				
+				String sxdl = sxsqsj.getSXDL();
+				String sxxl = sxsqsj.getSXXL();
+				String sxkssj = sxsqsj.getSXKSSJ();
+				
+				String sxkssjYear = "";
+				if(sxkssj != null && sxkssj.length() >= 4)
+					sxkssjYear = sxkssj.substring(0, 4);
+				
+				for(int j=0;j<jsonArr.length();j++)
+				{
+					JSONObject jsonTmp = jsonArr.getJSONObject(j);
+					
+					String sxdlInJson = jsonTmp.getString("sxdl");
+					String sxxlInJson = jsonTmp.getString("sxxl");
+					
+					if(sxdlInJson.equalsIgnoreCase(sxdl) && sxxlInJson.equalsIgnoreCase(sxxl))
+					{
+						if(sxkssjYear.equalsIgnoreCase(thisYear))
+						{
+							jsonTmp.put("cntThisyear", jsonTmp.getInt("cntThisyear")+1);
+						}
+						jsonTmp.put("cntTotal", jsonTmp.getInt("cntTotal")+1);
+					}
+				}
+			}
+			
 	        jsonObj.put("totalCount", iTotalCnt);
 	        jsonObj.put("list", jsonArr);
 	        

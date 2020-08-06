@@ -39,6 +39,8 @@ $(document).ready(function (){
 		}
 	);
 	
+	initialOrganizationTree('');
+	
 	if(curId != '')
 		viewDetail(curId);
 });
@@ -63,7 +65,7 @@ function viewDetail(id)
 				$('#birthday').val(obj.birthday);
 				$('#joinday').val(obj.joinday);
 				$('#mobile').val(obj.mobile);
-				$('#department').val(obj.department);
+				//$('#department').val(obj.department);
 				$('#job').val(obj.job);
 				//$('#role').val(obj.role);
 				
@@ -71,6 +73,9 @@ function viewDetail(id)
 					$("#role").val(obj.role.split(',')).trigger("change");
 						
 				$('#status').val(obj.status);
+				
+				$('#parentOrgInput').val(obj.orgIds);
+				$('#parentOrgNameInput').val(obj.orgNames);
 			}
 		});
 }
@@ -85,17 +90,7 @@ function gobackPage()
     });
 	
 }
-/*
-function ShowAddModal()
-{
-	$('#modalDetail').show();
-	
-	$('#modalTitle').text('新增');
-	
-	$('#addOrUpdateBtn').text('确定');
-	
-}
-*/
+
 function addOrUpdate()
 {
 	var roleArr = $('#role').val();
@@ -110,7 +105,7 @@ function addOrUpdate()
 		birthday:$('#birthday').val(),
 		joinday:$('#joinday').val(),
 		mobile:$('#mobile').val(),
-		department:$('#department').val(),
+		department:$('#parentOrgInput').val(),
 		job:$('#job').val(),
 		role:roleArr.join(','),
 		status:$('#status').val()
@@ -138,6 +133,98 @@ function addOrUpdate()
 	});
 }
 
+
+var setting = {
+	view: {
+		dblClickExpand: false,
+		selectedMulti : true,//可以多选
+		showLine: true
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	check: {
+		enable: true 
+	},
+	callback: {
+		beforeClick: beforeClick,
+		onClick: onClick
+	}
+};
+
+function beforeClick(treeId, treeNode) {
+	/*var check = (treeNode && !treeNode.isParent);
+	if (!check) alert("只能选择城市...");
+	return check;*/
+}
+
+function onClick(e, treeId, treeNode) {
+	//var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+	/*
+	debugger;
+	nodes = orgTree.getSelectedNodes(),
+	v = "";
+	nodes.sort(function compare(a,b){return a.id-b.id;});
+	for (var i=0, l=nodes.length; i<l; i++) {
+		v += nodes[i].name + ",";
+	}
+	if (v.length > 0 ) v = v.substring(0, v.length-1);
+	*/
+	
+	$("#parentOrgNameInput").val(treeNode.name);
+	
+	$("#parentOrgInput").val(treeNode.id);
+	
+}
+		 
+		 
+function showMenu() {	
+	$("#menuContent").slideDown("fast");
+	
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideMenu();
+	}
+}
+	
+var orgTree;
+
+function initialOrganizationTree(selectedOrgId)
+{
+	$.get(getContextPath()+"/sysOrganizationController/loadOrganizationTree",
+		function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			orgTree = $.fn.zTree.init($("#treeDemo"), setting, obj.organizationList);
+			if(selectedOrgId != null && selectedOrgId != '')
+			{
+				var nodes = orgTree.getNodesByParam("id", selectedOrgId, null);
+				if (nodes.length > 0)
+				{
+					orgTree.selectNode(nodes[0]);
+					
+					$("#parentOrgNameInput").val(nodes[0].name);
+					$("#parentOrgInput").val(selectedOrgId);
+				}
+			}
+			else{
+				var node = orgTree.getNodesByFilter(function (node) { return node.level == 0 }, true);  
+				$("#parentOrgNameInput").val(node.name);
+				$("#parentOrgInput").val(node.id);
+				//$("#parentOrgNameInput").val('丰台区');
+			}
+		}
+	});
+}
 
 function downloadAttach(fileName)
 {

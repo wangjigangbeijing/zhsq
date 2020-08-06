@@ -230,11 +230,11 @@ public class Utility
 		
 		try
 		{
-			String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+			//String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
 			
 			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
 			
-			if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
+			if(userId == null || userId.equalsIgnoreCase(""))
 				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 			
 			//String organization = "";
