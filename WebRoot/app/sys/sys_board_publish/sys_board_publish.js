@@ -71,7 +71,17 @@ function load()
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ {
+				columnDefs: [ 
+					{
+					className: 'control',
+					orderable: false,
+					targets:   2,//从0开始
+					mRender : function(data,type,full){
+						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.facilities+"\">"+full.facilitiesShort+"</a>";
+						return btn;
+					}
+					},
+					{
 					className: 'control',
 					orderable: false,
 					targets:   3,//从0开始

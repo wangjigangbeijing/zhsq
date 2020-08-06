@@ -17,6 +17,7 @@ import com.template.model.SysOrganization;
 import com.template.model.SysRole;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
+import com.template.model.jcsqsj.Jc_advertisement;
 import com.template.model.jcsqsj.Resident;
 import com.template.model.jcsqsj.Room;
 import com.template.service.DictionaryService;
@@ -24,6 +25,7 @@ import com.template.service.SysOrganizationService;
 import com.template.service.SysRoleService;
 import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
+import com.template.service.jcsqsj.Jc_advertisementService;
 import com.template.service.jcsqsj.ResidentService;
 import com.template.service.jcsqsj.RoomService;
 import com.template.util.ConstValue;
@@ -58,6 +60,8 @@ public class DaemonService
 	@Autowired
 	private SysUserOrganizationService userOrganizationService;
 	
+	@Autowired
+	private Jc_advertisementService jc_advertisementService;
 	/*
 	 * @Desc	
 	 */
@@ -76,6 +80,8 @@ public class DaemonService
 			loadUserInfo();
 			
 			loadOrganizationInfo();
+			
+			loadAdvertisementInfo();
 			
 			refreshResident();//定期刷民情图数据
 		}
@@ -248,6 +254,28 @@ public class DaemonService
 				String name = sysOrganization.getname();
 				
 				ConstValue.orgMap.put(id,name);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+	}
+	
+	public void loadAdvertisementInfo()
+	{
+		try
+		{
+			List<Jc_advertisement> orgList = jc_advertisementService.findByFilter(new HqlFilter());
+			
+			for(int i=0;i<orgList.size();i++)
+			{
+				Jc_advertisement sysOrganization = orgList.get(i);
+				
+				String id = sysOrganization.getId();
+				String name = sysOrganization.getname();
+				
+				ConstValue.advertisementMap.put(id,name);
 			}
 		}
 		catch(Exception e)

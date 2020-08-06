@@ -109,7 +109,31 @@ if(category != null && category.equalsIgnoreCase("") == false && category.equals
 			jsonTmp.put("id", sys_board_publish.getId());
 			jsonTmp.put("title",sys_board_publish.gettitle());
 			jsonTmp.put("category",sys_board_publish.getcategory());
-			jsonTmp.put("facilities",sys_board_publish.getfacilities());
+			
+			String facilities = sys_board_publish.getfacilities();
+			String [] facilityArr = facilities.split(",");
+			
+			String facilitiesNames = "";
+			
+			for(int j=0;j<facilityArr.length;j++)
+			{
+				String facility = facilityArr[j];
+				
+				if(ConstValue.advertisementMap.containsKey(facility))
+				{
+					facilitiesNames += ConstValue.advertisementMap.get(facility) + ",";
+				}
+			}
+			
+			jsonTmp.put("facilities",facilitiesNames);
+			
+			String facilitiesNamesShort = facilitiesNames;
+			
+			if(facilitiesNames.length() > 50)
+				facilitiesNamesShort = facilitiesNames.substring(0,50) +"...";
+
+			jsonTmp.put("facilitiesNamesShort",facilitiesNamesShort);
+			
 			jsonTmp.put("content",sys_board_publish.getcontent());
 			
 			String contentShort = sys_board_publish.getcontent();

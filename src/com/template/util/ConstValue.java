@@ -133,4 +133,6 @@ public class ConstValue {
 	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
 	
 	public static HashMap<String,String> orgMap = new HashMap<String,String>();
+	
+	public static HashMap<String,String> advertisementMap = new HashMap<String,String>();
 }

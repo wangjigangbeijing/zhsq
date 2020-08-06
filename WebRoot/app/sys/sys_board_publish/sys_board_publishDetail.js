@@ -12,12 +12,8 @@ $(document).ready(function (){
 		multiple: true
 	});
 	
-	debugger;
-	
 	$.get(getContextPath()+"/jc_advertisementController/load",
 		function(result){
-			
-			debugger;
 			
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
@@ -30,16 +26,16 @@ $(document).ready(function (){
 				{
 					var role = obj.list[i];
 					
-					roleArr[i] = "<option value='" + role.id + "'>" + role.name + "</option>";						
+					roleArr[i] = "<option value='" + role.id + "'>" + role.name + "</option>";
 				}
 				$('#facilities').html(roleArr.join(''));
+				
+				if(curId != '')
+					viewDetail(curId);
 			}
 		}
 	);
 	
-	
-	if(curId != '')
-		viewDetail(curId);
 });
 
 
@@ -55,7 +51,7 @@ function viewDetail(id)
 				$('#category').val(obj.category);
 				$('#starttime').val(obj.starttime);
 				$('#endtime').val(obj.endtime);
-				//$('#facilities').val(obj.facilities);
+				$('#status').val(obj.status);
 				
 				if(obj.facilities != null && obj.facilities != undefined)							
 					$("#facilities").val(obj.facilities.split(',')).trigger("change");
@@ -95,7 +91,8 @@ function addOrUpdate()
 		endtime:$('#endtime').val(),
 		facilities:facilities,
 		content:$('#content').val(),
-		attachment:$('#attachment').val()
+		attachment:$('#attachment').val(),
+		status:$('#status').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  

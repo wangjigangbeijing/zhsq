@@ -248,8 +248,8 @@ public class Utility
 		
 		try
 		{
-			if(organization.equalsIgnoreCase(""))
-			{
+			if(organization.equalsIgnoreCase("") && request.getSession().getAttribute(ConstValue.SESSION_USER_ORG) != null)
+			{	
 				organization = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ORG);
 			}
 		}
