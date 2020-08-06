@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.template.util.EncryptUtil;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.template.model.SysOrganization;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
 import com.template.service.SysOrganizationService;
@@ -41,6 +42,7 @@ public class LoginController {
 	
 	@Autowired
 	private SysUserService userService;
+
 	
 	@Autowired
 	private SysUserOrganizationService userOrganizationService;
@@ -122,13 +124,21 @@ public class LoginController {
 				List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
 
 				String organizations = "";
-				
+				String border = "";
 				for(int i=0;i<userOrgList.size();i++)
 				{
+					String orgid = userOrgList.get(i).getorganization();
+					
+					SysOrganization organization = organizationService.getById(orgid);
+					
+					if(organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
+						border = organization.getborder();
+					
 					organizations += userOrgList.get(i).getorganization()+",";
 				}
 				
 				jsonObj.put("organizations", organizations);
+				jsonObj.put("border", border);
 				
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, organizations);
 				

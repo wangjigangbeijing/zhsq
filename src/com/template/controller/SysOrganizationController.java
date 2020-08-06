@@ -171,7 +171,7 @@ public class SysOrganizationController {
 				jsonObj.put("directorname",organization.getdirectorname());
 				jsonObj.put("directorphone",organization.getdirectorphone());
 				jsonObj.put("note",organization.getnote());
-	
+				
 				jsonObj.put("success", true);
 			}
 			else

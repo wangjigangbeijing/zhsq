@@ -179,5 +179,15 @@ public void setparentid(String parent_id)
 	this.parent_id = parent_id;
 }
 
+@Column(name = "org_type", nullable = true)
+public String org_type;
+public String getorg_type()
+{
+	return org_type;
+}
+public void setorg_type(String org_type)
+{
+	this.org_type = org_type;
+}
 }
 
