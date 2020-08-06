@@ -72,7 +72,7 @@ public class SXSQSJController {
 			String sxfj, 
 			String sxjf, 
 			String sxbz, 
-			String sxzt,String fj,String sxjbr)
+			String sxzt,String fj,String sxjbr,String point)
 	{
 		logger.debug("addOrUpdate");
     	JSONObject jsonObj = new JSONObject();
@@ -112,6 +112,7 @@ public class SXSQSJController {
 			sxsqsj.setFJ(fj);
 			sxsqsj.setSXJBR(sxjbr);
 			sxsqsj.setOWNER(organization);
+			sxsqsj.setPOINT(point);
 			
 			sxsqsjService.saveOrUpdate(sxsqsj);
 			
@@ -220,6 +221,7 @@ public class SXSQSJController {
 				jsonTmp.put("sxzj", sxsqsj.getSXZJ());
 				jsonTmp.put("sxzp", sxsqsj.getSXZP());
 				jsonTmp.put("sxzt", sxsqsj.getSXZT());
+				jsonTmp.put("point", sxsqsj.getPOINT());
 				
 	        	jsonArr.put(jsonTmp);
 	        	
@@ -282,6 +284,7 @@ public class SXSQSJController {
 				jsonObj.put("sxzp", sxsqsj.getSXZP());
 				jsonObj.put("sxzt", sxsqsj.getSXZT());
 				jsonObj.put("fj", sxsqsj.getFJ());
+				jsonObj.put("point", sxsqsj.getPOINT());
 			}
 			else
 			{

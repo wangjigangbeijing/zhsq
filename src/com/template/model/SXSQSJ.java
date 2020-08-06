@@ -261,4 +261,17 @@ public class SXSQSJ implements java.io.Serializable {
 	{
 		this.OWNER = OWNER;
 	}
+	
+
+	@Column(name = "POINT", nullable = true)
+	public String POINT;
+	
+	public String getPOINT()
+	{
+		return POINT;
+	}
+	public void setPOINT(String POINT)
+	{
+		this.POINT = POINT;
+	}
 }
