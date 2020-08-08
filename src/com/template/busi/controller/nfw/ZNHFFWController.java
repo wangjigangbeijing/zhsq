@@ -16,43 +16,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
-import com.mysql.cj.util.StringUtils;
 import com.template.service.SysUserService;
 import com.template.util.Utility;
 
 @Controller
-@RequestMapping("wwzffwController")
-public class WWZFFWController {
+@RequestMapping("znhffwController")
+public class ZNHFFWController {
 
-	private static Logger logger = Logger.getLogger(WWZFFWController.class);
+	private static Logger logger = Logger.getLogger(ZNHFFWController.class);
 	@Autowired
 	private  HttpServletRequest request;
 	
 	@Autowired
 	private SysUserService userService;
 	
-	@RequestMapping(value="getwwzfdatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@RequestMapping(value="getznhfdatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String getDataList(String wwzfdxname, String wwlx, String wwfs) {
-		logger.info("getwwzfdatalist");
+	public String getDataList(String jsjbid) {
+		logger.info("getznhfdatalist:" + jsjbid);
 		
 		JSONObject jsonObj = new JSONObject();
 		try {
-			List<Object> params = new ArrayList<Object>();
-			String sql = "select a.* from nfw_wwzffw a where 1=1";
-			if(!StringUtils.isNullOrEmpty(wwzfdxname)) {
-				sql += " and a.wwzfdxname like ?";
-				params.add("%" + wwzfdxname + "%");
-			}
-			if(!StringUtils.isNullOrEmpty(wwlx) && !"null".equals(wwlx)) {
-				sql += " and a.wwlx=?";
-				params.add(wwlx);
-			}
-			if(!StringUtils.isNullOrEmpty(wwfs)) {
-				sql += " and a.wwfs=?";
-				params.add(wwfs);
-			}
-			List<HashMap> nodelist = this.userService.findBySql(sql, params);
+			String sql = "select a.* from nfw_znhffw a where a.jsjbid=?";
+			List<Object> vals = new ArrayList<Object>();
+			vals.add(jsjbid);
+			List<HashMap> nodelist = this.userService.findBySql(sql, vals);
 			
 			jsonObj.put("success", true);
 			jsonObj.put("list", JSONArray.toJSON(nodelist));
@@ -65,7 +53,7 @@ public class WWZFFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id,String wwzfdx, String wwzfdxname, String wwdxlx, String wwlx, String wwsj, String wwfs,String wwpwwjqk, String wwpwwjly, String sqcywwry, String qtcywwry, String wwzfxq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id, String jsjbid, String dsr, String dsrxm, String dsrlxdh, String hfsfcg, String sffkqk, String dsrsfmy,String bmqksm, String bz, String hfr, String hfsj, String hfly)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate:" + id);
 		JSONObject jsonObj = new JSONObject();
@@ -73,28 +61,26 @@ public class WWZFFWController {
 		{
 			Map<String, Object> map = new HashMap<String, Object>();
 			if(id != null && id.length() > 0) {
-				String sql = "select * from nfw_wwzffw where id=?";
+				String sql = "select * from nfw_znhffw where id=?";
 				List<Object> vals = new ArrayList<Object>();
 				vals.add(id);
 				List list = this.userService.findBySql(sql, vals);
 				if(list == null || list.size() == 0) {
 					//新增
 					map.put("id", Utility.getUniStr());
-					map.put("wwzfdx", wwzfdx);
-					map.put("wwzfdxname", wwzfdxname);
-					map.put("wwdxlx", wwdxlx);
-					map.put("wwlx", wwlx);
-					map.put("wwsj", wwsj);
-					map.put("wwfs", wwfs);
-					map.put("wwpwwjqk", wwpwwjqk);
-					map.put("wwpwwjly", wwpwwjly);
-					map.put("sqcywwry", sqcywwry);
-					map.put("qtcywwry", qtcywwry);
-					map.put("wwzfxq", wwzfxq);
+					map.put("jsjbid", jsjbid);
+					map.put("dsrxm", dsrxm);
+					map.put("dsrlxdh", dsrlxdh);
+					map.put("hfsfcg", hfsfcg);
+					map.put("sffkqk", sffkqk);
+					map.put("dsrsfmy", dsrsfmy);
+					map.put("bmqksm", bmqksm);
+					map.put("hfly", hfly);
 					map.put("bz", bz);
-					map.put("fj", fj);
+					map.put("hfr", hfr);
+					map.put("hfsj", hfsj);
 					
-					int ret = this.userService.addData(map, "nfw_wwzffw");
+					int ret = this.userService.addData(map, "nfw_znhffw");
 					if(ret > 0) {
 						jsonObj.put("dataid", map.get("id"));
 						jsonObj.put("success", true);
@@ -108,22 +94,19 @@ public class WWZFFWController {
 					
 					Map<String, Object> kvs = new HashMap<String, Object>();
 					kvs.put("id", id);
-					
-					map.put("wwzfdx", wwzfdx);
-					map.put("wwzfdxname", wwzfdxname);
-					map.put("wwdxlx", wwdxlx);
-					map.put("wwlx", wwlx);
-					map.put("wwsj", wwsj);
-					map.put("wwfs", wwfs);
-					map.put("wwpwwjqk", wwpwwjqk);
-					map.put("wwpwwjly", wwpwwjly);
-					map.put("sqcywwry", sqcywwry);
-					map.put("qtcywwry", qtcywwry);
-					map.put("wwzfxq", wwzfxq);
+					map.put("jsjbid", jsjbid);
+					map.put("dsrxm", dsrxm);
+					map.put("dsrlxdh", dsrlxdh);
+					map.put("hfsfcg", hfsfcg);
+					map.put("sffkqk", sffkqk);
+					map.put("dsrsfmy", dsrsfmy);
+					map.put("bmqksm", bmqksm);
+					map.put("hfly", hfly);
 					map.put("bz", bz);
-					map.put("fj", fj);
+					map.put("hfr", hfr);
+					map.put("hfsj", hfsj);
 					
-					int ret = this.userService.updateData(map, kvs, "nfw_wwzffw");
+					int ret = this.userService.updateData(map, kvs, "nfw_znhffw");
 					if(ret > 0) {
 						jsonObj.put("dataid", id);
 						jsonObj.put("success", true);
@@ -136,21 +119,19 @@ public class WWZFFWController {
 			}
 			else {
 				map.put("id", Utility.getUniStr());
-				map.put("wwzfdx", wwzfdx);
-				map.put("wwzfdxname", wwzfdxname);
-				map.put("wwdxlx", wwdxlx);
-				map.put("wwlx", wwlx);
-				map.put("wwsj", wwsj);
-				map.put("wwfs", wwfs);
-				map.put("wwpwwjqk", wwpwwjqk);
-				map.put("wwpwwjly", wwpwwjly);
-				map.put("sqcywwry", sqcywwry);
-				map.put("qtcywwry", qtcywwry);
-				map.put("wwzfxq", wwzfxq);
+				map.put("jsjbid", jsjbid);
+				map.put("dsrxm", dsrxm);
+				map.put("dsrlxdh", dsrlxdh);
+				map.put("hfsfcg", hfsfcg);
+				map.put("sffkqk", sffkqk);
+				map.put("dsrsfmy", dsrsfmy);
+				map.put("bmqksm", bmqksm);
+				map.put("hfly", hfly);
 				map.put("bz", bz);
-				map.put("fj", fj);
+				map.put("hfr", hfr);
+				map.put("hfsj", hfsj);
 				
-				int ret = this.userService.addData(map, "nfw_wwzffw");
+				int ret = this.userService.addData(map, "nfw_znhffw");
 				if(ret > 0) {
 					jsonObj.put("dataid", map.get("id"));
 					jsonObj.put("success", true);
@@ -177,7 +158,7 @@ public class WWZFFWController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			String sql = "delete from nfw_wwzffw where id=?";
+			String sql = "delete from nfw_znhffw where id=?";
 			List<Object> params = new ArrayList<Object>();
 			params.add(id);
 			int ret = this.userService.executeSql(sql, params);
@@ -204,7 +185,7 @@ public class WWZFFWController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			String sql = "select a.* from nfw_wwzffw a where a.id=?";
+			String sql = "select a.* from nfw_znhffw a where a.id=?";
 			List<Object> params = new ArrayList<Object>();
 			params.add(id);
 			List<HashMap> nodelist = this.userService.findBySql(sql, params);

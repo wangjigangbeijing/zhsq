@@ -1,9 +1,11 @@
-
+﻿
 var curUserType = -1;
 
 $(document).ready(function (){
 	
 	$('#btnAdd').click(addznhffw);
+	
+	loadznhffw();
 	
 });
 
@@ -12,12 +14,12 @@ var dataTable;
 function loadznhffw()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	var tableName = $('#tableNameQry').val();
 	
-	$.get(getContextPath()+"/tableController/loadTable?tableName="+tableName,
+	$.get(getContextPath()+"/znhffwController/getznhfdatalist?jsjbid="+jsjbId,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
+		console.log(obj);
 		if(obj.success)
 		{
 			dataTable = $('#dataTable').dataTable( {
@@ -48,10 +50,14 @@ function loadznhffw()
 						"sLast": "末页" 
 					}
 				}, //多语言配置					
-				"data":obj.tableList,
+				"data":obj.list,
 				"columns": [
-					{ "data": "tableZHName" ,"sClass":"text-center"},
-					{ "data": "status" ,"sClass":"text-center"},
+					{ "data": "dsrxm" ,"sClass":"text-center"},
+					{ "data": "dsrlxdh" ,"sClass":"text-center"},
+					{ 'data': 'hfsfcg' ,'sClass':'text-center'},
+					{ 'data': 'dsrsfmy' ,'sClass':'text-center'},
+					{ "data": "hfr" ,"sClass":"text-center"},
+					{ "data": "hfsj" ,"sClass":"text-center"},
 					{ "data": "" ,"sClass":"text-center"}
 				],
 				columnDefs: [ /*{
@@ -66,38 +72,22 @@ function loadznhffw()
 					{
 					className: 'control',
 					orderable: false,
-					targets:   2,//从0开始
+					targets:   6,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"tableManagement('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>管理</a>";
+						
+						var btn = "<a href=\"#\" onclick=\"enterZnhf('"+full.id+"')\"  class=\"btn-success lk-d\"><i class=\"fa fa-trash-o\"></i>查看</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn-info lk-a\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"tableData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>数据</a>&nbsp;";
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn-danger lk-b\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteTable('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"generateCode('"+full.id+"')\"  class=\"btn btn-info btn-xs\"><i class=\"fa fa-trash-o\"></i>生成代码</a>&nbsp;";
-						
-						//<a href=\"#\" onclick=\"viewDetail('"+full.id+"',true)\" class=\"btn btn-info btn-xs\">编辑</a>&nbsp;
-						
-						//var btn = '<button class="btn btn-success btn-xs" onclick="tableManagement(\''+full.id+'\');return false;"><i class="fa fa-pencil"></i></button>';
-						
-						//var btn = '<a id="inspectorAnchor" class="btn-primary" href=""><i class="fa fa-pencil"></i></a>';
 						
 						return btn;
 					}
 					}
 				]
 			} );
-			
-			$('#tableSelect').html('');
-			var userArr = [];
-			
-			for(var i=0;i<obj.tableList.length;i++)
-			{
-				var table = obj.tableList[i];
-				
-				userArr[i] = "<option value='" + table.id + "'>" + table.tableName + "</option>";						
-			}
-			$('#tableSelect').html(userArr.join(''));
 	
 		}
 		else
@@ -121,36 +111,45 @@ function addznhffw()
 	curTableId = '';
 }
 
-function deleteTable(tableId)
+function editData(id)
+{
+	curId = id;
+	$('#main-content').load("./nfw/znhffwDetail.html", function () {
+		
+    });
+}
+
+function deleteData(id)
 {
 	$.confirm({
 		title:"删除确认",
-		text:"确认删除表单?",
+		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/tableController/deleteTable",
+			$.post(getContextPath()+"/znhffwController/delete",
 			{
-				tableId:tableId
+				id:id
 			},
 			function(result){
 				var obj = jQuery.parseJSON(result);  
 				if(obj.success)
 				{
-					jSuccess("表单删除成功!",{
+					jSuccess("数据删除成功!",{
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'
 					});
 					
-					loadTable();
+					loadznhffw();
 				}
 				else
 				{
-					jError("表单删除成功!",{
+					jError(obj.errMsg,{
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'
 					});
 				}
 			});
+			
 		},
 		cancel: function(button) {
 			//alert("You aborted the operation.");
@@ -160,55 +159,9 @@ function deleteTable(tableId)
 	});
 }
 
-function tableManagement(tableId)
+function gobackPage()
 {
-	curTableId = tableId;
-	
-	$('#main-content').load("./table/tableDetail.html", function () {
-		getTableInfo();
-    });
-}
-
-function tableData(tableId)
-{
-	curTableId = tableId;
-	
-	$('#main-content').load("./table/tableData.html", function () {
+	$('#main-content').load("./nfw/jsjbfw.html", function () {
 		
-    });
-}
-/*
-function generateCode(tableId)
-{
-	$.post(getContextPath()+"/templateController/generateCode",
-	{
-		tableId:tableId
-	},
-	function(result){
-		var obj = jQuery.parseJSON(result);  
-		if(obj.success)
-		{
-			jSuccess("代码生成成功!",{
-				VerticalPosition : 'center',
-				HorizontalPosition : 'center'
-			});
-			
-		}
-		else
-		{
-			jError("代码生成失败!",{
-				VerticalPosition : 'center',
-				HorizontalPosition : 'center'
-			});
-		}
 	});
 }
-
-
-function guid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-    return v.toString(16);
-  });
-}
-*/

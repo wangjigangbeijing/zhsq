@@ -5,6 +5,8 @@ $(document).ready(function (){
 	
 	$('#btnAdd').click(addwwzffw);
 	
+	$('#btnSearch').click(loadwwzffw);
+	
 	loadwwzffw();
 	
 });
@@ -14,9 +16,16 @@ var dataTable;
 function loadwwzffw()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	var tableName = $('#tableNameQry').val();
+	var wwzfdxname = $('#wwzfdxname').val();
+	var wwlx = $('#wwlx').val();
 	
-	$.get(getContextPath()+"/wwzffwController/getwwzfdatalist",
+	var wwfs = '';
+	$('input:checkbox[name=wwfs]:checked').each(function (i) {
+		if(wwfs == '') wwfs = $(this).val();
+		else wwfs += "," + $(this).val();
+	});
+	
+	$.get(getContextPath()+'/wwzffwController/getwwzfdatalist?wwzfdxname=' + wwzfdxname + '&wwlx=' + wwlx + '&wwfs=' + wwfs,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -57,7 +66,7 @@ function loadwwzffw()
 					{ 'data': 'wwlx' ,'sClass':'text-center'},
 					{ 'data': 'wwfs' ,'sClass':'text-center'},
 					{ 'data': 'sqcywwry' ,'sClass':'text-center'},
-					{ 'data': 'qtcywwry' ,'sClass':'text-center'},
+					{ 'data': 'wwsj' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 				],
 				columnDefs: [ /*{

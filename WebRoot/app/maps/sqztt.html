@@ -1,4 +1,4 @@
-
+﻿
 <!--script src="../plugins/ol5/ol.js">
 
 <script type="text/javascript" src="./maps/include-web.js"></script>
@@ -337,7 +337,10 @@ function loadMap(mapName)
 										population: 4000,
 										rainfall: 500
 									});
-									iconFeature.setId(data.info);
+									//iconFeature.setId(data.info);
+									iconFeature.setId(data.id);
+									iconFeature.set('info', data.info);
+									
 									
 									var strokeColor = '#1E90FF';
 									if(layerStyleObj.style != null)
@@ -392,6 +395,8 @@ function loadMap(mapName)
 							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 							{
 								var data = dataList.features[p];
+								
+								console.log(data);
 								
 								layerStyleObj = layerStyleMap[data.layerId];
 								
@@ -480,6 +485,29 @@ function loadMap(mapName)
 			}
 	);
 }
+
+function editData(gid)
+{
+	var arr=new Array();
+	arr = gid.split('.');
+	curId = arr[1];
+	var arr2 = new Array();
+	arr2 = arr[0].split('_');
+	var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
+	
+	$('#main-content').load(url, function () {
+		
+    });
+}
+
+function mingqing(id)
+{
+	curId = id;
+	$('#main-content').load("./jcsqsj/residebuilding/residebuildingMinqing.html", function () {
+		
+    });
+}
+
 $(function () 
 {
 	$('#csgltAnchor').click(function () {
@@ -609,14 +637,25 @@ $(function ()
 		if(feature != null && feature != undefined)
 		{
 			var gid = feature.getId();
+	
+			console.log("info: " + feature.get('info'));
 			
 			//curId = gid.substring(gid.indexOf('\.')+1);
 			
 			var coordinate = evt.coordinate;
 			//var hdms = toStringHDMS(toLonLat(coordinate));
+			
+			var arr=new Array();
+			arr = gid.split('.');
 
-			content.innerHTML = '<p>图斑信息:</p><code>' + gid +
-			  '</code>';
+			if(gid.indexOf('jc_residebuilding') >= 0){
+								content.innerHTML = '<p>图斑信息:</p><p>' + feature.get('info') +
+				  '</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>' + '<button id="btnSearch" class="btn btn-info" style="margin-left:15px; float:right;" onclick="mingqing(\'' + arr[1] + '\')">民情图</button>';
+			}
+			else {
+				content.innerHTML = '<p>图斑信息:</p><p>' + feature.get('info') +
+				  '</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>';
+			  }
 			overlay.setPosition(coordinate);
 		
 		}

@@ -10,11 +10,35 @@
 
 $(document).ready(function (){
 	
+	$("#characterQry").select2({	 
+		multiple: true
+	});
+	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
+	
 	$(".select2").select2();
 	
 	if(curId != ''){
 		get(curId);
 	}
+	
+	var wwsj = $('#wwsj').datepicker({
+			format: 'yyyy-mm-dd',
+			todayBtn: 'linked',
+			onRender: function(date) {
+				console.log('onRender startDate');
+				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
+			}
+		}).on('changeDate', function(ev) {
+				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
+					var newDate = new Date(ev.date)
+					newDate.setDate(newDate.getDate() + 1);
+					checkout.setValue(newDate);
+				}*/
+				//checkin.hide();
+				//$('.dpd2')[0].focus();
+			
+			}).data('datepicker');
 	
 });
 
@@ -37,7 +61,7 @@ function get(id)
 				
 				$('#wwpwwjly').val(obj.data.wwpwwjly);
 				
-				
+				$('#wwsj').val(obj.data.wwsj);
 				
 				$('#qtcywwry').val(obj.data.qtcywwry);
 				
@@ -89,6 +113,7 @@ function addOrUpdate()
 		wwzfdxname:$('#wwzfdxname').val(),
 		wwdxlx:$('#wwdxlx').val(),
 		wwlx:$('#wwlx').val(),
+		wwsj:$('#wwsj').val(),
 		wwfs:wwfs,
 		wwpwwjqk:$('#wwpwwjqk').val(),
 		wwpwwjly:$('#wwpwwjly').val(),

@@ -5,6 +5,8 @@ $(document).ready(function (){
 	
 	$('#btnAdd').click(addzmblfw);
 	
+	$('#btnSearch').click(loadzmblfw);
+	
 	loadzmblfw();
 	
 });
@@ -14,9 +16,11 @@ var dataTable;
 function loadzmblfw()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	var tableName = $('#tableNameQry').val();
+	var zmsxdl = $('#zmsxdl').val();
+	var zmsxxl = $('#zmsxxl').val();
+	var blrname = $('#blrname').val();
 	
-	$.get(getContextPath()+"/zmblfwController/getzmbldatalist",
+	$.get(getContextPath()+'/zmblfwController/getzmbldatalist?zmsxdl=' + zmsxdl + '&zmsxxl=' + zmsxxl + '&blrname=' + blrname,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -52,10 +56,12 @@ function loadzmblfw()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
+					{ 'data': 'zmsxdl' ,'sClass':'text-center'},
 					{ 'data': 'zmsxxl' ,'sClass':'text-center'},
 					{ 'data': 'blrname' ,'sClass':'text-center'},
 					{ 'data': 'lxdh' ,'sClass':'text-center'},
 					{ 'data': 'blqd' ,'sClass':'text-center'},
+					{ 'data': 'blsj' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center',
 						mRender : function(data,type,full){
 							var btn = "<span style='color: blue;'>"+full.status+"</span>";
@@ -76,7 +82,7 @@ function loadzmblfw()
 					{
 					className: 'control',
 					orderable: false,
-					targets:   5,//从0开始
+					targets:   7,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn-info lk-a\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 

@@ -5,9 +5,13 @@ $(document).ready(function (){
 	
 	$('#btnAdd').click(addsqbsfw);
 	
+	$('#btnSearch').click(load);
+	
 	$('#sqbssxqdAnchor').click(sqbssxqd);
 	
 	load();
+	
+	loadsxdl();
 	
 });
 
@@ -16,18 +20,12 @@ var dataTable;
 function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	 var name = $('#nameQuery').val();
-	 var mobile = $('#mobileQuery').val();
-	 var address = $('#addressQuery').val();
-	 var quezhen = $('#quezhenQuery').val();
-	 var qzdate = $('#qzdateQuery').val();
-	 var yisi = $('#yisiQuery').val();
-	 var mijie = $('#mijieQuery').val();
-	 var hsjc = $('#hsjcQuery').val();
-	 var hsjcjieguo = $('#hsjcjieguoQuery').val();
+	 var blsxdl = $('#blsxdl').val();
+	 var blsxxl = $('#blsxxl').val();
+	 var blrname = $('#blrname').val();
 
 	
-	$.get(getContextPath()+'/sqbsfwController/load?sxdl=',
+	$.get(getContextPath()+'/sqbsfwController/load?blsxdl=' + blsxdl + '&blsxxl=' + blsxxl + '&blrname=' + blrname,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -64,9 +62,11 @@ function load()
 				"data":obj.list,
 				"columns": [
 					{ 'data': 'blsxdl' ,'sClass':'text-center'},
+					{ 'data': 'blsxxl' ,'sClass':'text-center'},
 					{ 'data': 'blrname' ,'sClass':'text-center'},
 					{ 'data': 'lxdh' ,'sClass':'text-center'},
 					{ 'data': 'blqd' ,'sClass':'text-center'},
+					{ 'data': 'blsj' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center',
 						mRender : function(data,type,full){
 							var btn = "<span style='color: blue;'>"+full.status+"</span>";
@@ -88,7 +88,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  5,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
 						
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn-info lk-a\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
@@ -245,3 +245,41 @@ function sqbssxqd()
 	
 }
 
+function loadsxdl(){
+	$.get(getContextPath()+"/sqbsfwController/loadsxdl",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxlb + "'>" + obj.list[i].sxlb + "</option>"
+					$("#blsxdl").append(content);
+				}
+				
+				
+			}
+			
+		});
+}
+
+function loadsxxl(){
+	$("#blsxxl").empty();
+	var sxlb = $("#blsxdl").val();
+	if(sxlb == ''){
+		return;
+	}
+	$.get(getContextPath()+"/sqbsfwController/loadsxxl?sxlb=" + sxlb,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxmc + "'>" + obj.list[i].sxmc + "</option>"
+					$("#blsxxl").append(content);
+				}
+				
+				
+			}
+			
+		});
+}

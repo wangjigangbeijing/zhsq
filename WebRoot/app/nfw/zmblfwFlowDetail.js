@@ -154,7 +154,7 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				console.log(obj);
-				$('#blr').html(obj.data.blr);				
+				$('#blrname').html(obj.data.blrname);				
 				$('#lxdh').html(obj.data.lxdh);
 				$('#blqd').html(obj.data.blqd);
 				$('#zmsxdl').html(obj.data.zmsxdl);

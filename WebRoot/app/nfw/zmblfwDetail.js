@@ -11,12 +11,36 @@
 
 $(document).ready(function (){
 	
+	$("#characterQry").select2({	 
+		multiple: true
+	});
+	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
+	
 	if(curId != '')
 		viewDetail(curId);
 	
 	if(curId == ''){
 		loadTemplateProcess();
 	}
+	
+	var blsj = $('#blsj').datepicker({
+			format: 'yyyy-mm-dd',
+			todayBtn: 'linked',
+			onRender: function(date) {
+				console.log('onRender startDate');
+				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
+			}
+		}).on('changeDate', function(ev) {
+				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
+					var newDate = new Date(ev.date)
+					newDate.setDate(newDate.getDate() + 1);
+					checkout.setValue(newDate);
+				}*/
+				//checkin.hide();
+				//$('.dpd2')[0].focus();
+			
+			}).data('datepicker');
 	
 });
 
@@ -38,6 +62,8 @@ function viewDetail(id)
 				$('#zmsxdl').val(obj.data.zmsxdl);
 				
 				$('#zmsxxl').val(obj.data.zmsxxl);
+				
+				$('#blsj').val(obj.data.blsj);
 				
 				$('#xq').val(obj.data.xq);
 				
@@ -117,6 +143,7 @@ function addOrUpdate()
 		blqd:$('#blqd').val(),
 		zmsxdl:$('#zmsxdl').val(),
 		zmsxxl:$('#zmsxxl').val(),
+		blsj: $('#blsj').val(),
 		xq: $('#xq').val(),
 		bz:$('#bz').val(),
 		fj:$('#pictures').val()

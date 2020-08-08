@@ -99,6 +99,24 @@ public class SQBSFW implements java.io.Serializable {
 		this.blsxxl = blsxxl;
 	}
 	
+	@Column(name = "blsj", nullable = true)
+	public String blsj;
+	
+	@Column(name = "fj", nullable = true)
+	public String fj;
+
+	public String getBlsj() {
+		return blsj;
+	}
+	public void setBlsj(String blsj) {
+		this.blsj = blsj;
+	}
+	public String getFj() {
+		return fj;
+	}
+	public void setFj(String fj) {
+		this.fj = fj;
+	}
 
 	@Column(name = "xq", nullable = true)
 	public String xq;

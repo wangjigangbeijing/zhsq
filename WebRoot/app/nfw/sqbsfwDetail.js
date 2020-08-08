@@ -24,7 +24,25 @@ $(document).ready(function (){
 		loadTemplateProcess();
 	}
 	
-	loadsxxl();
+	loadsxdl();
+	
+	var blsj = $('#blsj').datepicker({
+			format: 'yyyy-mm-dd',
+			todayBtn: 'linked',
+			onRender: function(date) {
+				console.log('onRender startDate');
+				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
+			}
+		}).on('changeDate', function(ev) {
+				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
+					var newDate = new Date(ev.date)
+					newDate.setDate(newDate.getDate() + 1);
+					checkout.setValue(newDate);
+				}*/
+				//checkin.hide();
+				//$('.dpd2')[0].focus();
+			
+			}).data('datepicker');
 	
 });
 
@@ -57,9 +75,20 @@ function viewDetail(id)
 				
 				$('#blsxxl').val(obj.data.blsxxl);
 				
+				$('#blsh').val(obj.data.blsj);
+				
 				$('#xq').val(obj.data.xq);
 				
 				$('#bz').val(obj.data.bz);
+				
+				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				
+				for(var j=0;j<picturesArr.length;j++)				
+				{					
+					if(picturesArr[j] != '')					
+					{						
+						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+					}
+				}
 			}
 		});
 }
@@ -75,8 +104,10 @@ function addOrUpdate()
 		blqd:$('#blqd').val(),
 		blsxdl:$('#blsxdl').val(),
 		blsxxl:$('#blsxxl').val(),
+		blsj:$('#blsj').val(),
 		xq:$('#xq').val(),
-		bz:$('#bz').val()
+		bz:$('#bz').val(),
+		fj:$('#pictures').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
@@ -104,8 +135,30 @@ function addOrUpdate()
 	});
 }
 
+function loadsxdl(){
+	$.get(getContextPath()+"/sqbsfwController/loadsxdl",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxlb + "'>" + obj.list[i].sxlb + "</option>"
+					$("#blsxdl").append(content);
+				}
+				
+				
+			}
+			
+		});
+}
+
 function loadsxxl(){
-	$.get(getContextPath()+"/sqbsfwController/loadsxxl",
+	$("#blsxxl").empty();
+	var sxlb = $("#blsxdl").val();
+	if(sxlb == ''){
+		return;
+	}
+	$.get(getContextPath()+"/sqbsfwController/loadsxxl?sxlb=" + sxlb,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)

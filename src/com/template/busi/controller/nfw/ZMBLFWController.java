@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
+import com.mysql.cj.util.StringUtils;
 import com.template.service.SysUserService;
 import com.template.util.Utility;
 
@@ -32,17 +33,31 @@ public class ZMBLFWController {
 	
 	@RequestMapping(value="getzmbldatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String getDataList() {
+	public String getDataList(String zmsxdl, String zmsxxl, String blrname) {
 		logger.info("getzmbldatalist");
 		
 		JSONObject jsonObj = new JSONObject();
 		try {
-			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_zmblfw a";
-			List<HashMap> nodelist = this.userService.findBySql(sql);
+			List<Object> params = new ArrayList<Object>();
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_zmblfw a where 1=1";
+			if(!StringUtils.isNullOrEmpty(zmsxdl)  && !"null".equals(zmsxdl)) {
+				sql += " and a.zmsxdl=?";
+				params.add(zmsxdl);
+			}
+			if(!StringUtils.isNullOrEmpty(zmsxxl) && !"null".equals(zmsxxl)) {
+				sql += " and a.zmsxxl=?";
+				params.add(zmsxxl);
+			}
+			if(!StringUtils.isNullOrEmpty(blrname)) {
+				sql += " and a.blrname like ?";
+				params.add("%" + blrname + "%");
+			}
+			List<HashMap> nodelist = this.userService.findBySql(sql, params);
 			
 			jsonObj.put("success", true);
 			jsonObj.put("list", JSONArray.toJSON(nodelist));
 		} catch(Exception e) {
+			e.printStackTrace();
 			jsonObj.put("success", false);
 		}
 		
@@ -51,7 +66,7 @@ public class ZMBLFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id, String blr, String blrname, String lxdh, String blqd, String zmsxdl,String zmsxxl, String xq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id, String blr, String blrname, String lxdh, String blqd, String zmsxdl,String zmsxxl, String blsj, String xq, String bz, String fj)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate");
 		JSONObject jsonObj = new JSONObject();
@@ -72,6 +87,7 @@ public class ZMBLFWController {
 					map.put("blqd", blqd);
 					map.put("zmsxdl", zmsxdl);
 					map.put("zmsxxl", zmsxxl);
+					map.put("blsj", blsj);
 					map.put("xq", xq);
 					map.put("bz", bz);
 					map.put("fj", fj);
@@ -97,6 +113,7 @@ public class ZMBLFWController {
 					map.put("blqd", blqd);
 					map.put("zmsxdl", zmsxdl);
 					map.put("zmsxxl", zmsxxl);
+					map.put("blsj", blsj);
 					map.put("xq", xq);
 					map.put("bz", bz);
 					map.put("fj", fj);
@@ -121,6 +138,7 @@ public class ZMBLFWController {
 				map.put("blqd", blqd);
 				map.put("zmsxdl", zmsxdl);
 				map.put("zmsxxl", zmsxxl);
+				map.put("blsj", blsj);
 				map.put("xq", xq);
 				map.put("bz", bz);
 				map.put("fj", fj);

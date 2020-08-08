@@ -1,4 +1,4 @@
-
+﻿
 <script src="./nfw/znhffw.js"></script>
 		
 		
@@ -45,9 +45,12 @@
                       <input class="form-control" id="tableNameQry">
                     </div>
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>
+					<button id="btnSearch" type="button" class="btn btn-success">查询</button>
 					&nbsp
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					<button id="btnAdd" type="button" class="btn btn-info" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+					
+					&nbsp
+					<button id="btnAdd" type="button" class="btn btn-default pull-right" onclick="gobackPage();" style="margin-right:20px;"><i class="fa fa-plus-o"></i> 返回</button>
 					
                   </div>
 				  
@@ -64,69 +67,24 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">办事服务列表</h3>
+                <h3 class="card-title">回访列表</h3>
               </div>
 
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="dataTable" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>办理事项</th>
-                    <th>办理人</th>
-                    <th>联系电话</th>
-                    <th>办理渠道</th>
-                    <th>办理时间</th>
-                    <th>状态</th>
+                    <th>当事人姓名</th>
+                    <th>当事人联系电话</th>
+                    <th>回访是否成功</th>
+                    <th>当事人是否满意</th>
+                    <th>回访人</th>
+					<th>回访时间</th>
                     <th>操作</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>老年证办理</td>
-                    <td>张三</td>
-                    <td>13012345678</td>
-                    <td>办事大厅</td>
-                    <td>2020-01-01 15:00:01</td>
-                    <td>进行中</td>
-                    <td>办理</td>
-                  </tr>
-                  <tr>
-                    <td>老年证办理</td>
-                    <td>张三</td>
-                    <td>13012345678</td>
-                    <td>办事大厅</td>
-                    <td>2020-01-01 15:00:01</td>
-                    <td>进行中</td>
-                    <td>办理</td>
-                  </tr>
-                  <tr>
-                    <td>老年证办理</td>
-                    <td>张三</td>
-                    <td>13012345678</td>
-                    <td>办事大厅</td>
-                    <td>2020-01-01 15:00:01</td>
-                    <td>进行中</td>
-                    <td>办理</td>
-                  </tr>
-                  <tr>
-                    <td>老年证办理</td>
-                    <td>张三</td>
-                    <td>13012345678</td>
-                    <td>办事大厅</td>
-                    <td>2020-01-01 15:00:01</td>
-                    <td>进行中</td>
-                    <td>办理</td>
-                  </tr>
-                  <tr>
-                    <td>老年证办理</td>
-                    <td>张三</td>
-                    <td>13012345678</td>
-                    <td>办事大厅</td>
-                    <td>2020-01-01 15:00:01</td>
-                    <td>进行中</td>
-                    <td>办理</td>
-                  </tr>
                   
                   </tbody>
 

@@ -17,21 +17,18 @@ $(document).ready(function (){
 
 var curId;
 
+var jsjbId;
+
 function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	 var name = $('#nameQuery').val();
-	 var mobile = $('#mobileQuery').val();
-	 var address = $('#addressQuery').val();
-	 var quezhen = $('#quezhenQuery').val();
-	 var qzdate = $('#qzdateQuery').val();
-	 var yisi = $('#yisiQuery').val();
-	 var mijie = $('#mijieQuery').val();
-	 var hsjc = $('#hsjcQuery').val();
-	 var hsjcjieguo = $('#hsjcjieguoQuery').val();
+	 var sjbt = $('#sjbt').val();
+	 var sjly = $('#sjly').val();
+	 var sjlybh = $('#sjlybh').val();
+	 var dsr = $('#dsr').val();
 
 	
-	$.get(getContextPath()+'/jsjbfwController/load?name='+name+'&mobile='+mobile+'&address='+address+'&quezhen='+quezhen+'&qzdate='+qzdate+'&yisi='+yisi+'&mijie='+mijie+'&hsjc='+hsjc+'&hsjcjieguo='+hsjcjieguo+'&',
+	$.get(getContextPath()+'/jsjbfwController/load?sjbt='+sjbt+'&sjly='+sjly+'&sjlybh='+sjlybh+'&dsr='+dsr,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -102,7 +99,9 @@ function load()
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn-danger lk-b\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn-primary lk-c\"><i class=\"fa fa-flask\"></i>业务流</a>";
+						btn += "<a href=\"#\" onclick=\"enterZnhf('"+full.id+"')\"  class=\"btn-success lk-d\"><i class=\"fa fa-trash-o\"></i>回访</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn-primary lk-c\"><i class=\"fa fa-flask-o\"></i>业务流</a>";
 						
 						return btn;
 					}
@@ -247,6 +246,13 @@ function enterFlow(id){
 	
 	$('#main-content').load("./nfw/jsjbfwFlowDetail.html", function () {
 		
-    });
+    });	
+}
+
+function enterZnhf(id){
+	jsjbId = id;
 	
+	$('#main-content').load("./nfw/znhffw.html", function () {
+		
+    });	
 }

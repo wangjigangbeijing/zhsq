@@ -32,6 +32,7 @@ import com.template.util.HqlFilter;
 import com.template.util.TimeUtil;
 import com.template.util.Utility;
 import com.template.model.nfw.SQBSFW;
+import com.mysql.cj.util.StringUtils;
 import com.template.model.SysUser;
 import com.template.service.nfw.SQBSFWService;
 import com.template.service.SysUserService;
@@ -55,8 +56,10 @@ public class SQBSFWController {
 			String blqd,
 			String blsxdl,
 			String blsxxl,
+			String blsj,
 			String xq,
-			String bz)
+			String bz,
+			String fj)
 	{
 		logger.debug("addOrUpdate");
     	JSONObject jsonObj = new JSONObject();
@@ -80,8 +83,10 @@ public class SQBSFWController {
 			sqbsfw.setblqd(blqd);
 			sqbsfw.setblsxdl(blsxdl);
 			sqbsfw.setblsxxl(blsxxl);
+			sqbsfw.setBlsj(blsj);
 			sqbsfw.setxq(xq);
 			sqbsfw.setbz(bz);
+			sqbsfw.setFj(fj);
 			
 			sqbsfwService.saveOrUpdate(sqbsfw);
 			
@@ -127,14 +132,50 @@ public class SQBSFWController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String load(String sxdl)
+	public String load(String blsxdl, String blsxxl, String blrname)
 	{
-		logger.info("load sxdl:"+sxdl);
+		logger.info("load: " + blsxdl + "-" + blsxxl + "-" + blrname);
 		
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_sqbsfw a";
+			List<Object> params = new ArrayList<Object>();
+			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_sqbsfw a where 1=1";
+			if(!StringUtils.isNullOrEmpty(blsxdl)) {
+				sql += " and a.blsxdl=?";
+				params.add(blsxdl);
+			}
+			if(!StringUtils.isNullOrEmpty(blsxxl) && !"null".equals(blsxxl)) {
+				sql += " and a.blsxxl=?";
+				params.add(blsxxl);
+			}
+			if(!StringUtils.isNullOrEmpty(blrname)) {
+				sql += " and a.blrname like ?";
+				params.add("%" + blrname + "%");
+			}
+			List<HashMap> list = this.sqbsfwService.findBySql(sql, params);
+	        jsonObj.put("totalCount", list.size());
+	        jsonObj.put("list", list);
+	        jsonObj.put("success", true);
+	}
+	catch(Exception e)
+	{
+		logger.error(e.getMessage(),e);
+		jsonObj.put("success", false);
+	}
+    return jsonObj.toString();
+    }
+	
+	@RequestMapping(value="loadsxdl",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String loadSxdl()
+	{
+		logger.info("load loadsxdl");
+		
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			String sql = "select distinct a.sxlb from nfw_sqbsfw_qd a";
 			List<HashMap> list = this.sqbsfwService.findBySql(sql);
 //			HqlFilter hqlFilter = new HqlFilter();
 //        List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);
@@ -153,15 +194,17 @@ public class SQBSFWController {
 	
 	@RequestMapping(value="loadsxxl",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String loadSxxl()
+	public String loadSxxl(String sxlb)
 	{
-		logger.info("load sxxl");
+		logger.info("load sxxl:" + sxlb);
 		
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			String sql = "select a.* from nfw_sqbsfw_qd a";
-			List<HashMap> list = this.sqbsfwService.findBySql(sql);
+			String sql = "select a.* from nfw_sqbsfw_qd a where a.sxlb=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(sxlb);
+			List<HashMap> list = this.sqbsfwService.findBySql(sql, params);
 //			HqlFilter hqlFilter = new HqlFilter();
 //        List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);
         //net.sf.json.JSONArray jsonArr = net.sf.json.JSONArray.fromObject(list);

@@ -10,49 +10,99 @@
 
 $(document).ready(function (){
 	
+	$("#characterQry").select2({	 
+		multiple: true
+	});
 	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
+	
+	if(curId != ''){
+		
+		get();
+	}
+	
+	var hfsj = $('#hfsj').datepicker({
+			format: 'yyyy-mm-dd',
+			todayBtn: 'linked',
+			onRender: function(date) {
+				console.log('onRender startDate');
+				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
+			}
+		}).on('changeDate', function(ev) {
+				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
+					var newDate = new Date(ev.date)
+					newDate.setDate(newDate.getDate() + 1);
+					checkout.setValue(newDate);
+				}*/
+				//checkin.hide();
+				//$('.dpd2')[0].focus();
+			
+			}).data('datepicker');
 	
 });
 
 function get()
 {
-	$.get(getContextPath()+"/sqzzqdController/get?id="+curId,
+	$.get(getContextPath()+"/znhffwController/get?id="+curId,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				$('#bh').val(obj.bh);
+				$('#dsr').val(obj.data.dsr);
 				
-				$('#gzzz').val(obj.gzzz);
+				$('#dsrxm').val(obj.data.dsrxm);
 				
-				$('#zzly').val(obj.zzly);
+				$('#dsrlxdh').val(obj.data.dsrlxdh);
 				
-				$('#zzy').val(obj.zzy);
+				$('#hfsfcg').val(obj.data.hfsfcg);
 				
-				$('#lb').val(obj.lb);
+				$('#sffkqk').val(obj.data.sffkqk);
 				
-				$('#yjflfgmc').val(obj.yjflfgmc);
+				$('#dsrsfmy').val(obj.data.dsrsfmy);
+				
+				$('#bmqksm').val(obj.data.bmqksm);
+				
+				$('#bz').val(obj.data.bz);
+				
+				$('#hfr').val(obj.data.hfr);
+				
+				$('#hfsj').val(obj.data.hfsj);
+				
+				var picturesArr = obj.data.hfly.split(VALUE_SPLITTER);				
+				for(var j=0;j<picturesArr.length;j++)				
+				{					
+					if(picturesArr[j] != '')					
+					{						
+						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+					}
+				}	
 			}
 		});
 }
 
 function addOrUpdate()
 {
-	$.post(getContextPath()+"/sqzzqdController/addOrUpdate",
+	$.post(getContextPath()+"/znhffwController/addOrUpdate",
 	{
 		id:curId,
-		bh:$('#bh').val(),
-		gzzz:$('#gzzz').val(),
-		zzly:$('#zzly').val(),
-		zzy:$('#zzy').val(),
-		lb:$('#lb').val(),
-		yjflfgmc:$('#yjflfgmc').val()
+		jsjbid:jsjbId,
+		dsr:$('#dsr').val(),
+		dsrxm:$('#dsrxm').val(),
+		dsrlxdh:$('#dsrlxdh').val(),
+		hfsfcg:$('#hfsfcg').val(),
+		sffkqk:$('#sffkqk').val(),
+		dsrsfmy:$('#dsrsfmy').val(),
+		bmqksm:$('#bmqksm').val(),
+		bz:$('#bz').val(),
+		hfr:$('#hfr').val(),
+		hfsj:$('#hfsj').val(),
+		hfly:$('#pictures').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
-			jSuccess("事项创建成功!",{
+			jSuccess("回访创建成功!",{
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'});
 						
@@ -60,7 +110,7 @@ function addOrUpdate()
 		}
 		else
 		{
-			jError("事项创建失败!"+data.errMsg,{
+			jError("回访创建失败!",{
 				VerticalPosition : 'center',
 				HorizontalPosition : 'center'});
 			return ;
@@ -187,7 +237,7 @@ function addOrUpdate()
 
 function gobackPage()
 {
-	$('#main-content').load("./sqzzqd/sqzzqd.html", function () {
+	$('#main-content').load("./nfw/znhffw.html", function () {
 		
 	});
 }

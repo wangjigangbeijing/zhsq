@@ -5,6 +5,8 @@ $(document).ready(function (){
 	
 	$('#btnAdd').click(addmyslfw);
 	
+	$('#btnSearch').click(loadmyslfw);
+	
 	loadmyslfw();
 	
 });
@@ -14,9 +16,11 @@ var dataTable;
 function loadmyslfw()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	var tableName = $('#tableNameQry').val();
+	var bt = $('#bt').val();
+	var lb = $('#lb').val();
+	var fkrname = $('#fkrname').val();
 	
-	$.get(getContextPath()+"/myslfwController/getmysldatalist",
+	$.get(getContextPath()+'/myslfwController/getmysldatalist?bt=' + bt + '&lb=' + lb + '&fkrname=' + fkrname,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -55,8 +59,9 @@ function loadmyslfw()
 					{ 'data': 'bt' ,'sClass':'text-center'},
 					{ 'data': 'lb' ,'sClass':'text-center'},
 					{ 'data': 'cd' ,'sClass':'text-center'},
-					{ 'data': 'fkr' ,'sClass':'text-center'},
+					{ 'data': 'fkrname' ,'sClass':'text-center'},
 					{ 'data': 'lxdh' ,'sClass':'text-center'},
+					{ 'data': 'slsj' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center',
 						mRender : function(data,type,full){
 							var btn = "<span style='color: blue;'>"+full.status+"</span>";
@@ -77,7 +82,7 @@ function loadmyslfw()
 					{
 					className: 'control',
 					orderable: false,
-					targets:   6,//从0开始
+					targets:   7,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn-info lk-a\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 

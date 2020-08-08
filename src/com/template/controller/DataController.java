@@ -957,8 +957,7 @@ public class DataController {
 			jsonObj.put("errMsg", e.getMessage());
 		}
         return jsonObj.toString();
-	}
-	
+	}	
 
 	@RequestMapping(value="wfs",method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
     @ResponseBody
@@ -987,10 +986,19 @@ public class DataController {
 				
 				String infoFields = mapLayer.getinfofields();
 				
-				if(layerId.equalsIgnoreCase("layer49"))
+				if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7"))
 					infoFields += ",type as facilitytype";
-				if(layerId.equalsIgnoreCase("layer50"))
+				if(layerId.equalsIgnoreCase("layer15_3"))
 					infoFields += ",sxxl as facilitytype";
+				if(layerId.equalsIgnoreCase("layer4_3")) {
+					infoFields += ",type as facilitytype";
+				}
+				if(layerId.equalsIgnoreCase("layer2_5")) {
+					infoFields += ",characteristics as facilitytype";
+				}
+				if(layerId.equalsIgnoreCase("layer7_4")) {
+					infoFields += ",kind as facilitytype";
+				}
 				
 				String sTableName = mapLayer.getlayersource();
 				
@@ -1041,7 +1049,7 @@ public class DataController {
 					{
 						JSONObject jsonTmp = new JSONObject();
 
-						if(layerId.equalsIgnoreCase("layer49") || layerId.equalsIgnoreCase("layer50"))					
+						if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer15_3") || layerId.equalsIgnoreCase("layer4_3") || layerId.equalsIgnoreCase("layer2_5") || layerId.equalsIgnoreCase("layer7_4"))					
 						{
 							String facilitytype = (String)hm.get("facilitytype");
 							jsonTmp.put("facilitytype", facilitytype);
