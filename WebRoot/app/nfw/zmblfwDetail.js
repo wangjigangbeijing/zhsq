@@ -24,23 +24,6 @@ $(document).ready(function (){
 		loadTemplateProcess();
 	}
 	
-	var blsj = $('#blsj').datepicker({
-			format: 'yyyy-mm-dd',
-			todayBtn: 'linked',
-			onRender: function(date) {
-				console.log('onRender startDate');
-				//return date.valueOf() < now.valueOf() ? 'disabled' : '';
-			}
-		}).on('changeDate', function(ev) {
-				/*if (ev.date.valueOf() > checkout.date.valueOf()) {
-					var newDate = new Date(ev.date)
-					newDate.setDate(newDate.getDate() + 1);
-					checkout.setValue(newDate);
-				}*/
-				//checkin.hide();
-				//$('.dpd2')[0].focus();
-			
-			}).data('datepicker');
 	
 });
 
