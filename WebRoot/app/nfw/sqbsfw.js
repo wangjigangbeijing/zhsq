@@ -263,7 +263,7 @@ function loadsxdl(){
 }
 
 function loadsxxl(){
-	$("#blsxxl").empty();
+	$('#blsxxl option').not(":first").remove(); 
 	var sxlb = $("#blsxdl").val();
 	if(sxlb == ''){
 		return;

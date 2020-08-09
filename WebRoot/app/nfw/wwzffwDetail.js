@@ -22,6 +22,8 @@ $(document).ready(function (){
 		get(curId);
 	}
 	
+	loaduser();
+	
 	var wwsj = $('#wwsj').datepicker({
 			format: 'yyyy-mm-dd',
 			todayBtn: 'linked',
@@ -265,5 +267,21 @@ function gobackPage()
 	curId = '';
 	$('#main-content').load("./nfw/wwzffw.html", function () {
 		
+	});
+}
+
+function loaduser(){
+	$.get(getContextPath()+'/sysUserController/load?name=',
+	function(result){
+		$('#btnSearchUser').removeAttr('disabled');
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			console.log(obj);
+			for(var i = 0; i < obj.list.length; i++){
+				var s = "<option>" + obj.list[i].name + "</option>";
+				$("#sqcywwry").append(s);
+			}
+		}
 	});
 }

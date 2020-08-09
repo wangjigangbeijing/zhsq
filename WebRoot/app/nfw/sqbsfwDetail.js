@@ -17,6 +17,8 @@ $(document).ready(function (){
 	
 	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
 	
+	loadsxdl();
+	
 	if(curId != '')
 		viewDetail(curId);
 	
@@ -24,7 +26,7 @@ $(document).ready(function (){
 		loadTemplateProcess();
 	}
 	
-	loadsxdl();
+	
 	
 	var blsj = $('#blsj').datepicker({
 			format: 'yyyy-mm-dd',
@@ -75,7 +77,7 @@ function viewDetail(id)
 				
 				$('#blsxxl').val(obj.data.blsxxl);
 				
-				$('#blsh').val(obj.data.blsj);
+				$('#blsj').val(obj.data.blsj);
 				
 				$('#xq').val(obj.data.xq);
 				
@@ -88,6 +90,10 @@ function viewDetail(id)
 					{						
 						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
 					}
+				}
+				
+				if(curId != ''){
+					loadsxxl();
 				}
 			}
 		});
@@ -145,15 +151,13 @@ function loadsxdl(){
 					var content = "<option value='" + obj.list[i].sxlb + "'>" + obj.list[i].sxlb + "</option>"
 					$("#blsxdl").append(content);
 				}
-				
-				
 			}
 			
 		});
 }
 
 function loadsxxl(){
-	$("#blsxxl").empty();
+	$('#blsxxl option').not(":first").remove(); 
 	var sxlb = $("#blsxdl").val();
 	if(sxlb == ''){
 		return;

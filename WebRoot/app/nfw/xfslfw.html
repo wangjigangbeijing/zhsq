@@ -35,14 +35,29 @@
 				<form class="form-horizontal">
                 <div class="card-body">
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-1 col-form-label">编号</label>
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">标题</label>
                     <div class="col-sm-2">
-                      <input class="form-control" id="tableNameQry">
+                      <input class="form-control" id="bt">
                     </div>
 					
 					<label for="inputEmail3" class="col-sm-1 col-form-label">类别</label>
                     <div class="col-sm-2">
-                      <input class="form-control" id="tableNameQry">
+                      <select class="form-control" id="lb">
+					    <option value="">请选择</option>
+                        <option>文化教育</option>
+                        <option>民主自治</option>
+                        <option>社区服务</option>
+                        <option>平安建设</option>
+                        <option>文化教育</option>
+                        <option>社区环境</option>
+                        <option>卫生健康</option>
+                        <option>社区组织</option>
+                      </select>
+                    </div>
+					
+					<label for="inputEmail3" class="col-sm-1 col-form-label">反馈人</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="fkrname">
                     </div>
 					
 					<button id="btnSearch" class="btn btn-success">查询</button>
@@ -77,6 +92,7 @@
                     <th>渠道</th>
                     <th>反馈人</th>
                     <th>电话</th>
+					<th>受理时间</th>
                     <th>状态</th>
                     <th>操作</th>
                   </tr>
