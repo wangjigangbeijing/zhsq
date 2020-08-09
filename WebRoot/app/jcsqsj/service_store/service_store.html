@@ -3,26 +3,38 @@
 <script src="./jcsqsj/service_store/service_store.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-                   <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fas fa-search"></i></button>
-              </div>
-	 
-          <div class="card-body collapse">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+
+			   <div class="form-group row" id="firstshow">
+
                     						<label class='col-md-1 control-label' style='text-align:right;'>网点名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='nameQuery'>
 </div>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+<label class='col-md-1 control-label' style='text-align:right;'>网点名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery2'>
+</div>
+
+
 						<label class='col-md-1 control-label' style='text-align:right;'>网点类型</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='typeQuery' id='typeQuery'>
@@ -47,7 +59,7 @@
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='addressQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>统一社会信用代码</label>
+						<label class='col-md-1 control-label' style='text-align:right;'>社会信用代码</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='socialcodeQuery'>
 </div>
@@ -60,10 +72,7 @@
 					</select>
 					
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>联系人</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='contactQuery'>
-</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>是否24小时营业</label>
 <div class='col-sm-2'>
 					<select class='form-control field' name='is24hoursQuery' id='is24hoursQuery'>
@@ -72,24 +81,36 @@
 						<option value='否'>否</option>
 					</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
+
+<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='statusQuery'>
+					<select class='form-control field' name='statusQuery' id='statusQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='在营'>在营</option>
+						<option value='迁出'>迁出</option>
+					</select>
+					
 </div>
 
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+</div>
+
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
 				
-              </div>
-			  
-			   </div>
 			
             <div class="card">
               <div class="card-body">
@@ -98,6 +119,8 @@
                   <tr>
 					<th style='text-align:center;'>网点名称</th>
 					<th style='text-align:center;'>网点类型</th>
+					<th style='text-align:center;'>网点地址</th>
+					<th style='text-align:center;'>社会信用代码</th>
 					<th style='text-align:center;'>联系人</th>
 					<th style='text-align:center;'>联系人电话</th>
 					<th style='text-align:center;'>是否24小时营业</th>

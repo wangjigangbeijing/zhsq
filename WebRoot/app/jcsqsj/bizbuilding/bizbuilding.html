@@ -1,0 +1,181 @@
+
+
+<script src="./jcsqsj/bizbuilding/bizbuilding.js"></script>
+
+<section class="content">
+	<div class="container-fluid" style="margin-top:10px;">
+        <div class="row">
+          <div class="col-12">
+			
+			<div class="card">
+
+	 
+              <div class="card-body">
+                
+				<form class="form-horizontal">
+				
+
+                  <div class="form-group row">
+				  <label class='col-md-1 control-label' style='text-align:right;'>楼栋名称1</label>
+			<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>楼栋地址2</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='addressQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>建设用途</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='purposeQuery' id='purposeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='综合,商业,厂房,仓库,办公,临时建筑,9其他'>综合,商业,厂房,仓库,办公,临时建筑,9其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>产权年限</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='propertyyearsQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>产权性质</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='propertyrightsQuery' id='propertyrightsQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='市政产权,小产权,城中村改造,其他'>市政产权,小产权,城中村改造,其他</option>
+						</select>
+</div>
+</div>
+
+  <div class="form-group row" id="card-body" style="display:none;">
+  
+						<label class='col-md-1 control-label' style='text-align:right;'>采暖方式</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='heatingsystemQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='ofcommunityQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>楼栋类型</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='buildtypeQuery'>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>楼栋结构</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='buildframeworkQuery' id='buildframeworkQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='框架结构,砖混结构,框筒结构,框剪结构,简易结构,钢结构,钢混结构,其他'>框架结构,砖混结构,框筒结构,框剪结构,简易结构,钢结构,钢混结构,其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>建筑类型</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='constructiontypeQuery' id='constructiontypeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='高层楼宇,小高层建筑,多层建筑,居民自建房,临时建筑,其他'>高层楼宇,小高层建筑,多层建筑,居民自建房,临时建筑,其他</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='statusQuery'>
+</div>
+
+  </div>
+
+  <div class="form-group" style="text-align:center; margin-top:20px;">
+	<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
+	
+	<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-left:20px;"><i class="fa fa-plus"></i> 增加</button>
+  </div>
+				  
+		
+				  
+          
+			  </form>
+			  
+			</div>
+			  
+			<div class="card-tools" style="text-align:center;">
+                <button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+                  <i id="showicon" class="fas fa-chevron-down"></i></button>
+              </div>
+			  
+				
+              </div>
+			  
+
+			
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="dataTable">
+                  <thead>
+                  <tr>
+                    <th style='text-align:center;'>数据编码</th>
+<th style='text-align:center;'>楼栋名称</th>
+<th style='text-align:center;'>楼栋地址</th>
+<th style='text-align:center;'>建设年代</th>
+<th style='text-align:center;'>建设用途</th>
+<th style='text-align:center;'>产权年限</th>
+<th style='text-align:center;'>产权性质</th>
+<th style='text-align:center;'>采暖方式</th>
+<th style='text-align:center;'>所属小区</th>
+<th style='text-align:center;'>楼栋类型</th>
+<th style='text-align:center;'>楼栋结构</th>
+<th style='text-align:center;'>建筑类型</th>
+<th style='text-align:center;'>号</th>
+<th style='text-align:center;'>层数</th>
+<th style='text-align:center;'>电梯数</th>
+<th style='text-align:center;'>建筑面积（平方米）</th>
+<th style='text-align:center;'>开发商</th>
+<th style='text-align:center;'>产权人</th>
+<th style='text-align:center;'>产权人联系电话</th>
+<th style='text-align:center;'>使用人</th>
+<th style='text-align:center;'>使用人联系电话</th>
+<th style='text-align:center;'>物业管理公司</th>
+<th style='text-align:center;'>物业管理公司联系人</th>
+<th style='text-align:center;'>物业管理公司联系电话</th>
+<th style='text-align:center;'>楼栋经度</th>
+<th style='text-align:center;'>楼栋纬度</th>
+<th style='text-align:center;'>状态</th>
+<th style='text-align:center;'>备注</th>
+<th style='text-align:center;'>入驻法人单位数量</th>
+<th style='text-align:center;'>操作</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>	  
+
+
+<script>
+
+var uploader = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploader.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploader.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+});
+uploader.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

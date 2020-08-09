@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +11,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,25 +21,44 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	 
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	
  var haslicence = $('#haslicenceQuery').val();
  var socialcode = $('#socialcodeQuery').val();
  var orgtype = $('#orgtypeQuery').val();
  var economictype = $('#economictypeQuery').val();
  var industry = $('#industryQuery').val();
- var subordination = $('#subordinationQuery').val();
  var scale = $('#scaleQuery').val();
  var officeaddress = $('#officeaddressQuery').val();
  var ofbizbuilding = $('#ofbizbuildingQuery').val();
  var contacttel = $('#contacttelQuery').val();
- var hasfirefacilities = $('#hasfirefacilitiesQuery').val();
- var status = $('#statusQuery').val();
+  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_organizationController/load?name='+name+'&haslicence='+haslicence+'&socialcode='+socialcode+'&orgtype='+orgtype+'&economictype='+economictype+'&industry='+industry+'&subordination='+subordination+'&scale='+scale+'&officeaddress='+officeaddress+'&ofbizbuilding='+ofbizbuilding+'&contacttel='+contacttel+'&hasfirefacilities='+hasfirefacilities+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_organizationController/load?name='+name+'&haslicence='+haslicence+'&socialcode='+socialcode+'&orgtype='+orgtype+'&economictype='+economictype+'&industry='+industry+'&scale='+scale+'&officeaddress='+officeaddress+'&ofbizbuilding='+ofbizbuilding+'&contacttel='+contacttel+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -71,34 +92,21 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
+
+					{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'haslicence' ,'sClass':'text-center'},
 					{ 'data': 'socialcode' ,'sClass':'text-center'},
-					{ 'data': 'socialcodedate' ,'sClass':'text-center'},
 					{ 'data': 'orgtype' ,'sClass':'text-center'},
 					{ 'data': 'economictype' ,'sClass':'text-center'},
-					{ 'data': 'industry' ,'sClass':'text-center'},
-					{ 'data': 'subordination' ,'sClass':'text-center'},
 					{ 'data': 'establishdate' ,'sClass':'text-center'},
-					{ 'data': 'capitaltype' ,'sClass':'text-center'},
-					{ 'data': 'capital' ,'sClass':'text-center'},
-					{ 'data': 'businessscope' ,'sClass':'text-center'},
 					{ 'data': 'scale' ,'sClass':'text-center'},
-					{ 'data': 'regaddress' ,'sClass':'text-center'},
 					{ 'data': 'officeaddress' ,'sClass':'text-center'},
 					{ 'data': 'ofbizbuilding' ,'sClass':'text-center'},
-					{ 'data': 'legalname' ,'sClass':'text-center'},
 					{ 'data': 'contactname' ,'sClass':'text-center'},
 					{ 'data': 'contacttel' ,'sClass':'text-center'},
-					{ 'data': 'moveindate' ,'sClass':'text-center'},
-					{ 'data': 'responsibilityplateno' ,'sClass':'text-center'},
-					{ 'data': 'hasfirefacilities' ,'sClass':'text-center'},
-					{ 'data': 'wastedisposal' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
-
 				],
 				columnDefs: [ /*{
 					className: 'control',
@@ -112,7 +120,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  26,//从0开始
+					targets:  11,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

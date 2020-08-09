@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +11,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,16 +21,31 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
-	 var name = $('#nameQuery').val();
- var roadname = $('#roadnameQuery').val();
- var rateinfo = $('#rateinfoQuery').val();
- var rateinfo = $('#rateinfoQuery').val();
 
-	
-	$.get(getContextPath()+'/jc_tc_dltccController/load?name='+name+'&roadname='+roadname+'&rateinfo='+rateinfo+'&rateinfo='+rateinfo+'&',
+
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
+	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
+	var roadname = $('#roadnameQuery').val();
+
+	$.get(getContextPath()+'/jc_tc_dltccController/load?name='+name+'&roadname='+roadname+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -67,10 +84,9 @@ function load()
 					{ 'data': 'roadname' ,'sClass':'text-center'},
 					{ 'data': 'area' ,'sClass':'text-center'},
 					{ 'data': 'rateinfo' ,'sClass':'text-center'},
-					{ 'data': 'parkeTime' ,'sClass':'text-center'},
+
 					{ 'data': 'parknum' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
-					{ 'data': 'rateinfo' ,'sClass':'text-center'},
+
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -86,7 +102,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  9,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

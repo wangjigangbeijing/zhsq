@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +11,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -20,19 +22,40 @@ var curId;
 function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
-	 var type = $('#typeQuery').val();
- var objname = $('#objnameQuery').val();
- var deptname1 = $('#deptname1Query').val();
- var isincommunity = $('#isincommunityQuery').val();
- var material = $('#materialQuery').val();
- var form = $('#formQuery').val();
- var objState = $('#objStateQuery').val();
 
-	
-	$.get(getContextPath()+'/jc_pubfacilities_gyController/load?type='+type+'&objname='+objname+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
+	var searchtype = $("#searchtype").val();
+
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
+	 var type = $('#typeQuery').val();
+	if(searchtype == 2){
+		type = $('#typeQuery2').val();
+	}
+
+	var objid = $('#objidQuery').val();
+	var deptname1 = $('#deptname1Query').val();
+	var isincommunity = $('#isincommunityQuery').val();
+	var material = $('#materialQuery').val();
+	var form = $('#formQuery').val();
+	var objState = $('#objStateQuery').val();
+
+	$.get(getContextPath()+'/jc_pubfacilities_gyController/load?type='+type+'&objid='+objid+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
+
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
+		
 		if(obj.success)
 		{
 			dataTable = $('#dataTable').dataTable( {
@@ -65,19 +88,15 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dateid' ,'sClass':'text-center'},
+					
 					{ 'data': 'type' ,'sClass':'text-center'},
 					{ 'data': 'objid' ,'sClass':'text-center'},
-					{ 'data': 'objname' ,'sClass':'text-center'},
 					{ 'data': 'locatedsc' ,'sClass':'text-center'},
 					{ 'data': 'deptname1' ,'sClass':'text-center'},
-					{ 'data': 'deptname2' ,'sClass':'text-center'},
-					{ 'data': 'deptname3' ,'sClass':'text-center'},
 					{ 'data': 'isincommunity' ,'sClass':'text-center'},
 					{ 'data': 'material' ,'sClass':'text-center'},
 					{ 'data': 'form' ,'sClass':'text-center'},
 					{ 'data': 'objState' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -93,7 +112,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  13,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

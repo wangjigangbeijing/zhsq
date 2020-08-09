@@ -1,8 +1,10 @@
 
 
+
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,17 +12,64 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
+
+	$.ajax({
+		type: 'POST',
+		url: getContextPath()+"/dictionaryController/getDataOfDic",
+		data: JSON.stringify({id:'ofcommunity'}),
+		contentType: "application/json",
+		success:function(result){
+				  
+		  if(result.success)
+		  {
+			  $('#ofcommunityQuery').html('');
+			  var filterArr = [];
+			  
+			  filterArr[0] = "<option value=''></option>";				
+			  
+			  for(var i=0;i<result.value.length;i++)
+			  {
+				  var filter = result.value[i];
+				  
+				  filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+			  }
+			  $('#ofcommunityQuery').html(filterArr.join(''));
+		  }
+		  else
+		  {
+			  jError("获取社区列表失败!",{
+				  VerticalPosition : 'center',
+				  HorizontalPosition : 'center'
+			  });
+		  }
+	  },
+	dataType: "json"
+  });
+
 });
 
 var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
+
  var type = $('#typeQuery').val();
  var address = $('#addressQuery').val();
  var ofresidebuilding = $('#ofresidebuildingQuery').val();
@@ -30,7 +79,15 @@ function load()
 	
 	$.get(getContextPath()+'/undergroundspaceController/load?name='+name+'&type='+type+'&address='+address+'&ofresidebuilding='+ofresidebuilding+'&ofbizbuilding='+ofbizbuilding+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+
+		if(searchtype == 1){
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -66,6 +123,7 @@ function load()
 				"columns": [
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
+					{ 'data': 'address' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
@@ -82,7 +140,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  3,//从0开始
+					targets:  4,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 

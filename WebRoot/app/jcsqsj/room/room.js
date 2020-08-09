@@ -1,5 +1,6 @@
 
 
+
 $(document).ready(function (){
 	
 	$('#btnAdd1').click(ShowAddModal);
@@ -23,26 +24,68 @@ $(document).ready(function (){
 	  contentType: "application/json",
 	  success:function(result){
 				
+		if(result.success)
+		{
+			$('#ofcommunityQuery').html('');
+			var filterArr = [];
+			
+			filterArr[0] = "<option value=''></option>";				
+			
+			for(var i=0;i<result.value.length;i++)
+			{
+				var filter = result.value[i];
+				
+				filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+			}
+			$('#ofcommunityQuery').html(filterArr.join(''));
+			
+			$('#ofresidebuildingQuery').html('');				
+			$('#ofunitQuery').html('');
+			$('#ofroomQuery').html('');
+			$('#offamilyQuery').html('');
+		}
+		else
+		{
+			jError("获取社区列表失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	},
+  dataType: "json"
+});
+
+$('#ofcommunityQuery').change(function(){
+	
+	var ofcommunity = $('#ofcommunityQuery').val();
+	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofresidebuilding',params:[{enname:'ofcommunity',value:ofcommunity}]}),
+	  contentType: "application/json",
+	  success:function(result){
+				
 			if(result.success)
 			{
-				$('#ofcommunity').html('');
+				$('#ofresidebuildingQuery').html('');
 				var filterArr = [];
-							
+				filterArr[0] = "<option value=''></option>";				
 				for(var i=0;i<result.value.length;i++)
 				{
 					var filter = result.value[i];
 					
-					filterArr[i] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
 				}
-				$('#ofcommunity').html(filterArr.join(''));
+				$('#ofresidebuildingQuery').html(filterArr.join(''));
 				
-				$('#ofresidebuilding').html('');
-				
-				$('#ofunit').html('');
+				$('#ofunitQuery').html('');
+				$('#ofroomQuery').html('');
+				$('#offamilyQuery').html('');
 			}
 			else
 			{
-				jError("获取社区列表失败!",{
+				jError("获取居民楼列表失败!",{
 					VerticalPosition : 'center',
 					HorizontalPosition : 'center'
 				});
@@ -50,81 +93,50 @@ $(document).ready(function (){
 		},
 	  dataType: "json"
 	});
+});
+
+$('#ofresidebuildingQuery').change(function(){
 	
-	$('#ofcommunity').change(function(){
-		
-		var ofcommunity = $('#ofcommunity').val();
-		
-		$.ajax({
-		  type: 'POST',
-		  url: getContextPath()+"/dictionaryController/getDataOfDic",
-		  data: JSON.stringify({id:'ofresidebuilding',params:[{enname:'ofcommunity',value:ofcommunity}]}),
-		  contentType: "application/json",
-		  success:function(result){
-					
-				if(result.success)
-				{
-					$('#ofresidebuilding').html('');
-					var filterArr = [];
-								
-					for(var i=0;i<result.value.length;i++)
-					{
-						var filter = result.value[i];
-						
-						filterArr[i] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
-					}
-					$('#ofresidebuilding').html(filterArr.join(''));
-					
-					$('#ofunit').html('');
-				}
-				else
-				{
-					jError("获取居民楼列表失败!",{
-						VerticalPosition : 'center',
-						HorizontalPosition : 'center'
-					});
-				}
-			},
-		  dataType: "json"
-		});
-	});
+	var ofresidebuilding = $('#ofresidebuildingQuery').val();
+	var ofcommunity = $('#ofcommunityQuery').val();
 	
-	$('#ofresidebuilding').change(function(){
-		
-		var ofresidebuilding = $('#ofresidebuilding').val();
-		var ofcommunity = $('#ofcommunity').val();
-		
-		$.ajax({
-		  type: 'POST',
-		  url: getContextPath()+"/dictionaryController/getDataOfDic",
-		  data: JSON.stringify({id:'ofresidebuilding',params:[{enname:'ofcommunity',value:ofcommunity},{enname:'ofresidebuilding',value:ofresidebuilding}]}),
-		  contentType: "application/json",
-		  success:function(result){
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofunit',params:[{enname:'ofcommunity',value:ofcommunity},{enname:'ofresidebuilding',value:ofresidebuilding}]}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ofunit').html('');
+				var filterArr = [];
+				filterArr[0] = "<option value=''></option>";							
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
 					
-				if(result.success)
-				{
-					$('#ofunit').html('');
-					var filterArr = [];
-								
-					for(var i=0;i<result.value.length;i++)
-					{
-						var filter = result.value[i];
-						
-						filterArr[i] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
-					}
-					$('#ofunit').html(filterArr.join(''));
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
 				}
-				else
-				{
-					jError("获取单元列表失败!",{
-						VerticalPosition : 'center',
-						HorizontalPosition : 'center'
-					});
-				}
-			},
-		  dataType: "json"
-		});
+				$('#ofunitQuery').html(filterArr.join(''));
+				
+				$('#ofroomQuery').html('');
+				$('#offamilyQuery').html('');
+			}
+			else
+			{
+				jError("获取单元列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
 	});
+});
+
+
+
 });
 
 var curId;
@@ -138,11 +150,10 @@ function load()
 	else {
 		$('#btnSearch2').attr('disabled','disabled');
 	}
-	 var number = $('#numberQuery').val();
+	 var number  = $('#numberQuery').val();
 	if(searchtype == 2){
-		number = $('#numberQuery2').val();
+		number  = $('#numberQuery2').val();
 	}
- 
 	
 	
  var ofcommunity = $('#ofcommunityQuery').val();
@@ -150,18 +161,21 @@ function load()
  var ofunit = $('#ofunitQuery').val();
  var status = $('#statusQuery').val();
  var isgrouporiented = $('#isgrouporientedQuery').val();
- var ownertype = $('#ownertypeQuery').val();
- var propertypapertype = $('#propertypapertypeQuery').val();
+
 
 	
-	$.get(getContextPath()+'/roomController/load?number='+number+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&status='+status+'&isgrouporiented='+isgrouporiented+'&ownertype='+ownertype+'&propertypapertype='+propertypapertype+'&',
+	$.get(getContextPath()+'/roomController/load?number='+number+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&status='+status+'&isgrouporiented='+isgrouporiented+'&',
 	function(result){
+	
 		if(searchtype == 1){
+			
 			$('#btnSearch1').removeAttr('disabled');
 		}
 		else {
 			$('#btnSearch2').removeAttr('disabled');
 		}
+
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{

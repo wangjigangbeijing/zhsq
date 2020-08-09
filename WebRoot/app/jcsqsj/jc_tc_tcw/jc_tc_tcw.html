@@ -3,32 +3,53 @@
 <script src="./jcsqsj/jc_tc_tcw/jc_tc_tcw.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-              <div class="card-body">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>车位类型</label>
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+			   <div class="form-group row" id="firstshow">
+						
+					<label class='col-md-1 control-label' style='text-align:right;'>车位类型</label>
+
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='cwtypeQuery'>
+	<select class='form-control field' name='cwtypeQuery' id='cwtypeQuery'>
+	 <option value=''>全部</option>
+	 <option value='一般停车位'>一般停车位</option>
+	 <option value='道路停车位'>道路停车位</option>
+	</select>
 </div>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+<label class='col-md-1 control-label' style='text-align:right;'>车位类型</label>
+
+<div class='col-sm-2'>
+	<select class='form-control field' name='cwtypeQuery' id='cwtypeQuery2'>
+	 <option value=''>全部</option>
+	 <option value='一般停车位'>一般停车位</option>
+	 <option value='道路停车位'>道路停车位</option>
+	</select>
+</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>泊车位使用属性</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='UseTypeQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>停车泊位尺寸属性</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='sizeTypeQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>停车泊位髙度属性</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='heightTypeQuery'>
+	<select class='form-control field' name='UseTypeQuery' id='UseTypeQuery'>
+	 <option value=''>全部</option>
+	 <option value='公用'>公用</option>
+	 <option value='专属'>专属</option>
+	</select>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>停车泊位排列形式</label>
 <div class='col-sm-2'>
@@ -42,22 +63,31 @@
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>是否配备充电桩</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='haschargeQuery'>
+	<select class='form-control field' name='haschargeQuery' id='haschargeQuery'>
+	 <option value=''>全部</option>
+	 <option value='已配备'>已配备</option>
+	 <option value='专配备'>专配备</option>
+	</select>
 </div>
 
+
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+</div>
+
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">
@@ -69,13 +99,13 @@
 <th style='text-align:center;'>位置描述</th>
 <th style='text-align:center;'>停车位个数</th>
 <th style='text-align:center;'>泊车位使用属性</th>
-<th style='text-align:center;'>停车泊位尺寸属性</th>
-<th style='text-align:center;'>停车泊位髙度属性</th>
+
+
 <th style='text-align:center;'>停车泊位排列形式</th>
-<th style='text-align:center;'>是否配备充电桩</th>
+
 <th style='text-align:center;'>充电桩数量</th>
 <th style='text-align:center;'>车位编号</th>
-<th style='text-align:center;'>备注</th>
+
 <th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +11,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,17 +21,33 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
  var regstatus = $('#regstatusQuery').val();
  var address = $('#addressQuery').val();
- var persionsize = $('#persionsizeQuery').val();
- var leadername = $('#leadernameQuery').val();
 
 	
-	$.get(getContextPath()+'/volunteerteamController/load?name='+name+'&regstatus='+regstatus+'&address='+address+'&persionsize='+persionsize+'&leadername='+leadername+'&',
+	$.get(getContextPath()+'/volunteerteamController/load?name='+name+'&regstatus='+regstatus+'&address='+address+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -63,9 +81,11 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-					{ 'data': 'name' ,'sClass':'text-center'},					
+					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'regstatus' ,'sClass':'text-center'},
-					{ 'data': 'competentunit' ,'sClass':'text-center'},
+					{ 'data': 'address' ,'sClass':'text-center'},	
+					{ 'data': 'establishdate' ,'sClass':'text-center'},										
+					{ 'data': 'contact' ,'sClass':'text-center'},
 					{ 'data': 'contactmobile' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
@@ -82,7 +102,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  4,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 

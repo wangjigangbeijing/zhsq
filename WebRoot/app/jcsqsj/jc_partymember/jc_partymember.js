@@ -1,8 +1,10 @@
 
 
+
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +12,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,27 +22,44 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
+
  var idnumber = $('#idnumberQuery').val();
  var sex = $('#sexQuery').val();
- var birthday = $('#birthdayQuery').val();
  var age = $('#ageQuery').val();
  var mobile = $('#mobileQuery').val();
- var education = $('#educationQuery').val();
- var partymembertype = $('#partymembertypeQuery').val();
+  var partymembertype = $('#partymembertypeQuery').val();
  var of_partyorganization = $('#of_partyorganizationQuery').val();
  var isincommunity = $('#isincommunityQuery').val();
- var joinpartydate = $('#joinpartydateQuery').val();
  var dyage = $('#dyageQuery').val();
  var membership = $('#membershipQuery').val();
- var islost = $('#islostQuery').val();
  var movemember = $('#movememberQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_partymemberController/load?name='+name+'&idnumber='+idnumber+'&sex='+sex+'&birthday='+birthday+'&age='+age+'&mobile='+mobile+'&education='+education+'&partymembertype='+partymembertype+'&of_partyorganization='+of_partyorganization+'&isincommunity='+isincommunity+'&joinpartydate='+joinpartydate+'&dyage='+dyage+'&membership='+membership+'&islost='+islost+'&movemember='+movemember+'&',
+	$.get(getContextPath()+'/jc_partymemberController/load?name='+name+'&idnumber='+idnumber+'&sex='+sex+'&age='+age+'&mobile='+mobile+'&partymembertype='+partymembertype+'&of_partyorganization='+of_partyorganization+'&isincommunity='+isincommunity+'&dyage='+dyage+'&membership='+membership+'&movemember='+movemember+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -73,27 +93,17 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'idnumber' ,'sClass':'text-center'},
+					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'sex' ,'sClass':'text-center'},
-					{ 'data': 'birthday' ,'sClass':'text-center'},
 					{ 'data': 'age' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'education' ,'sClass':'text-center'},
 					{ 'data': 'partymembertype' ,'sClass':'text-center'},
 					{ 'data': 'of_partyorganization' ,'sClass':'text-center'},
 					{ 'data': 'isincommunity' ,'sClass':'text-center'},
-					{ 'data': 'homeaddress' ,'sClass':'text-center'},
 					{ 'data': 'zhiwu' ,'sClass':'text-center'},
-					{ 'data': 'joinpartydate' ,'sClass':'text-center'},
-					{ 'data': 'inpartydate' ,'sClass':'text-center'},
 					{ 'data': 'dyage' ,'sClass':'text-center'},
 					{ 'data': 'membership' ,'sClass':'text-center'},
-					{ 'data': 'islost' ,'sClass':'text-center'},
-					{ 'data': 'lostdate' ,'sClass':'text-center'},
 					{ 'data': 'movemember' ,'sClass':'text-center'},
-					{ 'data': 'moveto' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -109,7 +119,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  21,//从0开始
+					targets:  12,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

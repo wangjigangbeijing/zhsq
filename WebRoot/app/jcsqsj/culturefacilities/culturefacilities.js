@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,26 +11,45 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
+
 
 var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	 
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
  var tpye = $('#tpyeQuery').val();
- var category = $('#categoryQuery').val();
- var contact = $('#contactQuery').val();
  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/culturefacilitiesController/load?name='+name+'&tpye='+tpye+'&category='+category+'&contact='+contact+'&status='+status+'&',
+	$.get(getContextPath()+'/culturefacilitiesController/load?name='+name+'&tpye='+tpye+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+		
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -66,6 +86,7 @@ function load()
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'tpye' ,'sClass':'text-center'},
 					{ 'data': 'managedepart' ,'sClass':'text-center'},
+					{ 'data': 'contact' ,'sClass':'text-center'},
 					{ 'data': 'contacttel' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
@@ -82,7 +103,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  5,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 

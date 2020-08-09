@@ -30,6 +30,7 @@
 						<label class='col-md-2 control-label'>身份证件名称</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='identitytype' id='identitytype'>
+						<option value=''>请选择</option>
  						<option value='居民身份证'>居民身份证</option>
 						<option value='军官证'>军官证</option>
 						<option value='机动车驾驶证'>机动车驾驶证</option>
@@ -116,7 +117,8 @@
 						<label class='col-md-2 control-label'>性别</label>
   				<div class='col-md-9'>
 					<label class='radio-inline'>
-						<input type='radio' name='sex' value='男性,女性'> 男性,女性
+						<input type='radio' name='sex' value='男性'> 男性
+						<input type='radio' name='sex' value='女性'> 女性
 					</label>
  						</div>
  					</div>
@@ -124,7 +126,8 @@
 						<label class='col-md-2 control-label'>户籍状态</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='residencestatus' id='residencestatus'>
- 						<option value='人户同在'>人户同在</option>
+							<option value=''>请选择</option>
+							<option value='人户同在'>人户同在</option>
 						<option value='户在人不在'>户在人不在</option>
 						<option value='人在户不在(本市)'>人在户不在(本市)</option>
 						<option value='人在户不在(外省市)'>人在户不在(外省市)</option>
@@ -137,8 +140,9 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>是否户主</label>
   				<div class='col-md-9'>
-					<label class='radio-inline'>
-						<input type='radio' name='ishouseholder' value='是,否'> 是,否
+					<label class='radio-inline'></label>
+						<input type='radio' name='ishouseholder' value='是'> 是
+						<input type='radio' name='ishouseholder' value='否'> 否
 					</label>
  						</div>
  					</div>
@@ -146,7 +150,8 @@
 						<label class='col-md-2 control-label'>与户主关系</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='relationshiphouseholder' id='relationshiphouseholder'>
- 						<option value='户主'>户主</option>
+							<option value=''>请选择</option>
+							<option value='户主'>户主</option>
 						<option value='配偶'>配偶</option>
 						<option value='子女'>子女</option>
 						<option value='父母'>父母</option>
@@ -162,7 +167,8 @@
 						<label class='col-md-2 control-label'>居民户籍类别</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='registrationcategory' id='registrationcategory'>
- 						<option value='本市城镇'>本市城镇</option>
+							<option value=''>请选择</option>
+							<option value='本市城镇'>本市城镇</option>
 						<option value='本市农业'>本市农业</option>
 						<option value='外埠城镇'>外埠城镇</option>
 						<option value='外埠农业'>外埠农业</option>			
@@ -232,7 +238,8 @@
 						<label class='col-md-2 control-label'>居民文化程度</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='education' id='education'>
- 						<option value='高中以下'>高中以下</option>
+							<option value=''>请选择</option>
+							<option value='高中以下'>高中以下</option>
 						<option value='高中'>高中</option>
 						<option value='大专'>大专</option>
 						<option value='本科'>本科</option>
@@ -246,7 +253,8 @@
 						<label class='col-md-2 control-label'>职业状态</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='professionstatus' id='professionstatus'>
- 						<option value='在职'>在职</option>
+							<option value=''>请选择</option>
+							<option value='在职'>在职</option>
 						<option value='在校'>在校</option>
 						<option value='无业'>无业</option>
 						<option value='灵活就业'>灵活就业</option>
@@ -259,7 +267,8 @@
 						<label class='col-md-2 control-label'>职业类型</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='professiontype' id='professiontype'>
- 						<option value='国家机关党群组织企业事业单位负责人'>国家机关党群组织企业事业单位负责人</option>
+							<option value=''>请选择</option>
+							<option value='国家机关党群组织企业事业单位负责人'>国家机关党群组织企业事业单位负责人</option>
 						<option value='专业技术人员'>专业技术人员</option>
 						<option value='办事人员和有关人员'>办事人员和有关人员</option>
 						<option value='商业服务业人员'>商业服务业人员</option>
@@ -472,7 +481,8 @@
 						<label class='col-md-2 control-label'>党籍状态</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='dy_membership' id='dy_membership'>
- 						<option value='刚入党'>刚入党</option>
+							<option value=''>请选择</option>
+							<option value='刚入党'>刚入党</option>
 						<option value='转正'>转正</option>
 						<option value='出党'>出党</option>
 						<option value='停止党籍'>停止党籍</option>
@@ -484,7 +494,8 @@
 						<label class='col-md-2 control-label'>是否为失联党员</label>
   				<div class='col-md-9'>
 					<label class='radio-inline'>
-						<input type='radio' name='dy_islost' value='是,否'> 是,否
+						<input type='radio' name='dy_islost' value='是'> 是
+						<input type='radio' name='dy_islost' value='否'> 否
 					</label>
  						</div>
  					</div>
@@ -503,7 +514,8 @@
 						<label class='col-md-2 control-label'>是否为流动党员</label>
   				<div class='col-md-9'>
 					<label class='radio-inline'>
-						<input type='radio' name='dy_movemember' value='是,否'> 是,否
+						<input type='radio' name='dy_movemember' value='是'> 是
+						<input type='radio' name='dy_movemember' value='否'> 否
 					</label>
  						</div>
  					</div>
@@ -517,6 +529,7 @@
 						<label class='col-md-2 control-label'>重点人类型</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='zdr_type' id='zdr_type'>
+							<option value=''>请选择</option>
  						<option value='刑释解教人员'>刑释解教人员</option>
 						<option value='社区矫正人员'>社区矫正人员</option>
 						<option value='吸毒人员'>吸毒人员</option>
@@ -648,7 +661,8 @@
 						<label class='col-md-2 control-label'>经济来源</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='lnr_economicsources' id='lnr_economicsources'>
- 						<option value='离退休金'>离退休金</option>
+							<option value=''>请选择</option>
+							<option value='离退休金'>离退休金</option>
 						<option value='工资'>工资</option>
 						<option value='低保'>低保</option>
 						<option value='其他'>其他</option>
@@ -659,7 +673,8 @@
 						<label class='col-md-2 control-label'>居住状况</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='lnr_livingconditions' id='lnr_livingconditions'>
- 						<option value='夫妻双方居住'>夫妻双方居住</option>
+							<option value=''>请选择</option>
+							<option value='夫妻双方居住'>夫妻双方居住</option>
 						<option value='独居'>独居</option>
 						<option value='和子女居住'>和子女居住</option>
 						<option value='其他'>其他</option>
@@ -712,7 +727,8 @@
 						<label class='col-md-2 control-label'>残疾类型</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='cj_disabilitytype' id='cj_disabilitytype'>
- 						<option value='听力'>听力</option>
+							<option value=''>请选择</option>
+							<option value='听力'>听力</option>
 						<option value='视力'>视力</option>
 						<option value='语言'>语言</option>
 						<option value='肢体'>肢体</option>
@@ -726,7 +742,8 @@
 						<label class='col-md-2 control-label'>残疾等级</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='cj_disabilitylevel' id='cj_disabilitylevel'>
- 						<option value='未定级'>未定级</option>
+							<option value=''>请选择</option>
+								<option value='未定级'>未定级</option>
 						<option value='一级'>一级</option>
 						<option value='二级'>二级</option>
 						<option value='三级'>三级</option>
@@ -750,7 +767,8 @@
 						<label class='col-md-2 control-label'>精神疾病类型</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='jsb_type' id='jsb_type'>
- 						<option value='精神分裂症'>精神分裂症</option>
+							<option value=''>请选择</option>
+							<option value='精神分裂症'>精神分裂症</option>
 						<option value='人格障碍'>人格障碍</option>
 						<option value='心境障碍'>心境障碍</option>
 						<option value='其他'>其他</option>

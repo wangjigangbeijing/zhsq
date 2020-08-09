@@ -3,47 +3,61 @@
 <script src="./jcsqsj/jc_tc_dltcc/jc_tc_dltcc.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-              <div class="card-body">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>停车场名称</label>
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+        <input type='hidden' class='form-control' id='searchtype' value="1">
+        
+			   <div class="form-group row" id="firstshow">
+
+                 <label class='col-md-1 control-label' style='text-align:right;'>停车场名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='nameQuery'>
 </div>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+                <label class='col-md-1 control-label' style='text-align:right;'>停车场名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery2'>
+</div>
+
+
 						<label class='col-md-1 control-label' style='text-align:right;'>道路名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='roadnameQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>收费标准</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='rateinfoQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>收费标准</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='rateinfoQuery'>
+
+
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
 </div>
 
-					
-					<button id="btnSearch" class="btn btn-success">查询</button>
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">
@@ -55,10 +69,10 @@
 <th style='text-align:center;'>道路名称</th>
 <th style='text-align:center;'>面积</th>
 <th style='text-align:center;'>收费标准</th>
-<th style='text-align:center;'>停车泊位可用时间</th>
+
 <th style='text-align:center;'>泊位数</th>
-<th style='text-align:center;'>备注</th>
-<th style='text-align:center;'>收费标准</th>
+
+
 <th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

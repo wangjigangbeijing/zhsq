@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +11,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,19 +21,34 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+ 
  var buildtype = $('#buildtypeQuery').val();
  var type = $('#typeQuery').val();
  var year = $('#yearQuery').val();
  var status = $('#statusQuery').val();
  var address = $('#addressQuery').val();
- var note = $('#noteQuery').val();
 
 	
-	$.get(getContextPath()+'/communityController/load?name='+name+'&buildtype='+buildtype+'&type='+type+'&year='+year+'&status='+status+'&address='+address+'&note='+note+'&',
+	$.get(getContextPath()+'/communityController/load?name='+name+'&buildtype='+buildtype+'&type='+type+'&year='+year+'&status='+status+'&address='+address+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{

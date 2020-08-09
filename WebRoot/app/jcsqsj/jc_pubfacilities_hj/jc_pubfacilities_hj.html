@@ -3,22 +3,24 @@
 <script src="./jcsqsj/jc_pubfacilities_hj/jc_pubfacilities_hj.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-              <div class="card-body">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+			   <div class="form-group row" id="firstshow">
+
                     						<label class='col-md-1 control-label' style='text-align:right;'>部件类别</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='typeQuery' id='typeQuery'>
  						<option value=''>全部</option>
- 						<option value='公共厕所'>公共厕所</option>
+						 <option value='公共厕所'>公共厕所</option>
  						<option value='公厕指示牌'>公厕指示牌</option>
  						<option value='化粪池'>化粪池</option>
  						<option value='垃圾间（楼）'>垃圾间（楼）</option>
@@ -33,9 +35,36 @@
  						<option value='噪声显示屏'>噪声显示屏</option>
 						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>部件名称</label>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+<label class='col-md-1 control-label' style='text-align:right;'>部件类别</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='objnameQuery'>
+						<select class='form-control field' name='typeQuery' id='typeQuery2'>
+ 						<option value=''>全部</option>
+						 <option value='公共厕所'>公共厕所</option>
+ 						<option value='公厕指示牌'>公厕指示牌</option>
+ 						<option value='化粪池'>化粪池</option>
+ 						<option value='垃圾间（楼）'>垃圾间（楼）</option>
+ 						<option value='垃圾箱'>垃圾箱</option>
+ 						<option value='户外广告'>户外广告</option>
+ 						<option value='牌匾标识'>牌匾标识</option>
+ 						<option value='宣传栏'>宣传栏</option>
+ 						<option value='气象监测站'>气象监测站</option>
+ 						<option value='环保监测站'>环保监测站</option>
+ 						<option value='污水口监测站'>污水口监测站</option>
+ 						<option value='污水监测器'>污水监测器</option>
+ 						<option value='噪声显示屏'>噪声显示屏</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>部件编码</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='objidQuery'>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>主管部门</label>
 <div class='col-sm-2'>
@@ -43,8 +72,13 @@
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>是否小区内</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='isincommunityQuery'>
+	<select class='form-control field' name='materialQuery' id='isincommunityQuery'>
+	 <option value=''>全部</option>
+	 <option value='是'>是</option>
+	 <option value='否'>否</option>
+	</select>
 </div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>材质</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='materialQuery' id='materialQuery'>
@@ -77,37 +111,38 @@
 </div>
 
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+</div>
+
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>数据编码</th>
+      
 <th style='text-align:center;'>部件类别</th>
 <th style='text-align:center;'>部件编号</th>
-<th style='text-align:center;'>部件名称</th>
 <th style='text-align:center;'>部件位置</th>
 <th style='text-align:center;'>主管部门</th>
-<th style='text-align:center;'>权属单位</th>
-<th style='text-align:center;'>养护单位</th>
 <th style='text-align:center;'>是否小区内</th>
 <th style='text-align:center;'>材质</th>
 <th style='text-align:center;'>形状</th>
 <th style='text-align:center;'>状态</th>
-<th style='text-align:center;'>备注</th>
 <th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

@@ -3,26 +3,37 @@
 <script src="./jcsqsj/partyorganization/partyorganization.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-                     <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fas fa-search"></i></button>
-              </div>
-	 
-          <div class="card-body collapse">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+
+			   <div class="form-group row" id="firstshow">
+
                     						<label class='col-md-1 control-label' style='text-align:right;'>党组织名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='nameQuery'>
 </div>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+<label class='col-md-1 control-label' style='text-align:right;'>党组织名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery2'>
+</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>组织类别</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='tpyeQuery' id='tpyeQuery'>
@@ -37,24 +48,29 @@
 						<option value='932临时联合党支部'>932临时联合党支部</option>
 						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>书记</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='secretaryQuery'>
-</div>
+								<label class='col-md-1 control-label' style='text-align:right;'>书记</label>
+		<div class='col-sm-2'>
+							<input type='text' class='form-control' id='secretaryQuery'>
+		</div>
 
+
+		<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+		<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+		
+		</div>
+		
+		
+		</form>
+		
+		</div>
+		
+		<div class="card-tools" style="text-align:center;">
+		<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+		<i id="showicon" class="fas fa-chevron-down"></i></button>
+		</div>
+		
+		</div>
 			
             <div class="card">
               <div class="card-body">
@@ -63,7 +79,8 @@
                   <tr>
 <th style='text-align:center;'>党组织名称</th>
 <th style='text-align:center;'>组织类别</th>
-<th style='text-align:center;'>联系人</th>
+<th style='text-align:center;'>书记姓名</th>
+<th style='text-align:center;'>联系人姓名</th>
 <th style='text-align:center;'>联系电话</th>
 <th style='text-align:center;'>操作</th>
                   </tr>

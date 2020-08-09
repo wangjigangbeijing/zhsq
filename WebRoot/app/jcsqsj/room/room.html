@@ -8,15 +8,16 @@
           <div class="col-12">
 			
 			<div class="card">
-			 
-                  
-	 
-          <div class="card-body">
+
+			<div class="card-body">
                 
 				<form class="form-horizontal">
 				
 				<input type='hidden' class='form-control' id='searchtype' value="1">
+
 				 <div class="form-group row" id="firstshow">
+
+					
                     	<label class='col-md-1 control-label' style='text-align:right;'>房间号</label>
 						<div class='col-sm-2'>
 							<input type='text' class='form-control' id='numberQuery'>
@@ -27,65 +28,69 @@
 						<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
 				</div>
                 
-                  <div class="form-group row" id="card-body" style="display:none;">
+				  <div class="form-group row" id="card-body" style="display:none;">
+					
                     						<label class='col-md-1 control-label' style='text-align:right;'>房间号</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='numberQuery2'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
+
+<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ofcommunityQuery'>
+					<select class='form-control field' name='ofcommunity' id='ofcommunityQuery'> 						
+						</select>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>所在楼宇</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ofresidebuildingQuery'>
+ 					<select class='form-control field' name='ofresidebuildingQuery' id='ofresidebuildingQuery'> 						
+						</select>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>所在单元</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ofunitQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>房屋状态</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='statusQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>是否群租</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='isgrouporientedQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>房主类型</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ownertypeQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>产权证类型</label>
-<div class='col-sm-2'>
-						<select class='form-control field' name='propertypapertypeQuery' id='propertypapertypeQuery'>
- 						<option value=''>全部</option>
- 						<option value='房地产权利证书'>房地产权利证书</option>
-						<option value='建筑许可证'>建筑许可证</option>
-						<option value='红线图'>红线图</option>
-						<option value='建筑规划许可证'>建筑规划许可证</option>
-						<option value='其他'>其他</option>
+ 					<select class='form-control field' name='ofunitQuery' id='ofunitQuery'> 						
 						</select>
 </div>
 
+	
+<label class='col-md-1 control-label' style='text-align:right;'>房屋状态</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='statusQuery' id='statusQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='出租'>出租</option>
+						<option value='自住'>自住</option>
+						<option value='出租'>待租</option>
+						<option value='自住'>空置</option>
+						<option value='出租'>其他</option>
+						</select>
+</div>
+
+<label class='col-md-1 control-label' style='text-align:right;'>是否群租</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='isgrouporientedQuery' id='isgrouporientedQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='是'>是</option>
+						<option value='否'>否</option>
+						</select>
+</div>
+
+
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
-					
-					<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-            
-              </form>
-				
-              </div>
-			  
-			  <div class="card-tools" style="text-align:center;">
-                <button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
-                  <i id="showicon" class="fas fa-chevron-down"></i></button>
-              </div>
-			  
-			   </div>
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+</div>
+
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">

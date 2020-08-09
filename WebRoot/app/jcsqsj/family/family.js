@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,10 +11,10 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
-	
 	
 	$.ajax({
 	  type: 'POST',
@@ -218,10 +219,21 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
+
  var registrationcategory = $('#registrationcategoryQuery').val();
- var registrationaddress = $('#registrationaddressQuery').val();
  var ofcommunity = $('#ofcommunityQuery').val();
  var ofresidebuilding = $('#ofresidebuildingQuery').val();
  var ofunit = $('#ofunitQuery').val();
@@ -229,9 +241,15 @@ function load()
  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/familyController/load?name='+name+'&registrationcategory='+registrationcategory+'&registrationaddress='+registrationaddress+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&ofroom='+ofroom+'&status='+status+'&',
+	$.get(getContextPath()+'/familyController/load?name='+name+'&registrationcategory='+registrationcategory+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&ofroom='+ofroom+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{

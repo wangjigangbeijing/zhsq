@@ -96,6 +96,15 @@
 						城市管理图
 						</a>
 
+						<a class="btn btn-app" id="tczytAnchor" >
+							<i> <img src="../../images/icon/gisicon/停车资源图.png" width="32px"  alt="" /></i></br>
+							停车资源图
+							</a>
+
+						<a class="btn btn-app" id="sxsqtAnchor" >
+								<i> <img src="../../images/icon/gisicon/事项社情图.png" width="32px"  alt="" /></i></br>
+							事项社情图
+								</a>
     
 
 
@@ -510,6 +519,14 @@ function mingqing(id)
 
 $(function () 
 {
+	$('#sxsqtAnchor').click(function () {
+        loadMap('事项社情图');
+    });
+	
+	$('#tczytAnchor').click(function () {
+        loadMap('停车资源图');
+    });
+	
 	$('#csgltAnchor').click(function () {
         loadMap('城市管理图');
     });
@@ -649,11 +666,11 @@ $(function ()
 			arr = gid.split('.');
 
 			if(gid.indexOf('jc_residebuilding') >= 0){
-								content.innerHTML = '<p>图斑信息:</p><p>' + feature.get('info') +
+								content.innerHTML = '<p>信息:</p><p>' + feature.get('info') +
 				  '</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>' + '<button id="btnSearch" class="btn btn-info" style="margin-left:15px; float:right;" onclick="mingqing(\'' + arr[1] + '\')">民情图</button>';
 			}
 			else {
-				content.innerHTML = '<p>图斑信息:</p><p>' + feature.get('info') +
+				content.innerHTML = '<p>信息:</p><p>' + feature.get('info') +
 				  '</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>';
 			  }
 			overlay.setPosition(coordinate);

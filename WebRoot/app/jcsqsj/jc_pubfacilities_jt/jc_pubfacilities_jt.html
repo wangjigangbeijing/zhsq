@@ -3,22 +3,24 @@
 <script src="./jcsqsj/jc_pubfacilities_jt/jc_pubfacilities_jt.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-              <div class="card-body">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+			   <div class="form-group row" id="firstshow">
+
                     						<label class='col-md-1 control-label' style='text-align:right;'>部件类别</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='typeQuery' id='typeQuery'>
  						<option value=''>全部</option>
- 						<option value='停车场'>停车场</option>
+						 <option value='停车场'>停车场</option>
  						<option value='立体车库'>立体车库</option>
  						<option value='停车咪表'>停车咪表</option>
  						<option value='公交站亭'>公交站亭</option>
@@ -51,9 +53,54 @@
  						<option value='港监设施'>港监设施</option>
 						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>部件名称</label>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+<label class='col-md-1 control-label' style='text-align:right;'>部件类别</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='objnameQuery'>
+						<select class='form-control field' name='typeQuery' id='typeQuery2'>
+ 						<option value=''>全部</option>
+						 <option value='停车场'>停车场</option>
+ 						<option value='立体车库'>立体车库</option>
+ 						<option value='停车咪表'>停车咪表</option>
+ 						<option value='公交站亭'>公交站亭</option>
+ 						<option value='出租车站牌'>出租车站牌</option>
+ 						<option value='过街天桥'>过街天桥</option>
+ 						<option value='地下通道'>地下通道</option>
+ 						<option value='立交桥'>立交桥</option>
+ 						<option value='跨河桥'>跨河桥</option>
+ 						<option value='交通标志牌'>交通标志牌</option>
+ 						<option value='限高架标志'>限高架标志</option>
+ 						<option value='路名牌'>路名牌</option>
+ 						<option value='地名牌'>地名牌</option>
+ 						<option value='交通信号灯'>交通信号灯</option>
+ 						<option value='交通信号设施'>交通信号设施</option>
+ 						<option value='交通岗亭'>交通岗亭</option>
+ 						<option value='交通护栏'>交通护栏</option>
+ 						<option value='防撞桶'>防撞桶</option>
+ 						<option value='安全岛'>安全岛</option>
+ 						<option value='人行横道桩'>人行横道桩</option>
+ 						<option value='便道桩'>便道桩</option>
+ 						<option value='柔性隔离体'>柔性隔离体</option>
+ 						<option value='道路信息显示屏'>道路信息显示屏</option>
+ 						<option value='道路隔音屏'>道路隔音屏</option>
+ 						<option value='非机动车停放点'>非机动车停放点</option>
+ 						<option value='自行车租赁点'>自行车租赁点</option>
+ 						<option value='存车支架'>存车支架</option>
+ 						<option value='铁道口设施'>铁道口设施</option>
+ 						<option value='栈桥'>栈桥</option>
+ 						<option value='水域标示牌'>水域标示牌</option>
+ 						<option value='港监设施'>港监设施</option>
+						</select>
+</div>
+						<label class='col-md-1 control-label' style='text-align:right;'>部件编码</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='objidQuery'>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>主管部门</label>
 <div class='col-sm-2'>
@@ -61,8 +108,13 @@
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>是否小区内</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='isincommunityQuery'>
+	<select class='form-control field' name='materialQuery' id='isincommunityQuery'>
+	 <option value=''>全部</option>
+	 <option value='是'>是</option>
+	 <option value='否'>否</option>
+	</select>
 </div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>材质</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='materialQuery' id='materialQuery'>
@@ -95,37 +147,38 @@
 </div>
 
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+</div>
+
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>数据编码</th>
+      
 <th style='text-align:center;'>部件类别</th>
 <th style='text-align:center;'>部件编号</th>
-<th style='text-align:center;'>部件名称</th>
 <th style='text-align:center;'>部件位置</th>
 <th style='text-align:center;'>主管部门</th>
-<th style='text-align:center;'>权属单位</th>
-<th style='text-align:center;'>养护单位</th>
 <th style='text-align:center;'>是否小区内</th>
 <th style='text-align:center;'>材质</th>
 <th style='text-align:center;'>形状</th>
 <th style='text-align:center;'>状态</th>
-<th style='text-align:center;'>备注</th>
 <th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

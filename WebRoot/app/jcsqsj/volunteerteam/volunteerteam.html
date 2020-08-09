@@ -3,26 +3,36 @@
 <script src="./jcsqsj/volunteerteam/volunteerteam.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-		
-             <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fas fa-search"></i></button>
-              </div>
-	 
-           <div class="card-body collapse">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>志愿团体名称</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='nameQuery'>
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+			   <div class="form-group row" id="firstshow">
+
+             <label class='col-md-1 control-label' style='text-align:right;'>团体名称</label>
+		<div class='col-sm-2'>
+ 			<input type='text' class='form-control' id='nameQuery'>
+	</div>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
 </div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+	<label class='col-md-1 control-label' style='text-align:right;'>团体名称</label>
+	<div class='col-sm-2'>
+						 <input type='text' class='form-control' id='nameQuery2'>
+	</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>登记状态</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='regstatusQuery' id='regstatusQuery'>
@@ -35,38 +45,38 @@
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='addressQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>人员规模</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='persionsizeQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>负责人姓名</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='leadernameQuery'>
+	
+
+
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
 </div>
 
-					
-					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-					<th style='text-align:center;'>志愿团体名称</th>
+					<th style='text-align:center;'>团体名称</th>
 					<th style='text-align:center;'>登记状态</th>
-					<th style='text-align:center;'>主管单位名称</th>
-					<th style='text-align:center;'>负责人手机</th>
+					<th style='text-align:center;'>详细地址</th>
+					<th style='text-align:center;'>成立日期</th>
+					<th style='text-align:center;'>联系人姓名</th>
+					<th style='text-align:center;'>联系人手机号</th>
 					<th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

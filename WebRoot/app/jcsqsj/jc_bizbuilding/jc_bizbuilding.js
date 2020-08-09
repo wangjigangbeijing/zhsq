@@ -1,8 +1,10 @@
 
 
+
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +12,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,8 +22,19 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
-	 var name = $('#nameQuery').val();
+
+	 var searchtype = $("#searchtype").val();
+	 if(searchtype == 1){
+		 $('#btnSearch1').attr('disabled','disabled');
+	 }
+	 else {
+		 $('#btnSearch2').attr('disabled','disabled');
+	 }
+	  var name = $('#nameQuery').val();
+	 if(searchtype == 2){
+		 name = $('#nameQuery2').val();
+	 }
+
  var address = $('#addressQuery').val();
  var purpose = $('#purposeQuery').val();
  var propertyyears = $('#propertyyearsQuery').val();
@@ -30,13 +44,19 @@ function load()
  var buildtype = $('#buildtypeQuery').val();
  var buildframework = $('#buildframeworkQuery').val();
  var constructiontype = $('#constructiontypeQuery').val();
- var propertymanagecontact = $('#propertymanagecontactQuery').val();
  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_bizbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&propertymanagecontact='+propertymanagecontact+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_bizbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{

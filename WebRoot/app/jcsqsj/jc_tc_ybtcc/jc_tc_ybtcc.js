@@ -1,8 +1,8 @@
 
-
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +10,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,20 +20,35 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
+	 var pkName = $('#parkNameQuery').val();
+	if(searchtype == 2){
+		pkName = $('#parkNameQuery2').val();
+	}
+
+
 	 var tradeName = $('#tradeNameQuery').val();
  var jztype = $('#jztypeQuery').val();
  var unitAddres = $('#unitAddresQuery').val();
  var adminDep = $('#adminDepQuery').val();
- var ownerDep = $('#ownerDepQuery').val();
- var maintDep = $('#maintDepQuery').val();
- var Chargetype = $('#ChargetypeQuery').val();
- var DyData = $('#DyDataQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_tc_ybtccController/load?tradeName='+tradeName+'&jztype='+jztype+'&unitAddres='+unitAddres+'&adminDep='+adminDep+'&ownerDep='+ownerDep+'&maintDep='+maintDep+'&Chargetype='+Chargetype+'&DyData='+DyData+'&',
+	$.get(getContextPath()+'/jc_tc_ybtccController/load?parkName='+pkName+'&tradeName='+tradeName+'&jztype='+jztype+'&unitAddres='+unitAddres+'&adminDep='+adminDep+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -66,30 +82,16 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'parkID' ,'sClass':'text-center'},
+
 					{ 'data': 'parkName' ,'sClass':'text-center'},
 					{ 'data': 'tradeName' ,'sClass':'text-center'},
 					{ 'data': 'jztype' ,'sClass':'text-center'},
 					{ 'data': 'unitName' ,'sClass':'text-center'},
-					{ 'data': 'unitAddres' ,'sClass':'text-center'},
 					{ 'data': 'area' ,'sClass':'text-center'},
 					{ 'data': 'adminDep' ,'sClass':'text-center'},
-					{ 'data': 'ownerDep' ,'sClass':'text-center'},
-					{ 'data': 'maintDep' ,'sClass':'text-center'},
 					{ 'data': 'berthNum' ,'sClass':'text-center'},
-					{ 'data': 'UnberthNum' ,'sClass':'text-center'},
-					{ 'data': 'GrberthNum' ,'sClass':'text-center'},
-					{ 'data': 'ParkingNum' ,'sClass':'text-center'},
-					{ 'data': 'openNum' ,'sClass':'text-center'},
-					{ 'data': 'parkTime' ,'sClass':'text-center'},
 					{ 'data': 'chpileNum' ,'sClass':'text-center'},
-					{ 'data': 'BaFreeNum' ,'sClass':'text-center'},
-					{ 'data': 'MecNum' ,'sClass':'text-center'},
 					{ 'data': 'Chargetype' ,'sClass':'text-center'},
-					{ 'data': 'LoLeChtype' ,'sClass':'text-center'},
-					{ 'data': 'ShLeChtype' ,'sClass':'text-center'},
-					{ 'data': 'DyData' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -105,7 +107,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  24,//从0开始
+					targets:  9,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						

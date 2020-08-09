@@ -1,8 +1,10 @@
 
 
+
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +12,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,20 +22,34 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
  var type = $('#typeQuery').val();
  var address = $('#addressQuery').val();
  var socialcode = $('#socialcodeQuery').val();
  var ischain = $('#ischainQuery').val();
- var contact = $('#contactQuery').val();
  var is24hours = $('#is24hoursQuery').val();
  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/service_storeController/load?name='+name+'&type='+type+'&address='+address+'&socialcode='+socialcode+'&ischain='+ischain+'&contact='+contact+'&is24hours='+is24hours+'&status='+status+'&',
+	$.get(getContextPath()+'/service_storeController/load?name='+name+'&type='+type+'&address='+address+'&socialcode='+socialcode+'&ischain='+ischain+'&is24hours='+is24hours+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -69,7 +86,7 @@ function load()
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
 					{ 'data': 'address' ,'sClass':'text-center'},
-
+					{ 'data': 'socialcode' ,'sClass':'text-center'},					
 					{ 'data': 'contact' ,'sClass':'text-center'},
 					{ 'data': 'contacttel' ,'sClass':'text-center'},
 					{ 'data': 'is24hours' ,'sClass':'text-center'},
@@ -90,7 +107,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  7,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 

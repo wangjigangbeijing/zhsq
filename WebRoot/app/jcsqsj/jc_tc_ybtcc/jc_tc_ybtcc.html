@@ -3,17 +3,39 @@
 <script src="./jcsqsj/jc_tc_ybtcc/jc_tc_ybtcc.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-              <div class="card-body">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+
+			   <div class="form-group row" id="firstshow">
+
+				<label class='col-md-1 control-label' style='text-align:right;'>停车场名称</label>
+				<div class='col-sm-2'>
+									 <input type='text' class='form-control' id='parkNameQuery'>
+				</div>
+
+				
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+				<label class='col-md-1 control-label' style='text-align:right;'>停车场名称</label>
+				<div class='col-sm-2'>
+									 <input type='text' class='form-control' id='parkNameQuery2'>
+				</div>
+
+
                     						<label class='col-md-1 control-label' style='text-align:right;'>车场业态类型</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='tradeNameQuery' id='tradeNameQuery'>
@@ -41,66 +63,41 @@
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='adminDepQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>权属部门</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ownerDepQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>养护单位</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='maintDepQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>收费类型</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ChargetypeQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>是否有动态数据</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='DyDataQuery'>
+					
+
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
 </div>
 
-					
-					<button id="btnSearch" class="btn btn-success">查询</button>
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>停车场库编号</th>
+
 <th style='text-align:center;'>停车场名称</th>
 <th style='text-align:center;'>车场业态类型</th>
 <th style='text-align:center;'>建筑类型</th>
 <th style='text-align:center;'>小区或单位名称</th>
-<th style='text-align:center;'>小区或单位地址</th>
 <th style='text-align:center;'>停车场面积</th>
 <th style='text-align:center;'>主管单位</th>
-<th style='text-align:center;'>权属部门</th>
-<th style='text-align:center;'>养护单位</th>
 <th style='text-align:center;'>泊位数</th>
-<th style='text-align:center;'>地下泊位数</th>
-<th style='text-align:center;'>地面泊位数</th>
-<th style='text-align:center;'>停车楼泊位数</th>
-<th style='text-align:center;'>对外开放泊位数</th>
-<th style='text-align:center;'>允许停放时间</th>
 <th style='text-align:center;'>充电桩停车泊位数量</th>
-<th style='text-align:center;'>无障碍泊位数量</th>
-<th style='text-align:center;'>机械车位数量</th>
 <th style='text-align:center;'>收费类型</th>
-<th style='text-align:center;'>长租收费标准</th>
-<th style='text-align:center;'>短租收费标准</th>
-<th style='text-align:center;'>是否有动态数据</th>
-<th style='text-align:center;'>备注</th>
 <th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

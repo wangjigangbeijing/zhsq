@@ -358,16 +358,32 @@ $(function ()
 		
 		if(feature != null && feature != undefined)
 		{
+
+
 			var gid = feature.getId();
-			
+
+			console.log("info: " + feature.get('info'));
+
 			//curId = gid.substring(gid.indexOf('\.')+1);
-			
+
 			var coordinate = evt.coordinate;
 			//var hdms = toStringHDMS(toLonLat(coordinate));
 
-			content.innerHTML = '<p>图斑信息:</p><code>' + gid +
-			  '</code>';
+			var arr=new Array();
+			arr = gid.split('.');
+
+			if(gid.indexOf('jc_residebuilding') >= 0){
+								content.innerHTML = '<p>信息:</p><p>' + feature.get('info') +
+				'</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>' + '<button id="btnSearch" class="btn btn-info" style="margin-left:15px; float:right;" onclick="mingqing(\'' + arr[1] + '\')">民情图</button>';
+			}
+			else {
+				content.innerHTML = '<p>信息:</p><p>' + feature.get('info') +
+				'</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>';
+			}
 			overlay.setPosition(coordinate);
+
+
+			
 		
 		}
 	});

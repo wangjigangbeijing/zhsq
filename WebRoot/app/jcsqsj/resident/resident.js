@@ -226,15 +226,17 @@ function load()
 	else {
 		$('#btnSearch2').attr('disabled','disabled');
 	}
-	 var name = $('#nameQuery').val();
- var identitytype = $('#identitytypeQuery').val();
- var idnumber = $('#idnumberQuery').val();
+
+	var name = $('#nameQuery').val();
+	var idnumber = $('#idnumberQuery').val();
+	var characteristics = $('#characteristicsQuery').val();
  if(searchtype == 2){
 	 name = $('#nameQuery2').val();
-	 identitytype = $('#identitytypeQuery2').val();
 	 idnumber = $('#idnumberQuery2').val();
+	 characteristics = $('#characteristicsQuery2').val();
  }
- var characteristics = $('#characteristicsQuery').val();
+
+ 
  var ofcommunity = $('#ofcommunityQuery').val();
  var ofresidebuilding = $('#ofresidebuildingQuery').val();
  var ofunit = $('#ofunitQuery').val();
@@ -248,43 +250,28 @@ function load()
  var birthday = $('#birthdayQuery').val();
  var age = $('#ageQuery').val();
  var nation = $('#nationQuery').val();
- var politicalstatus = $('#politicalstatusQuery').val();
  var education = $('#educationQuery').val();
  var professionstatus = $('#professionstatusQuery').val();
  var professiontype = $('#professiontypeQuery').val();
- var issocialsecurity = $('#issocialsecurityQuery').val();
  var tel = $('#telQuery').val();
  var mobile = $('#mobileQuery').val();
  var marriage = $('#marriageQuery').val();
- var isforeignmarriage = $('#isforeignmarriageQuery').val();
  var health = $('#healthQuery').val();
- var blood = $('#bloodQuery').val();
- var custodianincommunity = $('#custodianincommunityQuery').val();
- var dy_partymembertype = $('#dy_partymembertypeQuery').val();
- var dy_of_partyorganization = $('#dy_of_partyorganizationQuery').val();
- var dy_joinpartydate = $('#dy_joinpartydateQuery').val();
- var dy_membership = $('#dy_membershipQuery').val();
- var dy_islost = $('#dy_islostQuery').val();
- var dy_movemember = $('#dy_movememberQuery').val();
  var zdr_type = $('#zdr_typeQuery').val();
- var jzr_correctioncontent = $('#jzr_correctioncontentQuery').val();
- var sy_unemployedreemployment = $('#sy_unemployedreemploymentQuery').val();
- var lnr_economicsources = $('#lnr_economicsourcesQuery').val();
- var lnr_livingconditions = $('#lnr_livingconditionsQuery').val();
  var cj_disabilitytype = $('#cj_disabilitytypeQuery').val();
- var cj_disabilitylevel = $('#cj_disabilitylevelQuery').val();
- var jsb_type = $('#jsb_typeQuery').val();
 
 	
-	$.get(getContextPath()+'/residentController/load?name='+name+'&identitytype='+identitytype+'&idnumber='+idnumber+'&characteristics='+characteristics+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&ofroom='+ofroom+'&offamily='+offamily+'&sex='+sex+'&residencestatus='+residencestatus+'&ishouseholder='+ishouseholder+'&relationshiphouseholder='+relationshiphouseholder+'&registrationcategory='+registrationcategory+'&birthday='+birthday+'&age='+age+'&nation='+nation+'&politicalstatus='+politicalstatus+'&education='+education+'&professionstatus='+professionstatus+'&professiontype='+professiontype+'&issocialsecurity='+issocialsecurity+'&tel='+tel+'&mobile='+mobile+'&marriage='+marriage+'&isforeignmarriage='+isforeignmarriage+'&health='+health+'&blood='+blood+'&custodianincommunity='+custodianincommunity+'&dy_partymembertype='+dy_partymembertype+'&dy_of_partyorganization='+dy_of_partyorganization+'&dy_joinpartydate='+dy_joinpartydate+'&dy_membership='+dy_membership+'&dy_islost='+dy_islost+'&dy_movemember='+dy_movemember+'&zdr_type='+zdr_type+'&jzr_correctioncontent='+jzr_correctioncontent+'&sy_unemployedreemployment='+sy_unemployedreemployment+'&lnr_economicsources='+lnr_economicsources+'&lnr_livingconditions='+lnr_livingconditions+'&cj_disabilitytype='+cj_disabilitytype+'&cj_disabilitylevel='+cj_disabilitylevel+'&jsb_type='+jsb_type+'&',
+	$.get(getContextPath()+'/residentController/load?name='+name+'&idnumber='+idnumber+'&characteristics='+characteristics+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&ofroom='+ofroom+'&offamily='+offamily+'&sex='+sex+'&residencestatus='+residencestatus+'&ishouseholder='+ishouseholder+'&relationshiphouseholder='+relationshiphouseholder+'&registrationcategory='+registrationcategory+'&birthday='+birthday+'&age='+age+'&nation='+nation+'&education='+education+'&professionstatus='+professionstatus+'&professiontype='+professiontype+'&tel='+tel+'&mobile='+mobile+'&marriage='+marriage+'&health='+health+'&zdr_type='+zdr_type+'&cj_disabilitytype='+cj_disabilitytype+'&',
 	function(result){
 		
 		if(searchtype == 1){
+			
 			$('#btnSearch1').removeAttr('disabled');
 		}
 		else {
 			$('#btnSearch2').removeAttr('disabled');
 		}
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{

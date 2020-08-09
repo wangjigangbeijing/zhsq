@@ -3,33 +3,52 @@
 <script src="./jcsqsj/community/community.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
+	<div class="container-fluid">
         <div class="row">
           <div class="col-12">
 			
 			<div class="card">
-
-             <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="collapse" title="Collapse">
-                  <i class="fas fa-search"></i></button>
-              </div>
-
 			 
-             <div class="card-body collapse">
 
+	 
+          <div class="card-body">
                 
 				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>小区名称</label>
+
+    			<input type='hidden' class='form-control' id='searchtype' value="1">
+			
+			<div class="form-group row" id="firstshow">
+
+				<label class='col-md-1 control-label' style='text-align:right;'>小区名称</label>
+
+				<div class='col-sm-2'>
+						<input type='text' class='form-control' id='nameQuery'>
+				</div>
+				
+				<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+								
+			<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+			</div>
+	
+		<div class="form-group row" id="card-body" style="display:none;">
+
+			<label class='col-md-1 control-label' style='text-align:right;'>小区名称</label>
+
+			<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery2'>
+			</div>		
+
+<label class='col-md-1 control-label' style='text-align:right;'>主要建筑类别</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='nameQuery'>
+						<select class='form-control field' name='buildtypeQuery' id='buildtypeQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='楼房'>楼房</option>
+						<option value='平房'>平房</option>
+						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>主要建筑类别</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='buildtypeQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>小区类别</label>
+						
+<label class='col-md-1 control-label' style='text-align:right;'>小区类别</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='typeQuery' id='typeQuery'>
  						<option value=''>全部</option>
@@ -43,32 +62,40 @@
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='yearQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>小区状态</label>
+
+<label class='col-md-1 control-label' style='text-align:right;'>小区状态</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='statusQuery'>
+						<select class='form-control field' name='statusQuery' id='statusQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='正常'>正常</option>
+						<option value='拆除'>拆除</option>
+						</select>
 </div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>小区门牌地址</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='addressQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>备注</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='noteQuery'>
-</div>
+
 
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+			<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
+								
+			<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+			</div>
+
+
+			</form>
+
+			</div>
+
+			<div class="card-tools" style="text-align:center;">
+			<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+			<i id="showicon" class="fas fa-chevron-down"></i></button>
+			</div>
+
+			</div>
 			
             <div class="card">
               <div class="card-body">

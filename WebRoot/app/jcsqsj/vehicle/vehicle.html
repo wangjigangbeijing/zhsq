@@ -3,26 +3,39 @@
 <script src="./jcsqsj/vehicle/vehicle.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-		
-             <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fas fa-search"></i></button>
-              </div>
-	 
-          <div class="card-body collapse">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>车牌号</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='numberQuery'>
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+			   <div class="form-group row" id="firstshow">
+
+				<label class='col-md-1 control-label' style='text-align:right;'>车牌号</label>
+				
+			<div class='col-sm-2'>
+								<input type='text' class='form-control' id='numberQuery'>
+			</div>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
 </div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+
+	<label class='col-md-1 control-label' style='text-align:right;'>车牌号</label>
+	<div class='col-sm-2'>
+						 <input type='text' class='form-control' id='numberQuery2'>
+	</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
 <div class='col-sm-2'>
  					<select class='form-control field' name='ofcommunity' id='ofcommunityQuery'> 						
@@ -51,7 +64,7 @@
 						<label class='col-md-1 control-label' style='text-align:right;'>车辆类型</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='typeQuery' id='typeQuery'>
- 						<option value=''>全部</option>
+ 						<option value=''>请选择</option>
  						<option value='轿车'>轿车</option>
 						<option value='SUV'>SUV</option>
 						<option value='MPV'>MPV</option>
@@ -68,19 +81,32 @@
  					<input type='text' class='form-control' id='statusQuery'>
 </div>
 
+<div class='col-sm-2'>
+	<select class='form-control field' name='statusQuery' id='statusQuery'>
+	 <option value=''>全部</option>
+	 <option value='正常'>正常</option>
+	<option value='迁出'>迁出</option>
+	</select>
+</div>
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>&nbsp;
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+	<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
+						
+	<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+	</div>
+
+
+	</form>
+
+	</div>
+
+	<div class="card-tools" style="text-align:center;">
+	<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+	<i id="showicon" class="fas fa-chevron-down"></i></button>
+	</div>
+
+	</div>
+
 			
             <div class="card">
               <div class="card-body">

@@ -3,26 +3,46 @@
 <script src="./jcsqsj/jc_organization/jc_organization.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-              <div class="card-body">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>法人组织名称</label>
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+			   <div class="form-group row" id="firstshow">
+
+                    <label class='col-md-1 control-label' style='text-align:right;'>组织名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='nameQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>有无证照</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='haslicenceQuery'>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>统一社会信用代码</label>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+<label class='col-md-1 control-label' style='text-align:right;'>组织名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery2'>
+</div>
+
+<label class='col-md-1 control-label' style='text-align:right;'>有无证照</label>
+<div class='col-sm-2'>
+						<select class='form-control field' name='haslicenceQuery' id='haslicenceQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='有'>有</option>
+ 						<option value='无'>无</option>
+						</select>
+</div>
+
+						<label class='col-md-1 control-label' style='text-align:right;'>信用代码</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='socialcodeQuery'>
 </div>
@@ -77,19 +97,7 @@
  						<option value='T国际组织'>T国际组织</option>
 						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>隶属关系</label>
-<div class='col-sm-2'>
-						<select class='form-control field' name='subordinationQuery' id='subordinationQuery'>
- 						<option value=''>全部</option>
- 						<option value='中央'>中央</option>
- 						<option value='省'>省</option>
- 						<option value='市地区'>市地区</option>
- 						<option value='县'>县</option>
- 						<option value='街道乡镇'>街道乡镇</option>
- 						<option value='社区村'>社区村</option>
- 						<option value='其他'>其他</option>
-						</select>
-</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>企业规模</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='scaleQuery' id='scaleQuery'>
@@ -104,7 +112,7 @@
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='officeaddressQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>办公地址所在商业楼宇</label>
+						<label class='col-md-1 control-label' style='text-align:right;'>所在楼宇</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='ofbizbuildingQuery'>
 </div>
@@ -112,60 +120,55 @@
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='contacttelQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>是否有消防设备</label>
+
+
+<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='hasfirefacilitiesQuery'>
+						<select class='form-control field' name='statusQuery' id='statusQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='在营'>在营</option>
+ 						<option value='迁出'>迁出</option>
+						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='statusQuery'>
+					
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
 </div>
 
-					
-					<button id="btnSearch" class="btn btn-success">查询</button>
-					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+
+</form>
+
+</div>
+
+<div class="card-tools" style="text-align:center;">
+<button type="button" class="btn btn-tool"  data-toggle="tooltip" title="Collapse" onclick="forkme()">
+<i id="showicon" class="fas fa-chevron-down"></i></button>
+</div>
+
+</div>
+
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>数据编码</th>
-<th style='text-align:center;'>法人组织名称</th>
+
+
+<th style='text-align:center;'>组织名称</th>
 <th style='text-align:center;'>有无证照</th>
-<th style='text-align:center;'>统一社会信用代码</th>
-<th style='text-align:center;'>证照登记时间</th>
+<th style='text-align:center;'>信用代码</th>
 <th style='text-align:center;'>机构类型</th>
 <th style='text-align:center;'>经济类型</th>
-<th style='text-align:center;'>行业名称</th>
-<th style='text-align:center;'>隶属关系</th>
 <th style='text-align:center;'>成立时间</th>
-<th style='text-align:center;'>注册资本类型</th>
-<th style='text-align:center;'>注册资本</th>
-<th style='text-align:center;'>经营(业务)范围</th>
 <th style='text-align:center;'>企业规模</th>
-<th style='text-align:center;'>注册地址</th>
 <th style='text-align:center;'>办公地址</th>
-<th style='text-align:center;'>办公地址所在商业楼宇</th>
-<th style='text-align:center;'>法人姓名</th>
+<th style='text-align:center;'>所在楼宇</th>
 <th style='text-align:center;'>联系人姓名</th>
 <th style='text-align:center;'>联系电话</th>
-<th style='text-align:center;'>迁入现址时间</th>
-<th style='text-align:center;'>责任牌编号</th>
-<th style='text-align:center;'>是否有消防设备</th>
-<th style='text-align:center;'>垃圾消纳情况</th>
 <th style='text-align:center;'>状态</th>
-<th style='text-align:center;'>备注</th>
 <th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

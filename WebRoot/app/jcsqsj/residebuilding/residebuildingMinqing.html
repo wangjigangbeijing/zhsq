@@ -1,4 +1,4 @@
-﻿
+
 <section class="content">
       <div class="container-fluid" id="minqingDiv">
         
@@ -238,7 +238,6 @@ function gobackPage()
 
 $(document).ready(function ()
 {
-	console.log("curid:" + curId);
 	$.get(getContextPath()+"/residebuildingController/getMinqing?id="+curId,
 		function(result){
 			var obj = jQuery.parseJSON(result);  

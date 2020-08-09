@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,17 +11,63 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
+
+	$.ajax({
+		type: 'POST',
+		url: getContextPath()+"/dictionaryController/getDataOfDic",
+		data: JSON.stringify({id:'ofcommunity'}),
+		contentType: "application/json",
+		success:function(result){
+				  
+		  if(result.success)
+		  {
+			  $('#ofcommunityQuery').html('');
+			  var filterArr = [];
+			  
+			  filterArr[0] = "<option value=''></option>";				
+			  
+			  for(var i=0;i<result.value.length;i++)
+			  {
+				  var filter = result.value[i];
+				  
+				  filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+			  }
+			  $('#ofcommunityQuery').html(filterArr.join(''));
+		  }
+		  else
+		  {
+			  jError("获取社区列表失败!",{
+				  VerticalPosition : 'center',
+				  HorizontalPosition : 'center'
+			  });
+		  }
+	  },
+	dataType: "json"
+  });
+
 });
 
 var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	
+
 	 var address = $('#addressQuery').val();
 	 var propertyyears = $('#propertyyearsQuery').val();
 	 var propertyrights = $('#propertyrightsQuery').val();
@@ -33,7 +80,16 @@ function load()
 
 	$.get(getContextPath()+'/residebuildingController/load?name='+name+'&address='+address+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+	
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
