@@ -5,6 +5,8 @@ $(document).ready(function (){
 	
 	$('#btnAdd').click(addznhffw);
 	
+	$('#btnSearch').click(loadznhffw);
+	
 	loadznhffw();
 	
 });
@@ -15,7 +17,11 @@ function loadznhffw()
 {
 	$('#btnSearch').attr('disabled','disabled');
 	
-	$.get(getContextPath()+"/znhffwController/getznhfdatalist?jsjbid="+jsjbId,
+	var dsrxm = $('#dsrxm').val();
+	var hfsfcg = $('#hfsfcg').val();
+	var dsrsfmy = $('#dsrsfmy').val();
+	
+	$.get(getContextPath()+'/znhffwController/getznhfdatalist?jsjbid='+jsjbId + '&dsrxm=' + dsrxm + '&hfsfcg=' + hfsfcg + '&dsrsfmy=' + dsrsfmy,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -75,7 +81,7 @@ function loadznhffw()
 					targets:   6,//从0开始
 					mRender : function(data,type,full){
 						
-						var btn = "<a href=\"#\" onclick=\"enterZnhf('"+full.id+"')\"  class=\"btn-success lk-d\"><i class=\"fa fa-trash-o\"></i>查看</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\"  class=\"btn-success lk-d\"><i class=\"fa fa-trash-o\"></i>查看</a>&nbsp;";
 						
 						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn-info lk-a\"><i class=\"fa fa-pencil\"></i>修改</a>&nbsp;";
 
@@ -109,6 +115,14 @@ function addznhffw()
     });
 	
 	curTableId = '';
+}
+
+function viewData(id)
+{
+	curId = id;
+	$('#main-content').load("./nfw/znhffwDetail2.html", function () {
+		
+    });
 }
 
 function editData(id)

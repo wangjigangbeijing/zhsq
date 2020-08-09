@@ -1,6 +1,7 @@
 package com.template.busi.controller.nfw;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
+import com.mysql.cj.util.StringUtils;
+import com.template.model.SysUser;
 import com.template.service.SysUserService;
+import com.template.util.ConstValue;
+import com.template.util.HqlFilter;
+import com.template.util.TimeUtil;
 import com.template.util.Utility;
 
 @Controller
@@ -32,7 +38,7 @@ public class ZNHFFWController {
 	
 	@RequestMapping(value="getznhfdatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String getDataList(String jsjbid) {
+	public String getDataList(String jsjbid, String dsrxm, String hfsfcg, String dsrsfmy) {
 		logger.info("getznhfdatalist:" + jsjbid);
 		
 		JSONObject jsonObj = new JSONObject();
@@ -40,6 +46,19 @@ public class ZNHFFWController {
 			String sql = "select a.* from nfw_znhffw a where a.jsjbid=?";
 			List<Object> vals = new ArrayList<Object>();
 			vals.add(jsjbid);
+			
+			if(!StringUtils.isNullOrEmpty(dsrxm)) {
+				sql += " and a.dsrxm like ?";
+				vals.add("%" + dsrxm + "%");
+			}
+			if(!StringUtils.isNullOrEmpty(hfsfcg) && !"null".equals(hfsfcg)) {
+				sql += " and a.hfsfcg=?";
+				vals.add(hfsfcg);
+			}
+			if(!StringUtils.isNullOrEmpty(dsrsfmy)) {
+				sql += " and a.dsrsfmy=?";
+				vals.add(dsrsfmy);
+			}
 			List<HashMap> nodelist = this.userService.findBySql(sql, vals);
 			
 			jsonObj.put("success", true);
@@ -53,7 +72,7 @@ public class ZNHFFWController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id, String jsjbid, String dsr, String dsrxm, String dsrlxdh, String hfsfcg, String sffkqk, String dsrsfmy,String bmqksm, String bz, String hfr, String hfsj, String hfly)//,String duoxuan)Integer longitude,Integer latitude,
+	public String addOrUpdate(String id, String jsjbid, String dsr, String dsrxm, String dsrlxdh, String hfsfcg, String sffkqk, String dsrsfmy,String bmqksm, String bz, String hfr, String hfrname, String hfsj, String hfly)//,String duoxuan)Integer longitude,Integer latitude,
 	{
 		logger.info("addOrUpdate:" + id);
 		JSONObject jsonObj = new JSONObject();
@@ -78,6 +97,7 @@ public class ZNHFFWController {
 					map.put("hfly", hfly);
 					map.put("bz", bz);
 					map.put("hfr", hfr);
+					map.put("hfrname", hfrname);
 					map.put("hfsj", hfsj);
 					
 					int ret = this.userService.addData(map, "nfw_znhffw");
@@ -104,6 +124,7 @@ public class ZNHFFWController {
 					map.put("hfly", hfly);
 					map.put("bz", bz);
 					map.put("hfr", hfr);
+					map.put("hfrname", hfrname);
 					map.put("hfsj", hfsj);
 					
 					int ret = this.userService.updateData(map, kvs, "nfw_znhffw");
@@ -129,6 +150,7 @@ public class ZNHFFWController {
 				map.put("hfly", hfly);
 				map.put("bz", bz);
 				map.put("hfr", hfr);
+				map.put("hfrname", hfrname);
 				map.put("hfsj", hfsj);
 				
 				int ret = this.userService.addData(map, "nfw_znhffw");

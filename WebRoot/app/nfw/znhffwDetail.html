@@ -82,8 +82,9 @@
                         </div>
 						
 						<div class="form-group">
-                          <label>回访人</label>
-                          <input type="" class="form-control" id="hfr" placeholder="">
+                          <label>回访人<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser(); return false;">选择</button></label>
+                          <input type="hidden" class="form-control" id="hfr" placeholder="">
+						  <input type="text" class="form-control" id="hfrname" placeholder="">
                         </div>
 						
 						<div class="form-group">
@@ -199,6 +200,57 @@
 			  
             </div>
             <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" onclick="javascript:addAllRes();">添加选中</button>
+              <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+	  
+	  <div class="modal fade" id="userDialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+              <h4 class="modal-title">回访人员选择</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+			  <form class="form-horizontal">
+                <!--div class="card-body"-->
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">姓名</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="userNameQry">
+                    </div>
+					
+					<button id="btnSearchUser" type="button" class="btn btn-success" onclick="searchUser();">查询</button>
+					
+                  </div>
+              </form>
+			  
+			  <div class="card-body">
+                <table class="table table-bordered table-striped" id="userDataTable">
+                  <thead>
+                  <tr>
+				    <th style='text-align:center;'><input type="checkbox" class="checkall2"/></th>
+                    <th style='text-align:center;'>姓名</th>
+					<th style='text-align:center;'>角色</th>
+					<th style='text-align:center;'>手机号</th>
+					<th style='text-align:center;'>职务</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+			  
+			  
+            </div>
+            <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" onclick="javascript:addAllUser();">添加选中</button>
               <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
             </div>
@@ -241,6 +293,8 @@
 	
 	<script>
 		var userList = null;
+		
+		var user2List = null;
 
 		function searchResident()
 		{
@@ -251,7 +305,7 @@
 			function(result){
 				//$('#btnSearch').removeAttr('disabled');
 				var obj = jQuery.parseJSON(result);  
-				console.log(obj);
+				//console.log(obj);
 				if(obj.success)
 				{
 					userList = obj.list;
@@ -313,7 +367,77 @@
 			});
 		}
 		
-		function addAllUser()
+		function searchUser()
+		{
+			var userName = $('#userNameQry').val();
+			//var characteristics = $('#characterQry').val();
+			
+			$.get(getContextPath()+'/sysUserController/load?name='+userName,
+			function(result){
+				$('#btnSearchUser').removeAttr('disabled');
+				var obj = jQuery.parseJSON(result);  
+				console.log(obj);
+				if(obj.success)
+				{
+					user2List = obj.list;
+					dataTable = $('#userDataTable').dataTable( {
+						"processing": true,
+						"bJQueryUI": false,
+						"bFilter": false,
+						"bStateSave":true,
+						"bAutoWidth": false, //自适应宽度 
+						iDisplayLength: 10,
+						lengthChange: false,
+						"bProcessing": true, 
+						"bDestroy":true,
+						"bSort": false, //是否使用排序 		
+						/*"oLanguage": { 
+							"sProcessing": "正在加载中......", 
+							"sLengthMenu": "每页显示 _MENU_ 条记录", 
+							"sZeroRecords": "对不起，查询不到相关数据！", 
+							"sInfoEmpty":"",
+							"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+							"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+							"sSearch": "搜索", 
+							"oPaginate":  
+							{ 
+								"sFirst": "首页", 
+								"sPrevious": "上一页", 
+								"sNext": "下一页", 
+								"sLast": "末页" 
+							}
+						}, *///多语言配置					
+						"data":obj.list,
+						"columns": [
+							{
+								"sClass": "text-center",
+								"data": "id",
+								"render": function (data, type, row, meta) {
+									return '<input type="checkbox" name="userid" value="' + data + '"/>';
+								},
+							},
+							{ 'data': 'name' ,'sClass':'text-center'},
+							{ 'data': 'roleTxt' ,'sClass':'text-center'},
+							{ 'data': 'mobile' ,'sClass':'text-center'},
+							{ 'data': 'job' ,'sClass':'text-center'}
+						],
+						columnDefs: [
+							/*{
+							className: 'control',
+							orderable: false,
+							targets:  0,//从0开始
+							mRender : function(data,type,full){
+								var btn = "<a href=\"#\" onclick=\"selectUser('"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
+								return btn;
+							}
+							}*/
+						]
+					} );
+				}
+			});
+		}
+		
+		function addAllRes()
 		{
 			//$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
 			//意思是选择被选中的checkbox
@@ -344,6 +468,33 @@
 			$('#lxdh').val(phones);
 		}
 		
+		function addAllUser()
+		{
+			//$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
+			//意思是选择被选中的checkbox
+			var users = '';
+			var ids = '';
+			$('input:checkbox[name=userid]:checked').each(function (i) {
+				var val = $(this).val();
+				for(var i=0;i<user2List.length;i++)
+				{
+					if(user2List[i].id == val){
+						var name = '';
+						if(typeof(user2List[i].name)!="undefined") name = user2List[i].name;
+						if(users == '') users = name;
+						else users += ", " + name;
+						
+						if(ids == '') ids = val;
+						else ids += ", " + val;
+					}
+				}
+				
+			});
+			
+			$('#hfrname').val(users);
+			$('#hfr').val(ids);
+		}
+		
 		$(document).ready(function (){
 			//使用live绑定数据，因为checkAll还没有加载好
 			$(".checkall").on("click", function () {
@@ -357,6 +508,23 @@
 				} else {
 					$(this).removeAttr('checked')
 					$("input[name='resid']").each(function () {
+						this.checked = false;
+					   
+					});
+				}
+			});
+			
+			$(".checkall2").on("click", function () {
+				if (this.checked) {
+					$(this).attr('checked', 'checked')
+					$("input[name='userid']").each(function () {
+						this.checked = true;
+					});
+
+				   
+				} else {
+					$(this).removeAttr('checked')
+					$("input[name='userid']").each(function () {
 						this.checked = false;
 					   
 					});

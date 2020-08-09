@@ -16,9 +16,11 @@ $(document).ready(function (){
 	
 	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
 	
-	if(curId != ''){
-		
+	if(curId != ''){		
 		get();
+	}
+	else {
+		loadjsjbfw();
 	}
 	
 	var hfsj = $('#hfsj').datepicker({
@@ -80,6 +82,23 @@ function get()
 		});
 }
 
+function loadjsjbfw()
+{
+	$.get(getContextPath()+"/jsjbfwController/get?id="+jsjbId,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
+			if(obj.success)
+			{
+							
+				$("#dsrxm").val(obj.data.dsr);
+				$("#dsrlxdh").val(obj.data.dsrdh);
+				
+				//$('#pictures').val(obj.pictures);
+			}
+		});
+}
+
 function addOrUpdate()
 {
 	$.post(getContextPath()+"/znhffwController/addOrUpdate",
@@ -95,6 +114,7 @@ function addOrUpdate()
 		bmqksm:$('#bmqksm').val(),
 		bz:$('#bz').val(),
 		hfr:$('#hfr').val(),
+		hfrname:$('#hfrname').val(),
 		hfsj:$('#hfsj').val(),
 		hfly:$('#pictures').val()
 	},
