@@ -48,6 +48,7 @@ label:not(.form-check-label):not(.custom-file-label){    font-weight: normal;fon
 .btn-default {color: black}
 #picturespick {width: 120px; margin:0px; padding:0px; }
 #picturespick div{height: 35px;}
+.col-form-label {margin-left:10px !important;}
 .webuploader-pick {font-size: 14px !important;}
 .btn-xs {line-height: 1 !important;}
 .navbar-dark .btn-navbar, .navbar-dark .form-control-navbar{ border:1px solid #f2f4f6; background: #fbfdff; color: #333;border-right: none;}

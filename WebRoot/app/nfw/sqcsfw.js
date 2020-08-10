@@ -84,7 +84,7 @@ function loadsqcsfw()
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"lk-b\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"lk-c\"><i class=\"fa fa-flask\"></i>业务流</a>";
+						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"lk-c\"><i class=\"fa fa-flask-o\"></i>业务流</a>";
 						
 						return btn;
 					}

@@ -9,6 +9,8 @@ $(document).ready(function (){
 	
 	loadzmblfw();
 	
+	loadstatus();
+	
 });
 
 var dataTable;
@@ -19,8 +21,9 @@ function loadzmblfw()
 	var zmsxdl = $('#zmsxdl').val();
 	var zmsxxl = $('#zmsxxl').val();
 	var blrname = $('#blrname').val();
+	var status=$('#status').val();
 	
-	$.get(getContextPath()+'/zmblfwController/getzmbldatalist?zmsxdl=' + zmsxdl + '&zmsxxl=' + zmsxxl + '&blrname=' + blrname,
+	$.get(getContextPath()+'/zmblfwController/getzmbldatalist?zmsxdl=' + zmsxdl + '&zmsxxl=' + zmsxxl + '&blrname=' + blrname + '&status=' + status,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -88,7 +91,7 @@ function loadzmblfw()
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn-danger lk-b\"><i class=\"fa fa-trash-o\"></i>删除</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn-primary lk-c\"><i class=\"fa fa-flask\"></i>业务流</a>";
+						btn += "<a href=\"#\" onclick=\"enterFlow('"+full.id+"')\"  class=\"btn-primary lk-c\"><i class=\"fa fa-flask-o\"></i>业务流</a>";
 						
 						return btn;
 					}
@@ -104,6 +107,21 @@ function loadzmblfw()
 						HorizontalPosition : 'center'});
 		}
 	});
+}
+
+function loadstatus()
+{
+	$.get(getContextPath()+"/flowtemplateController/loadtemplatestatus?service=zmbl",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var s = "<option value='" + obj.list[i] + "'>" + obj.list[i] + "</option>";
+					$("#status").append(s);
+				}
+			}
+		});
 }
 
 function editData(id)

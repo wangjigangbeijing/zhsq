@@ -33,7 +33,7 @@ public class ZMBLFWController {
 	
 	@RequestMapping(value="getzmbldatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String getDataList(String zmsxdl, String zmsxxl, String blrname) {
+	public String getDataList(String zmsxdl, String zmsxxl, String blrname, String status) {
 		logger.info("getzmbldatalist");
 		
 		JSONObject jsonObj = new JSONObject();
@@ -51,6 +51,10 @@ public class ZMBLFWController {
 			if(!StringUtils.isNullOrEmpty(blrname)) {
 				sql += " and a.blrname like ?";
 				params.add("%" + blrname + "%");
+			}
+			if(!StringUtils.isNullOrEmpty(status)) {
+				sql = "select b.* from (" + sql + ") as b where b.status=?";
+				params.add(status);
 			}
 			List<HashMap> nodelist = this.userService.findBySql(sql, params);
 			

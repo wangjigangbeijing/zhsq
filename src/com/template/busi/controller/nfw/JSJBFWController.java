@@ -67,41 +67,6 @@ public class JSJBFWController {
 			jsjbfw.setsjnr(sjnr);
 			jsjbfw.setwtfl(wtfl);
 			
-			/*Xgyqinfo xgyqinfo;
-			if(id==null || id.equalsIgnoreCase(""))
-			{
-				xgyqinfo = new Xgyqinfo();
-				xgyqinfo.setId(Utility.getUniStr());
-			}
-			else
-			{
-				xgyqinfo = xgyqinfoService.getById(id);
-			}
-			xgyqinfo.setname(name);
-			xgyqinfo.setmobile(mobile);
-			xgyqinfo.setaddress(address);
-			xgyqinfo.setquezhen(quezhen);
-			if(qzdate != null && qzdate.equalsIgnoreCase("") == false)
-				xgyqinfo.setqzdate(TimeUtil.parseDate(qzdate, "yyyy-MM-dd"));
-			xgyqinfo.setqznote(qznote);
-			xgyqinfo.setyisi(yisi);
-			xgyqinfo.setmijie(mijie);
-			//xgyqinfo.setmjnote(mjnote);
-			if(glstartdate != null && glstartdate.equalsIgnoreCase("") == false)
-				xgyqinfo.setglstartdate(TimeUtil.parseDate(glstartdate, "yyyy-MM-dd"));// HH:mm
-			
-			if(glenddate != null && glenddate.equalsIgnoreCase("") == false)
-				xgyqinfo.setglenddate(TimeUtil.parseDate(glenddate, "yyyy-MM-dd"));// HH:mm
-			xgyqinfo.setnote(note);
-			xgyqinfo.sethsjc(hsjc);
-			if(hsjcdate != null && hsjcdate.equalsIgnoreCase("") == false)
-				xgyqinfo.sethsjcdate(TimeUtil.parseDate(hsjcdate, "yyyy-MM-dd"));// HH:mm
-			xgyqinfo.sethsjcjigou(hsjcjigou);
-			xgyqinfo.sethsjcjieguo(hsjcjieguo);
-	
-	        xgyqinfoService.save(xgyqinfo);*/
-			
-			
 			jsjbfwService.save(jsjbfw);
 			
 			jsonObj.put("dataid", jsjbfw.getId());
@@ -139,13 +104,14 @@ public class JSJBFWController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String load(String sjbt,String sjly,String sjlybh,String dsr)
+	public String load(String sjbt,String sjly,String sjlybh,String dsr, String status)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
 			List<Object> params = new ArrayList<Object>();
 			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from kz_jsjbfw a where 1=1";
+			
 			if(!StringUtils.isNullOrEmpty(sjbt)) {
 				sql += " and a.sjbt like ?";
 				params.add("%" + sjbt + "%");
@@ -163,6 +129,10 @@ public class JSJBFWController {
 				params.add(dsr);
 			}
 			sql += " order by a.pdsj desc";
+			if(!StringUtils.isNullOrEmpty(status)) {
+				sql = "select b.* from (" + sql + ") as b where b.status=?";
+				params.add(status);
+			}
 			List<HashMap> list = this.jsjbfwService.findBySql(sql, params);
 //			HqlFilter hqlFilter = new HqlFilter();
 //        List<JSJBFW> listObj = jsjbfwService.findByFilter(hqlFilter);

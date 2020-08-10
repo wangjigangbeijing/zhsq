@@ -33,7 +33,7 @@ public class XFSLFWController {
 	
 	@RequestMapping(value="getxfsldatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String getDataList(String bt, String lb, String fkrname) {
+	public String getDataList(String bt, String lb, String fkrname, String status) {
 		logger.info("getxfsldatalist");
 		
 		JSONObject jsonObj = new JSONObject();
@@ -51,6 +51,10 @@ public class XFSLFWController {
 			if(!StringUtils.isNullOrEmpty(fkrname)) {
 				sql += " and a.fkrname like ?";
 				params.add("%" + fkrname + "%");
+			}
+			if(!StringUtils.isNullOrEmpty(status)) {
+				sql = "select b.* from (" + sql + ") as b where b.status=?";
+				params.add(status);
 			}
 			List<HashMap> nodelist = this.userService.findBySql(sql, params);
 			

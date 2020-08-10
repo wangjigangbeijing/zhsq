@@ -13,6 +13,8 @@ $(document).ready(function (){
 	$('#btnSearch').click(load);
 	
 	load();
+	
+	loadstatus();
 });
 
 var curId;
@@ -26,9 +28,10 @@ function load()
 	 var sjly = $('#sjly').val();
 	 var sjlybh = $('#sjlybh').val();
 	 var dsr = $('#dsr').val();
+	 var status=$('#status').val();
 
 	
-	$.get(getContextPath()+'/jsjbfwController/load?sjbt='+sjbt+'&sjly='+sjly+'&sjlybh='+sjlybh+'&dsr='+dsr,
+	$.get(getContextPath()+'/jsjbfwController/load?sjbt='+sjbt+'&sjly='+sjly+'&sjlybh='+sjlybh+'&dsr='+dsr + '&status=' + status,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -112,63 +115,20 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
+function loadstatus()
 {
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jsjbfwController/get?id="+curId,
+	$.get(getContextPath()+"/flowtemplateController/loadtemplatestatus?service=jsjb",
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				$('#modalDetail').show();
-				
-								$('#name').val(obj.name);
-				$('#mobile').val(obj.mobile);
-				$('#address').val(obj.address);
-				$('#quezhen').val(obj.quezhen);
-				$('#qzdate').val(obj.qzdate);
-				$('#qznote').val(obj.qznote);
-				$('#yisi').val(obj.yisi);
-				$('#mijie').val(obj.mijie);
-				$('#mjnote').val(obj.mjnote);
-				$('#glstartdate').val(obj.glstartdate);
-				$('#glenddate').val(obj.glenddate);
-				$('#note').val(obj.note);
-				$('#hsjc').val(obj.hsjc);
-				$('#hsjcdate').val(obj.hsjcdate);
-				$('#hsjcjigou').val(obj.hsjcjigou);
-				$('#hsjcjieguo').val(obj.hsjcjieguo);
-
+				for(var i = 0; i < obj.list.length; i++){
+					var s = "<option value='" + obj.list[i] + "'>" + obj.list[i] + "</option>";
+					$("#status").append(s);
+				}
 			}
 		});
 }
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#name').val('');
-	$('#mobile').val('');
-	$('#address').val('');
-	$('#quezhen').val('');
-	$('#qzdate').val('');
-	$('#qznote').val('');
-	$('#yisi').val('');
-	$('#mijie').val('');
-	$('#mjnote').val('');
-	$('#glstartdate').val('');
-	$('#glenddate').val('');
-	$('#note').val('');
-	$('#hsjc').val('');
-	$('#hsjcdate').val('');
-	$('#hsjcjigou').val('');
-	$('#hsjcjieguo').val('');
-
-}
-*/
 
 function editData(id)
 {

@@ -530,4 +530,57 @@ public class FlowTemplateController {
 		
 		return jsonObj.toString();
 	}
+	
+	@RequestMapping(value="loadtemplatestatus",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String loadTemplateStatus(String service) {
+		logger.info("loadtemplatestatus");
+				
+		int templateid = 6;
+		if("sqbs".equals(service) || "zmbl".equals(service)) {
+			templateid = 5;
+		}
+		else if("jsjb".equals(service)) {
+			templateid = 6;
+		}
+		else if("mysl".equals(service) || "xfsl".equals(service)) {
+			templateid = 7;
+		}
+		else if("sqcs".equals(service)) {
+			templateid = 8;
+		}
+		
+		JSONObject jsonObj = new JSONObject();
+		try {
+			
+			String sql = "select * from fw_flowprocessinfo where templateid=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(templateid);
+			List<HashMap> templateprocesslist = this.userService.findBySql(sql, params);
+			if(templateprocesslist == null || templateprocesslist.size() == 0) {
+				jsonObj.put("success", false);
+			}
+			else {
+				//所有所有的状态
+				List<String> list = new ArrayList<String>();
+				for(int i = 0; i < templateprocesslist.size(); i++) {
+					String prev = (String) templateprocesslist.get(i).get("prevstatus");
+					String next = (String) templateprocesslist.get(i).get("nextstatus");
+					if(!StringUtils.isNullOrEmpty(prev) && !list.contains(prev)) {
+						list.add(prev);
+					}
+					if(!StringUtils.isNullOrEmpty(next) && !list.contains(next)) {
+						list.add(next);
+					}
+				}
+				jsonObj.put("success", true);
+				jsonObj.put("list", list);
+			}		
+			
+		} catch(Exception e) {
+			jsonObj.put("success", false);
+		}
+		
+		return jsonObj.toString();
+	}
 }
