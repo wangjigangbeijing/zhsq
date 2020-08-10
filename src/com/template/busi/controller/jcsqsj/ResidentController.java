@@ -375,6 +375,32 @@ public String load(String name,String identitytype,String idnumber,String charac
 			hqlFilter.addQryCond("jsb_type", HqlFilter.Operator.EQ, jsb_type);
 		}
 
+
+String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+
+String organization = "";
+if(ConstValue.userToOrgMap.containsKey(userId))
+	organization = ConstValue.userToOrgMap.get(userId);
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
+hqlFilter.setSort("created_at");
+hqlFilter.setOrder("desc");
+
         List<Resident> listObj = residentService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
         int iTotalCnt = 0;

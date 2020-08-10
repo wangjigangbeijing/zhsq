@@ -672,7 +672,7 @@ function loadtcwqy()
 //一般停车场出入口
 function loadybtcccrk()
 {
-	$('#jcsqsjDiv').load("./jcsqsj/jc_tc_ybtcccrk/jc_tc_ybtcccrk.html", function () {
+	$('#jcsqsjDiv').load("./jcsqsj/jc_tc_tcccrk/jc_tc_tcccrk.html", function () {
 	
 	});
 }

@@ -24,6 +24,18 @@ public void setId(String id)
 {
 	this.id = id;
 }
+
+@Column(name = "created_at", nullable = true)
+public Date created_at;
+public Date getcreated_at()
+{
+	return created_at;
+}
+public void setcreated_at(Date created_at)
+{
+	this.created_at = created_at;
+}
+
 @Column(name = "dataid", nullable = true)
 public String dataid;
 public String getdataid()

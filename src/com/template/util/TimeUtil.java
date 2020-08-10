@@ -89,6 +89,9 @@ public class TimeUtil {
 	 */
 	public static String formatDate(Date date, String format) {
 
+		if(date == null)
+			return "-";
+		
 		SimpleDateFormat sdf = null;
 		try {
 			sdf = new SimpleDateFormat(format);

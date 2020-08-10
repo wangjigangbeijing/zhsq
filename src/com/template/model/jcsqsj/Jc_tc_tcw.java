@@ -24,6 +24,17 @@ public void setId(String id)
 {
 	this.id = id;
 }
+@Column(name = "created_at", nullable = true)
+public Date created_at;
+public Date getcreated_at()
+{
+	return created_at;
+}
+public void setcreated_at(Date created_at)
+{
+	this.created_at = created_at;
+}
+
 @Column(name = "inparkname", nullable = true)
 public String inparkname;
 public String getinparkname()
@@ -64,7 +75,7 @@ public void setnumbers(Integer numbers)
 {
 	this.numbers = numbers;
 }
-@Column(name = "UseType", nullable = true)
+@Column(name = "usetype", nullable = true)
 public String UseType;
 public String getUseType()
 {
@@ -74,7 +85,7 @@ public void setUseType(String UseType)
 {
 	this.UseType = UseType;
 }
-@Column(name = "sizeType", nullable = true)
+@Column(name = "sizetype", nullable = true)
 public String sizeType;
 public String getsizeType()
 {
@@ -84,7 +95,7 @@ public void setsizeType(String sizeType)
 {
 	this.sizeType = sizeType;
 }
-@Column(name = "heightType", nullable = true)
+@Column(name = "heighttype", nullable = true)
 public String heightType;
 public String getheightType()
 {

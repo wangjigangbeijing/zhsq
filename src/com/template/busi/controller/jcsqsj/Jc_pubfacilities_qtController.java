@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,6 +124,32 @@ if(objState != null && objState.equalsIgnoreCase("") == false && objState.equals
 {
 	hqlFilter.addQryCond("objState", HqlFilter.Operator.EQ, objState);
 }
+
+
+String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+
+String organization = "";
+if(ConstValue.userToOrgMap.containsKey(userId))
+	organization = ConstValue.userToOrgMap.get(userId);
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
+hqlFilter.setSort("created_at");
+hqlFilter.setOrder("desc");
 
         List<Jc_pubfacilities_qt> listObj = jc_pubfacilities_qtService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
