@@ -9,6 +9,9 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +133,31 @@ if(duoxuan != null && duoxuan.equalsIgnoreCase("") == false && duoxuan.equalsIgn
 {
 	hqlFilter.addQryCond("duoxuan", HqlFilter.Operator.LIKE, "%"+duoxuan+"%");
 }
+
+String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+
+String organization = "";
+if(ConstValue.userToOrgMap.containsKey(userId))
+	organization = ConstValue.userToOrgMap.get(userId);
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
+hqlFilter.setSort("created_at");
+hqlFilter.setOrder("desc");
 
         List<Community> listObj = communityService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

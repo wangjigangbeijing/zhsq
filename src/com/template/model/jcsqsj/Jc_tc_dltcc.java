@@ -24,6 +24,17 @@ public void setId(String id)
 {
 	this.id = id;
 }
+@Column(name = "created_at", nullable = true)
+public Date created_at;
+public Date getcreated_at()
+{
+	return created_at;
+}
+public void setcreated_at(Date created_at)
+{
+	this.created_at = created_at;
+}
+
 @Column(name = "berthID", nullable = true)
 public String berthID;
 public String getberthID()
@@ -74,7 +85,7 @@ public void setrateinfo(String rateinfo)
 {
 	this.rateinfo = rateinfo;
 }
-@Column(name = "parkeTime", nullable = true)
+@Column(name = "parketime", nullable = true)
 public String parkeTime;
 public String getparkeTime()
 {

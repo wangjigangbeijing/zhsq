@@ -24,7 +24,18 @@ public void setId(String id)
 {
 	this.id = id;
 }
-@Column(name = "rkType", nullable = true)
+@Column(name = "created_at", nullable = true)
+public Date created_at;
+public Date getcreated_at()
+{
+	return created_at;
+}
+public void setcreated_at(Date created_at)
+{
+	this.created_at = created_at;
+}
+
+@Column(name = "rktype", nullable = true)
 public String rkType;
 public String getrkType()
 {
@@ -44,7 +55,7 @@ public void setname(String name)
 {
 	this.name = name;
 }
-@Column(name = "parkName", nullable = true)
+@Column(name = "parkname", nullable = true)
 public String parkName;
 public String getparkName()
 {

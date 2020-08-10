@@ -125,6 +125,9 @@ if(category != null && category.equalsIgnoreCase("") == false && category.equals
 				}
 			}
 			
+			if(facilitiesNames.endsWith(","))
+				facilitiesNames = facilitiesNames.substring(0, facilitiesNames.length() - 1);
+			
 			jsonTmp.put("facilities",facilitiesNames);
 			
 			String facilitiesNamesShort = facilitiesNames;
@@ -132,7 +135,7 @@ if(category != null && category.equalsIgnoreCase("") == false && category.equals
 			if(facilitiesNames.length() > 50)
 				facilitiesNamesShort = facilitiesNames.substring(0,50) +"...";
 
-			jsonTmp.put("facilitiesNamesShort",facilitiesNamesShort);
+			jsonTmp.put("facilitiesShort",facilitiesNamesShort);
 			
 			jsonTmp.put("content",sys_board_publish.getcontent());
 			

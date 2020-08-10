@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +50,7 @@ import com.template.service.SysUserService;
 import com.template.service.gis.GismaplayersService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
+import com.template.util.TimeUtil;
 import com.template.util.Utility;
 
 @Controller
@@ -161,6 +163,8 @@ public class DataController {
 				if(ownerCond.equalsIgnoreCase("") == false)
 					sSql += " AND ("+ownerCond+") ";
 			}
+			
+			sSql += " ORDER BY CREATED_AT DESC";
 			
 			logger.debug(sSql);
 			
@@ -601,8 +605,10 @@ public class DataController {
 					sVals += "'"+sPoint+"',";
 				}
 				
-				sCols += "owner,";
-				sVals += "'"+organization+"',";
+				String sCurTime = TimeUtil.formatDate(new Date());
+				
+				sCols += "owner,created_at,created_by,";
+				sVals += "'"+organization+"','"+sCurTime+"','"+userId+"',";
 				
 				if(sCols != null && sCols.endsWith(","))
 					sCols = sCols.substring(0,sCols.length() - 1);
@@ -667,8 +673,10 @@ public class DataController {
 						}
 					}
 				}
+
+				String sCurTime = TimeUtil.formatDate(new Date());
 				
-				sSql += " POINT = '"+sPoint+"' ";
+				sSql += " POINT = '"+sPoint+"',created_at = '"+sCurTime+"',created_by = '"+userId+"', ";
 				
 				if(sSql != null && sSql.endsWith(","))
 					sSql = sSql.substring(0,sSql.length() - 1);

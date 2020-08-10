@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +162,32 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 	hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 }
 
+
+String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+
+String organization = "";
+if(ConstValue.userToOrgMap.containsKey(userId))
+	organization = ConstValue.userToOrgMap.get(userId);
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
+hqlFilter.setSort("created_at");
+hqlFilter.setOrder("desc");
+
         List<Jc_organization> listObj = jc_organizationService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
         int iTotalCnt = 0;
@@ -173,12 +200,22 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			jsonTmp.put("name",jc_organization.getname());
 			jsonTmp.put("haslicence",jc_organization.gethaslicence());
 			jsonTmp.put("socialcode",jc_organization.getsocialcode());
-			jsonTmp.put("socialcodedate",TimeUtil.formatDate(jc_organization.getsocialcodedate(),"yyyy-MM-dd"));
+			
+			if(jc_organization.getsocialcodedate() != null)
+				jsonTmp.put("socialcodedate",TimeUtil.formatDate(jc_organization.getsocialcodedate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("socialcodedate","-");
+			
 			jsonTmp.put("orgtype",jc_organization.getorgtype());
 			jsonTmp.put("economictype",jc_organization.geteconomictype());
 			jsonTmp.put("industry",jc_organization.getindustry());
 			jsonTmp.put("subordination",jc_organization.getsubordination());
-			jsonTmp.put("establishdate",TimeUtil.formatDate(jc_organization.getestablishdate(),"yyyy-MM-dd"));
+
+			if(jc_organization.getestablishdate() != null)
+				jsonTmp.put("establishdate",TimeUtil.formatDate(jc_organization.getestablishdate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("establishdate","-");
+			
 			jsonTmp.put("capitaltype",jc_organization.getcapitaltype());
 			jsonTmp.put("capital",jc_organization.getcapital());
 			jsonTmp.put("businessscope",jc_organization.getbusinessscope());
@@ -189,7 +226,12 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			jsonTmp.put("legalname",jc_organization.getlegalname());
 			jsonTmp.put("contactname",jc_organization.getcontactname());
 			jsonTmp.put("contacttel",jc_organization.getcontacttel());
-			jsonTmp.put("moveindate",TimeUtil.formatDate(jc_organization.getmoveindate(),"yyyy-MM-dd"));
+			
+			if(jc_organization.getmoveindate() != null)
+				jsonTmp.put("moveindate",TimeUtil.formatDate(jc_organization.getmoveindate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("moveindate","-");
+			
 			jsonTmp.put("responsibilityplateno",jc_organization.getresponsibilityplateno());
 			jsonTmp.put("hasfirefacilities",jc_organization.gethasfirefacilities());
 			jsonTmp.put("wastedisposal",jc_organization.getwastedisposal());

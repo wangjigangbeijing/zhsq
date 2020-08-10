@@ -24,7 +24,18 @@ public void setId(String id)
 {
 	this.id = id;
 }
-@Column(name = "parkName", nullable = true)
+@Column(name = "created_at", nullable = true)
+public Date created_at;
+public Date getcreated_at()
+{
+	return created_at;
+}
+public void setcreated_at(Date created_at)
+{
+	this.created_at = created_at;
+}
+
+@Column(name = "parkname", nullable = true)
 public String parkName;
 public String getparkName()
 {
@@ -34,7 +45,7 @@ public void setparkName(String parkName)
 {
 	this.parkName = parkName;
 }
-@Column(name = "parkType", nullable = true)
+@Column(name = "parktype", nullable = true)
 public String parkType;
 public String getparkType()
 {
@@ -44,7 +55,7 @@ public void setparkType(String parkType)
 {
 	this.parkType = parkType;
 }
-@Column(name = "adminDep", nullable = true)
+@Column(name = "admindep", nullable = true)
 public String adminDep;
 public String getadminDep()
 {
@@ -54,7 +65,7 @@ public void setadminDep(String adminDep)
 {
 	this.adminDep = adminDep;
 }
-@Column(name = "ownerDep", nullable = true)
+@Column(name = "ownerdep", nullable = true)
 public String ownerDep;
 public String getownerDep()
 {
@@ -64,7 +75,7 @@ public void setownerDep(String ownerDep)
 {
 	this.ownerDep = ownerDep;
 }
-@Column(name = "maintDep", nullable = true)
+@Column(name = "maintdep", nullable = true)
 public String maintDep;
 public String getmaintDep()
 {

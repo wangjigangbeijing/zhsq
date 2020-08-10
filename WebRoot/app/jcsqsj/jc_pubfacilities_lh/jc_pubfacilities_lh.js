@@ -43,7 +43,7 @@ function load()
  var objState = $('#objStateQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_pubfacilities_lhController/load?type='+type+'&objname='+objname+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
+	$.get(getContextPath()+'/jc_pubfacilities_lhController/load?objname='+objname+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
 	function(result){
 		
 		if(searchtype == 1){
@@ -111,7 +111,7 @@ function load()
 					className: 'control',
 					orderable: false,
 					targets:  8,//从0开始
-					mRender : function(data,type,full){
+					mRender : function(data,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";

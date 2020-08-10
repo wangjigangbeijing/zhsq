@@ -41,7 +41,7 @@ function load()
  var hascharge = $('#haschargeQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_tc_tcwController/load?cwtype='+cwtype+'&UseType='+UseType+'&arrange='+arrange+'&hascharge='+hascharge+'&',
+	$.get(getContextPath()+'/jc_tc_tcwController/load?UseType='+UseType+'&arrange='+arrange+'&hascharge='+hascharge+'&',
 	function(result){
 		if(searchtype == 1){
 			
@@ -107,7 +107,7 @@ function load()
 					className: 'control',
 					orderable: false,
 					targets:  8,//从0开始
-					mRender : function(data,type,full){
+					mRender : function(data,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";

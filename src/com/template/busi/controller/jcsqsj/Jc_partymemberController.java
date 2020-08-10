@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,6 +165,32 @@ if(movemember != null && movemember.equalsIgnoreCase("") == false && movemember.
 	hqlFilter.addQryCond("movemember", HqlFilter.Operator.LIKE, "%"+movemember+"%");
 }
 
+
+String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+
+String organization = "";
+if(ConstValue.userToOrgMap.containsKey(userId))
+	organization = ConstValue.userToOrgMap.get(userId);
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
+hqlFilter.setSort("created_at");
+hqlFilter.setOrder("desc");
+
         List<Jc_partymember> listObj = jc_partymemberService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
         int iTotalCnt = 0;
@@ -175,7 +202,12 @@ if(movemember != null && movemember.equalsIgnoreCase("") == false && movemember.
 			jsonTmp.put("name",jc_partymember.getname());
 			jsonTmp.put("idnumber",jc_partymember.getidnumber());
 			jsonTmp.put("sex",jc_partymember.getsex());
-			jsonTmp.put("birthday",TimeUtil.formatDate(jc_partymember.getbirthday(),"yyyy-MM-dd"));
+			
+			if(jc_partymember.getbirthday() != null)
+				jsonTmp.put("birthday",TimeUtil.formatDate(jc_partymember.getbirthday(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("birthday","-");
+			
 			jsonTmp.put("age",jc_partymember.getage());
 			jsonTmp.put("mobile",jc_partymember.getmobile());
 			jsonTmp.put("education",jc_partymember.geteducation());
@@ -184,12 +216,29 @@ if(movemember != null && movemember.equalsIgnoreCase("") == false && movemember.
 			jsonTmp.put("isincommunity",jc_partymember.getisincommunity());
 			jsonTmp.put("homeaddress",jc_partymember.gethomeaddress());
 			jsonTmp.put("zhiwu",jc_partymember.getzhiwu());
-			jsonTmp.put("joinpartydate",TimeUtil.formatDate(jc_partymember.getjoinpartydate(),"yyyy-MM-dd"));
-			jsonTmp.put("inpartydate",TimeUtil.formatDate(jc_partymember.getinpartydate(),"yyyy-MM-dd"));
+			
+			if(jc_partymember.getjoinpartydate() != null)
+				jsonTmp.put("joinpartydate",TimeUtil.formatDate(jc_partymember.getjoinpartydate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("joinpartydate","-");
+			
+			
+			if(jc_partymember.getinpartydate() != null)
+				jsonTmp.put("inpartydate",TimeUtil.formatDate(jc_partymember.getinpartydate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("inpartydate","-");
+			
 			jsonTmp.put("dyage",jc_partymember.getdyage());
 			jsonTmp.put("membership",jc_partymember.getmembership());
 			jsonTmp.put("islost",jc_partymember.getislost());
-			jsonTmp.put("lostdate",TimeUtil.formatDate(jc_partymember.getlostdate(),"yyyy-MM-dd"));
+			
+			
+
+			if(jc_partymember.getlostdate() != null)
+				jsonTmp.put("lostdate",TimeUtil.formatDate(jc_partymember.getlostdate(),"yyyy-MM-dd"));
+			else
+				jsonTmp.put("lostdate","-");
+			
 			jsonTmp.put("movemember",jc_partymember.getmovemember());
 			jsonTmp.put("moveto",jc_partymember.getmoveto());
 			jsonTmp.put("pictures",jc_partymember.getpictures());

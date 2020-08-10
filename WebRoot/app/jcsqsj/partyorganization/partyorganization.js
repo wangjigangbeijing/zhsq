@@ -17,7 +17,6 @@ $(document).ready(function (){
 	
 	load();
 });
-});
 
 var curId;
 

@@ -24,6 +24,17 @@ public void setId(String id)
 {
 	this.id = id;
 }
+@Column(name = "created_at", nullable = true)
+public Date created_at;
+public Date getcreated_at()
+{
+	return created_at;
+}
+public void setcreated_at(Date created_at)
+{
+	this.created_at = created_at;
+}
+
 @Column(name = "dateid", nullable = true)
 public String dateid;
 public String getdateid()
@@ -134,7 +145,7 @@ public void setform(String form)
 {
 	this.form = form;
 }
-@Column(name = "objState", nullable = true)
+@Column(name = "objstate", nullable = true)
 public String objState;
 public String getobjState()
 {
