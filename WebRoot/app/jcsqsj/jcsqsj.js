@@ -5,7 +5,7 @@ var curType = '';
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(addsqzzqd);
+	//$('#btnAdd').click(addsqzzqd);
 	
 	//小区信息
 	$('#xqxxAnchor').click(function () {
