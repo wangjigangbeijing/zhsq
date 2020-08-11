@@ -42,6 +42,26 @@
   
   <link rel="stylesheet" href="../plugins/treegrid/css/jquery.treegrid.css">
   
+  <style>
+	  .card{box-shadow: none;border-radius: 0;}
+  .card-body{ padding: 2px;}
+  .nav-link{padding:10px;}
+  .tj-sqog .nav-pills .nav-link.active, .nav-pills .show>.nav-link{color: #333;    background-color: #f5f7fa;border-top: 2px solid #ff6900;}
+  .tj-gue .nav-pills .nav-link.active, .nav-pills .show>.nav-link{color: #333;    background-color: #f5f7fa;border-top: 2px solid #1dc6bd;}
+  .nav-pills .nav-link{border-radius:0}
+  .card-header{padding: 0; }
+  .card-header>.card-tools .nav ,.card-header>.card-tools{margin: 0;}
+  .card-title{line-height: 46px;  padding-left: 10px;}
+  .card-body tbody td{font-size: 13px;  padding: .8rem .3rem;}
+  .tj-sqog{border-left: 4px solid #ff6900;}
+  .tj-sqog h3{color: #ff6900;}
+  .tj-gue{border-left: 4px solid #1dc6bd;}
+  .tj-gue h3{ color:#33a8ac ;}
+  .tj-vit{border-left: 4px solid #bb63f7}
+  .tj-vit h3{ color:#9012f5 ;}
+  .table td, .table th{text-align:center;}
+</style>
+  
   <!-- Google Font: Source Sans Pro -->
   <!--  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">  -->
 </head>
@@ -239,6 +259,15 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview"> <!--  menu-open -->
+            <a href="#" id="homeAnchor" class="nav-link">
+              <i class="nav-icon fas fa-bookmark"></i>
+              <p>
+                首页
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+          </li>
+		  <li class="nav-item has-treeview"> <!--  menu-open -->
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-bookmark"></i>
               <p>
@@ -545,102 +574,397 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>社区职责清单</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">首页</a></li>
-              <li class="breadcrumb-item active">社区职责清单</li>
-            </ol>
-          </div>
+        <div class="row">
+			<div class="col-md-7">
+				<div class="card tj-sqog">
+				<div class="card-header">
+				<h3 class="card-title">
+                 社情信息
+                </h3>
+				<div class="card-tools">
+					
+					  
+					  <ul class="nav nav-pills ml-auto">
+						<li class="nav-item">
+						  <a class="nav-link active" href="#tabl_1" data-toggle="tab">社区基本信息</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="#tabl_2" data-toggle="tab">组织信息</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="#tabl_3" data-toggle="tab">设施类信息</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="#tabl_4" data-toggle="tab">服务网点信息</a>
+						</li><li class="nav-item">
+						  <a class="nav-link" href="#tabl_5" data-toggle="tab">消防设施类信息</a>
+						</li><li class="nav-item">
+						  <a class="nav-link" href="#tabl_6" data-toggle="tab">停车资源信息</a>
+						</li>
+					  </ul>
+				</div>
+				</div>
+                <div class="card-body">              
+                  	
+				  <div class="tab-content">
+						<div id="tabl_1" class="tab-pane card-body" role="tabpanel">
+							<table class="table table-bordered table-striped">
+							  <thead>
+							  <tr>
+								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">社区基本信息</th>  
+							  </tr>
+							  </thead>
+							  <tbody>
+								<tr>
+								<td>社区信息</td>
+								<td>下辖小区</td>
+								<td>楼房类住宅楼宇</td>
+								<td>楼房类房屋</td>
+								<td>平房类住宅楼宇</td>
+								<td>平方类房屋</td>
+								<td>商务楼宇</td>
+								<td>其他楼宇</td>					
+							  </tr>
+							  <tr>
+								<td>当前情况</td>
+								<td id="b11"></td>
+								<td id="b12"></td>
+								<td id="b13"></td>
+								<td id="b14"></td>
+								<td id="b15"></td>
+								<td id="b16"></td>
+								<td id="b17"></td>								
+							  </tr>
+							  
+							  </tbody>
+
+							</table>
+						  </div>
+						<div id="tabl_2" class="tab-pane card-body tj-body" role="tabpanel">
+							 <table class="table table-bordered table-striped">
+							  <thead>
+								<tr>
+								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">组织信息</th>  
+							  </tr>
+							  </thead>
+							  <tbody>
+								<tr>
+								<td>组织信息</td>
+								<td>党组织</td>
+								<td>党员数</td>
+								<td>法人组织</td>
+								<td>志愿团体</td>
+								<td>居民团体</td>
+							  </tr>
+							  <tr>
+								<td>当前情况</td>
+								<td id="b21"></td>
+								<td id="b22"></td>
+								<td id="b23"></td>
+								<td id="b24"></td>
+								<td id="b25"></td>					
+							  </tr>
+							  </tbody>
+
+							</table>
+						  </div>
+						  <div id="tabl_3" class="tab-pane card-body tj-body" role="tabpanel">
+							 <table class="table table-bordered table-striped">
+							  <thead>
+								<tr>
+								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">设施类信息</th>  
+							  </tr>
+							  </thead>
+							  <tbody>
+								<tr>
+								<td>设施信息</td>
+								<td>文体设施</td>
+								<td>避难场所</td>
+								<td>垃圾站桶</td>
+								<td>宣传设施</td>
+								<td>公用市政设施</td>
+								<td>交通市政设施</td>
+								<td>环境市政设施</td>
+								<td>绿化市政设施</td>
+								<td>其他市政设施</td>
+							  </tr>
+							  <tr>
+								<td>当前情况</td>
+								<td id="b31"></td>
+								<td id="b32"></td>
+								<td id="b33"></td>
+								<td id="b34"></td>
+								<td id="b35"></td>
+								<td id="b36"></td>
+								<td id="b37"></td>
+								<td id="b38"></td>
+								<td id="b39"></td>								
+							  </tr>
+							  </tbody>
+
+							</table>
+						  </div>
+						  <div id="tabl_4" class="tab-pane card-body tj-body" role="tabpanel">
+							 <table class="table table-bordered table-striped">
+							  <thead>
+								<tr>
+								<th colspan="15" style="background: #ff6900;color: #fff; text-align: center;">服务网点信息</th>  
+							  </tr>
+							  </thead>
+							  <tbody>
+								<tr>
+								<td>服务信息</td>
+								<td>政府机关</td>
+								<td>房产居住</td>
+								<td>购物百货</td>
+								<td>生活服务</td>
+								<td>休闲娱乐</td>
+								<td>餐饮小吃</td>
+								<td>企业实体</td>
+								<td>金融保险</td>
+								<td>旅游住宿</td>
+								<td>文化教育</td>
+								<td>医疗卫生</td>
+								<td>交通运输</td>
+								<td>汽车服务</td>
+								<td>社会团体</td>
+							  </tr>
+							  <tr>
+								<td>当前情况</td>
+								<td></td>	
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>								
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>								
+							  </tr>
+							  </tbody>
+
+							</table>				 
+						  </div>
+						  <div id="tabl_5" class="tab-pane card-body tj-body" role="tabpanel">
+							 <table class="table table-bordered table-striped">
+							  <thead>
+								<tr>
+								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">消防设施类信息</th>  
+							  </tr>
+							  </thead>
+							  <tbody>
+								<tr>
+								<td>消防信息</td>
+								<td>消防通道</td>
+								<td>消防设施</td>
+							  </tr>
+							  <tr>
+								<td>当前情况</td>
+								<td></td>	
+								<td></td>									
+							  </tr>
+							  </tbody>
+
+							</table>
+						  </div>
+						  <div id="tabl_6" class="tab-pane card-body tj-body" role="tabpanel">
+							 <table class="table table-bordered table-striped">
+							  <thead>
+								<tr>
+								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">停车资源信息</th>  
+							  </tr>
+							  </thead>
+							  <tbody>
+								<tr>
+								<td>停车信息</td>
+								<td>一般停车场</td>
+								<td>道路停车场</td>
+								<td>停车场内停车位</td>
+								<td>道路侧停车位</td>
+								<td>充电桩停车位</td>
+								<td>非机动车停车位</td>
+							  </tr>
+							  <tr>
+								<td>当前情况</td>
+								<td></td>	
+								<td></td>									
+								<td></td>	
+								<td></td>	
+								<td></td>	
+								<td></td>	
+							  </tr>
+							  </tbody>
+
+							</table>
+						  </div>
+					</div>
+                </div>                
+					
+						
+			</div>
+			</div>
+			
+			<div class="col-md-5">
+				<div class="card tj-sqog">
+				<div class="card-header">
+				<h3 class="card-title">事项及服务</h3>
+				</div>
+                <div class="card-body">              
+                  	
+				  <table class="table table-bordered">
+                  <thead>                  
+                    <tr style="background: #ff6900;color: #fff; text-align: center;">
+                      <th>家庭居民信息</th>
+                      <th>常驻家庭户数</th>
+                      <th>常驻人口数</th>
+                      <th>流动家庭户数</th>
+                      <th>流动人口数</th>
+                      <th>登记车辆</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>当前情况</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>                     	
+                    </tr>
+                    <tr>
+                      <td>本年度变化</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>                     	
+                    </tr>
+                  </tbody>
+                </table>
+                </div>                
+					
+						
+			</div>
+			</div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
 
-    
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
+	<section class="content">
+      
+	   <div class="container-fluid">
         <div class="row">
           <div class="col-12">
         
             <!-- /.card -->
-
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">社区职责清单</h3>
-              </div>
-
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>编号</th>
-                    <th>工作职责</th>
-                    <th>职责来源</th>
-                    <th>职责域</th>
-                    <th>类别</th>
-                    <th>依据法律法规名称</th>
-                    <th>操作</th>
-                  </tr>
+				<div class="card tj-sqog">
+				<div class="card-header">
+				<h3 class="card-title">民情信息</h3>
+				</div>
+                <div class="card-body">              
+                  	
+				  <table class="table table-bordered">
+                  <thead>                  
+                    <tr style="background: #ff6900;color: #fff; text-align: center;">
+                      <th></th>
+					  <th>中共党员</th>
+                      <th>志愿者</th>
+                      <th>居民代表</th>
+                      <th>楼门长</th>
+                      <th>军人</th>
+                      <th>文体骨干</th>
+					  <th>优抚对象</th>
+					  <th>少数民族</th>
+					  <th>0-6岁儿童</th>
+					  <th>7-13岁青少年</th>
+					  <th>13-18岁青少年</th>
+					  <th>老年人</th>
+					  <th>80岁以上老人</th>
+					  <th>90岁以上老人</th>
+					  <th>独居老人</th>
+					  <th>失独老人</th>
+					  <th>空巢老人</th>
+					  <th>失业人员</th>
+					  <th>待业人员</th>
+					  <th>精神病人</th>
+					  <th>残疾人</th>
+					  <th>重点人员</th>
+					  <th>两劳释放</th>
+					  <th>在押在教</th>
+					  <th>社区矫正人员</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>zz001</td>
-                    <td>宣传和执行党的路线方针政策，教育管理监督党员...</td>
-                    <td>北京市社区工作准入管理办法（试行）</td>
-                    <td>社区依法履行职责</td>
-                    <td>社区党建</td>
-                    <td>《中国共产党党章》等</td>
-                    <td>查看</td>
-                  </tr>
-                  <tr>
-                    <td>zz001</td>
-                    <td>宣传和执行党的路线方针政策，教育管理监督党员...</td>
-                    <td>北京市社区工作准入管理办法（试行）</td>
-                    <td>社区依法履行职责</td>
-                    <td>社区党建</td>
-                    <td>《中国共产党党章》等</td>
-                    <td>查看</td>
-                  </tr>
-                  <tr>
-                    <td>zz001</td>
-                    <td>宣传和执行党的路线方针政策，教育管理监督党员...</td>
-                    <td>北京市社区工作准入管理办法（试行）</td>
-                    <td>社区依法履行职责</td>
-                    <td>社区党建</td>
-                    <td>《中国共产党党章》等</td>
-                    <td>查看</td>
-                  </tr>
-                  <tr>
-                    <td>zz001</td>
-                    <td>宣传和执行党的路线方针政策，教育管理监督党员...</td>
-                    <td>北京市社区工作准入管理办法（试行）</td>
-                    <td>社区依法履行职责</td>
-                    <td>社区党建</td>
-                    <td>《中国共产党党章》等</td>
-                    <td>查看</td>
-                  </tr>
-                  <tr>
-                    <td>zz001</td>
-                    <td>宣传和执行党的路线方针政策，教育管理监督党员...</td>
-                    <td>北京市社区工作准入管理办法（试行）</td>
-                    <td>社区依法履行职责</td>
-                    <td>社区党建</td>
-                    <td>《中国共产党党章》等</td>
-                    <td>查看</td>
-                  </tr>
-                  
+                    <tr>
+                      <td>当前情况</td>
+						<td id="d1"></td>
+                     	<td id="d2"></td>
+                     	<td id="d3"></td>
+                     	<td id="d4"></td>
+                     	<td id="d5"></td>                     	
+						<td id="d6"></td>
+                     	<td id="d7"></td>
+                     	<td id="d8"></td>
+                     	<td id="d9"></td>
+                     	<td id="d10"></td>                     	
+						<td id="d11"></td>
+                     	<td id="d12"></td>
+                     	<td id="d13"></td>
+                     	<td id="d14"></td>
+                     	<td id="d15"></td>                     	
+						<td id="d16"></td>
+                     	<td id="d17"></td>
+                     	<td id="d18"></td>
+                     	<td id="d19"></td>
+                     	<td id="d20"></td>                     	
+						<td id="d21"></td>
+                     	<td id="d22"></td>
+                     	<td id="d23"></td>
+                     	<td id="d24"></td>
+                     	<td id="d25"></td>                     	
+                    </tr>
+                    <tr>
+                      <td>本年度变化</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>    
+						<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>                     	
+						<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>                     	
+						<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>                     	
+						<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>                     	
+                    </tr>
                   </tbody>
-
                 </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
+                </div>                
+					
+						
+			</div>
+
+            
             <!-- /.card -->
           </div>
           <!-- /.col -->
@@ -648,7 +972,344 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
-    </section>
+	  
+	</section>	  
+	
+	<section class="content">
+      
+	   <div class="container-fluid">
+        <div class="row">
+          <div class="col-7">
+          <div class="card tj-gue">
+              <!--<div class="card-header">
+                <h3 class="card-title">社情信息</h3>
+              </div>-->
+               <div class="card-header">
+                <h3 class="card-title">
+                 事项及服务
+                </h3>
+                <div class="card-tools">
+                  <ul class="nav nav-pills ml-auto">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#tab2_1" data-toggle="tab">事项社情</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#tab2_2" data-toggle="tab">社区办事服务</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#tab2_3" data-toggle="tab">接诉即办事件处理</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#tab2_4" data-toggle="tab">社区吹哨事件</a>
+                    </li>
+                    
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">              	
+                <div class="tab-content">
+					<div id="tab2_1" class="tab-pane card-body" role="tabpanel">
+						<table class="table table-bordered table-striped">
+						  
+						  <thead>
+							<tr style="background: #1dc6bd;color: #fff; text-align: center;">
+							<td>事项类别</td>
+							<td>社区党建事项</td>
+							<td>民主自治事项</td>
+							<td>社区服务事项</td>
+							<td>平安建设事项</td>
+							<td>社区环境事项</td>
+							<td>卫生健康事项</td>					
+						  </tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>本年度</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+									
+						  </tr>
+						  <tr>
+							<td>累计</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+												
+						  </tr>
+						  </tbody>
+
+						</table>
+					  </div>
+					<div id="tab2_2" class="tab-pane card-body tj-body" role="tabpanel">
+						 <table class="table table-bordered table-striped">
+						  
+						  <thead>
+							<tr style="background: #1dc6bd;color: #fff; text-align: center;">
+							<td>社区办事服务类别</td>
+							<td>民政服务</td>
+							<td>社保服务</td>
+							<td>助残服务</td>
+							<td>计生服务</td>
+							<td>证明开具</td>
+							<td>慰问走访服务</td>
+							<td>信访受理服务</td>
+							<td>小计</td>
+						  </tr>
+						  </thead>
+						  </tbody>
+						  <tr>
+							<td>本年度数量</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>							
+						  </tr>
+						  <tr>
+							<td>累计数量</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>	
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  <tr>
+							<td>本年度服务人次</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  <tr>
+							<td>累计服务人次</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>	
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  </tbody>
+
+						</table>
+					  </div>
+					  <div id="tab2_3" class="tab-pane card-body tj-body" role="tabpanel">
+						 <table class="table table-bordered table-striped">
+						 
+						  <thead>
+							<tr style="background: #1dc6bd;color: #fff; text-align: center;">
+							<td>接诉即办事件</td>
+							<td>类别1</td>
+							<td>类别2</td>
+							<td>类别3</td>
+							<td>类别4</td>
+							<td>小计</td>
+						  </tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>办理中</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>							
+						  </tr>
+						  <tr>
+							<td>办结</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>							
+						  </tr>
+						  </tbody>
+
+						</table>
+					  </div>
+					  <div id="tab2_4" class="tab-pane card-body tj-body" role="tabpanel">
+						 <table class="table table-bordered table-striped">
+						  
+						  <thead>
+							<tr style="background: #1dc6bd;color: #fff; text-align: center;">
+							<td>社区吹哨事件</td>
+							<td>类别1</td>
+							<td>类别2</td>
+							<td>类别3</td>
+							<td>类别4</td>
+							<td>小计</td>
+						  </tr>
+						  </thead>
+						  <tbody>
+						  <tr>
+							<td>办理中</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>							
+						  </tr>
+						  <tr>
+							<td>办结</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>							
+						  </tr>
+						  </tbody>
+
+						</table>				 
+					  </div>
+				</div>
+              </div>              
+            </div>
+          </div>
+          <div class="col-5">        
+            <!-- /.card -->
+					<div class="card tj-vit">
+              <div class="card-header">
+                <h3 class="card-title">信息发布平台</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr style="background: #bb63f7;color: #fff; text-align: center;">
+                      <th></th>
+                      <th>微信文章</th>
+					  <th>微信推送</th>
+                      <th>短信件次</th>
+					  <th>短信人次</th>
+                      <th>电话件次</th>
+					  <th>电话人数</th>
+                      <th>公布栏</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>社区党建</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+                     <tr>
+                      <td>民主自治</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+					<tr>
+                      <td>社区服务</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+					<tr>
+                      <td>平安建设</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+					<tr>
+                      <td>文化教育</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+					<tr>
+                      <td>社区环境</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+					<tr>
+                      <td>卫生健康</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+					<tr>
+                      <td>社区工作</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+					<tr>
+                      <td>小计</td>
+                      <td></td>
+                     	<td></td>
+                     	<td></td>
+                     	<td></td>  
+						<td></td>
+                     	<td></td>
+                     	<td></td>  
+                    </tr>
+                  </tbody>
+                </table>
+              </div>              
+           </div>	
+            
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+	  
+	</section>	
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -744,6 +1405,11 @@
       "responsive": true,
     });
   });
+</script>
+
+<script>
+	$("#tabl_1").tab("show");
+	$("#tab2_1").tab("show");
 </script>
 </body>
 </html>

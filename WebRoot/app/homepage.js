@@ -135,6 +135,16 @@ $(document).ready(function (){
         loadZnhffwPage();
     });
 	
+	
+	$('#homeAnchor').click(function () {
+		$('.nav-link').each(function () {
+		
+			//$(this).removeClass('active');
+			$(this).closest("li").removeClass('tj-fux');
+		});
+        window.location.href = "../app/homepage.html";
+    });
+	
 	/*$('#xxqffwAnchor').click(function () {
 		updateActiveMenu('xxqffwAnchor');
         loadXxqffwPage();
@@ -214,9 +224,115 @@ $(document).ready(function (){
 	
 	//loadTablePage();
 	
-	updateActiveMenu('sqzzqdAnchor');
-    loadSqzzqdPage();
+	//updateActiveMenu('sqzzqdAnchor');
+    //loadSqzzqdPage();
+	
+	//加载数据
+	loaddata();
+	
 });	
+
+function loaddata(){
+	
+	loadbaseinfo1();
+	
+	loadbaseinfo2();
+	
+	loadbaseinfo3();
+	
+	loadminqininfo();
+}
+
+function loadbaseinfo1(){
+	$.get(getContextPath()+'/homeController/loadbaseinfo1',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#b11").html(obj.data[0]);
+				$("#b12").html(obj.data[1]);
+				$("#b13").html(obj.data[2]);
+				$("#b14").html(obj.data[3]);
+				$("#b15").html(obj.data[4]);
+				$("#b16").html(obj.data[5]);
+				$("#b17").html(obj.data[6]);
+			}
+		});	
+}
+
+function loadbaseinfo2(){
+	$.get(getContextPath()+'/homeController/loadbaseinfo2',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#b21").html(obj.data[0]);
+				$("#b22").html(obj.data[1]);
+				$("#b23").html(obj.data[2]);
+				$("#b24").html(obj.data[3]);
+				$("#b25").html(obj.data[4]);
+			}
+		});	
+}
+
+function loadbaseinfo3(){
+	$.get(getContextPath()+'/homeController/loadbaseinfo3',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#b31").html(obj.data[0]);
+				$("#b32").html(obj.data[1]);
+				$("#b33").html(obj.data[2]);
+				$("#b34").html(obj.data[3]);
+				$("#b35").html(obj.data[4]);
+				$("#b36").html(obj.data[5]);
+				$("#b37").html(obj.data[6]);
+				$("#b38").html(obj.data[7]);
+				$("#b39").html(obj.data[8]);
+			}
+		});	
+}
+
+function loadminqininfo(){
+	$.get(getContextPath()+'/homeController/loadminqininfo',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#d1").html(obj.data[0]);
+				$("#d2").html(obj.data[1]);
+				$("#d3").html(obj.data[2]);
+				$("#d4").html(obj.data[3]);
+				$("#d5").html(obj.data[4]);
+				$("#d6").html(obj.data[5]);
+				$("#d7").html(obj.data[6]);
+				$("#d8").html(obj.data[7]);
+				$("#d9").html(obj.data[8]);
+				$("#d10").html(obj.data[9]);
+				$("#d11").html(obj.data[10]);
+				$("#d12").html(obj.data[11]);
+				$("#d13").html(obj.data[12]);
+				$("#d14").html(obj.data[13]);
+				$("#d15").html(obj.data[14]);
+				$("#d16").html(obj.data[15]);
+				$("#d17").html(obj.data[16]);
+				$("#d18").html(obj.data[17]);
+				$("#d19").html(obj.data[18]);
+				$("#d20").html(obj.data[19]);
+				$("#d21").html(obj.data[20]);
+				$("#d22").html(obj.data[21]);
+				$("#d23").html(obj.data[22]);
+				$("#d24").html(obj.data[23]);
+				$("#d25").html(obj.data[24]);
+			}
+		});	
+}
+
 
 function generateMenu()
 {
