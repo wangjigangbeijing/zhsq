@@ -36,7 +36,7 @@ public class ResidebuildingController {
 public String addOrUpdate(String id,String dataid,String name,String address,
 		String year,String propertyyears,String propertyrights,String heatingsystem,
 		String ofcommunity,String buildtype,String buildframework,String constructiontype,String units,
-		Integer levels,Integer elevators,Integer area,String developer,String propertyowner,String propertyownertel,
+		Integer levels,Integer gralevels,Integer elevators,Integer area,String developer,String propertyowner,String propertyownertel,
 		String user,String usertel,String propertymanage,String propertymanagecontact,String propertymanagecontacttel,
 		Integer longitude,Integer latitude,String status,String pictures,String note,Integer familiesinbuilding)
 {
@@ -66,6 +66,7 @@ public String addOrUpdate(String id,String dataid,String name,String address,
 		residebuilding.setconstructiontype(constructiontype);
 		residebuilding.setunits(units);
 		residebuilding.setlevels(levels);
+		residebuilding.setgralevels(gralevels);
 		residebuilding.setelevators(elevators);
 		residebuilding.setarea(area);
 		residebuilding.setdeveloper(developer);
@@ -266,6 +267,7 @@ hqlFilter.setOrder("desc");
 				jsonObj.put("constructiontype",residebuilding.getconstructiontype());
 				jsonObj.put("units",residebuilding.getunits());
 				jsonObj.put("levels",residebuilding.getlevels());
+				jsonObj.put("gralevels",residebuilding.getgralevels());
 				jsonObj.put("elevators",residebuilding.getelevators());
 				jsonObj.put("area",residebuilding.getarea());
 				jsonObj.put("developer",residebuilding.getdeveloper());

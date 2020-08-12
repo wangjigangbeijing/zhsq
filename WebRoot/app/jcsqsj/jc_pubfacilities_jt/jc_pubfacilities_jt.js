@@ -35,7 +35,6 @@ function load()
 		name = $('#typeQuery2').val();
 	}
 
- var objname = $('#objnameQuery').val();
  var deptname1 = $('#deptname1Query').val();
  var isincommunity = $('#isincommunityQuery').val();
  var material = $('#materialQuery').val();
@@ -43,7 +42,7 @@ function load()
  var objState = $('#objStateQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_pubfacilities_jtController/load?objname='+objname+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
+	$.get(getContextPath()+'/jc_pubfacilities_jtController/load?deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
 	function(result){
 		
 		if(searchtype == 1){

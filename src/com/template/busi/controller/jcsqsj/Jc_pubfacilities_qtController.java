@@ -126,7 +126,7 @@ if(objState != null && objState.equalsIgnoreCase("") == false && objState.equals
 }
 
 
-String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 
 String organization = "";
 if(ConstValue.userToOrgMap.containsKey(userId))

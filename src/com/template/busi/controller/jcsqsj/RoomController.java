@@ -27,7 +27,9 @@ public class RoomController {
 	private RoomService roomService;
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String addOrUpdate(String id,String dataid,String number,String ofcommunity,String ofresidebuilding,String ofunit,String level,String status,String isgrouporiented,String ownertype,String propertypapertype,String propertypaperid,String address,String propertymap,String note)
+public String addOrUpdate(String id,String dataid,String number,String ofcommunity,
+		String ofresidebuilding,String ofunit,String level,String status,String isgrouporiented,
+		String ownertype,String propertypapertype,String propertypaperid,String address,String propertymap,String note)
 {
 	JSONObject jsonObj = new JSONObject();
 	try

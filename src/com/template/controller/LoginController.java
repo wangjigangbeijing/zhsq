@@ -132,7 +132,7 @@ public class LoginController {
 					SysOrganization organization = organizationService.getById(orgid);
 					
 					if(organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
-						border = organization.getborder();
+						border = organization.getboundary();
 					
 					organizations += userOrgList.get(i).getorganization()+",";
 				}

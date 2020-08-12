@@ -135,7 +135,7 @@ public void setform(String form)
 {
 	this.form = form;
 }
-@Column(name = "objState", nullable = true)
+@Column(name = "objstate", nullable = true)
 public String objState;
 public String getobjState()
 {
@@ -174,6 +174,17 @@ public String getnote()
 public void setnote(String note)
 {
 	this.note = note;
+}
+
+@Column(name = "owner", nullable = true)
+public String owner;
+public String getowner()
+{
+	return owner;
+}
+public void setowner(String owner)
+{
+	this.owner = owner;
 }
 }
 

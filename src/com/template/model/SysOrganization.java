@@ -64,6 +64,17 @@ public void setborder(String border)
 {
 	this.border = border;
 }
+
+@Column(name = "boundry", nullable = true)
+public String boundary;
+public String getboundary()
+{
+	return boundary;
+}
+public void setboundary(String boundary)
+{
+	this.boundary = boundary;
+}
 @Column(name = "area", nullable = true)
 public Integer area;
 public Integer getarea()

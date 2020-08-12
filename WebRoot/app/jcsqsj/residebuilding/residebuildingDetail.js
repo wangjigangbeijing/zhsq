@@ -97,19 +97,26 @@ function viewDetail(id)
 			{
 				$('#modalDetail').show();
 				
-								$('#dataid').val(obj.dataid);
+				$('#dataid').val(obj.dataid);
 				$('#name').val(obj.name);
 				$('#address').val(obj.address);
 				$('#year').val(obj.year);
-				$('#propertyyears').val(obj.propertyyears);
+				//$('#propertyyears').val(obj.propertyyears);				
+				$("input[name='propertyyears'][value='"+obj.propertyyears+"']").attr("checked",true); 
+				
 				$('#propertyrights').val(obj.propertyrights);
-				$('#heatingsystem').val(obj.heatingsystem);
+				//$('#heatingsystem').val(obj.heatingsystem);
+				$("input[name='heatingsystem'][value='"+obj.heatingsystem+"']").attr("checked",true); 
+				
 				$('#ofcommunity').val(obj.ofcommunity);
-				$('#buildtype').val(obj.buildtype);
+				//$('#buildtype').val(obj.buildtype);
+				$("input[name='buildtype'][value='"+obj.buildtype+"']").attr("checked",true); 
+				
 				$('#buildframework').val(obj.buildframework);
 				$('#constructiontype').val(obj.constructiontype);
 				$('#units').val(obj.units);
 				$('#levels').val(obj.levels);
+				$('#gralevels').val(obj.gralevels);
 				$('#elevators').val(obj.elevators);
 				$('#area').val(obj.area);
 				$('#developer').val(obj.developer);
@@ -170,6 +177,7 @@ function addOrUpdate()
 		constructiontype:$('#constructiontype').val(),
 		units:$('#units').val(),
 		levels:$('#levels').val(),
+		gralevels:$('#gralevels').val(),
 		elevators:$('#elevators').val(),
 		area:$('#area').val(),
 		developer:$('#developer').val(),

@@ -119,7 +119,11 @@ $(document).ready(function (){
 	});
 	
 	if(curId != '')
-		viewDetail(curId);
+	{
+		setTimeout(function(){ 
+			viewDetail(curId);
+		}, 1000);
+	}
 });
 
 
@@ -134,9 +138,15 @@ function viewDetail(id)
 				$('#dataid').val(obj.dataid);
 				$('#number').val(obj.number);
 				$('#level').val(obj.level);
-				$('#status').val(obj.status);
-				$('#isgrouporiented').val(obj.isgrouporiented);
-				$('#ownertype').val(obj.ownertype);
+				//$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
+				
+				//$('#isgrouporiented').val(obj.isgrouporiented);
+				$("input[name='isgrouporiented'][value='"+obj.isgrouporiented+"']").attr("checked",true); 
+				
+				//$('#ownertype').val(obj.ownertype);
+				$("input[name='ownertype'][value='"+obj.ownertype+"']").attr("checked",true); 
+				
 				$('#propertypapertype').val(obj.propertypapertype);
 				$('#propertypaperid').val(obj.propertypaperid);
 				$('#address').val(obj.address);
@@ -166,7 +176,7 @@ function viewDetail(id)
 				$('#ofunit').html(filterArr.join(''));
 				$('#ofunit').attr("readonly","readonly");
 				
-				//$('#ofunit').val(obj.ofunit);
+				$('#note').val(obj.note);
 			}
 		});
 }
@@ -175,7 +185,7 @@ function gobackPage()
 {
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/room/room.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

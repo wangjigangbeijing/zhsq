@@ -14,6 +14,43 @@ $(document).ready(function (){
 	
 	//load();
 	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofcommunity'}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ofcommunity').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#ofcommunity').html(filterArr.join(''));
+				
+				//$('#ofresidebuilding').html('');
+				
+				//$('#ofunit').html('');
+			}
+			else
+			{
+				jError("获取社区列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
 	if(curId != '')
 		viewDetail(curId);
 });
@@ -28,7 +65,7 @@ function viewDetail(id)
 			{
 				$('#modalDetail').show();
 				
-								$('#dataid').val(obj.dataid);
+				//$('#dataid').val(obj.dataid);
 				$('#name').val(obj.name);
 				$('#address').val(obj.address);
 				$('#year').val(obj.year);
@@ -42,6 +79,7 @@ function viewDetail(id)
 				$('#constructiontype').val(obj.constructiontype);
 				$('#units').val(obj.units);
 				$('#levels').val(obj.levels);
+				$('#area').val(obj.area);
 				$('#elevators').val(obj.elevators);
 				$('#area').val(obj.area);
 				$('#developer').val(obj.developer);
@@ -66,7 +104,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_bizbuilding/jc_bizbuilding.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	
@@ -84,12 +122,10 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
-	
-	
 	$.post(getContextPath()+"/jc_bizbuildingController/addOrUpdate",
 	{
 		id:curId,
-				dataid:$('#dataid').val(),
+		dataid:$('#dataid').val(),
 		name:$('#name').val(),
 		address:$('#address').val(),
 		year:$('#year').val(),

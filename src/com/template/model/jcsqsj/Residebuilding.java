@@ -155,6 +155,19 @@ public void setunits(String units)
 {
 	this.units = units;
 }
+
+@Column(name = "gralevels", nullable = true)
+public Integer gralevels;
+public Integer getgralevels()
+{
+	return gralevels;
+}
+public void setgralevels(Integer gralevels)
+{
+	this.gralevels = gralevels;
+}
+
+
 @Column(name = "levels", nullable = true)
 public Integer levels;
 public Integer getlevels()

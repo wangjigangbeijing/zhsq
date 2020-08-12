@@ -15,18 +15,11 @@ var VALUE_SPLITTER = ",";
 var USER_TYPE_ADMIN = 0;
 var USER_TYPE_PM = 1;
 
+var curSXType = '';//事项类型
 
+var curUserType = -1;
 
-
-
-
-
-
-var curSXType = '';
-
-
-
-
+var curJCSQSJType = '';//基础社情数据类型
 
 $.ajax({
   type: 'POST',

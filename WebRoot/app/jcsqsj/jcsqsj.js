@@ -1,33 +1,29 @@
 ﻿
-var curUserType = -1;
-
-var curType = '';
-
 $(document).ready(function (){
 	
 	$('#btnAdd').click(addsqzzqd);
 	
 	//小区信息
 	$('#xqxxAnchor').click(function () {
-		curType = '小区信息';		
+		curJCSQSJType = '小区信息';		
 		loadCommunity();
     });
 	
 	//房屋信息
 	$('#fwxxAnchor').click(function () {		
-		curType = '房屋信息';		
+		curJCSQSJType = '房屋信息';		
 		loadRoom();        
     });
 	
 	//家庭信息
 	$('#jtxxAnchor').click(function () {
-		curType = '家庭信息';		
+		curJCSQSJType = '家庭信息';		
 		loadFamily();  
     });
 	
 	//居民信息
 	$('#jmxxAnchor').click(function () {
-		curType = '居民信息';	
+		curJCSQSJType = '居民信息';	
 		loadResident();
     });
 	
@@ -50,14 +46,14 @@ $(document).ready(function (){
 	
 	//周边道路
 	$('#zbdlAnchor').click(function () {
-		curType = '周边道路';	
+		curJCSQSJType = '周边道路';	
 		loadRoad();
     });
 	
 	//党组织
 	$('#dzzAnchor').click(function () {
 		
-		curType = '党组织';	
+		curJCSQSJType = '党组织';	
 		loadPartyOrganization();
        
     });
@@ -65,7 +61,7 @@ $(document).ready(function (){
 	//市政设施
 	$('#szbjAnchor').click(function () {
 		
-		curType = '市政设施';	
+		curJCSQSJType = '市政设施';	
 		loadPublicFacilities();
 		
     });
@@ -73,7 +69,7 @@ $(document).ready(function (){
 	//住宅楼宇
 	$('#zzlyAnchor').click(function () {
 		
-		curType = '住宅楼宇';	
+		curJCSQSJType = '住宅楼宇';	
 		loadResidebuilding();
 		
     });
@@ -81,7 +77,7 @@ $(document).ready(function (){
 	//商务楼宇
 	$('#swlyAnchor').click(function () {
 		
-		curType = '商务楼宇';	
+		curJCSQSJType = '商务楼宇';	
 		loadBizbuilding();
 		
     });
@@ -89,7 +85,7 @@ $(document).ready(function (){
 	//地下空间
 	$('#dxkjAnchor').click(function () {
 		
-		curType = '地下空间';	
+		curJCSQSJType = '地下空间';	
 		loadUndergroundspace();
 		
     });
@@ -97,7 +93,7 @@ $(document).ready(function (){
 	//车辆信息
 	$('#clxxAnchor').click(function () {
 		
-		curType = '车辆信息';	
+		curJCSQSJType = '车辆信息';	
 		loadVehicle();
 		
     });
@@ -105,7 +101,7 @@ $(document).ready(function (){
 	//文体设施
 	$('#wtssAnchor').click(function () {
 		
-		curType = '文体设施';	
+		curJCSQSJType = '文体设施';	
 		loadCultureFacilities();
 		
     });
@@ -122,7 +118,7 @@ $(document).ready(function (){
 	//停车资源
 	$('#tczyAnchor').click(function () {
 		
-		curType = '停车资源';	
+		curJCSQSJType = '停车资源';	
 		loadParking();
 		
     });
@@ -130,7 +126,7 @@ $(document).ready(function (){
 	//法人组织
 	$('#frzzAnchor').click(function () {
 		
-		curType = '法人组织';	
+		curJCSQSJType = '法人组织';	
 		loadOrganization();
 		
     });
@@ -138,7 +134,7 @@ $(document).ready(function (){
 	//志愿者队伍
 	$('#zyzdwAnchor').click(function () {
 		
-		curType = '志愿者队伍';	
+		curJCSQSJType = '志愿者队伍';	
 		loadVolunteerteam();
 		
     });
@@ -146,7 +142,7 @@ $(document).ready(function (){
 	//居民团体
 	$('#jmttAnchor').click(function () {
 		
-		curType = '居民团体';	
+		curJCSQSJType = '居民团体';	
 		loadPopulationgroup();
 		
     });
@@ -154,7 +150,7 @@ $(document).ready(function (){
 	//服务网点
 	$('#ffwdAnchor').click(function () {
 		
-		curType = '服务网点';	
+		curJCSQSJType = '服务网点';	
 		loadServicestore();
 		
     });
@@ -162,7 +158,7 @@ $(document).ready(function (){
 	//垃圾站
 	$('#ljzAnchor').click(function () {
 		
-		curType = '垃圾站';	
+		curJCSQSJType = '垃圾站';	
 		loadRubbish();
 		
     });
@@ -170,7 +166,7 @@ $(document).ready(function (){
 	//河湖水系
 	$('#hhsxAnchor').click(function () {
 		
-		curType = '河湖水系';	
+		curJCSQSJType = '河湖水系';	
 		loadWatersystem();
 		
     });
@@ -178,7 +174,7 @@ $(document).ready(function (){
 	//避难场所
 	$('#bncsAnchor').click(function () {
 		
-		curType = '避难场所';	
+		curJCSQSJType = '避难场所';	
 		loadShelter();
 		
     });
@@ -186,7 +182,7 @@ $(document).ready(function (){
 	//党员信息
 	$('#dyxxAnchor').click(function () {
 		
-		curType = '党员信息';	
+		curJCSQSJType = '党员信息';	
 		loaddyxx();
 		
     });
@@ -194,7 +190,7 @@ $(document).ready(function (){
 	//宣传设施
 	$('#xcssAnchor').click(function () {
 		
-		curType = '宣传设施';	
+		curJCSQSJType = '宣传设施';	
 		loadxcss();
 		
     });
@@ -202,7 +198,7 @@ $(document).ready(function (){
 	//公用市政设施
 	$('#gyszssAnchor').click(function () {
 		
-		curType = '公用市政设施';	
+		curJCSQSJType = '公用市政设施';	
 		loadgyszss();
 		
     });
@@ -210,7 +206,7 @@ $(document).ready(function (){
 	//交通市政设施
 	$('#jtszssAnchor').click(function () {
 		
-		curType = '交通市政设施';	
+		curJCSQSJType = '交通市政设施';	
 		loadjtszss();
 		
     });
@@ -218,7 +214,7 @@ $(document).ready(function (){
 	//市容环境市政设施
 	$('#srhjszssAnchor').click(function () {
 		
-		curType = '市容环境市政设施';	
+		curJCSQSJType = '市容环境市政设施';	
 		loadsrhjszss();
 		
     });
@@ -226,7 +222,7 @@ $(document).ready(function (){
 	//园林绿化市政设施
 	$('#yllhszssAnchor').click(function () {
 		
-		curType = '园林绿化市政设施';	
+		curJCSQSJType = '园林绿化市政设施';	
 		loadyllhszss();
 		
     });
@@ -234,7 +230,7 @@ $(document).ready(function (){
 	//其他市政设施
 	$('#qtszssAnchor').click(function () {
 		
-		curType = '其他市政设施';	
+		curJCSQSJType = '其他市政设施';	
 		loadqtszss();
 		
     });
@@ -242,7 +238,7 @@ $(document).ready(function (){
 	//消防通道
 	$('#xftdAnchor').click(function () {
 		
-		curType = '消防通道';	
+		curJCSQSJType = '消防通道';	
 		loadxftd();
 		
     });
@@ -250,7 +246,7 @@ $(document).ready(function (){
 	//消防设施
 	$('#xfssAnchor').click(function () {
 		
-		curType = '消防设施';	
+		curJCSQSJType = '消防设施';	
 		loadxfss();
 		
     });
@@ -259,7 +255,7 @@ $(document).ready(function (){
 	//停车位区域
 	$('#tcwqyAnchor').click(function () {
 		
-		curType = '停车位区域';	
+		curJCSQSJType = '停车位区域';	
 		loadtcwqy();
 		
     });
@@ -267,7 +263,7 @@ $(document).ready(function (){
 	//一般停车场出入口
 	$('#ybtcccrkAnchor').click(function () {
 		
-		curType = '一般停车场出入口';	
+		curJCSQSJType = '一般停车场出入口';	
 		loadybtcccrk();
 		
     });
@@ -275,7 +271,7 @@ $(document).ready(function (){
 	//一般停车场
 	$('#ybtccAnchor').click(function () {
 		
-		curType = '一般停车场';	
+		curJCSQSJType = '一般停车场';	
 		loadybtcc();
 		
     });
@@ -283,7 +279,7 @@ $(document).ready(function (){
 	//非机动车停车位
 	$('#fjdctcwAnchor').click(function () {
 		
-		curType = '非机动车停车位';	
+		curJCSQSJType = '非机动车停车位';	
 		loadfjdctcw();
 		
     });
@@ -291,115 +287,122 @@ $(document).ready(function (){
 	//道路停车场
 	$('#dltccAnchor').click(function () {
 		
-		curType = '道路停车场';	
+		curJCSQSJType = '道路停车场';	
 		loaddltcc();
 		
     });
 	
-	if(curType == '' || curType == '居民信息')
+});
+
+loadJCSQSJ();
+
+function loadJCSQSJ()
+{
+	
+	if(curJCSQSJType == '' || curJCSQSJType == '居民信息')
 	{
 		loadResident();
 	}
-	else if(curType == '小区信息')
+	else if(curJCSQSJType == '小区信息')
 	{
 		loadCommunity();
 	}
-	else if(curType == '房屋信息')
+	else if(curJCSQSJType == '房屋信息')
 	{
 		loadRoom();
 	}
-	else if(curType == '家庭信息')
+	else if(curJCSQSJType == '家庭信息')
 	{
 		loadFamily();
 	}
-	else if(curType =='周边道路')
+	else if(curJCSQSJType =='周边道路')
 		loadRoad();
 
-	else if(curType == '党组织')	
+	else if(curJCSQSJType == '党组织')	
 		loadPartyOrganization();
 
-	else if(curType == '市政设施')
+	else if(curJCSQSJType == '市政设施')
 		loadPublicFacilities();
 
-	else if(curType == '住宅楼宇')	
+	else if(curJCSQSJType == '住宅楼宇')	
 		loadResidebuilding();
 
-	else if(curType == '商务楼宇')	
+	else if(curJCSQSJType == '商务楼宇')	
 		loadBizbuilding();
 
-	else if(curType == '地下空间')	
+	else if(curJCSQSJType == '地下空间')	
 		loadUndergroundspace();
 
-	else if(curType == '车辆信息')	
+	else if(curJCSQSJType == '车辆信息')	
 		loadVehicle();
 
-	else if(curType == '文体设施')	
+	else if(curJCSQSJType == '文体设施')	
 		loadCultureFacilities();
 
-	else if(curType == '停车资源')	
+	else if(curJCSQSJType == '停车资源')	
 		loadParking();
 
-	else if(curType == '法人组织')	
+	else if(curJCSQSJType == '法人组织')	
 		loadOrganization();
 
-	else if(curType == '志愿者队伍')
+	else if(curJCSQSJType == '志愿者队伍')
 		loadVolunteerteam();
 
-	else if(curType == '居民团体')	
+	else if(curJCSQSJType == '居民团体')	
 		loadPopulationgroup();
 
-	else if(curType == '服务网点')	
+	else if(curJCSQSJType == '服务网点')	
 		loadServicestore();
 
-	else if(curType == '垃圾站')
+	else if(curJCSQSJType == '垃圾站')
 		loadRubbish();
 	
-	else if(curType == '河湖水系')
+	else if(curJCSQSJType == '河湖水系')
 		loadWatersystem();
 	
-	else if(curType == '避难场所')
+	else if(curJCSQSJType == '避难场所')
 		loadShelter();
 	
-	else if(curType == '党员信息')
+	else if(curJCSQSJType == '党员信息')
 		loaddyxx();
 	
-	else if(curType == '宣传设施')
+	else if(curJCSQSJType == '宣传设施')
 		loadxcss();
 	
-	else if(curType == '公用市政设施')
+	else if(curJCSQSJType == '公用市政设施')
 		loadgyszss();
 	
-	else if(curType == '交通市政设施')
+	else if(curJCSQSJType == '交通市政设施')
 		loadjtszss();
 	
-	else if(curType == '市容环境市政设施')
+	else if(curJCSQSJType == '市容环境市政设施')
 		loadsrhjszss();
 	
-	else if(curType == '园林绿化市政设施')
+	else if(curJCSQSJType == '园林绿化市政设施')
 		loadyllhszss();
 	
-	else if(curType == '其他市政设施')
+	else if(curJCSQSJType == '其他市政设施')
 		loadqtszss();
 	
-	else if(curType == '消防通道')
+	else if(curJCSQSJType == '消防通道')
 		loadxftd();
 	
-	else if(curType == '消防设施')
+	else if(curJCSQSJType == '消防设施')
 		loadxfss();
 	
-	else if(curType == '停车位区域')
+	else if(curJCSQSJType == '停车位区域')
 		loadtcwqy();
 	
-	else if(curType == '一般停车场出入口')
+	else if(curJCSQSJType == '一般停车场出入口')
 		loadybtcccrk();
 	
-	else if(curType == '一般停车场')
+	else if(curJCSQSJType == '一般停车场')
 		loadybtcc();
 	
-	else if(curType == '非机动车停车位')
+	else if(curJCSQSJType == '非机动车停车位')
 		loadfjdctcw();
 	
-	else if(curType == '道路停车场')
+	else if(curJCSQSJType == '道路停车场')
 		loaddltcc();
 	
 	$.get(getContextPath()+"/jcsqsjController/get",
@@ -446,7 +449,7 @@ $(document).ready(function (){
 			
 		}
 	});	
-});
+}
 
 function loadResident()
 {

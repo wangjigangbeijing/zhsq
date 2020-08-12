@@ -893,7 +893,7 @@ public class DataController {
 			
 			List<SysTableAttribute> layerAttrInDB = layerAttributeService.findByFilter(hqlFilter);
 			
-			String sFields = "";
+			String sFields = "point,";
 			
 			for(int i=0;i<layerAttrInDB.size();i++)
 			{
@@ -918,6 +918,10 @@ public class DataController {
 			for(int i=0;i<listObj.size();i++)
 			{
 				HashMap hm = listObj.get(i);
+				
+				Object objValuePoint = hm.get("point");	
+				
+				jsonObj.put("point", objValuePoint);
 				
 				for(int j=0;j<layerAttrInDB.size();j++)
 				{

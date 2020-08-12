@@ -216,6 +216,8 @@ $(function ()
 	$.get(getContextPath()+"/gismapController/getMapByName?name=社区民情图",
 			function(response)
 			{	
+				debugger;
+				
 				var respObj = jQuery.parseJSON(response); 
 
 				var geoServerURL = respObj.mapurl;
@@ -242,9 +244,19 @@ $(function ()
 					
 					var layerStyle = layer.layerstyle;
 					
+					console.log(layerStyle);
+					
 					var layerStyleObj = jQuery.parseJSON(layerStyle); 
 					
 					layerStyleMap[layerId] = layerStyleObj;
+					
+					if(layerId == 'layer2_5')
+					{
+						for(var k=0;k<layerStyleObj.length;k++)
+						{
+							layerStyleMap[layerStyleObj[k].type] = layerStyleObj[k].style;
+						}
+					}
 					
 					layerIds += layerId + ',';
 				}
@@ -283,7 +295,7 @@ $(function ()
 					var data = dataList.features[p];
 				
 					layerStyleObj = layerStyleMap[data.layerId];
-				
+					
 					if(data.type == 'MultiLineString')
 					{
 						var iconFeature = new ol.Feature({
@@ -306,9 +318,18 @@ $(function ()
 							rainfall: 500
 						});
 						
+						var iconurl = '';
+						if(layerStyleObj.style != null)
+							iconurl = layerStyleObj.style.iconurl;
+							
+						if(data.layerId == 'layer2_5')
+							iconurl = layerStyleMap[data.facilitytype].iconurl;
+						
+						console.log(iconurl);
+						
 						iconFeature.setStyle(new ol.style.Style({
 							image: new ol.style.Icon({
-								src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
+								src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
 							})
 						}));
 						

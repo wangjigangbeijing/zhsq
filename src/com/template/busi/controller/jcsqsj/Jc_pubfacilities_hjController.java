@@ -96,37 +96,37 @@ public String load(String type,String objname,String deptname1,String isincommun
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(type != null && type.equalsIgnoreCase("") == false && type.equalsIgnoreCase("null") == false)
+if(type != null && type.equalsIgnoreCase("") == false && type.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("type", HqlFilter.Operator.EQ, type);
 }
-if(objname != null && objname.equalsIgnoreCase("") == false && objname.equalsIgnoreCase("null") == false)
+if(objname != null && objname.equalsIgnoreCase("") == false && objname.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("objname", HqlFilter.Operator.LIKE, "%"+objname+"%");
 }
-if(deptname1 != null && deptname1.equalsIgnoreCase("") == false && deptname1.equalsIgnoreCase("null") == false)
+if(deptname1 != null && deptname1.equalsIgnoreCase("") == false && deptname1.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("deptname1", HqlFilter.Operator.LIKE, "%"+deptname1+"%");
 }
-if(isincommunity != null && isincommunity.equalsIgnoreCase("") == false && isincommunity.equalsIgnoreCase("null") == false)
+if(isincommunity != null && isincommunity.equalsIgnoreCase("") == false && isincommunity.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("isincommunity", HqlFilter.Operator.LIKE, "%"+isincommunity+"%");
 }
-if(material != null && material.equalsIgnoreCase("") == false && material.equalsIgnoreCase("null") == false)
+if(material != null && material.equalsIgnoreCase("") == false && material.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("material", HqlFilter.Operator.EQ, material);
 }
-if(form != null && form.equalsIgnoreCase("") == false && form.equalsIgnoreCase("null") == false)
+if(form != null && form.equalsIgnoreCase("") == false && form.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("form", HqlFilter.Operator.EQ, form);
 }
-if(objState != null && objState.equalsIgnoreCase("") == false && objState.equalsIgnoreCase("null") == false)
+if(objState != null && objState.equalsIgnoreCase("") == false && objState.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("objState", HqlFilter.Operator.EQ, objState);
 }
 
 
-String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 
 String organization = "";
 if(ConstValue.userToOrgMap.containsKey(userId))

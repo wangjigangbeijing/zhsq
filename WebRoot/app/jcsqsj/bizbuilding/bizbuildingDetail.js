@@ -68,7 +68,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./bizbuilding/bizbuilding.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

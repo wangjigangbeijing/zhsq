@@ -56,7 +56,7 @@ function gobackPage()
 {
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/community/community.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	
