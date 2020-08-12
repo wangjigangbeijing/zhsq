@@ -236,11 +236,23 @@ function loaddata(){
 	
 	loadbaseinfo1();
 	
+	loadminqininfo();
+	
+	loadsxsq();
+	
+	//loadinfodata();
+	
 	loadbaseinfo2();
 	
 	loadbaseinfo3();
 	
-	loadminqininfo();
+	loadbaseinfo4();
+	
+	loadbaseinfo5();
+	
+	loadbaseinfo6();
+	
+	//loadsqbs();
 }
 
 function loadbaseinfo1(){
@@ -297,6 +309,64 @@ function loadbaseinfo3(){
 		});	
 }
 
+function loadbaseinfo4(){
+	$.get(getContextPath()+'/homeController/loadbaseinfo4',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
+			if(obj.success)
+			{
+				$("#b41").html(obj.data[0]);
+				$("#b42").html(obj.data[1]);
+				$("#b43").html(obj.data[2]);
+				$("#b44").html(obj.data[3]);
+				$("#b45").html(obj.data[4]);
+				$("#b46").html(obj.data[5]);
+				$("#b47").html(obj.data[6]);
+				$("#b48").html(obj.data[7]);
+				$("#b49").html(obj.data[8]);
+				$("#b410").html(obj.data[9]);
+				$("#b411").html(obj.data[10]);
+				$("#b412").html(obj.data[11]);
+				$("#b413").html(obj.data[12]);
+				$("#b414").html(obj.data[13]);
+			}
+		});	
+}
+
+function loadbaseinfo5(){
+	$.get(getContextPath()+'/homeController/loadbaseinfo5',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
+			if(obj.success)
+			{
+				$("#b51").html(obj.data[0]);
+				$("#b52").html(obj.data[1]);
+			}
+		});	
+}
+
+function loadbaseinfo6(){
+	$.get(getContextPath()+'/homeController/loadbaseinfo6',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
+			if(obj.success)
+			{
+				$("#b61").html(obj.data[0]);
+				$("#b62").html(obj.data[1]);
+				$("#b63").html(obj.data[2]);
+				$("#b64").html(obj.data[3]);
+				$("#b65").html(obj.data[4]);
+				$("#b66").html(obj.data[5]);
+			}
+		});	
+}
+
 function loadminqininfo(){
 	$.get(getContextPath()+'/homeController/loadminqininfo',
 		function(result){
@@ -329,6 +399,74 @@ function loadminqininfo(){
 				$("#d23").html(obj.data[22]);
 				$("#d24").html(obj.data[23]);
 				$("#d25").html(obj.data[24]);
+			}
+		});	
+}
+
+function loadsxsq(){
+	$.get(getContextPath()+'/homeController/loadsxsq',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
+			if(obj.success)
+			{
+				$("#s1").html(obj.data[0]);
+				$("#s2").html(obj.data[1]);
+				$("#s3").html(obj.data[2]);
+				$("#s4").html(obj.data[3]);
+				$("#s5").html(obj.data[4]);
+				$("#s6").html(obj.data[5]);
+			}
+		});	
+}
+
+function loadsqbs(){
+	$.get(getContextPath()+'/homeController/loadsqbs',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
+			if(obj.success)
+			{
+				$("#bs1").html(obj.data[0]);
+				$("#bs2").html(obj.data[1]);
+				$("#bs3").html(obj.data[2]);
+				$("#bs4").html(obj.data[3]);
+				$("#bs5").html(obj.data[4]);
+				$("#bs6").html(obj.data[5]);
+				$("#bs7").html(obj.data[6]);
+				$("#bs8").html(obj.data[7]);
+			}
+		});	
+}
+
+function loadinfodata(){
+	$.get(getContextPath()+'/homeController/loadinfodata',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
+			if(obj.success)
+			{
+				$("#bi1").html(obj.data[0]);
+				$("#bi2").html(obj.data[1]);
+				$("#bi3").html(obj.data[2]);
+				$("#bi4").html(obj.data[3]);
+				$("#bi5").html(obj.data[4]);
+				$("#bi6").html(obj.data[5]);
+				$("#bi7").html(obj.data[6]);
+				$("#bi8").html(obj.data[7]);
+				$("#bi9").html(obj.data[8]);
+				$("#bi10").html(obj.data[9]);
+				$("#bi11").html(obj.data[10]);
+				$("#bi12").html(obj.data[11]);
+				$("#bi13").html(obj.data[12]);
+				$("#bi14").html(obj.data[13]);
+				$("#bi15").html(obj.data[14]);
+				$("#bi16").html(obj.data[15]);
+				$("#bi17").html(obj.data[16]);
+				$("#bi18").html(obj.data[17]);
 			}
 		});	
 }

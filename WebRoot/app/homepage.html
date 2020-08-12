@@ -44,7 +44,7 @@
   
   <style>
 	  .card{box-shadow: none;border-radius: 0;}
-  .card-body{ padding: 2px;}
+  .card-body{ padding: 10px;}
   .nav-link{padding:10px;}
   .tj-sqog .nav-pills .nav-link.active, .nav-pills .show>.nav-link{color: #333;    background-color: #f5f7fa;border-top: 2px solid #ff6900;}
   .tj-gue .nav-pills .nav-link.active, .nav-pills .show>.nav-link{color: #333;    background-color: #f5f7fa;border-top: 2px solid #1dc6bd;}
@@ -57,6 +57,8 @@
   .tj-sqog h3{color: #ff6900;}
   .tj-gue{border-left: 4px solid #1dc6bd;}
   .tj-gue h3{ color:#33a8ac ;}
+  .tj-bue{border-left: 4px solid #0080FF;}
+  .tj-bue h3{ color:#0080FF ;}
   .tj-vit{border-left: 4px solid #bb63f7}
   .tj-vit h3{ color:#9012f5 ;}
   .table td, .table th{text-align:center;}
@@ -85,7 +87,7 @@
         <a href="#" class="nav-link">本月慰问走访：5</a>
       </li> -->
       
-      <img src="../../images/zh.png" width="32px"  alt="" />
+      <img src="../images/logo.png" width="32px"  alt="" />
 	  <H3 style="color:white">大红门街道智慧社区综合管理服务平台<span style="color:blue">（金润家园社区）</span></H3>
     </ul>
 
@@ -260,19 +262,19 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview"> <!--  menu-open -->
             <a href="#" id="homeAnchor" class="nav-link">
-              <i class="nav-icon fas fa-bookmark"></i>
+              <img src="../images/icon/home/home.png" width="24px"  alt="" />
               <p>
                 首页
-                <i class="right fas fa-angle-left"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
           </li>
-		  <li class="nav-item has-treeview"> <!--  menu-open -->
+		  <li class="nav-item has-treeview menu-open"> <!--  menu-open -->
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-bookmark"></i>
+              <img src="../images/icon/home/one.png" width="20px"  alt="" />
               <p>
                 一单
-                <i class="right fas fa-angle-left"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -290,12 +292,12 @@
             </ul>
           </li>
   
-          <li class="nav-item has-treeview"> <!--  menu-open -->
+          <li class="nav-item has-treeview menu-open"> <!--  menu-open -->
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-list-alt"></i>
+              <img src="../images/icon/home/two.png" width="20px"  alt="" />
               <p>
                 两库
-                <i class="fas fa-angle-left right"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -314,12 +316,12 @@
 
             </ul>
           </li>
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-map"></i>
+              <img src="../images/icon/home/three.png" width="20px"  alt="" />
               <p>
                 三图
-                <i class="right fas fa-angle-left"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -345,20 +347,14 @@
           </li>
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
+              <img src="../images/icon/home/nservice.png" width="24px"  alt="" />
               <p>
                 N服务
-                <i class="fas fa-angle-left right"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-				<li class="nav-item">
-                <a id="zhfwAnchor" href="#" class="nav-link">
-                  <i class="fa-bj" aria-hidden="true"></i>
-                  <p>综合服务</p>
-                  <!--span class="badge badge-info right">2</span-->
-                </a>
-              </li>
+				
               <li class="nav-item">
                 <a id="sqbsfwAnchor" href="#" class="nav-link">
                   <i class="fa-bj" aria-hidden="true"></i>
@@ -414,17 +410,23 @@
                   <p>信息群发服务</p>
                 </a>
               </li-->
-
+				<li class="nav-item">
+                <a id="zhfwAnchor" href="#" class="nav-link">
+                  <i class="fa-bj" aria-hidden="true"></i>
+                  <p>其他综合服务</p>
+                  <!--span class="badge badge-info right">2</span-->
+                </a>
+              </li>
             </ul>
           </li>
 
  
-			<li class="nav-item has-treeview">
+			<li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-map"></i>
+              <img src="../images/icon/home/info.png" width="24px"  alt="" />
               <p>
                 信息发布平台
-                <i class="right fas fa-angle-left"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -463,12 +465,12 @@
 
 
 
-			<li class="nav-item has-treeview">
+			<li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-map"></i>
+              <img src="../images/icon/home/sys.png" width="24px"  alt="" />
               <p>
                 系统管理
-                <i class="right fas fa-angle-left"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -535,12 +537,12 @@
             </ul>
           </li>
 		  
-		  <li class="nav-item has-treeview">
+		  <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-flask"></i>
+              <img src="../images/icon/home/flow.png" width="24px"  alt="" />
               <p>
                 业务流管理
-                <i class="right fas fa-angle-left"></i>
+                <i class="right"><img src="../images/icon/home/left.png" width="12px"  alt="" /></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -572,6 +574,16 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" id="main-content">
     <!-- Content Header (Page header) -->
+    <section class="content-header" style="padding-bottom:0px;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12" style="text-align:center;">
+            <h1 style="font-size:40px; color:#005AB5;">ABC社区社情概览</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    
     <section class="content-header">
       <div class="container-fluid">
         <div class="row">
@@ -586,29 +598,29 @@
 					  
 					  <ul class="nav nav-pills ml-auto">
 						<li class="nav-item">
-						  <a class="nav-link active" href="#tabl_1" data-toggle="tab">社区基本信息</a>
+						  <a class="nav-link active" href="#tabl_1" data-toggle="tab">基本信息</a>
 						</li>
 						<li class="nav-item">
 						  <a class="nav-link" href="#tabl_2" data-toggle="tab">组织信息</a>
 						</li>
 						<li class="nav-item">
-						  <a class="nav-link" href="#tabl_3" data-toggle="tab">设施类信息</a>
+						  <a class="nav-link" href="#tabl_3" data-toggle="tab">设施信息</a>
 						</li>
 						<li class="nav-item">
-						  <a class="nav-link" href="#tabl_4" data-toggle="tab">服务网点信息</a>
+						  <a class="nav-link" href="#tabl_4" data-toggle="tab">服务网点</a>
 						</li><li class="nav-item">
-						  <a class="nav-link" href="#tabl_5" data-toggle="tab">消防设施类信息</a>
+						  <a class="nav-link" href="#tabl_5" data-toggle="tab">消防设施</a>
 						</li><li class="nav-item">
-						  <a class="nav-link" href="#tabl_6" data-toggle="tab">停车资源信息</a>
+						  <a class="nav-link" href="#tabl_6" data-toggle="tab">停车资源</a>
 						</li>
 					  </ul>
 				</div>
 				</div>
-                <div class="card-body">              
+                <div class="card-body" style="padding:0px;">              
                   	
 				  <div class="tab-content">
 						<div id="tabl_1" class="tab-pane card-body" role="tabpanel">
-							<table class="table table-bordered table-striped">
+							<table class="table table-bordered">
 							  <thead>
 							  <tr>
 								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">社区基本信息</th>  
@@ -621,7 +633,7 @@
 								<td>楼房类住宅楼宇</td>
 								<td>楼房类房屋</td>
 								<td>平房类住宅楼宇</td>
-								<td>平方类房屋</td>
+								<td>平房类房屋</td>
 								<td>商务楼宇</td>
 								<td>其他楼宇</td>					
 							  </tr>
@@ -641,7 +653,7 @@
 							</table>
 						  </div>
 						<div id="tabl_2" class="tab-pane card-body tj-body" role="tabpanel">
-							 <table class="table table-bordered table-striped">
+							 <table class="table table-bordered">
 							  <thead>
 								<tr>
 								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">组织信息</th>  
@@ -669,7 +681,7 @@
 							</table>
 						  </div>
 						  <div id="tabl_3" class="tab-pane card-body tj-body" role="tabpanel">
-							 <table class="table table-bordered table-striped">
+							 <table class="table table-bordered">
 							  <thead>
 								<tr>
 								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">设施类信息</th>  
@@ -705,7 +717,7 @@
 							</table>
 						  </div>
 						  <div id="tabl_4" class="tab-pane card-body tj-body" role="tabpanel">
-							 <table class="table table-bordered table-striped">
+							 <table class="table table-bordered">
 							  <thead>
 								<tr>
 								<th colspan="15" style="background: #ff6900;color: #fff; text-align: center;">服务网点信息</th>  
@@ -713,7 +725,7 @@
 							  </thead>
 							  <tbody>
 								<tr>
-								<td>服务信息</td>
+								<td style="width: 80px;">服务信息</td>
 								<td>政府机关</td>
 								<td>房产居住</td>
 								<td>购物百货</td>
@@ -731,27 +743,27 @@
 							  </tr>
 							  <tr>
 								<td>当前情况</td>
-								<td></td>	
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>								
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>								
+								<td id="b41"></td>	
+								<td id="b42"></td>
+								<td id="b43"></td>
+								<td id="b44"></td>
+								<td id="b45"></td>
+								<td id="b46"></td>
+								<td id="b47"></td>
+								<td id="b48"></td>
+								<td id="b49"></td>
+								<td id="b410"></td>								
+								<td id="b411"></td>
+								<td id="b412"></td>
+								<td id="b413"></td>
+								<td id="b414"></td>								
 							  </tr>
 							  </tbody>
 
 							</table>				 
 						  </div>
 						  <div id="tabl_5" class="tab-pane card-body tj-body" role="tabpanel">
-							 <table class="table table-bordered table-striped">
+							 <table class="table table-bordered">
 							  <thead>
 								<tr>
 								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">消防设施类信息</th>  
@@ -765,15 +777,15 @@
 							  </tr>
 							  <tr>
 								<td>当前情况</td>
-								<td></td>	
-								<td></td>									
+								<td id="b51"></td>	
+								<td id="b52"></td>									
 							  </tr>
 							  </tbody>
 
 							</table>
 						  </div>
 						  <div id="tabl_6" class="tab-pane card-body tj-body" role="tabpanel">
-							 <table class="table table-bordered table-striped">
+							 <table class="table table-bordered">
 							  <thead>
 								<tr>
 								<th colspan="10" style="background: #ff6900;color: #fff; text-align: center;">停车资源信息</th>  
@@ -791,12 +803,12 @@
 							  </tr>
 							  <tr>
 								<td>当前情况</td>
-								<td></td>	
-								<td></td>									
-								<td></td>	
-								<td></td>	
-								<td></td>	
-								<td></td>	
+								<td id="b61"></td>	
+								<td id="b62"></td>									
+								<td id="b63"></td>	
+								<td id="b64"></td>	
+								<td id="b65"></td>	
+								<td id="b66"></td>	
 							  </tr>
 							  </tbody>
 
@@ -819,12 +831,12 @@
 				  <table class="table table-bordered">
                   <thead>                  
                     <tr style="background: #ff6900;color: #fff; text-align: center;">
-                      <th>家庭居民信息</th>
-                      <th>常驻家庭户数</th>
-                      <th>常驻人口数</th>
-                      <th>流动家庭户数</th>
-                      <th>流动人口数</th>
-                      <th>登记车辆</th>
+                      <th>家庭居民情况</th>
+                      <th>常住户</th>
+                      <th>常住人</th>
+                      <th>流动户</th>
+                      <th>流动人</th>
+                      <th>车辆</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -863,7 +875,7 @@
           <div class="col-12">
         
             <!-- /.card -->
-				<div class="card tj-sqog">
+				<div class="card tj-bue">
 				<div class="card-header">
 				<h3 class="card-title">民情信息</h3>
 				</div>
@@ -871,38 +883,38 @@
                   	
 				  <table class="table table-bordered">
                   <thead>                  
-                    <tr style="background: #ff6900;color: #fff; text-align: center;">
+                    <tr style="background: #97CBFF;color: #fff; text-align: center;">
                       <th></th>
-					  <th>中共党员</th>
-                      <th>志愿者</th>
-                      <th>居民代表</th>
-                      <th>楼门长</th>
-                      <th>军人</th>
-                      <th>文体骨干</th>
-					  <th>优抚对象</th>
-					  <th>少数民族</th>
-					  <th>0-6岁儿童</th>
-					  <th>7-13岁青少年</th>
-					  <th>13-18岁青少年</th>
-					  <th>老年人</th>
-					  <th>80岁以上老人</th>
-					  <th>90岁以上老人</th>
-					  <th>独居老人</th>
-					  <th>失独老人</th>
-					  <th>空巢老人</th>
-					  <th>失业人员</th>
-					  <th>待业人员</th>
-					  <th>精神病人</th>
-					  <th>残疾人</th>
-					  <th>重点人员</th>
-					  <th>两劳释放</th>
-					  <th>在押在教</th>
-					  <th>社区矫正人员</th>
+					  <th><img src="../images/icon/mqicon/中共党员.png" width="24px"  alt="" title="中共党员"/></th>
+                      <th><img src="../images/icon/mqicon/志愿者.png" width="24px"  alt="" title="志愿者"/></th>
+                      <th><img src="../images/icon/mqicon/居民代表.png" width="24px"  alt="" title="居民代表"/></th>
+                      <th><img src="../images/icon/mqicon/楼门长.png" width="24px"  alt="" title="楼门长"/></th>
+                      <th><img src="../images/icon/mqicon/军人.png" width="24px"  alt="" title="军人"/></th>
+                      <th><img src="../images/icon/mqicon/文体骨干.png" width="24px"  alt="" title="文体骨干"/></th>
+					  <th><img src="../images/icon/mqicon/优抚对象.png" width="24px"  alt="" title="优抚对象"/></th>
+					  <th><img src="../images/icon/mqicon/少数民族.png" width="24px"  alt="" title="少数民族"/></th>
+					  <th><img src="../images/icon/mqicon/0-6岁儿童.png" width="24px"  alt="" title="0-6岁儿童"/></th>
+					  <th><img src="../images/icon/mqicon/7-13岁青少年.png" width="24px"  alt="" title="7-13岁青少年"/></th>
+					  <th><img src="../images/icon/mqicon/13-18岁青少年.png" width="24px"  alt="" title="13-18岁青少年"/></th>
+					  <th><img src="../images/icon/mqicon/老年人.png" width="24px"  alt="" title="老年人"/></th>
+					  <th><img src="../images/icon/mqicon/80岁以上老人.png" width="24px"  alt="" title="80岁以上老人"/></th>
+					  <th><img src="../images/icon/mqicon/90岁以上老人.png" width="24px"  alt="" title="90岁以上老人"/></th>
+					  <th><img src="../images/icon/mqicon/独居老人.png" width="24px"  alt="" title="独居老人"/></th>
+					  <th><img src="../images/icon/mqicon/失独老人.png" width="24px"  alt="" title="失独老人"/></th>
+					  <th><img src="../images/icon/mqicon/空巢老人.png" width="24px"  alt="" title="空巢老人"/></th>
+					  <th><img src="../images/icon/mqicon/失业人员.png" width="24px"  alt="" title="失业人员"/></th>
+					  <th><img src="../images/icon/mqicon/待业人员.png" width="24px"  alt="" title="待业人员"/></th>
+					  <th><img src="../images/icon/mqicon/精神病人.png" width="24px"  alt="" title="精神病人"/></th>
+					  <th><img src="../images/icon/mqicon/残疾人.png" width="24px"  alt="" title="残疾人"/></th>
+					  <th><img src="../images/icon/mqicon/重点人员.png" width="24px"  alt="" title="重点人员"/></th>
+					  <th><img src="../images/icon/mqicon/两劳释放.png" width="24px"  alt="" title="两劳释放"/></th>
+					  <th><img src="../images/icon/mqicon/在押在教.png" width="24px"  alt="" title="在押在教"/></th>
+					  <th><img src="../images/icon/mqicon/社区矫正人员.png" width="24px"  alt="" title="社区矫正人员"/></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>当前情况</td>
+                      <td style="width:80px;">当前情况</td>
 						<td id="d1"></td>
                      	<td id="d2"></td>
                      	<td id="d3"></td>
@@ -975,7 +987,7 @@
 	  
 	</section>	  
 	
-	<section class="content">
+	<section class="content-header">
       
 	   <div class="container-fluid">
         <div class="row">
@@ -994,13 +1006,13 @@
                       <a class="nav-link active" href="#tab2_1" data-toggle="tab">事项社情</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#tab2_2" data-toggle="tab">社区办事服务</a>
+                      <a class="nav-link" href="#tab2_2" data-toggle="tab">办事服务</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#tab2_3" data-toggle="tab">接诉即办事件处理</a>
+                      <a class="nav-link" href="#tab2_3" data-toggle="tab">接诉即办</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#tab2_4" data-toggle="tab">社区吹哨事件</a>
+                      <a class="nav-link" href="#tab2_4" data-toggle="tab">社区吹哨</a>
                     </li>
                     
                   </ul>
@@ -1010,28 +1022,28 @@
               <div class="card-body">              	
                 <div class="tab-content">
 					<div id="tab2_1" class="tab-pane card-body" role="tabpanel">
-						<table class="table table-bordered table-striped">
+						<table class="table table-bordered">
 						  
 						  <thead>
 							<tr style="background: #1dc6bd;color: #fff; text-align: center;">
 							<td>事项类别</td>
-							<td>社区党建事项</td>
-							<td>民主自治事项</td>
-							<td>社区服务事项</td>
-							<td>平安建设事项</td>
-							<td>社区环境事项</td>
-							<td>卫生健康事项</td>					
+							<td>社区党建</td>
+							<td>民主自治</td>
+							<td>社区服务</td>
+							<td>平安建设</td>
+							<td>社区环境</td>
+							<td>卫生健康</td>					
 						  </tr>
 						  </thead>
 						  <tbody>
 						  <tr>
 							<td>本年度</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td id="s1"></td>
+							<td id="s2"></td>
+							<td id="s3"></td>
+							<td id="s4"></td>
+							<td id="s5"></td>
+							<td id="s6"></td>
 									
 						  </tr>
 						  <tr>
@@ -1047,34 +1059,35 @@
 						  </tbody>
 
 						</table>
+						<div id="mainchart" style="width: 100%;height:300px;"></div>
 					  </div>
 					<div id="tab2_2" class="tab-pane card-body tj-body" role="tabpanel">
 						 <table class="table table-bordered table-striped">
 						  
 						  <thead>
 							<tr style="background: #1dc6bd;color: #fff; text-align: center;">
-							<td>社区办事服务类别</td>
-							<td>民政服务</td>
-							<td>社保服务</td>
-							<td>助残服务</td>
-							<td>计生服务</td>
-							<td>证明开具</td>
-							<td>慰问走访服务</td>
-							<td>信访受理服务</td>
+							<td>社区服务</td>
+							<td>民政</td>
+							<td>社保</td>
+							<td>助残</td>
+							<td>计生</td>
+							<td>证明</td>
+							<td>慰问走访</td>
+							<td>信访</td>
 							<td>小计</td>
 						  </tr>
 						  </thead>
 						  </tbody>
 						  <tr>
 							<td>本年度数量</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>							
+							<td id="bs1"></td>
+							<td id="bs2"></td>
+							<td id="bs3"></td>
+							<td id="bs4"></td>
+							<td id="bs5"></td>
+							<td id="bs6"></td>
+							<td id="bs7"></td>
+							<td id="bs8"></td>							
 						  </tr>
 						  <tr>
 							<td>累计数量</td>
@@ -1208,82 +1221,82 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>社区党建</td>
+                      <td>党建</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i1"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i10"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
                      <tr>
-                      <td>民主自治</td>
+                      <td>自治</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i2"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i11"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
 					<tr>
-                      <td>社区服务</td>
+                      <td>服务</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i3"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i12"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
 					<tr>
-                      <td>平安建设</td>
+                      <td>平安</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i4"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i13"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
 					<tr>
-                      <td>文化教育</td>
+                      <td>文教</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i5"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i14"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
 					<tr>
-                      <td>社区环境</td>
+                      <td>环境</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i6"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i15"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
 					<tr>
-                      <td>卫生健康</td>
+                      <td>卫健</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i7"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i16"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
 					<tr>
-                      <td>社区工作</td>
+                      <td>社工</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i8"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i17"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
@@ -1291,9 +1304,9 @@
                       <td>小计</td>
                       <td></td>
                      	<td></td>
-                     	<td></td>
+                     	<td id="i9"></td>
                      	<td></td>  
-						<td></td>
+						<td id="i18"></td>
                      	<td></td>
                      	<td></td>  
                     </tr>
@@ -1384,6 +1397,8 @@
 <script type="text/javascript" src="../plugins/treegrid/js/jquery.treegrid.min.js"></script>  
 
 <script language="javascript" type="text/javascript" src="../plugins/DatePicker/WdatePicker.js"></script>
+
+<script language="javascript" type="text/javascript" src="../plugins/echarts/echarts.min.js"></script>
   
 <script src="./common.js"></script>
 
@@ -1410,6 +1425,106 @@
 <script>
 	$("#tabl_1").tab("show");
 	$("#tab2_1").tab("show");
+</script>
+
+<script>
+	var myChart = echarts.init(document.getElementById('mainchart'));
+
+	// 指定图表的配置项和数据
+	var option = {
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+				type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			}
+		},
+		legend: {
+			data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎', '百度', '谷歌', '必应', '其他']
+		},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '3%',
+			containLabel: true
+		},
+		xAxis: [
+			{
+				type: 'category',
+				data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+			}
+		],
+		yAxis: [
+			{
+				type: 'value'
+			}
+		],
+		series: [
+			{
+				name: '直接访问',
+				type: 'bar',
+				data: [320, 332, 301, 334, 390, 330, 320]
+			},
+			{
+				name: '邮件营销',
+				type: 'bar',
+				stack: '广告',
+				data: [120, 132, 101, 134, 90, 230, 210]
+			},
+			{
+				name: '联盟广告',
+				type: 'bar',
+				stack: '广告',
+				data: [220, 182, 191, 234, 290, 330, 310]
+			},
+			{
+				name: '视频广告',
+				type: 'bar',
+				stack: '广告',
+				data: [150, 232, 201, 154, 190, 330, 410]
+			},
+			{
+				name: '搜索引擎',
+				type: 'bar',
+				data: [862, 1018, 964, 1026, 1679, 1600, 1570],
+				markLine: {
+					lineStyle: {
+						type: 'dashed'
+					},
+					data: [
+						[{type: 'min'}, {type: 'max'}]
+					]
+				}
+			},
+			{
+				name: '百度',
+				type: 'bar',
+				barWidth: 5,
+				stack: '搜索引擎',
+				data: [620, 732, 701, 734, 1090, 1130, 1120]
+			},
+			{
+				name: '谷歌',
+				type: 'bar',
+				stack: '搜索引擎',
+				data: [120, 132, 101, 134, 290, 230, 220]
+			},
+			{
+				name: '必应',
+				type: 'bar',
+				stack: '搜索引擎',
+				data: [60, 72, 71, 74, 190, 130, 110]
+			},
+			{
+				name: '其他',
+				type: 'bar',
+				stack: '搜索引擎',
+				data: [62, 82, 91, 84, 109, 110, 120]
+			}
+		]
+	};
+
+	// 使用刚指定的配置项和数据显示图表。
+	myChart.setOption(option);
 </script>
 </body>
 </html>

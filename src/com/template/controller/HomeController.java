@@ -1,5 +1,6 @@
 package com.template.controller;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -425,6 +426,215 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	    return jsonObj.toString();
 	}
 	
+	@RequestMapping(value="loadbaseinfo4",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadBaseInfo4()
+	{
+		String owner = getOrganization();
+		logger.debug("loadbaseinfo4 owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			for(int i = 0; i < 14; i++) numlist.add(0);
+			
+			//1
+			String sql = "select type, count(*) as num from jc_service_store t where t.owner like ? group by t.type";
+			List<Object> params = new ArrayList<Object>();
+			params.add("%" + owner + "%");
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list == null || list.size() == 0) {
+				
+			}
+			else {
+				for(int i = 0; i < list.size(); i++) {
+					String key = (String) list.get(i).get("type");
+					int num = ((BigInteger)list.get(i).get("num")).intValue();
+					
+					if("政府机关".equals(key)) 	numlist.set(0, num);
+					if("房产居住".equals(key)) 	numlist.set(1, num);
+					if("购物百货".equals(key)) 	numlist.set(2, num);
+					if("生活服务".equals(key)) 	numlist.set(3, num);
+					if("休闲娱乐".equals(key)) 	numlist.set(4, num);
+					if("餐饮小吃".equals(key)) 	numlist.set(5, num);
+					if("企业实业".equals(key)) 	numlist.set(6, num);
+					if("金融保险".equals(key)) 	numlist.set(7, num);
+					if("旅游住宿".equals(key)) 	numlist.set(8, num);
+					if("文化教育".equals(key)) 	numlist.set(9, num);
+					if("医疗卫生".equals(key)) 	numlist.set(10, num);
+					if("交通运输".equals(key)) 	numlist.set(11, num);
+					if("汽车服务".equals(key)) 	numlist.set(12, num);
+					if("社会团体".equals(key)) 	numlist.set(13, num);
+				}
+			}
+			
+			jsonObj.put("data", numlist);
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadbaseinfo5",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadBaseInfo5()
+	{
+		String owner = getOrganization();
+		logger.debug("loadBaseInfo5 owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			
+			//1
+			String sql = "select count(*) as num from jc_xftd t where t.OWNER = ?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(owner);
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//2
+			sql = "select count(*) as num from jc_xfss t where t.OWNER = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			jsonObj.put("data", JSONArray.toJSON(numlist));
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadbaseinfo6",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadBaseInfo6()
+	{
+		String owner = getOrganization();
+		logger.debug("loadBaseInfo6 owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			
+			//1
+			String sql = "select count(*) as num from jc_tc_ybtcc t where t.OWNER = ?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(owner);
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//2
+			sql = "select count(*) as num from jc_tc_dltcc t where t.OWNER = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//3
+			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.parkName from jc_tc_ybtcc t2 where t2.OWNER = ?)";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigDecimal)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//4
+			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.name from jc_tc_dltcc t2 where t2.OWNER = ?)";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigDecimal)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//5
+			sql = "select count(*) as num from jc_tc_tcw t where t.OWNER = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//6
+			sql = "select count(*) as num from jc_tc_fjdctcw t where t.OWNER = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			jsonObj.put("data", JSONArray.toJSON(numlist));
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
 	@RequestMapping(value="loadminqininfo",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String loadMinqinInfo()
@@ -475,6 +685,255 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 					if("两劳释放".equals(key)) 	numlist.set(22, num);
 					if("在押在教".equals(key)) 	numlist.set(23, num);
 					if("社区矫正人员".equals(key)) 	numlist.set(24, num);
+				}
+			}
+			
+			jsonObj.put("data", numlist);
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadsxsq",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadSxsq()
+	{
+		String owner = getOrganization();
+		logger.debug("loadsxsq owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			for(int i = 0; i < 6; i++) numlist.add(0);
+			
+			//1
+			String sql = "select sxdl, count(*) as num from sxsqsj t where t.owner like ? group by t.sxdl";
+			List<Object> params = new ArrayList<Object>();
+			params.add("%" + owner + "%");
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list == null || list.size() == 0) {
+				
+			}
+			else {
+				for(int i = 0; i < list.size(); i++) {
+					String key = (String) list.get(i).get("sxdl");
+					int num = ((BigInteger)list.get(i).get("num")).intValue();
+					
+					if("社区党建事项".equals(key)) 	numlist.set(0, num);
+					if("民主自治事项".equals(key)) 	numlist.set(1, num);
+					if("社区服务事项".equals(key)) 	numlist.set(2, num);
+					if("平安建设事项".equals(key)) 	numlist.set(3, num);
+					if("社区环境事项".equals(key)) 	numlist.set(4, num);
+					if("卫生健康事项".equals(key)) 	numlist.set(5, num);
+				}
+			}
+			
+			jsonObj.put("data", numlist);
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadsqbs",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadSqbs()
+	{
+		String owner = getOrganization();
+		logger.debug("loadsqbs owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			int total = 0;
+			//1
+			String sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '民政服务' and t.owner = ?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(owner);
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+				total += numlist.get(0);
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//2
+			sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '社保服务' and t.owner = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+				total += numlist.get(1);
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//3
+			sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '助残服务' and t.owner = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+				total += numlist.get(2);
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//4
+			sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '计生服务' and t.owner = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+				total += numlist.get(3);
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//5
+			sql = "select count(*) as num from nfw_zmblfw t where t.owner = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+				total += numlist.get(4);
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//6
+			sql = "select count(*) as num from nfw_wwzffw t where t.owner = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+				total += numlist.get(5);
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//7
+			sql = "select count(*) as num from nfw_xfslfw t where t.owner = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+				total += numlist.get(6);
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			numlist.add(total);
+			
+			jsonObj.put("data", JSONArray.toJSON(numlist));
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadinfodata",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadInfoData()
+	{
+		String owner = getOrganization();
+		logger.debug("loadinfodata owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			for(int i = 0; i < 18; i++) numlist.add(0);
+			
+			//1
+			String sql = "select sms_type, count(*) as num from sms_message t where t.owner like ? group by t.sms_type";
+			List<Object> params = new ArrayList<Object>();
+			params.add("%" + owner + "%");
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list == null || list.size() == 0) {
+				
+			}
+			else {
+				for(int i = 0; i < list.size(); i++) {
+					String key = (String) list.get(i).get("sms_type");
+					int num = ((BigInteger)list.get(i).get("num")).intValue();
+					
+					if("社区党建".equals(key)) 	numlist.set(0, num);
+					if("民主自治".equals(key)) 	numlist.set(1, num);
+					if("社区服务".equals(key)) 	numlist.set(2, num);
+					if("平安建设".equals(key)) 	numlist.set(3, num);
+					if("文化教育".equals(key)) 	numlist.set(4, num);
+					if("社区环境".equals(key)) 	numlist.set(5, num);
+					if("卫生健康".equals(key)) 	numlist.set(6, num);
+					if("社区工作".equals(key)) 	numlist.set(7, num);
+					int total = numlist.get(0) + numlist.get(1) + numlist.get(2) + numlist.get(3) + numlist.get(4) + numlist.get(5) + numlist.get(6) + numlist.get(7);
+					numlist.set(8, total);
+				}
+			}
+			
+			//1
+			sql = "select sjfl, count(*) as num from sys_tel_publish t where t.owner like ? group by t.sjfl";
+			params.clear();
+			params.add("%" + owner + "%");
+			list = this.userService.findBySql(sql, params);
+			if(list == null || list.size() == 0) {
+				
+			}
+			else {
+				for(int i = 0; i < list.size(); i++) {
+					String key = (String) list.get(i).get("sjfl");
+					int num = ((BigInteger)list.get(i).get("num")).intValue();
+					
+					if("社区党建".equals(key)) 	numlist.set(9, num);
+					if("民主自治".equals(key)) 	numlist.set(10, num);
+					if("社区服务".equals(key)) 	numlist.set(11, num);
+					if("平安建设".equals(key)) 	numlist.set(12, num);
+					if("文化教育".equals(key)) 	numlist.set(13, num);
+					if("社区环境".equals(key)) 	numlist.set(14, num);
+					if("卫生健康".equals(key)) 	numlist.set(15, num);
+					if("社区工作".equals(key)) 	numlist.set(16, num);
+					int total = numlist.get(9) + numlist.get(10) + numlist.get(11) + numlist.get(12) + numlist.get(13) + numlist.get(14) + numlist.get(15) + numlist.get(16);
+					numlist.set(17, total);
 				}
 			}
 			
