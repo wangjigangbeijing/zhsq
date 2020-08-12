@@ -208,8 +208,10 @@ public String get(String id)
 			jsonObj.put("registrationaddress",family.getregistrationaddress());
 			jsonObj.put("ofcommunity",family.getofcommunity());
 			jsonObj.put("ofresidebuilding",family.getofresidebuilding());
+			jsonObj.put("ofresidebuildingname",ConstValue.hmDicMap.get(family.getofresidebuilding()));
 			jsonObj.put("ofunit",family.getofunit());
 			jsonObj.put("ofroom",family.getofroom());
+			jsonObj.put("ofroomname",ConstValue.hmDicMap.get(family.getofroom()));
 			jsonObj.put("status",family.getstatus());
 
 			jsonObj.put("success", true);

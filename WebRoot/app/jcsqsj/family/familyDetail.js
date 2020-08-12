@@ -167,9 +167,12 @@ $(document).ready(function (){
 		});
 	});
 	
-	
 	if(curId != '')
-		viewDetail(curId);
+	{
+		setTimeout(function(){ 
+			viewDetail(curId);
+		}, 1000);
+	}
 });
 
 
@@ -223,7 +226,8 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/family/family.html", function () {
+	//$('#main-content').load("./jcsqsj/family/family.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {	
 		
     });
 	

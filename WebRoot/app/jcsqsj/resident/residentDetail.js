@@ -211,9 +211,12 @@ $(document).ready(function (){
 		});
 	});
 	
-	
 	if(curId != '')
-		viewDetail(curId);
+	{
+		setTimeout(function(){ 
+			viewDetail(curId);
+		}, 1000);
+	}
 });
 
 

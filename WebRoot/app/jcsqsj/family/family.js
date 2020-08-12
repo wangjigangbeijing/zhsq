@@ -287,9 +287,9 @@ function load()
 					{ 'data': 'registrationcategory' ,'sClass':'text-center'},
 					{ 'data': 'registrationaddress' ,'sClass':'text-center'},
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
-					{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
+					{ 'data': 'ofresidebuildingname' ,'sClass':'text-center'},
 					{ 'data': 'ofunit' ,'sClass':'text-center'},
-					{ 'data': 'ofroom' ,'sClass':'text-center'},
+					{ 'data': 'roomname' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 

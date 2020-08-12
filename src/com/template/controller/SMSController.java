@@ -44,7 +44,7 @@ public class SMSController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			String userName = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_NAME);
+			String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 			
 			SMSMessage smsMessage = new SMSMessage();
 			
@@ -58,7 +58,7 @@ public class SMSController {
 			smsMessage.setFailCnt(0);
 			smsMessage.setSendStatus(ConstValue.SMS_STATUS_INITIAL);
 			smsMessage.setTargetCnt(iTargetCnt);
-			smsMessage.setSender(userName);
+			smsMessage.setSender(userId);
 			smsMessage.setTimerSend(new Date());
 			smsMessage.setTarget(mobileList);
 			smsMessage.setSMSType(smsType);

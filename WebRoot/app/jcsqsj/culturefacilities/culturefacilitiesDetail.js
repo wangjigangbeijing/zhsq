@@ -27,10 +27,9 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#dateid').val(obj.dateid);
+				$('#dateid').val(obj.dateid);
 				$('#name').val(obj.name);
-				$('#tpye').val(obj.tpye);
+				
 				$('#category').val(obj.category);
 				$('#address').val(obj.address);
 				$('#purpose').val(obj.purpose);
@@ -40,10 +39,14 @@ function viewDetail(id)
 				$('#contacttel').val(obj.contacttel);
 				$('#longitude').val(obj.longitude);
 				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
+				
+				$("input[name='tpye'][value='"+obj.tpye+"']").attr("checked",true); 
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
+				
+				//$('#tpye').val(obj.tpye);
+				//$('#status').val(obj.status);
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
-
-					
+	
 			}
 		});
 }
@@ -53,7 +56,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./culturefacilities/culturefacilities.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	
@@ -72,13 +75,12 @@ function ShowAddModal()
 function addOrUpdate()
 {
 	
-	
 	$.post(getContextPath()+"/culturefacilitiesController/addOrUpdate",
 	{
 		id:curId,
-				dateid:$('#dateid').val(),
+		dateid:$('#dateid').val(),
 		name:$('#name').val(),
-		tpye:$('#tpye').val(),
+		tpye:$('input:radio[name="tpye"]:checked').val(),
 		category:$('#category').val(),
 		address:$('#address').val(),
 		purpose:$('#purpose').val(),
@@ -88,7 +90,7 @@ function addOrUpdate()
 		contacttel:$('#contacttel').val(),
 		longitude:$('#longitude').val(),
 		latitude:$('#latitude').val(),
-		status:$('#status').val(),
+		status:$('input:radio[name="status"]:checked').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()
 	},

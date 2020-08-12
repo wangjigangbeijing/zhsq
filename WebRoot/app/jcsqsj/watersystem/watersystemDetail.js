@@ -51,7 +51,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./watersystem/watersystem.html", function () {
+	$('#main-content').load("./jcsqsj/watersystem/watersystem.html", function () {
 		
     });
 	

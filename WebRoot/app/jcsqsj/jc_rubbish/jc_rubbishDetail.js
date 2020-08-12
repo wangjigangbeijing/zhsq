@@ -29,8 +29,12 @@ function viewDetail(id)
 				$('#modalDetail').show();
 				
 								$('#name').val(obj.name);
-				$('#type').val(obj.type);
-				$('#kind').val(obj.kind);
+				//$('#type').val(obj.type);
+				//$('#kind').val(obj.kind);
+				
+				$("input[name='type'][value='"+obj.type+"']").attr("checked",true); 
+				$("input[name='kind'][value='"+obj.kind+"']").attr("checked",true); 
+				
 if(obj.catagory != null){
 	var catagoryArr = obj.catagory.split(VALUE_SPLITTER);
 	for(var j=0;j<catagoryArr.length;j++)
@@ -86,9 +90,9 @@ var valcatagory = valcatagoryArr.join(VALUE_SPLITTER);//将数组元素连接起
 	$.post(getContextPath()+"/jc_rubbishController/addOrUpdate",
 	{
 		id:curId,
-				name:$('#name').val(),
-		type:$('#type').val(),
-		kind:$('#kind').val(),
+		name:$('#name').val(),
+		type:$('input:radio[name="type"]:checked').val(),//$('#type').val(),
+		kind:$('input:radio[name="kind"]:checked').val(),//$('#kind').val(),
 		catagory:valcatagory,
 		address:$('#address').val(),
 		department:$('#department').val(),

@@ -34,7 +34,7 @@ function viewDetail(id)
 				$('#area').val(obj.area);
 				$('#longitude').val(obj.longitude);
 				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 
 					
@@ -44,10 +44,9 @@ function viewDetail(id)
 
 function gobackPage()
 {
-	
 	curId = '';
 	
-	$('#main-content').load("./shelter/shelter.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	
@@ -76,7 +75,7 @@ function addOrUpdate()
 		area:$('#area').val(),
 		longitude:$('#longitude').val(),
 		latitude:$('#latitude').val(),
-		status:$('#status').val(),
+		status:$('input:radio[name="status"]:checked').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()
 	},

@@ -14,8 +14,47 @@ $(document).ready(function (){
 	
 	//load();
 	
+	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofpartyorganization'}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#of_partyorganization').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#of_partyorganization').html(filterArr.join(''));
+				
+			}
+			else
+			{
+				jError("获取党组织列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
 	if(curId != '')
-		viewDetail(curId);
+	{
+		setTimeout(function(){ 
+			viewDetail(curId);
+		}, 1000);
+	}
 });
 
 
@@ -27,8 +66,7 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#name').val(obj.name);
+				$('#name').val(obj.name);
 				$('#idnumber').val(obj.idnumber);
 				$('#sex').val(obj.sex);
 				$('#birthday').val(obj.birthday);
@@ -57,10 +95,9 @@ function viewDetail(id)
 
 function gobackPage()
 {
-	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_partymember/jc_partymember.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

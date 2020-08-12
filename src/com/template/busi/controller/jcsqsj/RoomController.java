@@ -216,6 +216,7 @@ public String get(String id)
 			jsonObj.put("number",room.getnumber());
 			jsonObj.put("ofcommunity",room.getofcommunity());
 			jsonObj.put("ofresidebuilding",room.getofresidebuilding());
+			jsonObj.put("ofresidebuildingname",ConstValue.hmDicMap.get(room.getofresidebuilding()));
 			jsonObj.put("ofunit",room.getofunit());
 			jsonObj.put("level",room.getlevel());
 			jsonObj.put("status",room.getstatus());

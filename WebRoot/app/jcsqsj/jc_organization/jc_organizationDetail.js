@@ -14,8 +14,47 @@ $(document).ready(function (){
 	
 	//load();
 	
+	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofbizbuilding'}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ofbizbuilding').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#ofbizbuilding').html(filterArr.join(''));
+				
+			}
+			else
+			{
+				jError("获取商业楼宇列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
 	if(curId != '')
-		viewDetail(curId);
+	{
+		setTimeout(function(){ 
+			viewDetail(curId);
+		}, 1000);
+	}
 });
 
 
@@ -65,7 +104,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_organization/jc_organization.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	
