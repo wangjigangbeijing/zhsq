@@ -1,0 +1,108 @@
+<html>  
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+</head>
+<body>  
+  <div style="text-align:center;">  
+    <button id="prev" type="button" class="btn btn-info" onclick="goPrevious()">Previous</button>  
+    <button id="next" onclick="goNext()">Next</button>  
+    &nbsp; &nbsp;  
+    <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>  
+  </div>  
+    
+  <div style="text-align:center;">  
+    <canvas id="the-canvas"></canvas>  
+  </div>  
+  
+  <!-- Use latest PDF.js build from Github -->  
+  <script type="text/javascript" src="pdf.js"></script>  
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+  <script type="text/javascript">  
+	
+	var url = "";
+	var reurl = location.search; //获取url中含"?"符后的字串
+	var dot = reurl.indexOf("?");
+	if(dot >= 0){
+		var param = reurl.substr(dot + 1);
+		console.log(param);
+		
+		url = param.substr(6);
+		console.log(url);
+	}
+    //  
+    // NOTE:   
+    // Modifying the URL below to another server will likely *NOT* work. Because of browser  
+    // security restrictions, we have to use a file server with special headers  
+    // (CORS) - most servers don't support cross-origin browser requests.  
+    //  
+    //var url = 'http://localhost:8080/zhsq/test.pdf';  
+  
+    //  
+    // Disable workers to avoid yet another cross-origin issue (workers need the URL of  
+    // the script to be loaded, and currently do not allow cross-origin scripts)  
+    //  
+    PDFJS.disableWorker = true;  
+  
+    var pdfDoc = null,  
+        pageNum = 1,  
+        scale = 2,  
+        canvas = document.getElementById('the-canvas'),  
+        ctx = canvas.getContext('2d');  
+  
+    //  
+    // Get page info from document, resize canvas accordingly, and render page  
+    //  
+    function renderPage(num) {  
+      // Using promise to fetch the page  
+      pdfDoc.getPage(num).then(function(page) {  
+        var viewport = page.getViewport(scale); 
+        canvas.height = viewport.height;  
+        canvas.width = viewport.width;  
+  
+        // Render PDF page into canvas context  
+        var renderContext = {  
+          canvasContext: ctx,  
+          viewport: viewport  
+        };  
+        page.render(renderContext);  
+      });  
+  
+      // Update page counters  
+      document.getElementById('page_num').textContent = pageNum;  
+      document.getElementById('page_count').textContent = pdfDoc.numPages;  
+    }  
+  
+    //  
+    // Go to previous page  
+    //  
+    function goPrevious() {  
+      if (pageNum <= 1)  
+        return;  
+      pageNum--;  
+      renderPage(pageNum);  
+    }  
+  
+    //  
+    // Go to next page  
+    //  
+    function goNext() {  
+      if (pageNum >= pdfDoc.numPages)  
+        return;  
+      pageNum++;  
+      renderPage(pageNum);  
+    }  
+  
+    //  
+    // Asynchronously download PDF as an ArrayBuffer  
+    //  
+    PDFJS.getDocument(url).then(function getPdfHelloWorld(_pdfDoc) {  
+      pdfDoc = _pdfDoc;  
+      renderPage(pageNum);  
+    });  
+  </script>    
+</body>  
+</html> 
