@@ -283,6 +283,7 @@ function getsqname(){
 			if(obj.success)
 			{
 				$("#sqname").html("(" + obj.data + ")");
+				$("#username").html(obj.username);
 			}
 		});	
 }

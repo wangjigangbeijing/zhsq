@@ -74,12 +74,20 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@RequestMapping(value="getsqname",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String getSqname()
-	{
+	{		
 		String name = getOrganizationName();
 		JSONObject jsonObj = new JSONObject();
 		try
-		{			
+		{
 			jsonObj.put("data", name);
+			String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			List<Object> params = new ArrayList<Object>();
+			params.add(userid);
+			String sql = "select * from sys_user where id=?";
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0) {
+				jsonObj.put("username", list.get(0).get("name"));
+			}
 			jsonObj.put("success", true);
 		}
 		catch(Exception e)
