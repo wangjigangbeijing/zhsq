@@ -227,6 +227,8 @@ $(document).ready(function (){
 	//updateActiveMenu('sqzzqdAnchor');
     //loadSqzzqdPage();
 	
+	getsqname();
+	
 	//加载数据
 	loaddata();
 	
@@ -269,6 +271,18 @@ function loadbaseinfo1(){
 				$("#b15").html(obj.data[4]);
 				$("#b16").html(obj.data[5]);
 				$("#b17").html(obj.data[6]);
+			}
+		});	
+}
+
+function getsqname(){
+	$.get(getContextPath()+'/homeController/getsqname',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$("#sqname").html("(" + obj.data + ")");
 			}
 		});	
 }

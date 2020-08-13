@@ -52,6 +52,44 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 		}
 	}
 	
+	/**
+	 * 获取用户社区名称
+	 * @return
+	 */
+	private String getOrganizationName() {
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String sql = "select b.name from sys_user_organization a, sys_organization b where a.organization=b.id and a.user=?";
+		List<Object> params = new ArrayList<Object>();
+		params.add(userid);
+		List<HashMap> list = this.userService.findBySql(sql, params);
+		if(list == null || list.size() == 0) {
+			return null;
+		}
+		else {
+			return (String) list.get(0).get("name");
+		}
+	}
+	
+	@RequestMapping(value="getsqname",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String getSqname()
+	{
+		String name = getOrganizationName();
+		JSONObject jsonObj = new JSONObject();
+		try
+		{			
+			jsonObj.put("data", name);
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
 	@RequestMapping(value="loadbaseinfo1",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String loadBaseInfo1()
@@ -575,7 +613,11 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
-				numlist.add(((BigDecimal)list.get(0).get("num")).intValue());
+				try {
+					numlist.add(((BigDecimal)list.get(0).get("num")).intValue());
+				} catch(Exception e) {
+					numlist.add(0);
+				}
 			}
 			else
 			{
@@ -589,7 +631,11 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
-				numlist.add(((BigDecimal)list.get(0).get("num")).intValue());
+				try {
+					numlist.add(((BigDecimal)list.get(0).get("num")).intValue());
+				} catch(Exception e) {
+					numlist.add(0);
+				}
 			}
 			else
 			{
