@@ -15,6 +15,8 @@ $(document).ready(function (){
 
 var dataTable;
 
+var curId = '';
+
 function loadmyslfw()
 {
 	$('#btnSearch').attr('disabled','disabled');
@@ -186,6 +188,7 @@ var uuid = '';
 function addmyslfw()
 {
 	//uuid = guid();
+	curId = '';
 	$('#main-content').load("./nfw/myslfwDetail.html", function () {
 		//EditableTable.init();
 		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况

@@ -75,6 +75,7 @@ function loadTemplateProcess(){
 	$.get(getContextPath()+"/flowtemplateController/getdatatemplateprocessinfo?service=zmbl&dataid=",
 		function(result){
 			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
 			if(obj.success)
 			{
 				if(obj.isfinish){

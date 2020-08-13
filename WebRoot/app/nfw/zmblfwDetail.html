@@ -239,6 +239,8 @@
     </section>
 		
 	<script>
+		var header = getContextPath()+"/fileController/download?fileName=";
+		
 		var uploaderpictures = WebUploader.create({
 			auto: true,
 		// swf文件路径
@@ -253,11 +255,14 @@
 		}
 		});
 		uploaderpictures.on( 'fileQueued', function( file ) {
-			$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+			$('#'+file.source._refer[0].id+'table').append('<tr><td id=name_' + file.id + '>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
 								"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
 								'</tr>');
 		});
 		uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+			var url = header + response.fileName;
+			var content = '<a href="' + url + '" data-lightbox="' + response.fileName + '" data-title="' + response.fileName + '" style="color:#64A600; font-size: 12px;">'+response.fileName+'</a>';
+			$("#name_" + file.id).html(content);
 			$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
 			console.log($( '#'+response.attributeName ).val());
 			$( '#'+file.id ).text('已上传');

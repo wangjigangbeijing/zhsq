@@ -13,7 +13,7 @@ $(document).ready(function (){
 	
 });
 
-var curId;
+var curId = '';
 
 var dataTable;
 
@@ -186,6 +186,7 @@ function enterFlow(id){
 var uuid = '';
 function addzmblfw()
 {
+	curId = '';
 	//uuid = guid();
 	$('#main-content').load("./nfw/zmblfwDetail.html", function () {
 		//EditableTable.init();
