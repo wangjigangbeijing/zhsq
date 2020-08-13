@@ -52,12 +52,18 @@ function viewDetail(id)
 				
 				$('#bz').val(obj.data.bz);
 				
+				$('#pictures').val(obj.data.fj);
+				
+				var header = getContextPath()+"/fileController/download?fileName=";
+				
 				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				
 				for(var j=0;j<picturesArr.length;j++)				
 				{					
 					if(picturesArr[j] != '')					
 					{						
-						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+						var url = header + picturesArr[j];
+						//$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+						$('#picturespicktable').append('<tr><td><a href="' + url + '" data-lightbox="' + picturesArr[j] + '" data-title="' + picturesArr[j] + '" style="color:#64A600; font-size: 12px;">'+picturesArr[j]+'</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
 					}
 				}	
 			}

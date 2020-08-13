@@ -1,4 +1,4 @@
-var baseUrl = "ws://127.0.0.1:12345";	
+﻿var baseUrl = "ws://127.0.0.1:12345";	
 
 function openSocket() {				
 	socket = new WebSocket(baseUrl);
@@ -126,7 +126,7 @@ function openSocket() {
 			document.getElementById("photographPri").onclick = function() {
 				//dialog.get_actionType("setdeskew");	
 				dialog.photoBtnClicked("primaryDev_");
-				dialog.get_actionType("savePhotoPriDev");
+				//dialog.get_actionType("savePhotoPriDev");
 				//dialog.get_actionType("setdeskew");	
 			};
 			
@@ -261,7 +261,6 @@ function openSocket() {
 				var element = document.getElementById("bigPriDev");
 				element.src = "data:image/jpg;base64," + message;							
 			});
-
 			
 			//接收拍照base64，主头数据
 			dialog.send_priPhotoData.connect(function(message) {
@@ -269,8 +268,9 @@ function openSocket() {
 				element.src = "data:image/jpg;base64," + message;	
 
 				//console.log(element);
-				
-				console.log("图像数据：" + message);
+				//上传图像
+				uploadimage(message);
+				console.log(message);
 			});
 			
 			//output("ready to send/receive messages!");
@@ -279,6 +279,40 @@ function openSocket() {
 			//dialog.html_loaded("faceDetect_two");
 		});
 	}
+}
+
+function uploadimage(img){
+	$.post(getContextPath()+"/fileController/uploadfilestring",
+	{
+		imgstr:img
+	},
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			jSuccess("图片上传成功!",{
+						VerticalPosition : 'center',
+						HorizontalPosition : 'center'});
+				
+			var header = getContextPath()+"/fileController/download?fileName=";
+			var url = header + obj.fileName;
+			var val = $('#pictures').val();
+			$( '#pictures').val(val + VALUE_SPLITTER+ obj.fileName);
+						
+			$('#picturespicktable').append('<tr><td><a href="' + url + '" data-lightbox="' + obj.fileName + '" data-title="' + obj.fileName + '" style="color:#64A600; font-size: 12px;">'+obj.fileName+'</a></td><td>已上传</td>'+
+					"<td><button type='button' id='Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach('" + obj.fileName + "');return false;'><i class='fa fa-check'></i></button></td>"+
+					'</tr>');
+			
+			$("#deviceDialog").dialog("close");
+		}
+		else
+		{
+			jError("图片上传失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'});
+			return ;
+		}
+	});
 }
 
 //输出信息

@@ -13,6 +13,8 @@ $(document).ready(function (){
 	
 });
 
+var curId;
+
 var dataTable;
 
 function loadzmblfw()

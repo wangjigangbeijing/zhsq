@@ -75,6 +75,8 @@ function viewDetail(id)
 				$('#sjnr').val(obj.data.sjnr);
 				$('#bz').val(obj.data.bz);
 				
+				$('#pictures').val(obj.data.fj);
+				
 				var header = getContextPath()+"/fileController/download?fileName=";
 				
 				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				

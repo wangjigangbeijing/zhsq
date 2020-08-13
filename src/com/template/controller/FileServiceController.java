@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.template.util.Base64ToJPG;
 import com.template.util.ConstValue;
 import com.template.util.TimeUtil;
 import com.template.util.Utility;
@@ -87,6 +88,33 @@ public class FileServiceController {
 	                boolean bRet = Utility.saveFileFromInputStream(file.getInputStream(), tmpDir, fileName);
 		        }	
 			}
+			jsonRet.put("success", true);
+			jsonRet.put("fileName", fileName);
+		}
+		catch (Exception e) 
+		{
+			logger.error(e.getMessage(),e);
+			jsonRet.put("success", false);
+			jsonRet.put("errMsg", e.getMessage());
+		}
+		return jsonRet.toString();
+	}
+	
+	@RequestMapping(value="uploadfilestring",method=RequestMethod.POST,produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String uploadFileString(String imgstr)
+	{
+		logger.debug("uploadfilestring");
+		JSONObject jsonRet = new JSONObject();
+		
+		try
+		{
+			String fileName = TimeUtil.formatDate(new Date(), "yyyyMMddHHmmss") + ".jpg";
+			String storePath = tmpDir + "/" + fileName;
+			
+			String path = Base64ToJPG.base642Jpg(imgstr, storePath);
+			logger.debug("StorePath:" + path);
+			
 			jsonRet.put("success", true);
 			jsonRet.put("fileName", fileName);
 		}
