@@ -38,6 +38,7 @@
 	<security:http pattern="/**/*.woff" security="none" />
 	<security:http pattern="/**/*.woff2" security="none" />
 	<security:http pattern="/**/*.tff" security="none" />
+	<security:http pattern="/**/*.pdf" security="none" />
 	
 	<!--auto-config = true 则使用from-login. 如果不使用该属性 则默认为http-basic(没有session). -->
 	<!-- lowercase-comparisons：表示URL比较前先转为小写。 -->
