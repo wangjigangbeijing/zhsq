@@ -88,8 +88,8 @@ function load()
 					{ 'data': 'location' ,'sClass':'text-center'},
 					{ 'data': 'numbers' ,'sClass':'text-center'},
 					{ 'data': 'UseType' ,'sClass':'text-center'},
-					{ 'data': 'arrange' ,'sClass':'text-center'},
-					{ 'data': 'chargenum' ,'sClass':'text-center'},
+					//{ 'data': 'arrange' ,'sClass':'text-center'},
+					//{ 'data': 'chargenum' ,'sClass':'text-center'},
 					{ 'data': 'cwcode' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
@@ -106,8 +106,8 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  8,//从0开始
-					mRender : function(data,full){
+					targets:  6,//从0开始
+					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";

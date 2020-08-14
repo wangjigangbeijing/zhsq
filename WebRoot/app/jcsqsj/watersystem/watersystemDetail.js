@@ -27,8 +27,7 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#dateid').val(obj.dateid);
+				$('#dateid').val(obj.dateid);
 				$('#name').val(obj.name);
 				$('#deptname1').val(obj.deptname1);
 				$('#deptname2').val(obj.deptname2);
@@ -38,7 +37,8 @@ function viewDetail(id)
 				$('#leaderorg').val(obj.leaderorg);
 				$('#longitude').val(obj.longitude);
 				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
+				//$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 
 					
@@ -48,7 +48,6 @@ function viewDetail(id)
 
 function gobackPage()
 {
-	
 	curId = '';
 	
 	$('#main-content').load("./jcsqsj/watersystem/watersystem.html", function () {
@@ -84,7 +83,7 @@ function addOrUpdate()
 		leaderorg:$('#leaderorg').val(),
 		longitude:$('#longitude').val(),
 		latitude:$('#latitude').val(),
-		status:$('#status').val(),
+		status:$('input:radio[name="status"]:checked').val(),//$('#status').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()
 	},
