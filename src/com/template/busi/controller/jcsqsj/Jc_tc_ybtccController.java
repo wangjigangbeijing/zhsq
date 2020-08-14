@@ -68,6 +68,13 @@ public String addOrUpdate(String id,String parkID,String parkName,String tradeNa
 		jc_tc_ybtcc.setpicture(picture);
 		jc_tc_ybtcc.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_tc_ybtcc.setowner(organization);
+		
         jc_tc_ybtccService.save(jc_tc_ybtcc);
         jsonObj.put("success", true);
 	}
@@ -101,7 +108,8 @@ public String delete(String id)
 }
 @RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String load(String tradeName,String jztype,String unitAddres,String adminDep,String ownerDep,String maintDep,String Chargetype,String DyData)
+public String load(String tradeName,String jztype,String unitAddres,String adminDep,
+		String ownerDep,String maintDep,String Chargetype,String DyData)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -149,7 +157,7 @@ if(ConstValue.userToOrgMap.containsKey(userId))
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
-if(organization != null)
+if(organization != null && organization.equalsIgnoreCase("") == false)
 {
 	String [] organizationArr = organization.split(",");
 	

@@ -47,6 +47,13 @@ public String addOrUpdate(String id,String name,String forbuildings,String pictu
 		jc_xftd.setpicture(picture);
 		jc_xftd.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_xftd.setowner(organization);
+		
         jc_xftdService.save(jc_xftd);
         jsonObj.put("success", true);
 	}
@@ -86,11 +93,11 @@ public String load(String name,String forbuildings)
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
 }
-if(forbuildings != null && forbuildings.equalsIgnoreCase("") == false && forbuildings.equalsIgnoreCase("null") == false)
+if(forbuildings != null && forbuildings.equalsIgnoreCase("") == false && forbuildings.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("forbuildings", HqlFilter.Operator.LIKE, "%"+forbuildings+"%");
 }
@@ -104,7 +111,7 @@ if(ConstValue.userToOrgMap.containsKey(userId))
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
-if(organization != null)
+if(organization != null && organization.equalsIgnoreCase("") == false)
 {
 	String [] organizationArr = organization.split(",");
 	

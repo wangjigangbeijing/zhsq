@@ -1,6 +1,7 @@
 package com.template.scheduler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,7 @@ import com.template.model.SysRole;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
 import com.template.model.jcsqsj.Jc_advertisement;
+import com.template.model.jcsqsj.Residebuilding;
 import com.template.model.jcsqsj.Resident;
 import com.template.model.jcsqsj.Room;
 import com.template.service.DictionaryService;
@@ -25,11 +27,14 @@ import com.template.service.SysOrganizationService;
 import com.template.service.SysRoleService;
 import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
+import com.template.service.jcsqsj.FamilyService;
 import com.template.service.jcsqsj.Jc_advertisementService;
+import com.template.service.jcsqsj.ResidebuildingService;
 import com.template.service.jcsqsj.ResidentService;
 import com.template.service.jcsqsj.RoomService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
+import com.template.util.TimeUtil;
 
 /*
 
@@ -62,10 +67,17 @@ public class DaemonService
 	
 	@Autowired
 	private Jc_advertisementService jc_advertisementService;
+	
+	@Autowired
+	private ResidebuildingService residebuildingService;
+	
+	@Autowired
+	private FamilyService familyService;
+	
 	/*
 	 * @Desc	
 	 */
-	public void job() 
+	public void twoMinsJob() 
 	{
 		try
 		{
@@ -83,7 +95,25 @@ public class DaemonService
 			
 			loadAdvertisementInfo();
 			
+			//refreshResident();//定期刷民情图数据
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+	}
+	
+	public void dailyJob() 
+	{
+		try
+		{
+			logger.info("Periodic Job...");
+			
 			refreshResident();//定期刷民情图数据
+			
+			
+			refreshResidentBuilding();//定期刷民情图数据
+			
 		}
 		catch(Exception e)
 		{
@@ -314,6 +344,45 @@ public class DaemonService
 					{
 						Resident resident = residentList.get(i);
 						
+						Date birthday = resident.getbirthday();//刷新居民年龄
+						
+						if(birthday != null)
+						{
+							long years = TimeUtil.getTimeSpanYear(birthday, new Date());
+							
+							years += 1;
+							
+							resident.setage(String.valueOf(years));
+							
+							String yearChar = "";
+							if(years <= 6)
+								yearChar = "0-6岁儿童";
+							else if(years <= 13 && years >6)
+								yearChar = "7-13岁青少年"; 
+							else if(years <= 18 && years >13)
+								yearChar = "13-18岁青少年"; 
+							else if(years <= 80 && years >60)
+								yearChar = "老年人"; 
+							else if(years <= 90 && years >80)
+								yearChar = "80岁以上老人"; 
+							else if(years >90)
+								yearChar = "90岁以上老人"; 
+							
+							String curChar = resident.getcharacteristics();
+							
+							curChar.replaceAll("0-6岁儿童", "");
+							curChar.replaceAll("7-13岁青少年", "");
+							curChar.replaceAll("13-18岁青少年", "");
+							curChar.replaceAll("老年人", "");
+							curChar.replaceAll("80岁以上老人", "");
+							curChar.replaceAll("90岁以上老人", "");
+							
+							curChar += ","+yearChar;
+							
+							resident.setcharacteristics(curChar);
+						}
+						residentService.save(resident);
+						
 						String residentcharacteristic = resident.characteristics;
 						
 						if(residentcharacteristic != null && residentcharacteristic.equalsIgnoreCase("") == false)
@@ -368,4 +437,34 @@ public class DaemonService
 			logger.error(e.getMessage(),e);
 		}		
 	}
+	
+	public void refreshResidentBuilding()
+	{
+		try
+		{
+			List<Residebuilding> resideBuildingList = residebuildingService.findByFilter(new HqlFilter());
+			
+			for(int i=0;i<resideBuildingList.size();i++)	
+			{
+				Residebuilding building = resideBuildingList.get(i);
+				
+				String buildingId = building.getId();
+				
+				HqlFilter hqlFilter = new HqlFilter();
+				
+				hqlFilter.addQryCond("ofresidebuilding", HqlFilter.Operator.EQ, buildingId);
+				
+				Integer familyCount = familyService.countByFilter(hqlFilter).intValue();
+				
+				building.setfamiliesinbuilding(familyCount);
+				
+				residebuildingService.save(building);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+	}
+	
 }

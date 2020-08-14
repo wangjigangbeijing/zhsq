@@ -27,8 +27,7 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#dateid').val(obj.dateid);
+				$('#dateid').val(obj.dateid);
 				$('#type').val(obj.type);
 				$('#objid').val(obj.objid);
 				$('#objname').val(obj.objname);
@@ -36,7 +35,8 @@ function viewDetail(id)
 				$('#deptname1').val(obj.deptname1);
 				$('#deptname2').val(obj.deptname2);
 				$('#deptname3').val(obj.deptname3);
-				$('#isincommunity').val(obj.isincommunity);
+				//$('#isincommunity').val(obj.isincommunity);
+				$("input[name='isincommunity'][value='"+obj.isincommunity+"']").attr("checked",true); 
 				$('#material').val(obj.material);
 				$('#form').val(obj.form);
 				$('#objState').val(obj.objState);
@@ -83,7 +83,8 @@ function addOrUpdate()
 		deptname1:$('#deptname1').val(),
 		deptname2:$('#deptname2').val(),
 		deptname3:$('#deptname3').val(),
-		isincommunity:$('#isincommunity').val(),
+		//isincommunity:$('#isincommunity').val(),
+		isincommunity:$('input:radio[name="isincommunity"]:checked').val(),//$('#isincommunity').val(),
 		material:$('#material').val(),
 		form:$('#form').val(),
 		objState:$('#objState').val(),

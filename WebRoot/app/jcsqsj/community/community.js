@@ -117,7 +117,9 @@ function load()
 						
 						//btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
 						
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
@@ -130,62 +132,20 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
+function viewData(id)
 {
-	//$('#modalTitle').text('修改用户信息');
 	curId = id;
-	$.get(getContextPath()+"/communityController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dataid').val(obj.dataid);
-				$('#name').val(obj.name);
-				$('#buildtype').val(obj.buildtype);
-				$('#type').val(obj.type);
-				$('#year').val(obj.year);
-				$('#buildings').val(obj.buildings);
-				$('#gates').val(obj.gates);
-				$('#groundparking').val(obj.groundparking);
-				$('#underparking').val(obj.underparking);
-				$('#longitude').val(obj.longitude);
-				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
-				$('#address').val(obj.address);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
+	$('#main-content').load("./jcsqsj/community/communityDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
 }
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dataid').val('');
-	$('#name').val('');
-	$('#buildtype').val('');
-	$('#type').val('');
-	$('#year').val('');
-	$('#buildings').val('');
-	$('#gates').val('');
-	$('#groundparking').val('');
-	$('#underparking').val('');
-	$('#longitude').val('');
-	$('#latitude').val('');
-	$('#status').val('');
-	$('#address').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
-
 function editData(id)
 {
 	curId = id;

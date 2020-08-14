@@ -35,7 +35,12 @@ function viewDetail(id)
 				$('#socialcode').val(obj.socialcode);
 				$('#businessscope').val(obj.businessscope);
 				$('#businessarea').val(obj.businessarea);
-				$('#ischain').val(obj.ischain);
+				//$('#ischain').val(obj.ischain);
+				
+				$("input[name='ischain'][value='"+obj.ischain+"']").attr("checked",true); 
+				$("input[name='is24hours'][value='"+obj.is24hours+"']").attr("checked",true); 
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
+				
 				$('#otherbusiness').val(obj.otherbusiness);
 				$('#contact').val(obj.contact);
 				$('#contacttel').val(obj.contacttel);
@@ -44,7 +49,7 @@ function viewDetail(id)
 				$('#is24hours').val(obj.is24hours);
 				$('#longitude').val(obj.longitude);
 				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
+				//$('#status').val(obj.status);
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 
 					
@@ -75,28 +80,29 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
-	
-	
 	$.post(getContextPath()+"/service_storeController/addOrUpdate",
 	{
 		id:curId,
-				dateid:$('#dateid').val(),
+		dateid:$('#dateid').val(),
 		name:$('#name').val(),
 		type:$('#type').val(),
 		address:$('#address').val(),
 		socialcode:$('#socialcode').val(),
 		businessscope:$('#businessscope').val(),
 		businessarea:$('#businessarea').val(),
-		ischain:$('#ischain').val(),
+		//ischain:$('#ischain').val(),
+		ischain:$('input:radio[name="ischain"]:checked').val(),
 		otherbusiness:$('#otherbusiness').val(),
 		contact:$('#contact').val(),
 		contacttel:$('#contacttel').val(),
 		opentime:$('#opentime').val(),
 		closetime:$('#closetime').val(),
-		is24hours:$('#is24hours').val(),
+		//is24hours:$('#is24hours').val(),
+		is24hours:$('input:radio[name="is24hours"]:checked').val(),
 		longitude:$('#longitude').val(),
 		latitude:$('#latitude').val(),
-		status:$('#status').val(),
+		//status:$('#status').val(),
+		status:$('input:radio[name="status"]:checked').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()
 	},

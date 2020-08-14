@@ -56,6 +56,13 @@ public String addOrUpdate(String id,String inparkname,String cwtype,String locat
 		jc_tc_tcw.setpciture(pciture);
 		jc_tc_tcw.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_tc_tcw.setowner(organization);
+		
         jc_tc_tcwService.save(jc_tc_tcw);
         jsonObj.put("success", true);
 	}
@@ -129,7 +136,7 @@ if(ConstValue.userToOrgMap.containsKey(userId))
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
-if(organization != null)
+if(organization != null && organization.equalsIgnoreCase("") == false)
 {
 	String [] organizationArr = organization.split(",");
 	
@@ -154,7 +161,16 @@ hqlFilter.setOrder("desc");
 			Jc_tc_tcw jc_tc_tcw = listObj.get(i);
 			JSONObject jsonTmp = new JSONObject();
 			jsonTmp.put("id", jc_tc_tcw.getId());
+			
+			String inparknameDisplay = jc_tc_tcw.getinparkname();
+			
 			jsonTmp.put("inparkname",jc_tc_tcw.getinparkname());
+			
+			if(ConstValue.hmDicMap.containsKey(inparknameDisplay))
+				inparknameDisplay = ConstValue.hmDicMap.get(inparknameDisplay);
+			
+			jsonTmp.put("inparknameDisplay",inparknameDisplay);
+			
 			jsonTmp.put("cwtype",jc_tc_tcw.getcwtype());
 			jsonTmp.put("location",jc_tc_tcw.getlocation());
 			jsonTmp.put("numbers",jc_tc_tcw.getnumbers());

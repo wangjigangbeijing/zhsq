@@ -70,6 +70,13 @@ public String addOrUpdate(String id,String dataid,String name,String haslicence,
 		jc_organization.setpictures(pictures);
 		jc_organization.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_organization.setowner(organization);
+		
         jc_organizationService.save(jc_organization);
         jsonObj.put("success", true);
 	}

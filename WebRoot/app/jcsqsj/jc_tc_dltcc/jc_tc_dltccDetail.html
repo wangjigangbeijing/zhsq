@@ -3,103 +3,6 @@
 <script src="./jcsqsj/jc_tc_dltcc/jc_tc_dltccDetail.js"></script>
 
 
-
-
-
-<!--section class="wrapper">
-
-			<div class="row">
-                  <div class="col-lg-12">
-					  <section class="panel">
-                          <header class="panel-heading">
-                              
-                          </header>
-						  
-                          <div class="panel-body">
-                              <form role="form" class="form-horizontal tasi-form" id="submitLayerForm">
-                                  
-																<div class='form-group row'>
-						<label class='col-md-2 control-label'>停车场编号</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='berthID'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>停车场名称</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='name'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>道路名称</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='roadname'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>面积</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='area'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>收费标准</label>
-  				<div class='col-md-9'>
-					<label class='radio-inline'>
-						<input type='radio' name='rateinfo' value=''> 
-					</label>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>停车泊位可用时间</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='parkeTime'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>泊位数</label>
-  				<div class='col-md-9'>
- 					<input type='number' class='form-control' id='parknum'>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>照片</label>
-  				<div class='col-md-9'>
-<div id='picturediv' class='wu-example'>
-<input type='text' class='form-control field' name='picture' id='picture' style='display:none;'>
-<table class='table' id='picturepicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
-<div class='btns'>
-<div id='picturepick'>选择文件</div>
-</div>
-</div>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>备注</label>
-  				<div class='col-md-9'>
-					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
- 						</div>
- 					</div>
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>收费标准</label>
-  				<div class='col-md-9'>
- 					<input type='text' class='form-control' id='rateinfo'>
- 						</div>
- 					</div>
-
-									  <div class="modal-footer">
-										  <button class="btn btn-success pull-left" type="button" id="addOrUpdateBtn" onclick="addOrUpdate();">确定</button>							  
-										  <button class="btn btn-warning" type="button" onclick="closeModalDetail();"> 关闭</button>
-									  </div>
-								  
-                              </form>
-                          </div>
-                      </section>
-                  </div>
-              </div>
-	
-</section-->		  
-
 <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -134,10 +37,12 @@
  						</div>
  					</div>
 					<div class='form-group row'>
-						<label class='col-md-2 control-label'>收费标准</label>
+						<label class='col-md-2 control-label'>收费类型</label>
   				<div class='col-md-9'>
 					<label class='radio-inline'>
-						<input type='radio' name='rateinfo' value=''> 
+						<input type='checkbox' name='rateinfo' value='免费'> 免费
+						<input type='checkbox' name='rateinfo' value='长租'> 长租
+						<input type='checkbox' name='rateinfo' value='短租'> 短租
 					</label>
  						</div>
  					</div>
@@ -171,14 +76,13 @@
 					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
  						</div>
  					</div>
-					<div class='form-group row'>
+					<!--div class='form-group row'>
 						<label class='col-md-2 control-label'>收费标准</label>
   				<div class='col-md-9'>
  					<input type='text' class='form-control' id='rateinfo'>
  						</div>
- 					</div>
+ 					</div-->
 
-					
                 </div>
                 <div class="card-footer">
 				

@@ -42,7 +42,7 @@ public String addOrUpdate(String id,String parkID,String parkName,String parkTyp
 		{
 			jc_tc_fjdctcw = jc_tc_fjdctcwService.getById(id);
 		}
-		//jc_tc_fjdctcw.setparkID(parkID);
+		jc_tc_fjdctcw.setparkID(parkID);
 		jc_tc_fjdctcw.setparkName(parkName);
 		jc_tc_fjdctcw.setparkType(parkType);
 		jc_tc_fjdctcw.setadminDep(adminDep);
@@ -51,6 +51,13 @@ public String addOrUpdate(String id,String parkID,String parkName,String parkTyp
 		jc_tc_fjdctcw.setpicture(picture);
 		jc_tc_fjdctcw.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_tc_fjdctcw.setowner(organization);
+		
         jc_tc_fjdctcwService.save(jc_tc_fjdctcw);
         jsonObj.put("success", true);
 	}
@@ -120,7 +127,7 @@ if(ConstValue.userToOrgMap.containsKey(userId))
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
-if(organization != null)
+if(organization != null && organization.equalsIgnoreCase("") == false)
 {
 	String [] organizationArr = organization.split(",");
 	
@@ -145,7 +152,7 @@ hqlFilter.setOrder("desc");
 			Jc_tc_fjdctcw jc_tc_fjdctcw = listObj.get(i);
 			JSONObject jsonTmp = new JSONObject();
 			jsonTmp.put("id", jc_tc_fjdctcw.getId());
-			//jsonTmp.put("parkID",jc_tc_fjdctcw.getparkID());
+			jsonTmp.put("parkID",jc_tc_fjdctcw.getparkID());
 			jsonTmp.put("parkName",jc_tc_fjdctcw.getparkName());
 			jsonTmp.put("parkType",jc_tc_fjdctcw.getparkType());
 			jsonTmp.put("adminDep",jc_tc_fjdctcw.getadminDep());
@@ -178,7 +185,7 @@ public String get(String id)
 		Jc_tc_fjdctcw jc_tc_fjdctcw = jc_tc_fjdctcwService.getById(id);
 		if(jc_tc_fjdctcw != null)
 		{
-			//jsonObj.put("parkID",jc_tc_fjdctcw.getparkID());
+			jsonObj.put("parkID",jc_tc_fjdctcw.getparkID());
 			jsonObj.put("parkName",jc_tc_fjdctcw.getparkName());
 			jsonObj.put("parkType",jc_tc_fjdctcw.getparkType());
 			jsonObj.put("adminDep",jc_tc_fjdctcw.getadminDep());

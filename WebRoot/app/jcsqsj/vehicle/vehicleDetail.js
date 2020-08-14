@@ -241,7 +241,9 @@ function viewDetail(id)
 				$('#color').val(obj.color);
 				$('#ownername').val(obj.ownername);
 				$('#ownertel').val(obj.ownertel);
-				$('#status').val(obj.status);
+				
+				//$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 
 					
@@ -291,7 +293,7 @@ function addOrUpdate()
 		color:$('#color').val(),
 		ownername:$('#ownername').val(),
 		ownertel:$('#ownertel').val(),
-		status:$('#status').val(),
+		status:$('input:radio[name="status"]:checked').val(),//$('#status').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()
 	},

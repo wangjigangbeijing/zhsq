@@ -35,7 +35,7 @@ function load()
 		name = $('#typeQuery2').val();
 	}
 
- var objname = $('#objnameQuery').val();
+ //var objname = $('#objnameQuery').val();
  var deptname1 = $('#deptname1Query').val();
  var isincommunity = $('#isincommunityQuery').val();
  var material = $('#materialQuery').val();
@@ -43,7 +43,7 @@ function load()
  var objState = $('#objStateQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_xfssController/load?objname='+objname+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
+	$.get(getContextPath()+'/jc_xfssController/load?deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
 	function(result){
 		
 		if(searchtype == 1){
@@ -111,7 +111,7 @@ function load()
 					className: 'control',
 					orderable: false,
 					targets:  8,//从0开始
-					mRender : function(data,full){
+					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";

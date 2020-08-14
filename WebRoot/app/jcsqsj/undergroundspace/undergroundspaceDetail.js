@@ -14,8 +14,82 @@ $(document).ready(function (){
 	
 	//load();
 	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofresidebuilding'}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ofresidebuilding').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#ofresidebuilding').html(filterArr.join(''));
+				
+			}
+			else
+			{
+				jError("获取住宅楼宇列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
+	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofbizbuilding'}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ofbizbuilding').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#ofbizbuilding').html(filterArr.join(''));
+				
+			}
+			else
+			{
+				jError("获取商务列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
+	
 	if(curId != '')
-		viewDetail(curId);
+	{
+		setTimeout(function(){ 
+			viewDetail(curId);
+		}, 1000);
+	}
 });
 
 
@@ -27,8 +101,7 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#dateid').val(obj.dateid);
+				$('#dateid').val(obj.dateid);
 				$('#name').val(obj.name);
 				$('#type').val(obj.type);
 				$('#address').val(obj.address);
@@ -39,7 +112,7 @@ function viewDetail(id)
 				$('#purpose').val(obj.purpose);
 				$('#longitude').val(obj.longitude);
 				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); //$('#status').val(obj.status);
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 
 					
@@ -86,7 +159,7 @@ function addOrUpdate()
 		purpose:$('#purpose').val(),
 		longitude:$('#longitude').val(),
 		latitude:$('#latitude').val(),
-		status:$('#status').val(),
+		status:$('input:radio[name="status"]:checked').val(),//$('#status').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()
 	},

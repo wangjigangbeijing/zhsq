@@ -39,7 +39,13 @@ function load()
  var adminDep = $('#adminDepQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_tc_ybtccController/load?parkName='+pkName+'&tradeName='+tradeName+'&jztype='+jztype+'&unitAddres='+unitAddres+'&adminDep='+adminDep+'&',
+	var Chargetype = $('#ChargetypeQuery').val();
+	if(searchtype == 2){
+		Chargetype = $('#ChargetypeQuery').val();
+	}
+
+
+	$.get(getContextPath()+'/jc_tc_ybtccController/load?parkName='+pkName+'&tradeName='+tradeName+'&jztype='+jztype+'&unitAddres='+unitAddres+'&adminDep='+adminDep+'&Chargetype='+Chargetype,
 	function(result){
 		
 		if(searchtype == 1){
@@ -88,9 +94,9 @@ function load()
 					{ 'data': 'jztype' ,'sClass':'text-center'},
 					{ 'data': 'unitName' ,'sClass':'text-center'},
 					{ 'data': 'area' ,'sClass':'text-center'},
-					{ 'data': 'adminDep' ,'sClass':'text-center'},
+					//{ 'data': 'adminDep' ,'sClass':'text-center'},
 					{ 'data': 'berthNum' ,'sClass':'text-center'},
-					{ 'data': 'chpileNum' ,'sClass':'text-center'},
+					//{ 'data': 'chpileNum' ,'sClass':'text-center'},
 					{ 'data': 'Chargetype' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
@@ -107,7 +113,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  9,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 

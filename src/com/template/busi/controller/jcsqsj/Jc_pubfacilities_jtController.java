@@ -57,6 +57,13 @@ public String addOrUpdate(String id,String dateid,String type,String objid,Strin
 		jc_pubfacilities_jt.setpictures(pictures);
 		jc_pubfacilities_jt.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_pubfacilities_jt.setowner(organization);
+		
         jc_pubfacilities_jtService.save(jc_pubfacilities_jt);
         jsonObj.put("success", true);
 	}

@@ -53,9 +53,9 @@
 		<property name="minEvictableIdleTimeMillis" value="600000" />
 
 		<!-- 打开removeAbandoned功能 -->
-		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandoned" value="false" />
 		<!-- 180秒，也就是3分钟 -->
-		<property name="removeAbandonedTimeout" value="180" />
+		<property name="removeAbandonedTimeout" value="300" />
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 

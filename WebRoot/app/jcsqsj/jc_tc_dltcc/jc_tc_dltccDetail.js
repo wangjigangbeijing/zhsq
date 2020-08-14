@@ -27,31 +27,36 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#berthID').val(obj.berthID);
+				$('#berthID').val(obj.berthID);
 				$('#name').val(obj.name);
 				$('#roadname').val(obj.roadname);
 				$('#area').val(obj.area);
-				$('#rateinfo').val(obj.rateinfo);
 				$('#parkeTime').val(obj.parkeTime);
 				$('#parknum').val(obj.parknum);
 				var pictureArr = obj.picture.split(VALUE_SPLITTER);				for(var j=0;j<pictureArr.length;j++)				{					if(pictureArr[j] != '')					{						$('#picturepicktable').append('<tr><td>'+pictureArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pictureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
-				$('#rateinfo').val(obj.rateinfo);
-
-					
+				//$("input[name='rateinfo'][value='"+obj.rateinfo+"']").attr("checked",true); 
+				
+				if(obj.rateinfo != null){
+					var rateinfoArr = obj.rateinfo.split(VALUE_SPLITTER);
+					for(var j=0;j<rateinfoArr.length;j++)
+					{
+						if(rateinfoArr[j] != '')
+						{
+							$("input[name='rateinfo'][value='"+rateinfoArr[j]+"']").attr('checked','true');
+						}
+					}
+				}
 			}
 		});
 }
 
 function gobackPage()
 {
-	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_tc_dltcc/jc_tc_dltcc.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
-	
 }
 /*
 function ShowAddModal()
@@ -66,21 +71,25 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
+	var arr = [];
+	$("input[name='rateinfo']:checked").each(function (index, item) {//
+		arr.push($(this).val());
+	});
 	
+	var rateinfo = arr.join(',');
 	
 	$.post(getContextPath()+"/jc_tc_dltccController/addOrUpdate",
 	{
 		id:curId,
-				berthID:$('#berthID').val(),
+		berthID:$('#berthID').val(),
 		name:$('#name').val(),
 		roadname:$('#roadname').val(),
 		area:$('#area').val(),
-		rateinfo:$('#rateinfo').val(),
 		parkeTime:$('#parkeTime').val(),
 		parknum:$('#parknum').val(),
 		picture:$('#picture').val(),
 		note:$('#note').val(),
-		rateinfo:$('#rateinfo').val()
+		rateinfo:rateinfo//$('#rateinfo').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  

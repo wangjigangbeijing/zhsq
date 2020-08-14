@@ -30,7 +30,8 @@ function viewDetail(id)
 				
 								$('#parkID').val(obj.parkID);
 				$('#parkName').val(obj.parkName);
-				$('#parkType').val(obj.parkType);
+				//$('#parkType').val(obj.parkType);
+				$("input[name='parkType'][value='"+obj.parkType+"']").attr("checked",true); 
 				$('#adminDep').val(obj.adminDep);
 				$('#ownerDep').val(obj.ownerDep);
 				$('#maintDep').val(obj.maintDep);
@@ -46,7 +47,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_tc_fjdctcw/jc_tc_fjdctcw.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	
@@ -71,7 +72,7 @@ function addOrUpdate()
 		id:curId,
 				parkID:$('#parkID').val(),
 		parkName:$('#parkName').val(),
-		parkType:$('#parkType').val(),
+		parkType:$('input:radio[name="parkType"]:checked').val(),//$('#parkType').val(),
 		adminDep:$('#adminDep').val(),
 		ownerDep:$('#ownerDep').val(),
 		maintDep:$('#maintDep').val(),

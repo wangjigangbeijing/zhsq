@@ -84,6 +84,13 @@ public String addOrUpdate(String id,String dataid,String name,String address,
 		residebuilding.setnote(note);
 		residebuilding.setfamiliesinbuilding(familiesinbuilding);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		residebuilding.setowner(organization);
+		
         residebuildingService.save(residebuilding);
         jsonObj.put("success", true);
 	}
@@ -173,7 +180,7 @@ if(ConstValue.userToOrgMap.containsKey(userId))
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
-if(organization != null)
+if(organization != null && organization.equalsIgnoreCase("") == false)
 {
 	String [] organizationArr = organization.split(",");
 	

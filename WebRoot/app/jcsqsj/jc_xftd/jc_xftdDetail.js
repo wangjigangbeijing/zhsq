@@ -42,7 +42,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_xftd/jc_xftd.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

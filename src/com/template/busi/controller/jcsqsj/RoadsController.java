@@ -59,6 +59,13 @@ public String addOrUpdate(String id,String dateid,String name,String type,Intege
 		roads.setpictures(pictures);
 		roads.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		roads.setowner(organization);
+		
         roadsService.save(roads);
         jsonObj.put("success", true);
 	}

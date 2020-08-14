@@ -14,6 +14,49 @@ $(document).ready(function (){
 	
 	//load();
 	
+	/*$('input[type=radio][name=cwtype]').change(function() {
+        if (this.value == '一般停车位') {
+            alert("Allot Thai Gayo Bhai");
+        }
+        else if (this.value == '道路停车位') {
+            alert("Transfer Thai Gayo");
+        }
+    });*/
+	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'inparkname'}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#inparkname').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#inparkname').html(filterArr.join(''));
+				
+			}
+			else
+			{
+				jError("获取停车场列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
 	if(curId != '')
 		viewDetail(curId);
 });
@@ -27,16 +70,20 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#inparkname').val(obj.inparkname);
-				$('#cwtype').val(obj.cwtype);
+				$('#inparkname').val(obj.inparkname);
+				//$('#cwtype').val(obj.cwtype);
+				$("input[name='cwtype'][value='"+obj.cwtype+"']").attr("checked",true); 
 				$('#location').val(obj.location);
 				$('#numbers').val(obj.numbers);
-				$('#UseType').val(obj.UseType);
-				$('#sizeType').val(obj.sizeType);
-				$('#heightType').val(obj.heightType);
+				//$('#UseType').val(obj.UseType);
+				$("input[name='UseType'][value='"+obj.UseType+"']").attr("checked",true); 
+				//$('#sizeType').val(obj.sizeType);
+				$("input[name='sizeType'][value='"+obj.sizeType+"']").attr("checked",true); 
+				//$('#heightType').val(obj.heightType);
+				$("input[name='heightType'][value='"+obj.heightType+"']").attr("checked",true); 
 				$('#arrange').val(obj.arrange);
-				$('#hascharge').val(obj.hascharge);
+				//$('#hascharge').val(obj.hascharge);
+				$("input[name='hascharge'][value='"+obj.hascharge+"']").attr("checked",true); 
 				$('#chargenum').val(obj.chargenum);
 				$('#cwcode').val(obj.cwcode);
 				var pcitureArr = obj.pciture.split(VALUE_SPLITTER);				for(var j=0;j<pcitureArr.length;j++)				{					if(pcitureArr[j] != '')					{						$('#pciturepicktable').append('<tr><td>'+pcitureArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pcitureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
@@ -48,7 +95,6 @@ function viewDetail(id)
 
 function gobackPage()
 {
-	
 	curId = '';
 	
 	$('#main-content').load("./jcsqsj/jc_tc_tcw/jc_tc_tcw.html", function () {
@@ -56,33 +102,21 @@ function gobackPage()
     });
 	
 }
-/*
-function ShowAddModal()
-{
-	$('#modalDetail').show();
-	
-	$('#modalTitle').text('新增');
-	
-	$('#addOrUpdateBtn').text('确定');
-	
-}
-*/
+
 function addOrUpdate()
 {
-	
-	
 	$.post(getContextPath()+"/jc_tc_tcwController/addOrUpdate",
 	{
 		id:curId,
-				inparkname:$('#inparkname').val(),
-		cwtype:$('#cwtype').val(),
+		inparkname:$('#inparkname').val(),
+		cwtype:$('input:radio[name="cwtype"]:checked').val(),//$('#cwtype').val(),
 		location:$('#location').val(),
 		numbers:$('#numbers').val(),
-		UseType:$('#UseType').val(),
-		sizeType:$('#sizeType').val(),
-		heightType:$('#heightType').val(),
+		UseType:$('input:radio[name="UseType"]:checked').val(),//$('#UseType').val(),
+		sizeType:$('input:radio[name="sizeType"]:checked').val(),//$('#sizeType').val(),
+		heightType:$('input:radio[name="heightType"]:checked').val(),//$('#heightType').val(),
 		arrange:$('#arrange').val(),
-		hascharge:$('#hascharge').val(),
+		hascharge:$('input:radio[name="hascharge"]:checked').val(),//$('#hascharge').val(),
 		chargenum:$('#chargenum').val(),
 		cwcode:$('#cwcode').val(),
 		pciture:$('#pciture').val(),
