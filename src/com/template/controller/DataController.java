@@ -1022,6 +1022,35 @@ public class DataController {
 				
 				String sCond = "";
 				
+				String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
+				
+				String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+				
+				if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
+					userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+				
+				String organization = "";
+				if(ConstValue.userToOrgMap.containsKey(userId))
+					organization = ConstValue.userToOrgMap.get(userId);
+				
+				if(organization != null && organization.equalsIgnoreCase("") == false)
+				{
+					String [] organizationArr = organization.split(",");
+					
+					String ownerCond = "";
+					
+					for(int i=0;i<organizationArr.length;i++)
+					{
+						ownerCond += " OWNER LIKE '%"+organizationArr[i]+"%' OR ";
+					}
+					
+					if(ownerCond.endsWith(" OR "))
+						ownerCond = ownerCond.substring(0, ownerCond.length() - 4);
+					
+					if(ownerCond.equalsIgnoreCase("") == false)
+						sSql += " AND ("+ownerCond+") ";
+				}
+				
 				sSql = sSql.substring(0, sSql.length() - 5);
 				
 				logger.debug(sSql);

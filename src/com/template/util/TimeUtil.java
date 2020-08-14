@@ -1029,6 +1029,18 @@ public class TimeUtil {
 		return hour;
 	}
 	
+	public static Long getTimeSpanDay(Date startDate, Date endDate) {
+		long diff = endDate.getTime() - startDate.getTime();
+		Long hour = diff / (60 * 60 * 1000)/24;
+		return hour;
+	}
+	
+
+	public static Long getTimeSpanYear(Date startDate, Date endDate) {
+		long diff = endDate.getTime() - startDate.getTime();
+		Long hour = diff / (60 * 60 * 1000)/24/365;
+		return hour;
+	}
 	/**
 	 * 获取两段日期内的所有月份(包含结束时间，不包含开始时间)
 	 * 

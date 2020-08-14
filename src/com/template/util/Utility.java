@@ -219,12 +219,7 @@ public class Utility
 	    return true;  
 	}
 	
-	
-
-	@Autowired
-	private HttpServletRequest request;
-	
-	public String getOrganization()
+	public String getOrganization(HttpServletRequest request)
 	{
 		String organization = "";
 		
@@ -248,7 +243,7 @@ public class Utility
 		
 		try
 		{
-			if(organization.equalsIgnoreCase("") && request.getSession().getAttribute(ConstValue.SESSION_USER_ORG) != null)
+			if((organization == null || organization.equalsIgnoreCase(""))  && request.getSession().getAttribute(ConstValue.SESSION_USER_ORG) != null)
 			{	
 				organization = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ORG);
 			}

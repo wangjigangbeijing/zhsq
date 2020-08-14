@@ -20,7 +20,9 @@
 	</task:scheduled-tasks>
   -->
  	<task:scheduled-tasks>
-		<task:scheduled ref="DaemonService" method="job" cron="0 0/5 * * * ?" />
+		<task:scheduled ref="DaemonService" method="twoMinsJob" cron="0 0/2 * * * ?" />
+		
+		<task:scheduled ref="DaemonService" method="dailyJob" cron="0 0 0 * * ?" />
 	</task:scheduled-tasks>
 	
 </beans>
