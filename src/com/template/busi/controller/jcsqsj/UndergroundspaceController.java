@@ -57,6 +57,13 @@ public String addOrUpdate(String id,String dateid,String name,String type,String
 		undergroundspace.setpictures(pictures);
 		undergroundspace.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		undergroundspace.setowner(organization);
+		
         undergroundspaceService.save(undergroundspace);
         jsonObj.put("success", true);
 	}

@@ -279,9 +279,13 @@ function viewDetail(id)
 				$('#offamily').html(filterArr.join(''));
 				$('#offamily').attr("readonly","readonly");	
 				
-				$('#sex').val(obj.sex);
+				//$('#sex').val(obj.sex);
+				$("input[name='sex'][value='"+obj.sex+"']").attr("checked",true); 
+				
 				$('#residencestatus').val(obj.residencestatus);
-				$('#ishouseholder').val(obj.ishouseholder);
+				//$('#ishouseholder').val(obj.ishouseholder);
+				$("input[name='ishouseholder'][value='"+obj.ishouseholder+"']").attr("checked",true); 
+				
 				$('#relationshiphouseholder').val(obj.relationshiphouseholder);
 				$('#registrationcategory').val(obj.registrationcategory);
 				$('#nationality').val(obj.nationality);
@@ -298,33 +302,51 @@ function viewDetail(id)
 				$('#professiontype').val(obj.professiontype);
 				$('#workunit').val(obj.workunit);
 				$('#job').val(obj.job);
-				$('#issocialsecurity').val(obj.issocialsecurity);
+				//$('#issocialsecurity').val(obj.issocialsecurity);
+				$("input[name='issocialsecurity'][value='"+obj.issocialsecurity+"']").attr("checked",true); 
+				
 				$('#email').val(obj.email);
 				$('#tel').val(obj.tel);
 				$('#fax').val(obj.fax);
 				$('#mobile').val(obj.mobile);
 				$('#eligiousbelief').val(obj.eligiousbelief);
-				$('#marriage').val(obj.marriage);
-				$('#isforeignmarriage').val(obj.isforeignmarriage);
-				$('#health').val(obj.health);
+				//$('#marriage').val(obj.marriage);
+				$("input[name='marriage'][value='"+obj.marriage+"']").attr("checked",true); 
+				
+				//$('#isforeignmarriage').val(obj.isforeignmarriage);
+				$("input[name='isforeignmarriage'][value='"+obj.isforeignmarriage+"']").attr("checked",true); 
+				
+				//$('#health').val(obj.health);
+				$("input[name='health'][value='"+obj.health+"']").attr("checked",true); 
+				
 				$('#military').val(obj.military);
 				$('#stature').val(obj.stature);
-				$('#blood').val(obj.blood);
+				//$('#blood').val(obj.blood);
+				$("input[name='blood'][value='"+obj.blood+"']").attr("checked",true); 
+				
 				$('#hobby').val(obj.hobby);
 				$('#reasonnotresidence').val(obj.reasonnotresidence);
 				$('#custodian').val(obj.custodian);
 				$('#custodiantel').val(obj.custodiantel);
 				$('#custodianrelationship').val(obj.custodianrelationship);
-				$('#custodianincommunity').val(obj.custodianincommunity);
+				//$('#custodianincommunity').val(obj.custodianincommunity);
+				$("input[name='custodianincommunity'][value='"+obj.custodianincommunity+"']").attr("checked",true); 
+				
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
-				$('#dy_partymembertype').val(obj.dy_partymembertype);
+				//$('#dy_partymembertype').val(obj.dy_partymembertype);
+				$("input[name='dy_partymembertype'][value='"+obj.dy_partymembertype+"']").attr("checked",true); 
+				
 				$('#dy_of_partyorganization').val(obj.dy_of_partyorganization);
 				$('#dy_joinpartydate').val(obj.dy_joinpartydate);
 				$('#dy_inpartydate').val(obj.dy_inpartydate);
 				$('#dy_membership').val(obj.dy_membership);
-				$('#dy_islost').val(obj.dy_islost);
+				//$('#dy_islost').val(obj.dy_islost);
+				$("input[name='dy_islost'][value='"+obj.dy_islost+"']").attr("checked",true); 
+				
 				$('#dy_lostdate').val(obj.dy_lostdate);
-				$('#dy_movemember').val(obj.dy_movemember);
+				//$('#dy_movemember').val(obj.dy_movemember);
+				$("input[name='dy_movemember'][value='"+obj.dy_movemember+"']").attr("checked",true); 
+				
 				$('#dy_moveto').val(obj.dy_moveto);
 				$('#zdr_type').val(obj.zdr_type);
 				$('#zdr_reason').val(obj.zdr_reason);
@@ -334,7 +356,9 @@ function viewDetail(id)
 				$('#jzr_correctiondate').val(obj.jzr_correctiondate);
 				$('#jzr_correctionaddress').val(obj.jzr_correctionaddress);
 				$('#sy_unemployedreason').val(obj.sy_unemployedreason);
-				$('#sy_unemployedreemployment').val(obj.sy_unemployedreemployment);
+				//$('#sy_unemployedreemployment').val(obj.sy_unemployedreemployment);
+				$("input[name='sy_unemployedreemployment'][value='"+obj.sy_unemployedreemployment+"']").attr("checked",true); 
+				
 				$('#sy_reemploymentunit').val(obj.sy_reemploymentunit);
 				$('#ylfn_firstmarriagedate').val(obj.ylfn_firstmarriagedate);
 				$('#ylfn_children').val(obj.ylfn_children);
@@ -416,9 +440,9 @@ var valcharacteristics = valcharacteristicsArr.join(VALUE_SPLITTER);//将数组�
 		ofunit:$('#ofunit').val(),
 		ofroom:$('#ofroom').val(),
 		offamily:$('#offamily').val(),
-		sex:$('#sex').val(),
+		sex:$('input:radio[name="sex"]:checked').val(),//$('#sex').val(),
 		residencestatus:$('#residencestatus').val(),
-		ishouseholder:$('#ishouseholder').val(),
+		ishouseholder:$('input:radio[name="ishouseholder"]:checked').val(),//$('#ishouseholder').val(),
 		relationshiphouseholder:$('#relationshiphouseholder').val(),
 		registrationcategory:$('#registrationcategory').val(),
 		nationality:$('#nationality').val(),
@@ -435,34 +459,34 @@ var valcharacteristics = valcharacteristicsArr.join(VALUE_SPLITTER);//将数组�
 		professiontype:$('#professiontype').val(),
 		workunit:$('#workunit').val(),
 		job:$('#job').val(),
-		issocialsecurity:$('#issocialsecurity').val(),
+		issocialsecurity:$('input:radio[name="issocialsecurity"]:checked').val(),//$('#issocialsecurity').val(),
 		email:$('#email').val(),
 		tel:$('#tel').val(),
 		fax:$('#fax').val(),
 		mobile:$('#mobile').val(),
 		eligiousbelief:$('#eligiousbelief').val(),
-		marriage:$('#marriage').val(),
-		isforeignmarriage:$('#isforeignmarriage').val(),
-		health:$('#health').val(),
+		marriage:$('input:radio[name="marriage"]:checked').val(),//$('#marriage').val(),
+		isforeignmarriage: $('input:radio[name="isforeignmarriage"]:checked').val(),//$('#isforeignmarriage').val(),
+		health:$('input:radio[name="health"]:checked').val(),//$('#health').val(),
 		military:$('#military').val(),
 		stature:$('#stature').val(),
-		blood:$('#blood').val(),
+		blood:$('input:radio[name="blood"]:checked').val(),//$('#blood').val(),
 		hobby:$('#hobby').val(),
 		reasonnotresidence:$('#reasonnotresidence').val(),
 		custodian:$('#custodian').val(),
 		custodiantel:$('#custodiantel').val(),
 		custodianrelationship:$('#custodianrelationship').val(),
-		custodianincommunity:$('#custodianincommunity').val(),
+		custodianincommunity:$('input:radio[name="custodianincommunity"]:checked').val(),//$('#custodianincommunity').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val(),
-		dy_partymembertype:$('#dy_partymembertype').val(),
+		dy_partymembertype:$('input:radio[name="dy_partymembertype"]:checked').val(), //$('#dy_partymembertype').val(),
 		dy_of_partyorganization:$('#dy_of_partyorganization').val(),
 		dy_joinpartydate:$('#dy_joinpartydate').val(),
 		dy_inpartydate:$('#dy_inpartydate').val(),
 		dy_membership:$('#dy_membership').val(),
-		dy_islost:$('#dy_islost').val(),
+		dy_islost:  $('input:radio[name="dy_islost"]:checked').val(),//$('#dy_islost').val(),
 		dy_lostdate:$('#dy_lostdate').val(),
-		dy_movemember:$('#dy_movemember').val(),
+		dy_movemember:  $('input:radio[name="dy_movemember"]:checked').val(),//$('#dy_movemember').val(),
 		dy_moveto:$('#dy_moveto').val(),
 		zdr_type:$('#zdr_type').val(),
 		zdr_reason:$('#zdr_reason').val(),
@@ -472,7 +496,7 @@ var valcharacteristics = valcharacteristicsArr.join(VALUE_SPLITTER);//将数组�
 		jzr_correctiondate:$('#jzr_correctiondate').val(),
 		jzr_correctionaddress:$('#jzr_correctionaddress').val(),
 		sy_unemployedreason:$('#sy_unemployedreason').val(),
-		sy_unemployedreemployment:$('#sy_unemployedreemployment').val(),
+		sy_unemployedreemployment:  $('input:radio[name="sy_unemployedreemployment"]:checked').val(),//$('#sy_unemployedreemployment').val(),
 		sy_reemploymentunit:$('#sy_reemploymentunit').val(),
 		ylfn_firstmarriagedate:$('#ylfn_firstmarriagedate').val(),
 		ylfn_children:$('#ylfn_children').val(),

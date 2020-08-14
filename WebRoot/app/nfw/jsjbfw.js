@@ -17,9 +17,9 @@ $(document).ready(function (){
 	loadstatus();
 });
 
-var curId;
+var curId = '';
 
-var jsjbId;
+var jsjbId = '';
 
 function load()
 {

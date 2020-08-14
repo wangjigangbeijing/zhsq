@@ -57,6 +57,13 @@ public String addOrUpdate(String id,String dateid,String type,String objid,Strin
 		jc_pubfacilities_lh.setpictures(pictures);
 		jc_pubfacilities_lh.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_pubfacilities_lh.setowner(organization);
+		
         jc_pubfacilities_lhService.save(jc_pubfacilities_lh);
         jsonObj.put("success", true);
 	}
@@ -134,7 +141,7 @@ if(ConstValue.userToOrgMap.containsKey(userId))
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
-if(organization != null)
+if(organization != null && organization.equalsIgnoreCase("") == false)
 {
 	String [] organizationArr = organization.split(",");
 	

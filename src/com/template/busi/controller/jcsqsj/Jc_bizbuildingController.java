@@ -71,6 +71,13 @@ public String addOrUpdate(String id,String dataid,String name,String address,Str
 		jc_bizbuilding.setnote(note);
 		jc_bizbuilding.setorginbuilding(orginbuilding);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_bizbuilding.setowner(organization);
+		
         jc_bizbuildingService.save(jc_bizbuilding);
         jsonObj.put("success", true);
 	}

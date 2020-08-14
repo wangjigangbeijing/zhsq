@@ -9,6 +9,8 @@ $(document).ready(function (){
 	
 });
 
+var curId;
+
 var dataTable;
 
 function loadsqcsfw()
@@ -161,6 +163,7 @@ function enterFlow(id){
 var uuid = '';
 function addsqcsfw()
 {
+	curId = '';
 	//uuid = guid();
 	$('#main-content').load("./nfw/sqcsfwDetail.html", function () {
 		//EditableTable.init();

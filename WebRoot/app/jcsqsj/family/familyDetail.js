@@ -138,7 +138,7 @@ $(document).ready(function (){
 		$.ajax({
 		  type: 'POST',
 		  url: getContextPath()+"/dictionaryController/getDataOfDic",
-		  data: JSON.stringify({id:'ofunit',params:[{enname:'ofcommunity',value:ofcommunity},{enname:'ofresidebuilding',value:ofresidebuilding},{enname:'ofunit',value:ofunit}]}),
+		  data: JSON.stringify({id:'ofroom',params:[{enname:'ofcommunity',value:ofcommunity},{enname:'ofresidebuilding',value:ofresidebuilding},{enname:'ofunit',value:ofunit}]}),
 		  contentType: "application/json",
 		  success:function(result){
 					
@@ -192,7 +192,8 @@ function viewDetail(id)
 				//$('#ofresidebuilding').val(obj.ofresidebuilding);
 				//$('#ofunit').val(obj.ofunit);
 				//$('#ofroom').val(obj.ofroom);
-				$('#status').val(obj.status);
+				//$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
 
 				$('#ofcommunity').html('');
 				var filterArr = [];				
@@ -257,7 +258,7 @@ function addOrUpdate()
 		ofresidebuilding:$('#ofresidebuilding').val(),
 		ofunit:$('#ofunit').val(),
 		ofroom:$('#ofroom').val(),
-		status:$('#status').val()
+		status:$('input:radio[name="status"]:checked').val()//,$('#status').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  

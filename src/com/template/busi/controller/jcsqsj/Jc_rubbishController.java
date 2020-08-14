@@ -53,7 +53,13 @@ public String addOrUpdate(String id,String name,String type,String kind,String c
 		jc_rubbish.setcleartime(cleartime);
 		jc_rubbish.setpicture(picture);
 		jc_rubbish.setnote(note);
-
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_rubbish.setowner(organization);
+		
         jc_rubbishService.save(jc_rubbish);
         jsonObj.put("success", true);
 	}
@@ -131,7 +137,7 @@ if(ConstValue.userToOrgMap.containsKey(userId))
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
-if(organization != null)
+if(organization != null && organization.equalsIgnoreCase("") == false)
 {
 	String [] organizationArr = organization.split(",");
 	

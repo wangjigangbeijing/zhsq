@@ -114,6 +114,8 @@ public class TimeUtil {
 	 */
 	public static Date parseDate(String date, String format) {
 
+		if(date == null || date.equalsIgnoreCase(""))
+			return null;
 		SimpleDateFormat sdf = null;
 		try {
 			sdf = new SimpleDateFormat(format);

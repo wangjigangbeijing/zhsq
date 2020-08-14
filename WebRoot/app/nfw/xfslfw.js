@@ -13,6 +13,8 @@ $(document).ready(function (){
 	
 });
 
+var curId = '';
+
 var dataTable;
 
 function loadxfslfw()
@@ -184,6 +186,7 @@ function enterFlow(id){
 var uuid = '';
 function addxfslfw()
 {
+	curId = '';
 	//uuid = guid();
 	$('#main-content').load("./nfw/xfslfwDetail.html", function () {
 		//EditableTable.init();

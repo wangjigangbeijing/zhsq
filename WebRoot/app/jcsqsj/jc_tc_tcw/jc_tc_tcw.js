@@ -83,7 +83,7 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'inparkname' ,'sClass':'text-center'},
+										{ 'data': 'inparknameDisplay' ,'sClass':'text-center'},
 					{ 'data': 'cwtype' ,'sClass':'text-center'},
 					{ 'data': 'location' ,'sClass':'text-center'},
 					{ 'data': 'numbers' ,'sClass':'text-center'},

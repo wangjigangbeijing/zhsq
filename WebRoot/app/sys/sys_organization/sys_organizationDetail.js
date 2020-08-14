@@ -62,7 +62,7 @@ function viewDetail(id)
 				$('#directorphone').val(obj.directorphone);
 				$('#note').val(obj.note);
 
-					
+				$("input[name='orgtype'][value='"+obj.orgtype+"']").attr("checked",true); 	
 			}
 		});
 }
@@ -113,7 +113,8 @@ function addOrUpdate()
 		secretaryphone:$('#secretaryphone').val(),
 		directorname:$('#directorname').val(),
 		directorphone:$('#directorphone').val(),
-		note:$('#note').val()
+		note:$('#note').val(),
+		orgtype:$('input:radio[name="orgtype"]:checked').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  

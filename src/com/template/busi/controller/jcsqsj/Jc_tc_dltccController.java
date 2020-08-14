@@ -53,6 +53,13 @@ public String addOrUpdate(String id,String berthID,String name,String roadname,S
 		jc_tc_dltcc.setnote(note);
 		jc_tc_dltcc.setrateinfo(rateinfo);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_tc_dltcc.setowner(organization);
+		
         jc_tc_dltccService.save(jc_tc_dltcc);
         jsonObj.put("success", true);
 	}
@@ -92,48 +99,44 @@ public String load(String name,String roadname,String rateinfo)
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
-}
-if(roadname != null && roadname.equalsIgnoreCase("") == false && roadname.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("roadname", HqlFilter.Operator.LIKE, "%"+roadname+"%");
-}
-if(rateinfo != null && rateinfo.equalsIgnoreCase("") == false && rateinfo.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("rateinfo", HqlFilter.Operator.LIKE, "%"+rateinfo+"%");
-}
-if(rateinfo != null && rateinfo.equalsIgnoreCase("") == false && rateinfo.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("rateinfo", HqlFilter.Operator.LIKE, "%"+rateinfo+"%");
-}
-
-
-String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
-
-String organization = "";
-if(ConstValue.userToOrgMap.containsKey(userId))
-	organization = ConstValue.userToOrgMap.get(userId);
-
-ArrayList<String> alOrg = new ArrayList<String>(); 
-
-if(organization != null)
-{
-	String [] organizationArr = organization.split(",");
-	
-
-	for(int i=0;i<organizationArr.length;i++)
-	{
-		alOrg.add("%"+organizationArr[i]+"%");
-	}
-}
-
-if(alOrg != null && alOrg.size() != 0)
-	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
-
-hqlFilter.setSort("created_at");
-hqlFilter.setOrder("desc");
+		
+		if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+		}
+		if(roadname != null && roadname.equalsIgnoreCase("") == false && roadname.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("roadname", HqlFilter.Operator.LIKE, "%"+roadname+"%");
+		}
+		if(rateinfo != null && rateinfo.equalsIgnoreCase("") == false && rateinfo.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("rateinfo", HqlFilter.Operator.LIKE, "%"+rateinfo+"%");
+		}
+		
+		String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		
+		ArrayList<String> alOrg = new ArrayList<String>(); 
+		
+		if(organization != null && organization.equalsIgnoreCase("") == false)
+		{
+			String [] organizationArr = organization.split(",");
+			
+		
+			for(int i=0;i<organizationArr.length;i++)
+			{
+				alOrg.add("%"+organizationArr[i]+"%");
+			}
+		}
+		
+		if(alOrg != null && alOrg.size() != 0)
+			hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+		
+		hqlFilter.setSort("created_at");
+		hqlFilter.setOrder("desc");
 
         List<Jc_tc_dltcc> listObj = jc_tc_dltccService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

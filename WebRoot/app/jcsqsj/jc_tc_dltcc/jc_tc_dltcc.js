@@ -21,8 +21,6 @@ var curId;
 
 function load()
 {
-
-
 	var searchtype = $("#searchtype").val();
 	if(searchtype == 1){
 		$('#btnSearch1').attr('disabled','disabled');
@@ -34,10 +32,15 @@ function load()
 	if(searchtype == 2){
 		name = $('#nameQuery2').val();
 	}
+	
+	var rateinfo = $('#rateinfoQuery').val();
+	if(searchtype == 2){
+		rateinfo = $('#rateinfoQuery').val();
+	}
 
 	var roadname = $('#roadnameQuery').val();
 
-	$.get(getContextPath()+'/jc_tc_dltccController/load?name='+name+'&roadname='+roadname+'&',
+	$.get(getContextPath()+'/jc_tc_dltccController/load?name='+name+'&roadname='+roadname+'&rateinfo='+rateinfo,
 	function(result){
 		if(searchtype == 1){
 			
@@ -79,16 +82,13 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'berthID' ,'sClass':'text-center'},
+					{ 'data': 'berthID' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'roadname' ,'sClass':'text-center'},
 					{ 'data': 'area' ,'sClass':'text-center'},
 					{ 'data': 'rateinfo' ,'sClass':'text-center'},
-
 					{ 'data': 'parknum' ,'sClass':'text-center'},
-
 					{ 'data': '' ,'sClass':'text-center'}
-
 				],
 				columnDefs: [ /*{
 					className: 'control',
@@ -116,52 +116,6 @@ function load()
 		}
 	});
 }
-
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_tc_dltccController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#berthID').val(obj.berthID);
-				$('#name').val(obj.name);
-				$('#roadname').val(obj.roadname);
-				$('#area').val(obj.area);
-				$('#rateinfo').val(obj.rateinfo);
-				$('#parkeTime').val(obj.parkeTime);
-				$('#parknum').val(obj.parknum);
-				$('#picture').val(obj.picture);
-				$('#note').val(obj.note);
-				$('#rateinfo').val(obj.rateinfo);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#berthID').val('');
-	$('#name').val('');
-	$('#roadname').val('');
-	$('#area').val('');
-	$('#rateinfo').val('');
-	$('#parkeTime').val('');
-	$('#parknum').val('');
-	$('#picture').val('');
-	$('#note').val('');
-	$('#rateinfo').val('');
-
-}
-*/
 
 function editData(id)
 {

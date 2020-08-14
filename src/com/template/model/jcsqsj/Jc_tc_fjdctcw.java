@@ -35,6 +35,17 @@ public void setcreated_at(Date created_at)
 	this.created_at = created_at;
 }
 
+@Column(name = "parkid", nullable = true)
+public String parkID;
+public String getparkID()
+{
+	return parkID;
+}
+public void setparkID(String parkID)
+{
+	this.parkID = parkID;
+}
+
 @Column(name = "parkname", nullable = true)
 public String parkName;
 public String getparkName()
