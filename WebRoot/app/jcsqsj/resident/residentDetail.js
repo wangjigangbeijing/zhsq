@@ -1,4 +1,4 @@
-
+﻿
 
 $(document).ready(function (){
 	
@@ -537,4 +537,14 @@ function downloadAttach(fileName)
 	window.open(encodeURI(url));
 	
 	//window.open(getContextPath()+"/fileController/downLoad/"+encodeURI(obj.fileName));
+}
+
+function selectcardtype(){
+	var type = $('#identitytype').val();
+	if(type == '居民身份证'){
+		$('#readidcard').show();
+	}
+	else {
+		$('#readidcard').hide();
+	}
 }
