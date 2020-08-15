@@ -1018,7 +1018,7 @@ public class DataController {
 				
 				//String sSql = "select id,st_astext(geom) as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
 				
-				String sSql = "select id,point as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
+				String sSql = "select id,point as geom,"+infoFields+" from "+sTableName+" where 1 = 1";
 				
 				String sCond = "";
 				
@@ -1041,17 +1041,21 @@ public class DataController {
 					
 					for(int i=0;i<organizationArr.length;i++)
 					{
-						ownerCond += " OWNER LIKE '%"+organizationArr[i]+"%' OR ";
+						if(ownerCond.length() == 0) {
+							ownerCond = " OWNER LIKE '%"+organizationArr[i]+"%'";
+						}
+						else {
+							ownerCond += " OR OWNER LIKE '%"+organizationArr[i]+"%'";
+						}
 					}
 					
-					if(ownerCond.endsWith(" OR "))
-						ownerCond = ownerCond.substring(0, ownerCond.length() - 4);
-					
-					if(ownerCond.equalsIgnoreCase("") == false)
+					if(ownerCond.length() > 0) {
 						sSql += " AND ("+ownerCond+") ";
+					}
+						
 				}
 				
-				sSql = sSql.substring(0, sSql.length() - 5);
+				//sSql = sSql.substring(0, sSql.length() - 5);
 				
 				logger.debug(sSql);
 				

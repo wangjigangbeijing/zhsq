@@ -125,13 +125,21 @@
               <div class="card-header">
                 <h3 class="card-title" id="mapTitle">社区专题图</h3>
 
-                <div class="card-tools" id="layerDiv">
+                
                   <!--button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
                   <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button-->
-                </div>
+                
               </div>
          	 <div class="card-body" id="sqzttDiv" style="height:700px;">
+			 
+				<img src="../images/label.png" style="position:absolute; right: 15px; top:65px; z-index:1000;" id="labelimg" onclick="showlayerlabel();"/>
+				<img src="../images/layer.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" onclick="showlayer();"/>
+				<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 105px; width: 150px; background-color:#d0d0d0; opacity:0.8; display:none; border-radius:5px;">
+					<ul id="main_checkbox" style="padding-top:10px;">
+					
+					</ul>
+				</div>
               </div>
               <!-- /.card-body -->
             </div>
@@ -215,6 +223,8 @@ var curMap = '';
 var baseLayer = null;
 var dataLayer = null;
 
+var labelshow = true; //默认显示label
+
 var layerStyleMap = {};
 
 function loadMap(mapName)
@@ -230,7 +240,9 @@ function loadMap(mapName)
 
 				var geoServerURL = respObj.mapurl;
 				
-				$('#layerDiv').empty();	
+				$('#layerDiv').show();
+				$('#main_checkbox').hide();
+				$('#main_checkbox').empty();	
 				
 				for(var i=0;i<respObj.list.length;i++)
 				{
@@ -242,10 +254,10 @@ function loadMap(mapName)
 					
 					var checkboxWidth = layer.note.length * 22;
 					//图层列表
-					var layerCtl = '<input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
-                          '<label class="form-check-label" style="width:'+checkboxWidth+'px;">'+layer.note+'</label>';
+					var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
+                          '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
 					
-					$('#layerDiv').append(layerCtl);
+					$('#main_checkbox').append(layerCtl);
 					
 					var layerType = layer.layertype;
 					
@@ -321,7 +333,7 @@ function loadMap(mapName)
 									{
 										if(layerStyleMap[data.facilitytype] == null)
 										{
-											console.log('icon for '+data.facilitytype+' not found for layerId:'+layerId+'.');
+											//console.log('icon for '+data.facilitytype+' not found for layerId:'+layerId+'.');
 											continue;
 										}
 										iconurl = layerStyleMap[data.facilitytype].iconurl;
@@ -332,7 +344,14 @@ function loadMap(mapName)
 									iconFeature.setStyle(new ol.style.Style({
 										image: new ol.style.Icon({
 											src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
-										})
+										}),
+										text: new ol.style.Text({
+											font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
+											  color: '#fff',width: 2
+											}),// get the text from the feature - `this` is ol.Feature
+											// and show only under certain resolution
+											text: data.info
+										  })
 									}));
 									
 									iconFeature.setId(data.id);
@@ -376,7 +395,14 @@ function loadMap(mapName)
 										fill: new ol.style.Fill({           // 填充样式
 											color: layerStyleObj.style['fill-color-rgb'],
 											opacity: layerStyleObj.style['fill-opacity']
-										})
+										}),
+										text: new ol.style.Text({
+											font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
+											  color: '#fff',width: 2
+											}),// get the text from the feature - `this` is ol.Feature
+											// and show only under certain resolution
+											text: data.info
+										  })
 									}));
 									
 									dataLayer.getSource().addFeature(iconFeature);	
@@ -386,129 +412,12 @@ function loadMap(mapName)
 					});
 				}
 				
-				
+				var height = respObj.list.length * 25;
+				$('#main_checkbox').css("height", height +"px");
 				
 				
 				$("input[name='layer']").change(function() {
-					
-					var checkedLayerId = '';
-					
-					$("input[name='layer']").each(function () {
-						
-						if($(this).prop('checked'))
-							checkedLayerId += $(this).attr('id')+',';
-					});
-					
-					
-					$.ajax({
-						type: "GET",
-						//url:"http://49.233.26.198:8082/gis/zhsq/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=zhsq:jc_community&maxFeatures=50&outputFormat=application/json",
-						url: getContextPath()+"/dataController/wfs?layerIds="+checkedLayerId,
-						contentType: "application/json; charset=utf-8",
-						dataType: "json",
-						success: function (dataList) {
-							
-							dataLayer.getSource().clear();
-							
-							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
-							{
-								var data = dataList.features[p];
-								
-								console.log(data);
-								
-								layerStyleObj = layerStyleMap[data.layerId];
-								
-								if(data.type == 'MultiLineString')
-								{
-									var iconFeature = new ol.Feature({
-										geometry: new ol.geom.MultiLineString(data.coordinates),
-										weight:1,
-										population: 4000,
-										rainfall: 500
-									});
-									
-									iconFeature.setId(data.id);
-									
-									dataLayer.getSource().addFeature(iconFeature);	
-								}
-								else if(data.type == 'Point')
-								{
-									/*var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Point(data.coordinates),
-										weight:1,
-										population: 4000,
-										rainfall: 500
-									});
-									
-									iconFeature.setId(data.id);
-									dataLayer.getSource().addFeature(iconFeature);	
-									*/
-									
-									var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Point(data.coordinates),			
-										weight:1,
-										population: 4000,
-										rainfall: 500
-									});
-									
-									
-									var iconurl = '';
-									if(layerStyleObj.style != null)
-										iconurl = layerStyleObj.style.iconurl;
-										
-									if(data.layerId == 'layer2_5'||data.layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
-										||layerId == 'layer13_7'||layerId == 'layer5_2')
-										iconurl = layerStyleMap[data.facilitytype].iconurl;
-									
-									console.log(iconurl);
-									
-									iconFeature.setStyle(new ol.style.Style({
-										image: new ol.style.Icon({
-											src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
-										})
-									}));
-									
-									iconFeature.setId(data.id);
-									dataLayer.getSource().addFeature(iconFeature);	
-								}
-								else if(data.type == 'MultiPolygon')
-								{
-									var pointArr = data.coordinates;
-									
-									var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Polygon(data.coordinates),
-										weight:1,
-										population: 4000,
-										rainfall: 500
-									});
-									iconFeature.setId(data.info);
-									
-									var strokeColor = '#1E90FF';
-									if(layerStyleObj.style != null)
-										strokeColor = layerStyleObj.style['stroke-color'];
-										
-									var strokeWidth = 1; 
-									if(layerStyleObj.style != null)
-										strokeWidth = layerStyleObj.style['stroke-width'];
-									
-									
-									iconFeature.setStyle(new ol.style.Style({
-										stroke: new ol.style.Stroke({       // 线样式
-											color: strokeColor,
-											width: strokeWidth
-										}),
-										fill: new ol.style.Fill({           // 填充样式
-											color: layerStyleObj.style['fill-color-rgb'],//'orange'
-											opacity: layerStyleObj.style['fill-opacity']
-										})
-									}));
-									
-									dataLayer.getSource().addFeature(iconFeature);	
-								}
-							}
-						}
-					});
-					
+					reloadlayer();
 				});
 				
 			}
@@ -535,6 +444,164 @@ function mingqing(id)
 	$('#main-content').load("./jcsqsj/residebuilding/residebuildingMinqing.html", function () {
 		
     });
+}
+
+function reloadlayer(){
+	var checkedLayerId = '';
+					
+	$("input[name='layer']").each(function () {
+		
+		if($(this).prop('checked'))
+			checkedLayerId += $(this).attr('id')+',';
+	});
+	
+	
+	$.ajax({
+		type: "GET",
+		//url:"http://49.233.26.198:8082/gis/zhsq/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=zhsq:jc_community&maxFeatures=50&outputFormat=application/json",
+		url: getContextPath()+"/dataController/wfs?layerIds="+checkedLayerId,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function (dataList) {
+			
+			dataLayer.getSource().clear();
+			
+			for(var p=0;dataList.features != null && p < dataList.features.length;p++)
+			{
+				var data = dataList.features[p];
+				
+				layerStyleObj = layerStyleMap[data.layerId];
+				
+				if(data.type == 'MultiLineString')
+				{
+					var iconFeature = new ol.Feature({
+						geometry: new ol.geom.MultiLineString(data.coordinates),
+						weight:1,
+						population: 4000,
+						rainfall: 500
+					});
+					
+					iconFeature.setId(data.id);
+					
+					dataLayer.getSource().addFeature(iconFeature);	
+				}
+				else if(data.type == 'Point')
+				{
+					/*var iconFeature = new ol.Feature({
+						geometry: new ol.geom.Point(data.coordinates),
+						weight:1,
+						population: 4000,
+						rainfall: 500
+					});
+					
+					iconFeature.setId(data.id);
+					dataLayer.getSource().addFeature(iconFeature);	
+					*/
+					
+					var iconFeature = new ol.Feature({
+						geometry: new ol.geom.Point(data.coordinates),			
+						weight:1,
+						population: 4000,
+						rainfall: 500
+					});
+					
+					
+					var iconurl = '';
+					if(layerStyleObj.style != null)
+						iconurl = layerStyleObj.style.iconurl;
+						
+					if(data.layerId == 'layer2_5'||data.layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
+						||layerId == 'layer13_7'||layerId == 'layer5_2')
+						iconurl = layerStyleMap[data.facilitytype].iconurl;
+					
+					console.log(iconurl);
+					
+					if(showlabel){
+						iconFeature.setStyle(new ol.style.Style({
+							image: new ol.style.Icon({
+								src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
+							}),
+							text: new ol.style.Text({
+								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
+								  color: '#fff',width: 2
+								}),// get the text from the feature - `this` is ol.Feature
+								// and show only under certain resolution
+								text: data.info
+							  })
+						}));
+					}
+					else {
+						iconFeature.setStyle(new ol.style.Style({
+							image: new ol.style.Icon({
+								src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
+							})
+						}));
+					}
+					
+					
+					iconFeature.setId(data.id);
+					dataLayer.getSource().addFeature(iconFeature);	
+				}
+				else if(data.type == 'MultiPolygon')
+				{
+					var pointArr = data.coordinates;
+					
+					var iconFeature = new ol.Feature({
+						geometry: new ol.geom.Polygon(data.coordinates),
+						weight:1,
+						population: 4000,
+						rainfall: 500
+					});
+					//iconFeature.setId(data.info);
+					iconFeature.setId(data.id);
+					iconFeature.set('info', data.info);
+					
+					var strokeColor = '#1E90FF';
+					if(layerStyleObj.style != null)
+						strokeColor = layerStyleObj.style['stroke-color'];
+						
+					var strokeWidth = 1; 
+					if(layerStyleObj.style != null)
+						strokeWidth = layerStyleObj.style['stroke-width'];
+					
+					
+					if(showlabel){
+						iconFeature.setStyle(new ol.style.Style({
+							stroke: new ol.style.Stroke({       // 线样式
+								color: strokeColor,
+								width: strokeWidth
+							}),
+							fill: new ol.style.Fill({           // 填充样式
+								color: layerStyleObj.style['fill-color-rgb'],
+								opacity: layerStyleObj.style['fill-opacity']
+							}),
+							text: new ol.style.Text({
+								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
+								  color: '#fff',width: 2
+								}),// get the text from the feature - `this` is ol.Feature
+								// and show only under certain resolution
+								text: data.info
+							  })
+						}));
+					}
+					else {
+						iconFeature.setStyle(new ol.style.Style({
+							stroke: new ol.style.Stroke({       // 线样式
+								color: strokeColor,
+								width: strokeWidth
+							}),
+							fill: new ol.style.Fill({           // 填充样式
+								color: layerStyleObj.style['fill-color-rgb'],//'orange'
+								opacity: layerStyleObj.style['fill-opacity']
+							})
+						}));
+					}
+					
+					dataLayer.getSource().addFeature(iconFeature);	
+				}
+			}
+		}
+	});
 }
 
 $(function () 
@@ -699,6 +766,32 @@ $(function ()
 	});
 	
 })
+
+function showlayer(){
+	if($("#main_checkbox").is(":hidden")){
+		$("#main_checkbox").show();
+	}
+	else {
+		$("#main_checkbox").hide();
+	}
+}
+
+function showlayerlabel(){	
+	if(showlabel == true){
+		showlabel = false;
+	}
+	else {
+		showlabel = true;
+	}
+	if(showlabel == true){
+		$('#labelimg').attr("src", "../images/label.png");
+	}
+	else {
+		$('#labelimg').attr("src", "../images/label2.png");
+	}
+	console.log("showlabel:" + showlabel);
+	reloadlayer();
+}
 </script>
 </body>
 </html>
