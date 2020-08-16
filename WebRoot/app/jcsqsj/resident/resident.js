@@ -1,4 +1,4 @@
-
+﻿
 
 $(document).ready(function (){
 	
@@ -654,6 +654,16 @@ function deleteData(id)
 		confirmButton: "删除",
 		cancelButton: "放弃"
 	});
+}
+
+function selectidtype(){
+	var val = $('#identitytype').val();
+	if(val == '居民身份证'){
+		$('#idcardBn').show();
+	}
+	else {
+		$('#idcardBn').hide();
+	}
 }
 
 

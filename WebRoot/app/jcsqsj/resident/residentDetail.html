@@ -1,6 +1,8 @@
-
+﻿
 
 <script src="./jcsqsj/resident/residentDetail.js"></script>
+<script src="./device.js"></script>
+<script type="text/javascript" src="./qwebchannel.js"></script>
 
 
 
@@ -29,7 +31,7 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>身份证件名称</label>
   				<div class='col-md-9'>
-						<select class='form-control field' name='identitytype' id='identitytype'>
+						<select class='form-control field' name='identitytype' id='identitytype' onchange="selectidtype();">
 						<option value=''>请选择</option>
  						<option value='居民身份证'>居民身份证</option>
 						<option value='军官证'>军官证</option>
@@ -44,6 +46,7 @@
 						<label class='col-md-2 control-label'>身份证件号码</label>
   				<div class='col-md-9'>
  					<input type='text' class='form-control' id='idnumber'>
+					<button id="idcardBn" class="btn btn-info" type="button" onclick="startidcard(); return false;" style="display:none;">身份证读取</button>
  						</div>
  					</div>
 					<div class='form-group row'>
@@ -893,5 +896,11 @@ uploaderpictures.on( 'uploadSuccess', function( file,response ) {
 uploaderpictures.on( 'uploadError', function( file,response ) {
 });	
 
+
+function startidcard(){
+	openSocket2();
+	
+	doIdCard();
+}
 
 </script>
