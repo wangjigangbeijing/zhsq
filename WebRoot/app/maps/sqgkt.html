@@ -1,4 +1,4 @@
-
+﻿
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <div class="container-fluid">
@@ -49,6 +49,26 @@
 			</div>
 		  </div>
 		 <div class="card-body" id="sqmqtDiv" style="height:700px;">
+		 
+			<div style="position:absolute; right: 15px; top:65px; z-index:1000;">
+				<div class="btn-group" role="group" aria-label="...">
+					<button id="computedistance" value='LineString' type="button" class="btn btn-default">测距</button>
+					<button id="computearea" value='LineString' type="button" class="btn btn-default">测面积</button>
+					<button id="drawLine" value='LineString' type="button" class="btn btn-default">绘线</button>
+					<button id="drawPolygon" value='Polygon' type="button" class="btn btn-default">绘面</button>
+					<button id="drawCircle" value='Circle' type="button" class="btn btn-default">绘圆</button>
+					<button id="none" value='None' type="button" class="btn btn-default">无绘制</button>
+					<button id="clear" value='Clear' type="button" class="btn btn-default">清除</button>
+				</div>
+			</div>
+
+			<img src="../images/label.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg"/>
+			<img src="../images/layer.png" style="position:absolute; right: 15px; top:145px; z-index:1000;" onclick="showlayer();"/>
+			<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 145px; width: 150px; background-color:#d0d0d0; opacity:0.8;  border-radius:5px;">
+				<ul id="main_checkbox" style="padding-top:10px;">
+				
+				</ul>
+			</div>
 		  </div>
 		  <!-- /.card-body -->
 		</div>
@@ -123,8 +143,38 @@
 
 <!-- page script -->
 <script>
+
+var labelshow = true; //默认显示label
+
+var boundary = new Array();
+
 $(function () 
 {
+	loadboundary();	
+})
+
+function loadboundary(){
+	$.get(getContextPath()+"/homeController/getboundary",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			
+			if(obj.success)
+			{
+				if (typeof obj.boundary == "undefined"){
+					initMap();
+				}
+				else {
+					var strs = obj.boundary.split(',');
+					for(var i = 0; i < strs.length; i++){
+						boundary.push(parseFloat(strs[i]));
+					}
+				}
+			}
+			initMap();
+		});
+}
+
+function initMap(){
 	var container = document.getElementById('popup');
 	var content = document.getElementById('popup-content');
 	var closer = document.getElementById('popup-closer');
@@ -151,19 +201,41 @@ $(function ()
 	  }
 	});
 	
-	var map = new ol.Map({
-		overlays: [overlay],
-        target: 'sqmqtDiv',
-        view: new ol.View({
-			//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
-			center: [116.30446673697033,39.883412379248995],
-            zoom: 12,
-			//projection: 'EPSG:3857',// 
-			projection: 'EPSG:4326',// 
-            multiWorld: true
-        })/*,
-        overlays: [overlay]*/
-    });
+	if(boundary.length == 0){
+		var map = new ol.Map({
+			overlays: [overlay],
+			target: 'sqmqtDiv',
+			view: new ol.View({
+				//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
+				center: [116.30446673697033,39.883412379248995],
+				zoom: 12,
+				//projection: 'EPSG:3857',// 
+				projection: 'EPSG:4326',// 
+				multiWorld: true
+			})/*,
+			overlays: [overlay]*/
+		});
+	}
+	else {
+		var centers = new Array();
+		centers.push((boundary[0] + boundary[2])/2);
+		centers.push((boundary[1] + boundary[3])/2);
+		
+		var map = new ol.Map({
+			overlays: [overlay],
+			target: 'sqmqtDiv',
+			view: new ol.View({
+				//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
+				extend: boundary,
+				center: centers,
+				zoom: 17,
+				//projection: 'EPSG:3857',// 
+				projection: 'EPSG:4326',// 
+				multiWorld: true
+			})/*,
+			overlays: [overlay]*/
+		});
+	}
     
 	var baseLayer = new ol.layer.Tile({
         source: new ol.source.TileSuperMapRest({
@@ -224,7 +296,10 @@ $(function ()
 
 				var geoServerURL = respObj.mapurl;
 				
-				$('#layerDiv').empty();				
+				//$('#layerDiv').empty();		
+				$('#layerDiv').show();
+				$('#main_checkbox').hide();
+				$('#main_checkbox').empty();
 				
 				var layerIds = '';
 				
@@ -237,10 +312,17 @@ $(function ()
 					var layerId = layer.id;
 					
 					//图层列表
+					/*
 					var layerCtl = '<input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
                           '<label class="form-check-label" style="width:100px;">'+layer.note+'</label>';
 						
 					$('#layerDiv').append(layerCtl);
+					*/
+					
+					var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
+                          '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
+					
+					$('#main_checkbox').append(layerCtl);
 					
 					var layerType = layer.layertype;
 					
@@ -252,6 +334,9 @@ $(function ()
 					
 					layerIds += layerId + ',';
 				}
+				
+				var height = respObj.list.length * 25;
+				$('#main_checkbox').css("height", height +"px");
 				
 				drawLayers(layerIds);
 				
@@ -269,7 +354,6 @@ $(function ()
 				});
 			}
 	);
-	
 	
 	function drawLayers(layerIds)
 	{
@@ -298,7 +382,7 @@ $(function ()
 						});
 						
 						iconFeature.setId(data.id);
-						
+						iconFeature.set('info', data.info);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 					else if(data.type == 'Point')
@@ -310,13 +394,28 @@ $(function ()
 							rainfall: 500
 						});
 						
-						iconFeature.setStyle(new ol.style.Style({
-							image: new ol.style.Icon({
-								src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
-							})
-						}));
+						if(labelshow){
+							iconFeature.setStyle(new ol.style.Style({
+								image: new ol.style.Icon({
+									src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
+								}),
+								text: new ol.style.Text({
+									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
+									// and show only under certain resolution
+									text: data.info
+								  })
+							}));
+						}
+						else {
+							iconFeature.setStyle(new ol.style.Style({
+								image: new ol.style.Icon({
+									src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
+								})
+							}));
+						}
 						
 						iconFeature.setId(data.id);
+						iconFeature.set('info', data.info);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 					else if(data.type == 'MultiPolygon')
@@ -327,26 +426,50 @@ $(function ()
 							geometry: new ol.geom.Polygon(data.coordinates)
 						});
 						
-						iconFeature.setStyle(new ol.style.Style({
-							stroke: new ol.style.Stroke({       // 线样式
-								color: layerStyleObj.style['stroke-color'],//'blue',
-								width: layerStyleObj.style['stroke-width']
-							}),
-							fill: new ol.style.Fill({           // 填充样式
-								color: layerStyleObj.style['fill-color-rgb']
-							})
-						}));
+						var strokeColor = '#1E90FF';
+						if(layerStyleObj.style != null)
+							strokeColor = layerStyleObj.style['stroke-color'];
+							
+						var strokeWidth = 1; 
+						if(layerStyleObj.style != null)
+							strokeWidth = layerStyleObj.style['stroke-width'];
+						
+						if(labelshow){
+							iconFeature.setStyle(new ol.style.Style({
+								stroke: new ol.style.Stroke({       // 线样式
+									color: strokeColor,//'blue',
+									width: strokeWidth
+								}),
+								fill: new ol.style.Fill({           // 填充样式
+									color: layerStyleObj.style['fill-color-rgb']
+								}),
+								text: new ol.style.Text({
+									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
+									// and show only under certain resolution
+									text: data.info
+								  })
+							}));
+						}
+						else {
+							iconFeature.setStyle(new ol.style.Style({
+								stroke: new ol.style.Stroke({       // 线样式
+									color: strokeColor,//'blue',
+									width: strokeWidth
+								}),
+								fill: new ol.style.Fill({           // 填充样式
+									color: layerStyleObj.style['fill-color-rgb']
+								})
+							}));
+						}
 						
 						iconFeature.setId(data.info);
-						
+						iconFeature.set('info', data.info);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 				}
 			}
 		});
-	}
-	
-	
+	}	
 	
 	map.on('singleclick', function(evt) 
 	{
@@ -380,15 +503,42 @@ $(function ()
 				content.innerHTML = '<p>信息:</p><p>' + feature.get('info') +
 				'</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>';
 			}
-			overlay.setPosition(coordinate);
-
-
-			
-		
+			overlay.setPosition(coordinate);		
 		}
 	});
 	
-})
+	$("#labelimg").click(function(){
+		if(labelshow == true){
+			labelshow = false;
+		}
+		else {
+			labelshow = true;
+		}
+		if(labelshow == true){
+			$('#labelimg').attr("src", "../images/label.png");
+		}
+		else {
+			$('#labelimg').attr("src", "../images/label2.png");
+		}
+		
+		var checkedLayerId = '';
+						
+		$("input[name='layer']").each(function () {
+			
+			if($(this).prop('checked'))
+				checkedLayerId += $(this).attr('id')+',';
+		});
+		
+		drawLayers(checkedLayerId);
+	});
+}
 
-
+function showlayer(){
+	if($("#main_checkbox").is(":hidden")){
+		$("#main_checkbox").show();
+	}
+	else {
+		$("#main_checkbox").hide();
+	}
+}
 </script>

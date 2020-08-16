@@ -133,9 +133,22 @@
               </div>
          	 <div class="card-body" id="sqzttDiv" style="height:700px;">
 			 
-				<img src="../images/label.png" style="position:absolute; right: 15px; top:65px; z-index:1000;" id="labelimg" onclick="showlayerlabel();"/>
-				<img src="../images/layer.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" onclick="showlayer();"/>
-				<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 105px; width: 150px; background-color:#d0d0d0; opacity:0.8; display:none; border-radius:5px;">
+				<div style="position:absolute; right: 15px; top:65px; z-index:999;">
+					<div class="btn-group" role="group" aria-label="...">
+						<button id="computedistance" value='LineString' type="button" class="btn btn-default">测距</button>
+						<button id="computearea" value='LineString' type="button" class="btn btn-default">测面积</button>
+						<button id="drawLine" value='LineString' type="button" class="btn btn-default">绘线</button>
+						<button id="drawLine" value='LineString' type="button" class="btn btn-default">绘线</button>
+						<button id="drawPolygon" value='Polygon' type="button" class="btn btn-default">绘面</button>
+						<button id="drawCircle" value='Circle' type="button" class="btn btn-default">绘圆</button>
+						<button id="none" value='None' type="button" class="btn btn-default">无绘制</button>
+						<button id="clear" value='Clear' type="button" class="btn btn-default">清除</button>
+					</div>
+				</div>
+
+				<img src="../images/label.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg" onclick="showlayerlabel();"/>
+				<img src="../images/layer.png" style="position:absolute; right: 15px; top:145px; z-index:1000;" onclick="showlayer();"/>
+				<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 145px; width: 150px; background-color:#d0d0d0; opacity:0.8; display:none; border-radius:5px;">
 					<ul id="main_checkbox" style="padding-top:10px;">
 					
 					</ul>
@@ -304,7 +317,7 @@ function loadMap(mapName)
 									});
 									
 									iconFeature.setId(data.id);
-									
+									iconFeature.set('info', data.info);
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
 								else if(data.type == 'Point')
