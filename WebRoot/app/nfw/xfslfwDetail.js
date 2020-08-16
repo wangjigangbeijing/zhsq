@@ -53,12 +53,20 @@ function viewDetail(id)
 				
 				$('#yjflfgmc').val(obj.yjflfgmc);
 				
-				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);				
+				var picturesArr = obj.data.fj.split(VALUE_SPLITTER);	
+				var header = getContextPath()+"/fileController/download?fileName=";			
 				for(var j=0;j<picturesArr.length;j++)				
 				{					
 					if(picturesArr[j] != '')					
 					{						
-						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+						var url = header + picturesArr[j];
+						if(url.indexOf('.pdf') >= 0 || url.indexOf('.PDF') >= 0){
+							var uurl = getContextPath() + "/dist/js/pdf.html?param=" + url;
+							$('#picturespicktable').append('<tr><td><a href="' + uurl + '" target="_blank")>' + picturesArr[j] + '</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+						}
+						else {
+							$('#picturespicktable').append('<tr><td><a href="' + url + '" data-lightbox="' + picturesArr[j] + '" data-title="' + picturesArr[j] + '" style="color:#64A600; font-size: 12px;">'+picturesArr[j]+'</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					
+						}				
 					}
 				}	
 			}

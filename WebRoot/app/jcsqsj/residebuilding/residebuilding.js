@@ -152,11 +152,16 @@ function load()
 					orderable: false,
 					targets:  12,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"mingqing('"+full.id+"')\" data-toggle=\"tooltip\" class=\"btn btn-primary btn-xs\" title=\"查看\">民情图</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"mingqing('"+full.id+"')\" data-toggle=\"tooltip\" class=\"btn btn-success btn-xs\" title=\"查看民情图\">民情图</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" class=\"btn btn-info btn-xs\" title=\"查看\">编辑</a>&nbsp;";
+						btn += "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" class=\"btn btn-primary btn-xs\" title=\"查看\">编辑</a>&nbsp;";
 						
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" class=\"btn btn-danger btn-xs\" data-toggle=\"tooltip\">删除</a>";
+
+						
+						
 						
 						return btn;
 					}
@@ -165,6 +170,21 @@ function load()
 			} );
 		}
 	});
+}
+
+function viewData(id)
+{
+	curId = id;
+	$('#main-content').load("./jcsqsj/residebuilding/residebuildingDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
 }
 
 function editData(id)

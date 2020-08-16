@@ -108,7 +108,9 @@ function load()
 					orderable: false,
 					targets:  6,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
 
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
@@ -176,6 +178,20 @@ function closeModalDetail()
 }
 */
 
+function viewData(id)
+{
+	curId = id;
+	$('#main-content').load("./jcsqsj/jc_rubbish/jc_rubbishDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
+}
 function editData(id)
 {
 	curId = id;

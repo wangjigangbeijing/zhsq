@@ -1,10 +1,8 @@
 
 
-<script src="./jcsqsj/jc_organization/jc_organizationDetail.js"></script>
+<script src="./jcsqsj/organization/organizationDetail.js"></script>
 
-
-
-
+  
 
 <section class="content">
       <div class="container-fluid">
@@ -15,12 +13,12 @@
               <form class="form-horizontal">
                 <div class="card-body">
                     
-										<!--div class='form-group row'>
+										<div class='form-group row'>
 						<label class='col-md-2 control-label'>数据编码</label>
   				<div class='col-md-9'>
  					<input type='text' class='form-control' id='dataid'>
  						</div>
- 					</div-->
+ 					</div>
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>法人组织名称</label>
   				<div class='col-md-9'>
@@ -30,10 +28,7 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>有无证照</label>
   				<div class='col-md-9'>
-					<label class='radio-inline'>
-						<input type='radio' name='haslicence' value='有'> 有
-						<input type='radio' name='haslicence' value='无'> 无
-					</label>
+ 					<input type='text' class='form-control' id='haslicence'>
  						</div>
  					</div>
 					<div class='form-group row'>
@@ -57,13 +52,12 @@
 						<label class='col-md-2 control-label'>机构类型</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='orgtype' id='orgtype'>
-						<option value=''>请选择</option>
  						<option value='企业法人'>企业法人</option>
- 						<option value='事业法人'>事业法人</option>
- 						<option value='社团法人'>社团法人</option>
- 						<option value='行政法人'>行政法人</option>
- 						<option value='工会法人'>工会法人</option>
- 						<option value='其他机构'>其他机构</option>
+						<option value='事业法人'>事业法人</option>
+						<option value='社团法人'>社团法人</option>
+						<option value='行政法人'>行政法人</option>
+						<option value='工会法人'>工会法人</option>
+						<option value='其他机构'>其他机构</option>
 						</select>
  						</div>
  					</div>
@@ -71,16 +65,15 @@
 						<label class='col-md-2 control-label'>经济类型</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='economictype' id='economictype'>
-							<option value=''>请选择</option>
-							<option value='国有经济'>国有经济</option>
- 						<option value='集体经济'>集体经济</option>
- 						<option value='私营经济'>私营经济</option>
- 						<option value='个体经济'>个体经济</option>
- 						<option value='联营经济'>联营经济</option>
- 						<option value='股份制'>股份制</option>
- 						<option value='外商投资'>外商投资</option>
- 						<option value='港澳台投资'>港澳台投资</option>
- 						<option value='其他'>其他</option>
+ 						<option value='国有经济'>国有经济</option>
+						<option value='集体经济'>集体经济</option>
+						<option value='私营经济'>私营经济</option>
+						<option value='个体经济'>个体经济</option>
+						<option value='联营经济'>联营经济</option>
+						<option value='股份制'>股份制</option>
+						<option value='外商投资'>外商投资</option>
+						<option value='港澳台投资'>港澳台投资</option>
+						<option value='其他'>其他</option>
 						</select>
  						</div>
  					</div>
@@ -89,23 +82,23 @@
   				<div class='col-md-9'>
 						<select class='form-control field' name='industry' id='industry'>
  						<option value='A农林牧渔业'>A农林牧渔业</option>
- 						<option value='B采矿业'>B采矿业</option>
- 						<option value='C制造业'>C制造业</option>
- 						<option value='D电力热力燃气及水生产和供应业'>D电力热力燃气及水生产和供应业</option>
- 						<option value='E建筑业'>E建筑业</option>
- 						<option value='F批发和零售业'>F批发和零售业</option>
- 						<option value='G交通运输仓储和邮政业'>G交通运输仓储和邮政业</option>
- 						<option value='H住宿和餐饮业'>H住宿和餐饮业</option>
- 						<option value='J金融业'>J金融业</option>
- 						<option value='K房地产业'>K房地产业</option>
- 						<option value='M科学研究和技术服务业'>M科学研究和技术服务业</option>
- 						<option value='N水利环境和公共设施管理业'>N水利环境和公共设施管理业</option>
- 						<option value='O居民服务修理和其他服务业'>O居民服务修理和其他服务业</option>
- 						<option value='P教育'>P教育</option>
- 						<option value='Q卫生和社会工作'>Q卫生和社会工作</option>
- 						<option value='R文化体育和娱乐业'>R文化体育和娱乐业</option>
- 						<option value='S公共管理社会保障和社会组织'>S公共管理社会保障和社会组织</option>
- 						<option value='T国际组织'>T国际组织</option>
+						<option value='B采矿业'>B采矿业</option>
+						<option value='C制造业'>C制造业</option>
+						<option value='D电力热力燃气及水生产和供应业'>D电力热力燃气及水生产和供应业</option>
+						<option value='E建筑业'>E建筑业</option>
+						<option value='F批发和零售业'>F批发和零售业</option>
+						<option value='G交通运输仓储和邮政业'>G交通运输仓储和邮政业</option>
+						<option value='H住宿和餐饮业'>H住宿和餐饮业</option>
+						<option value='J金融业'>J金融业</option>
+						<option value='K房地产业'>K房地产业</option>
+						<option value='M科学研究和技术服务业'>M科学研究和技术服务业</option>
+						<option value='N水利环境和公共设施管理业'>N水利环境和公共设施管理业</option>
+						<option value='O居民服务修理和其他服务业'>O居民服务修理和其他服务业</option>
+						<option value='P教育'>P教育</option>
+						<option value='Q卫生和社会工作'>Q卫生和社会工作</option>
+						<option value='R文化体育和娱乐业'>R文化体育和娱乐业</option>
+						<option value='S公共管理社会保障和社会组织'>S公共管理社会保障和社会组织</option>
+						<option value='T国际组织'>T国际组织</option>
 						</select>
  						</div>
  					</div>
@@ -113,14 +106,13 @@
 						<label class='col-md-2 control-label'>隶属关系</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='subordination' id='subordination'>
-							<option value=''>请选择</option>
-							<option value='中央'>中央</option>
- 						<option value='省'>省</option>
- 						<option value='市地区'>市地区</option>
- 						<option value='县'>县</option>
- 						<option value='街道乡镇'>街道乡镇</option>
- 						<option value='社区村'>社区村</option>
- 						<option value='其他'>其他</option>
+ 						<option value='中央'>中央</option>
+						<option value='省'>省</option>
+						<option value='市地区'>市地区</option>
+						<option value='县'>县</option>
+						<option value='街道乡镇'>街道乡镇</option>
+						<option value='社区村'>街道乡镇</option>
+						<option value='其他'>其他</option>
 						</select>
  						</div>
  					</div>
@@ -157,11 +149,10 @@
 						<label class='col-md-2 control-label'>企业规模</label>
   				<div class='col-md-9'>
 						<select class='form-control field' name='scale' id='scale'>
-							<option value=''>请选择</option>
-							<option value='0到10人'>0到10人</option>
- 						<option value='10到50人'>10到50人</option>
- 						<option value='51-300人'>51-300人</option>
- 						<option value='300人以上'>300人以上</option>
+ 						<option value='0到10人'>0到10人</option>
+						<option value='10到50人'>10到50人</option>
+						<option value='51-300人'>51-300人</option>
+						<option value='300人以上'>300人以上</option>
 						</select>
  						</div>
  					</div>
@@ -180,13 +171,21 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>办公地址所在商业楼宇</label>
   				<div class='col-md-9'>
-				
-						<select class='form-control field' name='ofbizbuilding' id='ofbizbuilding'> 						
+						<select class='form-control field' name='ofbizbuilding' id='ofbizbuilding'>
+ 						
 						</select>
-				
-				
  						</div>
  					</div>
+					<!--div class='form-group row'>
+						<label class='col-md-2 control-label'>办公地址经度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>办公地址纬度</label>
+  				<div class='col-md-9'>
+ 						</div>
+ 					</div-->
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>法人姓名</label>
   				<div class='col-md-9'>

@@ -21,21 +21,39 @@ $(document).ready(function (){
 
 function viewDetail(id)
 {
-	$.get(getContextPath()+"/parkingController/get?id="+id,
+	$.get(getContextPath()+"/organizationController/get?id="+id,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
 				$('#modalDetail').show();
 				
-								$('#dateid').val(obj.dateid);
+								$('#dataid').val(obj.dataid);
 				$('#name').val(obj.name);
-				$('#address').val(obj.address);
-				$('#isofficial').val(obj.isofficial);
-				$('#parkinglotnum').val(obj.parkinglotnum);
-				$('#area').val(obj.area);
+				$('#haslicence').val(obj.haslicence);
+				$('#socialcode').val(obj.socialcode);
+				$('#socialcodedate').val(obj.socialcodedate);
+				$('#orgtype').val(obj.orgtype);
+				$('#economictype').val(obj.economictype);
+				$('#industry').val(obj.industry);
+				$('#subordination').val(obj.subordination);
+				$('#establishdate').val(obj.establishdate);
+				$('#capitaltype').val(obj.capitaltype);
+				$('#capital').val(obj.capital);
+				$('#businessscope').val(obj.businessscope);
+				$('#scale').val(obj.scale);
+				$('#regaddress').val(obj.regaddress);
+				$('#officeaddress').val(obj.officeaddress);
+				$('#ofbizbuilding').val(obj.ofbizbuilding);
 				$('#longitude').val(obj.longitude);
 				$('#latitude').val(obj.latitude);
+				$('#legalname').val(obj.legalname);
+				$('#contactname').val(obj.contactname);
+				$('#contacttel').val(obj.contacttel);
+				$('#moveindate').val(obj.moveindate);
+				$('#responsibilityplateno').val(obj.responsibilityplateno);
+				$('#hasfirefacilities').val(obj.hasfirefacilities);
+				$('#wastedisposal').val(obj.wastedisposal);
 				$('#status').val(obj.status);
 				$('#pictures').val(obj.pictures);
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);
@@ -51,7 +69,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./parking/parking.html", function () {
+	$('#main-content').load("./organization/organization.html", function () {
 		
     });
 	
@@ -71,17 +89,35 @@ function addOrUpdate()
 {
 	
 	
-	$.post(getContextPath()+"/parkingController/addOrUpdate",
+	$.post(getContextPath()+"/organizationController/addOrUpdate",
 	{
 		id:curId,
-				dateid:$('#dateid').val(),
+				dataid:$('#dataid').val(),
 		name:$('#name').val(),
-		address:$('#address').val(),
-		isofficial:$('#isofficial').val(),
-		parkinglotnum:$('#parkinglotnum').val(),
-		area:$('#area').val(),
+		haslicence:$('#haslicence').val(),
+		socialcode:$('#socialcode').val(),
+		socialcodedate:$('#socialcodedate').val(),
+		orgtype:$('#orgtype').val(),
+		economictype:$('#economictype').val(),
+		industry:$('#industry').val(),
+		subordination:$('#subordination').val(),
+		establishdate:$('#establishdate').val(),
+		capitaltype:$('#capitaltype').val(),
+		capital:$('#capital').val(),
+		businessscope:$('#businessscope').val(),
+		scale:$('#scale').val(),
+		regaddress:$('#regaddress').val(),
+		officeaddress:$('#officeaddress').val(),
+		ofbizbuilding:$('#ofbizbuilding').val(),
 		longitude:$('#longitude').val(),
 		latitude:$('#latitude').val(),
+		legalname:$('#legalname').val(),
+		contactname:$('#contactname').val(),
+		contacttel:$('#contacttel').val(),
+		moveindate:$('#moveindate').val(),
+		responsibilityplateno:$('#responsibilityplateno').val(),
+		hasfirefacilities:$('#hasfirefacilities').val(),
+		wastedisposal:$('#wastedisposal').val(),
 		status:$('#status').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()
