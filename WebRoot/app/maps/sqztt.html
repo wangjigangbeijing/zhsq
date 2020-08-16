@@ -695,9 +695,14 @@ function loadboundary(){
 			
 			if(obj.success)
 			{
-				var strs = obj.boundary.split(',');
-				for(var i = 0; i < strs.length; i++){
-					boundary.push(parseFloat(strs[i]));
+				if (typeof exp == "undefined"){
+					initMap();
+				}
+				else {
+					var strs = obj.boundary.split(',');
+					for(var i = 0; i < strs.length; i++){
+						boundary.push(parseFloat(strs[i]));
+					}
 				}
 			}
 			initMap();
@@ -731,25 +736,42 @@ function initMap(){
 	  }
 	});
 	
-	console.log(boundary);
-	var centers = new Array();
-	centers.push((boundary[0] + boundary[2])/2);
-	centers.push((boundary[1] + boundary[3])/2);
+	if(boundary.length == 0){
+		var map = new ol.Map({
+			overlays: [overlay],
+			target: 'sqzttDiv',
+			view: new ol.View({
+				//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
+				center: [116.30446673697033,39.883412379248995],
+				zoom: 12,
+				//projection: 'EPSG:3857',// 
+				projection: 'EPSG:4326',// 
+				multiWorld: true
+			})/*,
+			overlays: [overlay]*/
+		});
+	}
+	else {
+		var centers = new Array();
+		centers.push((boundary[0] + boundary[2])/2);
+		centers.push((boundary[1] + boundary[3])/2);
+		
+		var map = new ol.Map({
+			overlays: [overlay],
+			target: 'sqzttDiv',
+			view: new ol.View({
+				//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
+				extend: boundary,
+				center: centers,
+				zoom: 17,
+				//projection: 'EPSG:3857',// 
+				projection: 'EPSG:4326',// 
+				multiWorld: true
+			})/*,
+			overlays: [overlay]*/
+		});
+	}
 	
-	var map = new ol.Map({
-		overlays: [overlay],
-        target: 'sqzttDiv',
-        view: new ol.View({
-			//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
-			extend: boundary,
-			center: centers,
-            zoom: 17,
-			//projection: 'EPSG:3857',// 
-			projection: 'EPSG:4326',// 
-            multiWorld: true
-        })/*,
-        overlays: [overlay]*/
-    });
     
 	var baseLayer = new ol.layer.Tile({
         source: new ol.source.TileSuperMapRest({
