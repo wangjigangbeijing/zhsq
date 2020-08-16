@@ -31,7 +31,7 @@
                 <div class="card-body">
 					
 					<div class="form-group">
-                      <label>办理人<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident(); return false;">选择</button></label>
+                      <label>办理人&nbsp;&nbsp;<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident(); return false;">选择</button><button class="btn btn-info" type="button" onclick="startidcard(); return false;" style="margin-left:15px;">身份证读取</button></label>
                       <input type="hidden" class="form-control" id="blr">
 					  <input type="text" class="form-control" id="blrname">
                     </div>
@@ -408,6 +408,12 @@
 		
 		function startdevice(){
 			openSocket();
+		}
+		
+		function startidcard(){
+			openSocket();
+			
+			doIdCard();
 		}
 		
 		</script>
