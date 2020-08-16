@@ -1,10 +1,8 @@
 
 
-
 $(document).ready(function (){
 	
-	$('#btnAdd1').click(ShowAddModal);
-	$('#btnAdd2').click(ShowAddModal);
+	$('#btnAdd').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -12,8 +10,7 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch1').click(load);
-	$('#btnSearch2').click(load);
+	$('#btnSearch').click(load);
 	
 	load();
 });
@@ -22,35 +19,21 @@ var curId;
 
 function load()
 {
-	
-	var searchtype = $("#searchtype").val();
-	if(searchtype == 1){
-		$('#btnSearch1').attr('disabled','disabled');
-	}
-	else {
-		$('#btnSearch2').attr('disabled','disabled');
-	}
+	$('#btnSearch').attr('disabled','disabled');
 	 var name = $('#nameQuery').val();
-	if(searchtype == 2){
-		name = $('#nameQuery2').val();
-	}
-
-
- var idnumber = $('#idnumberQuery').val();
- var sex = $('#sexQuery').val();
- var age = $('#ageQuery').val();
- var mobile = $('#mobileQuery').val();
-  var partymembertype = $('#partymembertypeQuery').val();
- var of_partyorganization = $('#of_partyorganizationQuery').val();
- var isincommunity = $('#isincommunityQuery').val();
- var dyage = $('#dyageQuery').val();
- var membership = $('#membershipQuery').val();
- var movemember = $('#movememberQuery').val();
+	 var haslicence = $('#haslicenceQuery').val();
+	 var socialcode = $('#socialcodeQuery').val();
+	 var orgtype = $('#orgtypeQuery').val();
+	 var economictype = $('#economictypeQuery').val();
+	 var industry = $('#industryQuery').val();
+	 var scale = $('#scaleQuery').val();
+	 var officeaddress = $('#officeaddressQuery').val();
+	 var ofbizbuilding = $('#ofbizbuildingQuery').val();
+	 var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_partymemberController/load?name='+name+'&idnumber='+idnumber+'&sex='+sex+'&age='+age+'&mobile='+mobile+'&partymembertype='+partymembertype+'&of_partyorganization='+of_partyorganization+'&isincommunity='+isincommunity+'&dyage='+dyage+'&membership='+membership+'&movemember='+movemember+'&',
+	$.get(getContextPath()+'/organizationController/load?name='+name+'&haslicence='+haslicence+'&socialcode='+socialcode+'&orgtype='+orgtype+'&economictype='+economictype+'&industry='+industry+'&scale='+scale+'&officeaddress='+officeaddress+'&ofbizbuilding='+ofbizbuilding+'&status='+status+'&',
 	function(result){
-
 		if(searchtype == 1){
 			
 			$('#btnSearch1').removeAttr('disabled');
@@ -58,8 +41,6 @@ function load()
 		else {
 			$('#btnSearch2').removeAttr('disabled');
 		}
-
-
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -92,18 +73,16 @@ function load()
 					}
 				}, //多语言配置					
 				"data":obj.list,
-				"columns": [
+				"columns": [					
 					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'sex' ,'sClass':'text-center'},
-					{ 'data': 'age' ,'sClass':'text-center'},
-					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'partymembertype' ,'sClass':'text-center'},
-					{ 'data': 'of_partyorganization' ,'sClass':'text-center'},
-					{ 'data': 'isincommunity' ,'sClass':'text-center'},
-					{ 'data': 'zhiwu' ,'sClass':'text-center'},
-					{ 'data': 'dyage' ,'sClass':'text-center'},
-					{ 'data': 'membership' ,'sClass':'text-center'},
-					{ 'data': 'movemember' ,'sClass':'text-center'},
+					{ 'data': 'orgtype' ,'sClass':'text-center'},
+					
+					{ 'data': 'economictype' ,'sClass':'text-center'},
+					{ 'data': 'scale' ,'sClass':'text-center'},
+					
+					{ 'data': 'contacttel' ,'sClass':'text-center'},
+					{ 'data': 'status' ,'sClass':'text-center'},
+					
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -119,7 +98,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  11,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
@@ -141,33 +120,40 @@ function viewDetail(id)
 {
 	//$('#modalTitle').text('修改用户信息');
 	curId = id;
-	$.get(getContextPath()+"/jc_partymemberController/get?id="+curId,
+	$.get(getContextPath()+"/organizationController/get?id="+curId,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
 				$('#modalDetail').show();
 				
-								$('#name').val(obj.name);
-				$('#idnumber').val(obj.idnumber);
-				$('#sex').val(obj.sex);
-				$('#birthday').val(obj.birthday);
-				$('#age').val(obj.age);
-				$('#mobile').val(obj.mobile);
-				$('#education').val(obj.education);
-				$('#partymembertype').val(obj.partymembertype);
-				$('#of_partyorganization').val(obj.of_partyorganization);
-				$('#isincommunity').val(obj.isincommunity);
-				$('#homeaddress').val(obj.homeaddress);
-				$('#zhiwu').val(obj.zhiwu);
-				$('#joinpartydate').val(obj.joinpartydate);
-				$('#inpartydate').val(obj.inpartydate);
-				$('#dyage').val(obj.dyage);
-				$('#membership').val(obj.membership);
-				$('#islost').val(obj.islost);
-				$('#lostdate').val(obj.lostdate);
-				$('#movemember').val(obj.movemember);
-				$('#moveto').val(obj.moveto);
+								$('#dataid').val(obj.dataid);
+				$('#name').val(obj.name);
+				$('#haslicence').val(obj.haslicence);
+				$('#socialcode').val(obj.socialcode);
+				$('#socialcodedate').val(obj.socialcodedate);
+				$('#orgtype').val(obj.orgtype);
+				$('#economictype').val(obj.economictype);
+				$('#industry').val(obj.industry);
+				$('#subordination').val(obj.subordination);
+				$('#establishdate').val(obj.establishdate);
+				$('#capitaltype').val(obj.capitaltype);
+				$('#capital').val(obj.capital);
+				$('#businessscope').val(obj.businessscope);
+				$('#scale').val(obj.scale);
+				$('#regaddress').val(obj.regaddress);
+				$('#officeaddress').val(obj.officeaddress);
+				$('#ofbizbuilding').val(obj.ofbizbuilding);
+				$('#longitude').val(obj.longitude);
+				$('#latitude').val(obj.latitude);
+				$('#legalname').val(obj.legalname);
+				$('#contactname').val(obj.contactname);
+				$('#contacttel').val(obj.contacttel);
+				$('#moveindate').val(obj.moveindate);
+				$('#responsibilityplateno').val(obj.responsibilityplateno);
+				$('#hasfirefacilities').val(obj.hasfirefacilities);
+				$('#wastedisposal').val(obj.wastedisposal);
+				$('#status').val(obj.status);
 				$('#pictures').val(obj.pictures);
 				$('#note').val(obj.note);
 
@@ -180,36 +166,44 @@ function closeModalDetail()
 	$('#modalDetail').hide();
 	curId = '';
 	
-		$('#name').val('');
-	$('#idnumber').val('');
-	$('#sex').val('');
-	$('#birthday').val('');
-	$('#age').val('');
-	$('#mobile').val('');
-	$('#education').val('');
-	$('#partymembertype').val('');
-	$('#of_partyorganization').val('');
-	$('#isincommunity').val('');
-	$('#homeaddress').val('');
-	$('#zhiwu').val('');
-	$('#joinpartydate').val('');
-	$('#inpartydate').val('');
-	$('#dyage').val('');
-	$('#membership').val('');
-	$('#islost').val('');
-	$('#lostdate').val('');
-	$('#movemember').val('');
-	$('#moveto').val('');
+		$('#dataid').val('');
+	$('#name').val('');
+	$('#haslicence').val('');
+	$('#socialcode').val('');
+	$('#socialcodedate').val('');
+	$('#orgtype').val('');
+	$('#economictype').val('');
+	$('#industry').val('');
+	$('#subordination').val('');
+	$('#establishdate').val('');
+	$('#capitaltype').val('');
+	$('#capital').val('');
+	$('#businessscope').val('');
+	$('#scale').val('');
+	$('#regaddress').val('');
+	$('#officeaddress').val('');
+	$('#ofbizbuilding').val('');
+	$('#longitude').val('');
+	$('#latitude').val('');
+	$('#legalname').val('');
+	$('#contactname').val('');
+	$('#contacttel').val('');
+	$('#moveindate').val('');
+	$('#responsibilityplateno').val('');
+	$('#hasfirefacilities').val('');
+	$('#wastedisposal').val('');
+	$('#status').val('');
 	$('#pictures').val('');
 	$('#note').val('');
 
 }
 */
 
+
 function viewData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jc_partymember/jc_partymemberDetail.html", function () {
+	$('#main-content').load("./jcsqsj/organization/organizationDetail.html", function () {
 		$('#confirmBtn').hide();
 		
 		$("select").attr("disabled","disabled");
@@ -221,10 +215,11 @@ function viewData(id)
     });
 }
 
+
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jc_partymember/jc_partymemberDetail.html", function () {
+	$('#main-content').load("./jcsqsj/organization/organizationDetail.html", function () {
 		
     });
 }
@@ -235,7 +230,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jcsqsj/jc_partymember/jc_partymemberDetail.html", function () {
+	$('#main-content').load("./jcsqsj/organization/organizationDetail.html", function () {
 		
     });
 	
@@ -252,7 +247,7 @@ function deleteData(id)
 		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/jc_partymemberController/delete",
+			$.post(getContextPath()+"/organizationController/delete",
 			{
 				id:id
 			},
