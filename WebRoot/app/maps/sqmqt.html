@@ -198,8 +198,10 @@ function initMap(){
 	  }
 	});
 	
+	var map;
+	
 	if(boundary.length == 0){
-		var map = new ol.Map({
+		map = new ol.Map({
 			overlays: [overlay],
 			target: 'sqmqtDiv',
 			view: new ol.View({
@@ -218,7 +220,7 @@ function initMap(){
 		centers.push((boundary[0] + boundary[2])/2);
 		centers.push((boundary[1] + boundary[3])/2);
 		
-		var map = new ol.Map({
+		map = new ol.Map({
 			overlays: [overlay],
 			target: 'sqmqtDiv',
 			view: new ol.View({

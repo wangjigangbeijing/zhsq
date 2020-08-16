@@ -135,9 +135,8 @@
 			 
 				<div style="position:absolute; right: 15px; top:65px; z-index:999;">
 					<div class="btn-group" role="group" aria-label="...">
-						<button id="computedistance" value='LineString' type="button" class="btn btn-default">测距</button>
-						<button id="computearea" value='LineString' type="button" class="btn btn-default">测面积</button>
-						<button id="drawLine" value='LineString' type="button" class="btn btn-default">绘线</button>
+						<button id="computedistance" value='computedist' type="button" class="btn btn-default">测距</button>
+						<button id="computearea" value='computearea' type="button" class="btn btn-default">测面积</button>
 						<button id="drawLine" value='LineString' type="button" class="btn btn-default">绘线</button>
 						<button id="drawPolygon" value='Polygon' type="button" class="btn btn-default">绘面</button>
 						<button id="drawCircle" value='Circle' type="button" class="btn btn-default">绘圆</button>
@@ -241,6 +240,7 @@ var labelshow = true; //默认显示label
 var boundary = new Array();
 
 var layerStyleMap = {};
+var draw;
 
 function loadMap(mapName)
 {
@@ -737,6 +737,10 @@ function initMap(){
 	  return false;
 	};
 
+	var source = new ol.source.Vector({wrapX: false});
+	var vector = new ol.layer.Vector({
+        source: source
+    });
 
 	/**
 	 * Create an overlay to anchor the popup to the map.
@@ -749,10 +753,13 @@ function initMap(){
 	  }
 	});
 	
+	var map;
 	if(boundary.length == 0){
-		var map = new ol.Map({
+		map = new ol.Map({
 			overlays: [overlay],
 			target: 'sqzttDiv',
+			controls: ol.control.defaults({attributionOptions: {collapsed: false}})
+				.extend([new ol.supermap.control.Logo()]),
 			view: new ol.View({
 				//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
 				center: [116.30446673697033,39.883412379248995],
@@ -769,9 +776,11 @@ function initMap(){
 		centers.push((boundary[0] + boundary[2])/2);
 		centers.push((boundary[1] + boundary[3])/2);
 		
-		var map = new ol.Map({
+		map = new ol.Map({
 			overlays: [overlay],
 			target: 'sqzttDiv',
+			controls: ol.control.defaults({attributionOptions: {collapsed: false}})
+				.extend([new ol.supermap.control.Logo()]),
 			view: new ol.View({
 				//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
 				extend: boundary,
@@ -784,6 +793,42 @@ function initMap(){
 			overlays: [overlay]*/
 		});
 	}
+	
+	map.addLayer(vector);
+	
+	var buttons = $('.btn-group').children();
+    buttons.map(function (key) {
+        var value = buttons[key].value;
+        if (value === 'None') {
+            $(buttons[key]).on('click', function () {
+                clearInteraction();
+            });
+            return;
+        }
+        if (value === 'Clear') {
+            $(buttons[key]).on('click', function () {
+                clearInteraction();
+                source.clear();
+            });
+            return;
+        }
+        $(buttons[key]).on('click', function () {
+            clearInteraction();
+            draw = new ol.interaction.Draw({
+                source: source,
+                type: buttons[key].value,
+                snapTolerance: 20,
+                freehand: true
+            });
+            map.addInteraction(draw);
+        });
+    });
+
+    function clearInteraction() {
+        if (draw) {
+            map.removeInteraction(draw);
+        }
+    }
 	
     
 	var baseLayer = new ol.layer.Tile({
