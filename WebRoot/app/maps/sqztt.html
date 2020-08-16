@@ -225,11 +225,13 @@ var dataLayer = null;
 
 var labelshow = true; //默认显示label
 
+var boundary = new Array();
+
 var layerStyleMap = {};
 
 function loadMap(mapName)
 {
-	curMap = 'mapName';
+	curMap = mapName;
 	
 	dataLayer.getSource().clear();
 	
@@ -340,21 +342,28 @@ function loadMap(mapName)
 									}
 									
 									//console.log("http://localhost:8080"+getContextPath()+"/fileController/downloadIcon?fileName="+iconurl);
-									
-									iconFeature.setStyle(new ol.style.Style({
-										image: new ol.style.Icon({
-											src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
-										}),
-										text: new ol.style.Text({
-											font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
-											  color: '#fff',width: 2
-											}),// get the text from the feature - `this` is ol.Feature
-											// and show only under certain resolution
-											text: data.info
-										  })
-									}));
+									if(labelshow){
+										iconFeature.setStyle(new ol.style.Style({
+											image: new ol.style.Icon({
+												src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
+											}),
+											text: new ol.style.Text({
+												font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
+												// and show only under certain resolution
+												text: data.info
+											  })
+										}));
+									}
+									else {
+										iconFeature.setStyle(new ol.style.Style({
+											image: new ol.style.Icon({
+												src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
+											})
+										}));
+									}
 									
 									iconFeature.setId(data.id);
+									iconFeature.set('info', data.info);
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
 								else if(data.type == 'MultiPolygon')
@@ -387,23 +396,35 @@ function loadMap(mapName)
 									if(layerStyleObj.style != null)
 										strokeWidth = layerStyleObj.style['stroke-width'];
 									
-									iconFeature.setStyle(new ol.style.Style({
-										stroke: new ol.style.Stroke({       // 线样式
-											color: strokeColor,
-											width: strokeWidth
-										}),
-										fill: new ol.style.Fill({           // 填充样式
-											color: layerStyleObj.style['fill-color-rgb'],
-											opacity: layerStyleObj.style['fill-opacity']
-										}),
-										text: new ol.style.Text({
-											font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
-											  color: '#fff',width: 2
-											}),// get the text from the feature - `this` is ol.Feature
-											// and show only under certain resolution
-											text: data.info
-										  })
-									}));
+									if(labelshow){
+										iconFeature.setStyle(new ol.style.Style({
+											stroke: new ol.style.Stroke({       // 线样式
+												color: strokeColor,
+												width: strokeWidth
+											}),
+											fill: new ol.style.Fill({           // 填充样式
+												color: layerStyleObj.style['fill-color-rgb'],
+												opacity: layerStyleObj.style['fill-opacity']
+											}),
+											text: new ol.style.Text({
+												font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
+												// and show only under certain resolution
+												text: data.info
+											  })
+										}));
+									}
+									else {
+										iconFeature.setStyle(new ol.style.Style({
+											stroke: new ol.style.Stroke({       // 线样式
+												color: strokeColor,
+												width: strokeWidth
+											}),
+											fill: new ol.style.Fill({           // 填充样式
+												color: layerStyleObj.style['fill-color-rgb'],
+												opacity: layerStyleObj.style['fill-opacity']
+											})
+										}));
+									}
 									
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
@@ -451,9 +472,17 @@ function reloadlayer(){
 					
 	$("input[name='layer']").each(function () {
 		
-		if($(this).prop('checked'))
-			checkedLayerId += $(this).attr('id')+',';
+		if($(this).prop('checked')){
+			if(checkedLayerId.length == ''){
+				checkedLayerId = $(this).attr('id');
+			}
+			else {
+				checkedLayerId += ',' + $(this).attr('id');
+			}
+		}
 	});
+	
+	console.log("layids:" + checkedLayerId);
 	
 	
 	$.ajax({
@@ -510,21 +539,19 @@ function reloadlayer(){
 					if(layerStyleObj.style != null)
 						iconurl = layerStyleObj.style.iconurl;
 						
-					if(data.layerId == 'layer2_5'||data.layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
-						||layerId == 'layer13_7'||layerId == 'layer5_2')
+					if(data.layerId == 'layer2_5'||data.layerId == 'layer4_3'||data.layerId == 'layer3_5'||data.layerId == 'layer4_2'||data.layerId == 'layer6_2'
+						||data.layerId == 'layer13_7'||data.layerId == 'layer5_2')
 						iconurl = layerStyleMap[data.facilitytype].iconurl;
 					
 					console.log(iconurl);
 					
-					if(showlabel){
+					if(labelshow){
 						iconFeature.setStyle(new ol.style.Style({
 							image: new ol.style.Icon({
 								src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
 							}),
 							text: new ol.style.Text({
-								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
-								  color: '#fff',width: 2
-								}),// get the text from the feature - `this` is ol.Feature
+								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 								// and show only under certain resolution
 								text: data.info
 							  })
@@ -540,6 +567,7 @@ function reloadlayer(){
 					
 					
 					iconFeature.setId(data.id);
+					iconFeature.set('info', data.info);
 					dataLayer.getSource().addFeature(iconFeature);	
 				}
 				else if(data.type == 'MultiPolygon')
@@ -565,7 +593,7 @@ function reloadlayer(){
 						strokeWidth = layerStyleObj.style['stroke-width'];
 					
 					
-					if(showlabel){
+					if(labelshow){
 						iconFeature.setStyle(new ol.style.Style({
 							stroke: new ol.style.Stroke({       // 线样式
 								color: strokeColor,
@@ -576,9 +604,7 @@ function reloadlayer(){
 								opacity: layerStyleObj.style['fill-opacity']
 							}),
 							text: new ol.style.Text({
-								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#000' }),stroke: new ol.style.Stroke({
-								  color: '#fff',width: 2
-								}),// get the text from the feature - `this` is ol.Feature
+								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 								// and show only under certain resolution
 								text: data.info
 							  })
@@ -658,6 +684,27 @@ $(function ()
         loadMap('先锋党建图');
     });
 	
+	loadboundary();
+	
+})
+
+function loadboundary(){
+	$.get(getContextPath()+"/homeController/getboundary",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			
+			if(obj.success)
+			{
+				var strs = obj.boundary.split(',');
+				for(var i = 0; i < strs.length; i++){
+					boundary.push(parseFloat(strs[i]));
+				}
+			}
+			initMap();
+		});
+}
+
+function initMap(){
 	var container = document.getElementById('popup');
 	var content = document.getElementById('popup-content');
 	var closer = document.getElementById('popup-closer');
@@ -684,13 +731,19 @@ $(function ()
 	  }
 	});
 	
+	console.log(boundary);
+	var centers = new Array();
+	centers.push((boundary[0] + boundary[2])/2);
+	centers.push((boundary[1] + boundary[3])/2);
+	
 	var map = new ol.Map({
 		overlays: [overlay],
         target: 'sqzttDiv',
         view: new ol.View({
 			//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
-			center: [116.30446673697033,39.883412379248995],
-            zoom: 12,
+			extend: boundary,
+			center: centers,
+            zoom: 17,
 			//projection: 'EPSG:3857',// 
 			projection: 'EPSG:4326',// 
             multiWorld: true
@@ -764,8 +817,7 @@ $(function ()
 		
 		}
 	});
-	
-})
+}
 
 function showlayer(){
 	if($("#main_checkbox").is(":hidden")){
@@ -777,19 +829,19 @@ function showlayer(){
 }
 
 function showlayerlabel(){	
-	if(showlabel == true){
-		showlabel = false;
+	if(labelshow == true){
+		labelshow = false;
 	}
 	else {
-		showlabel = true;
+		labelshow = true;
 	}
-	if(showlabel == true){
+	if(labelshow == true){
 		$('#labelimg').attr("src", "../images/label.png");
 	}
 	else {
 		$('#labelimg').attr("src", "../images/label2.png");
 	}
-	console.log("showlabel:" + showlabel);
+	console.log("labelshow:" + labelshow);
 	reloadlayer();
 }
 </script>

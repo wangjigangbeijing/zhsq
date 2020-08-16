@@ -1,4 +1,4 @@
-
+﻿
 
 $(document).ready(function (){
 	
@@ -26,14 +26,14 @@ function viewDetail(id)
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
+				console.log(obj);
 				$('#modalDetail').show();
 				
 				$('#dataid').val(obj.dataid);
 				$('#name').val(obj.name);
 				
 				//$('#buildtype').val(obj.buildtype);
-				$("input[name='buildtype'][value='"+obj.buildtype+"']").attr("checked",true); 
-				
+				$("input[name='buildtype'][value='"+obj.buildtype+"']").attr("checked",true);
 				$('#type').val(obj.type);
 				$('#year').val(obj.year);
 				$('#buildings').val(obj.buildings);
@@ -43,9 +43,19 @@ function viewDetail(id)
 				$('#longitude').val(obj.longitude);
 				$('#latitude').val(obj.latitude);
 				//$('#status').val(obj.status);
-				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true);
 				$('#address').val(obj.address);
-				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
+				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				
+				for(var j=0;j<picturesArr.length;j++)				
+				{					
+					if(picturesArr[j] != '')					
+					{						
+						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							
+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							
+						'</tr>');					
+					}			
+				}				
+				$('#note').val(obj.note);
 
 					
 			}
