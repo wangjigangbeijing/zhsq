@@ -286,7 +286,8 @@ function loadMap(mapName)
 					layerStyleMap[layerId] = layerStyleObj;
 					
 					if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
-						||layerId == 'layer13_7'||layerId == 'layer5_2')
+						||layerId == 'layer13_7'||layerId == 'layer5_2'||layerId == 'layer13_5'
+						||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')
 					{
 						for(var k=0;k<layerStyleObj.length;k++)
 						{
@@ -346,7 +347,8 @@ function loadMap(mapName)
 										iconurl = layerStyleObj.style.iconurl;
 										
 									if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
-										||layerId == 'layer13_7'||layerId == 'layer5_2')
+										||layerId == 'layer13_7'||layerId == 'layer5_2'||layerId == 'layer13_5'
+										||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')
 									{
 										if(layerStyleMap[data.facilitytype] == null)
 										{
@@ -551,10 +553,18 @@ function reloadlayer(){
 					var iconurl = '';
 					if(layerStyleObj.style != null)
 						iconurl = layerStyleObj.style.iconurl;
-						
+
 					if(data.layerId == 'layer2_5'||data.layerId == 'layer4_3'||data.layerId == 'layer3_5'||data.layerId == 'layer4_2'||data.layerId == 'layer6_2'
-						||data.layerId == 'layer13_7'||data.layerId == 'layer5_2')
+						||data.layerId == 'layer13_7'||data.layerId == 'layer5_2'||data.layerId == 'layer13_5'
+						||data.layerId == 'layer13_3'||data.layerId == 'layer13_4'||data.layerId == 'layer13_6'||data.layerId == 'layer15_3'||data.layerId == 'layer7_4')	
+					{
+						if(layerStyleMap[data.facilitytype] == null)
+						{
+							//console.log('icon for '+data.facilitytype+' not found for layerId:'+layerId+'.');
+							continue;
+						}
 						iconurl = layerStyleMap[data.facilitytype].iconurl;
+					}
 					
 					console.log(iconurl);
 					
