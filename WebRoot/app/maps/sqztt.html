@@ -795,6 +795,9 @@ function initMap(){
 	}
 	
 	map.addLayer(vector);
+	var info = new ol.control.Control({element: document.getElementById('popup')});
+    info.setMap(map);
+    map.addControl(info);
 	
 	var buttons = $('.btn-group').children();
     buttons.map(function (key) {
