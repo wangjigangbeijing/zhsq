@@ -50,16 +50,18 @@
 		  </div>
 		 <div class="card-body" id="sqmqtDiv" style="height:700px;">
 		 
-			<div style="position:absolute; right: 15px; top:65px; z-index:1000;">
+			<div id="control_popup">
+			<div style="position:absolute; right: 15px; top:65px; z-index:999;">
 				<div class="btn-group" role="group" aria-label="...">
-					<button id="computedistance" value='LineString' type="button" class="btn btn-default">测距</button>
-					<button id="computearea" value='LineString' type="button" class="btn btn-default">测面积</button>
+					<button id="computedistance" value='computedist' type="button" class="btn btn-default">测距</button>
+					<button id="computearea" value='computearea' type="button" class="btn btn-default">测面积</button>
 					<button id="drawLine" value='LineString' type="button" class="btn btn-default">绘线</button>
 					<button id="drawPolygon" value='Polygon' type="button" class="btn btn-default">绘面</button>
 					<button id="drawCircle" value='Circle' type="button" class="btn btn-default">绘圆</button>
 					<button id="none" value='None' type="button" class="btn btn-default">无绘制</button>
 					<button id="clear" value='Clear' type="button" class="btn btn-default">清除</button>
 				</div>
+			</div>
 			</div>
 
 			<img src="../images/label.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg"/>
@@ -148,6 +150,10 @@ var labelshow = true; //默认显示label
 
 var boundary = new Array();
 
+var draw;
+
+var map, interaction, feature;
+
 $(function () 
 {
 	loadboundary();	
@@ -176,6 +182,7 @@ function loadboundary(){
 }
 
 function initMap(){
+	var url = "https://iserver.supermap.io/iserver/services/map-world/rest/maps/World";
 	var container = document.getElementById('popup');
 	var content = document.getElementById('popup-content');
 	var closer = document.getElementById('popup-closer');
@@ -202,7 +209,7 @@ function initMap(){
 	  }
 	});
 	
-	var map;
+	
 	if(boundary.length == 0){
 		map = new ol.Map({
 			overlays: [overlay],
@@ -473,8 +480,100 @@ function initMap(){
 		});
 	}	
 	
+	//画线
+	var source = new ol.source.Vector({wrapX: false});
+	var vector = new ol.layer.Vector({
+        source: source
+    });
+	map.addLayer(vector);
+	var info = new ol.control.Control({element: document.getElementById('control_popup')});
+    info.setMap(map);
+    map.addControl(info);
+	
+	var buttons = $('.btn-group').children();
+    buttons.map(function (key) {
+        var value = buttons[key].value;
+        if (value === 'None') {
+            $(buttons[key]).on('click', function () {
+                clearInteraction();
+            });
+            return;
+        }
+        if (value === 'Clear') {
+            $(buttons[key]).on('click', function () {
+                clearInteraction();
+                source.clear();
+            });
+            return;
+        }
+        $(buttons[key]).on('click', function () {
+			if(buttons[key].value == 'computedist'){
+				clearInteraction();
+				draw = new ol.interaction.Draw({
+					source: source,
+					type: "LineString"
+				});
+				draw.on('drawstart', function (evt) {
+					feature = evt.feature;
+				});
+				draw.on('drawend', function () {
+					var distanceMeasureParam = new SuperMap.MeasureParameters(feature.getGeometry());
+					new ol.supermap.MeasureService(url, {measureMode: ""}).measureDistance(distanceMeasureParam, function (serviceResult) {
+						console.log(serviceResult);
+						jSuccess(serviceResult.result.distance + '米',{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'});
+					});
+				});
+
+				map.addInteraction(draw);
+			}
+			else if(buttons[key].value == 'computearea'){
+				clearInteraction();
+				draw = new ol.interaction.Draw({
+					source: source,
+					type: "Polygon",
+				});
+				draw.on('drawstart', function (evt) {
+					feature = evt.feature;
+				});
+				draw.on('drawend', function () {
+					var areaMeasureParam = new SuperMap.MeasureParameters(feature.getGeometry());
+					new ol.supermap.MeasureService(url).measureArea(areaMeasureParam, function (serviceResult) {
+						//widgets.alert.showAlert(serviceResult.result.area + resources.msg_sqm, true);
+						jSuccess(serviceResult.result.area + '平方米',{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'});
+					});
+				});
+
+				map.addInteraction(draw);
+			}
+			else {
+				clearInteraction();
+				draw = new ol.interaction.Draw({
+					source: source,
+					type: buttons[key].value,
+					snapTolerance: 20,
+					freehand: true
+				});
+				map.addInteraction(draw);
+			}
+        });
+    });
+
+    function clearInteraction() {
+        if (draw) {
+            map.removeInteraction(draw);
+			draw = null;
+        }
+    }
+	
 	map.on('singleclick', function(evt) 
 	{
+		if(draw != null){
+			return;
+		}
 		var feature = map.forEachFeatureAtPixel(evt.pixel,
 			function(feature) {
 			
