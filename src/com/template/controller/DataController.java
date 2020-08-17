@@ -1026,7 +1026,7 @@ public class DataController {
 				
 				String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
 				
-				if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
+				if((sSource == null || sSource.equalsIgnoreCase("app") == false) && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
 					userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 				
 				String organization = "";
@@ -1082,7 +1082,7 @@ public class DataController {
 					
 					String sGeom = (String)hm.get("geom");
 
-					if(sGeom == null)
+					if(sGeom == null || sGeom.equalsIgnoreCase("") || sGeom.equalsIgnoreCase("null"))
 					{
 						logger.error("geom is null");
 						continue;

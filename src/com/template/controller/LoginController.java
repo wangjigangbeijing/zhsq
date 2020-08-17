@@ -124,6 +124,7 @@ public class LoginController {
 				List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
 
 				String organizations = "";
+				String organizationNames = "";
 				String border = "";
 				for(int i=0;i<userOrgList.size();i++)
 				{
@@ -132,12 +133,19 @@ public class LoginController {
 					SysOrganization organization = organizationService.getById(orgid);
 					
 					if(organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
+					{
 						border = organization.getboundary();
+						organizationNames  = organization.getname();
+					}
 					
 					organizations += userOrgList.get(i).getorganization()+",";
 				}
 				
+				if(organizations.endsWith(","))
+					organizations = organizations.substring(0, organizations.length() - 1);
+				
 				jsonObj.put("organizations", organizations);
+				jsonObj.put("organizationNames", organizationNames);
 				jsonObj.put("border", border);
 				
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, organizations);
