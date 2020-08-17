@@ -841,7 +841,7 @@ function getCurrentLoginUserInfo()
 			
 			curUserName = obj.userName;
 			
-			if(obj.sUserId != 'admin')
+			if(obj.userId != 'admin')
 				$('#sysMenu').hide();
 			/*if(obj.userType != USER_TYPE_WEB_CUSTOMER)
 			{
