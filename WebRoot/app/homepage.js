@@ -840,6 +840,9 @@ function getCurrentLoginUserInfo()
 			var obj = jQuery.parseJSON(result);  
 			
 			curUserName = obj.userName;
+			
+			if(obj.sUserId != 'admin')
+				$('#sysMenu').hide();
 			/*if(obj.userType != USER_TYPE_WEB_CUSTOMER)
 			{
 				//$('#DataStatAnchor').hide();
