@@ -45,7 +45,6 @@
               </div>
          	 <div class="card-body" id="sqmqtDiv" style="height:700px;">
 			 
-				<div id="control_popup">
 				<div style="position:absolute; right: 15px; top:65px; z-index:999;">
 					<div class="btn-group" role="group" aria-label="...">
 						<button id="computedistance" value='computedist' type="button" class="btn btn-default">测距</button>
@@ -56,7 +55,6 @@
 						<button id="none" value='None' type="button" class="btn btn-default">无绘制</button>
 						<button id="clear" value='Clear' type="button" class="btn btn-default">清除</button>
 					</div>
-				</div>
 				</div>
 
 				<img src="../images/label.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg"/>
@@ -503,9 +501,11 @@ function initMap(){
         source: source
     });
 	map.addLayer(vector);
+	/*
 	var info = new ol.control.Control({element: document.getElementById('control_popup')});
     info.setMap(map);
     map.addControl(info);
+	*/
 	
 	var buttons = $('.btn-group').children();
     buttons.map(function (key) {
