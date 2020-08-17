@@ -46,14 +46,14 @@
          	 <div class="card-body" id="sqmqtDiv" style="height:700px;">
 			 
 				<div style="position:absolute; right: 15px; top:65px; z-index:999;">
-					<div class="btn-group" role="group" aria-label="...">
-						<button id="computedistance" value='computedist' type="button" class="btn btn-default">测距</button>
-						<button id="computearea" value='computearea' type="button" class="btn btn-default">测面积</button>
-						<button id="drawLine" value='LineString' type="button" class="btn btn-default">绘线</button>
-						<button id="drawPolygon" value='Polygon' type="button" class="btn btn-default">绘面</button>
-						<button id="drawCircle" value='Circle' type="button" class="btn btn-default">绘圆</button>
-						<button id="none" value='None' type="button" class="btn btn-default">无绘制</button>
-						<button id="clear" value='Clear' type="button" class="btn btn-default">清除</button>
+					<div class="btn-group" role="group" aria-label="...">						
+						<button id="computedistance" value='computedist' type="button" class="btn btn-default"><img src="../images/icon/map/ceju.png" title="测距" style="width:24px;"/></button>
+						<button id="computearea" value='computearea' type="button" class="btn btn-default"><img src="../images/icon/map/cemian.png" title="测面积" style="width:24px;"/></button>
+						<button id="drawLine" value='LineString' type="button" class="btn btn-default"><img src="../images/icon/map/huixian.png" title="画线" style="width:24px;"/></button>
+						<button id="drawPolygon" value='Polygon' type="button" class="btn btn-default"><img src="../images/icon/map/huimian.png" title="画面" style="width:24px;"/></button>
+						<button id="drawCircle" value='Circle' type="button" class="btn btn-default"><img src="../images/icon/map/huiyuan.png" title="画圆" style="width:24px;"/></button>
+						<button id="none" value='None' type="button" class="btn btn-default"><img src="../images/icon/map/nodraw.png" title="无绘制" style="width:24px;"/></button>
+						<button id="clear" value='Clear' type="button" class="btn btn-default"><img src="../images/icon/map/clear.png" title="清除" style="width:24px;"/></button>
 					</div>
 				</div>
 
@@ -149,6 +149,8 @@ var draw;
 
 var map, interaction, feature;
 
+var measureTooltipElement;
+
 $(function () 
 {
 	loadboundary();	
@@ -177,7 +179,7 @@ function loadboundary(){
 }
 
 function initMap(){
-	var url = "https://iserver.supermap.io/iserver/services/map-world/rest/maps/World";
+	var url = "https://iserver.supermap.io/iserver/services/map-world/rest/maps/China";
 	var container = document.getElementById('popup');
 	var content = document.getElementById('popup-content');
 	var closer = document.getElementById('popup-closer');
@@ -526,13 +528,28 @@ function initMap(){
         $(buttons[key]).on('click', function () {
 			if(buttons[key].value == 'computedist'){
 				clearInteraction();
+				var listener;
 				draw = new ol.interaction.Draw({
 					source: source,
 					type: "LineString"
 				});
+				//createMeasureTooltip();
 				draw.on('drawstart', function (evt) {
 					feature = evt.feature;
+					/*
+					var tooltipCoord = evt.coordinate;
+
+					listener = feature.getGeometry().on('change', function (evt) {
+					  var geom = evt.target;
+					  var output;
+					  output = formatLength(geom);
+					  tooltipCoord = geom.getLastCoordinate();
+					  measureTooltipElement.innerHTML = output;
+					  measureTooltip.setPosition(tooltipCoord);
+					});
+					*/
 				});
+				
 				draw.on('drawend', function () {
 					var distanceMeasureParam = new SuperMap.MeasureParameters(feature.getGeometry());
 					new ol.supermap.MeasureService(url, {measureMode: ""}).measureDistance(distanceMeasureParam, function (serviceResult) {
@@ -541,6 +558,14 @@ function initMap(){
 							VerticalPosition : 'center',
 							HorizontalPosition : 'center'});
 					});
+					/*
+					measureTooltipElement.className = 'ol-tooltip ol-tooltip-static';
+					measureTooltip.setOffset([0, -7]);
+					// unset sketch
+					feature = null;
+					// unset tooltip so that a new one can be created
+					measureTooltipElement = null;
+					*/
 				});
 
 				map.addInteraction(draw);
@@ -551,6 +576,7 @@ function initMap(){
 					source: source,
 					type: "Polygon",
 				});
+				
 				draw.on('drawstart', function (evt) {
 					feature = evt.feature;
 				});
@@ -578,6 +604,39 @@ function initMap(){
 			}
         });
     });
+	
+	/*
+	var info = new ol.control.Control({element: document.getElementById('control_popup')});
+    info.setMap(map);
+    map.addControl(info);
+	*/
+	var formatLength = function (line) {
+	  var length = line.getLength();
+	  console.log(length);
+	  var output;
+	  if (length > 100) {
+		output = Math.round((length / 1000) * 100) / 100 + ' ' + 'km';
+	  } else {
+		output = Math.round(length * 100) / 100 + ' ' + 'm';
+	  }
+	  return output;
+	};
+
+	/**
+	 * Format area output.
+	 * @param {Polygon} polygon The polygon.
+	 * @return {string} Formatted area.
+	 */
+	var formatArea = function (polygon) {
+	  var area = getArea(polygon);
+	  var output;
+	  if (area > 10000) {
+		output = Math.round((area / 1000000) * 100) / 100 + ' ' + 'km<sup>2</sup>';
+	  } else {
+		output = Math.round(area * 100) / 100 + ' ' + 'm<sup>2</sup>';
+	  }
+	  return output;
+	};
 
     function clearInteraction() {
         if (draw) {
@@ -585,6 +644,20 @@ function initMap(){
 			draw = null;
         }
     }
+	
+	function createMeasureTooltip() {
+	  if (measureTooltipElement) {
+		//measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+	  }
+	  measureTooltipElement = document.createElement('div');
+	  measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
+	  measureTooltip = new ol.Overlay({
+		element: measureTooltipElement,
+		offset: [0, -15],
+		positioning: 'bottom-center',
+	  });
+	  map.addOverlay(measureTooltip);
+	}
 	
 	map.on('singleclick', function(evt) 
 	{
