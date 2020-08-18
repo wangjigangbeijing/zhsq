@@ -295,6 +295,9 @@ function uploadimage(img){
 //输出信息
 function output(message){
 	var output = document.getElementById("output");
+	if(output == null){
+		return;
+	}
 	output.innerHTML = output.innerHTML + message + "\n";
 	output.scrollTop = output.scrollHeight;				
 }
