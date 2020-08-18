@@ -340,13 +340,17 @@ function initMap(){
 					
 					layerStyleMap[layerId] = layerStyleObj;
 					
-					if(layerId == 'layer2_5')
+					if(isFacilityLayer(layerId))
+					/*if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
+						||layerId == 'layer13_7'||layerId == 'layer5_2'||layerId == 'layer13_5'
+						||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')*/
 					{
 						for(var k=0;k<layerStyleObj.length;k++)
 						{
 							layerStyleMap[layerStyleObj[k].type] = layerStyleObj[k].style;
 						}
 					}
+					
 					
 					layerIds += layerId + ',';
 				}
@@ -415,8 +419,18 @@ function initMap(){
 						if(layerStyleObj.style != null)
 							iconurl = layerStyleObj.style.iconurl;
 							
-						if(data.layerId == 'layer2_5')
+						if(isFacilityLayer(data.layerId))
+						/*if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
+							||layerId == 'layer13_7'||layerId == 'layer5_2'||layerId == 'layer13_5'
+							||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')*/
+						{
+							if(layerStyleMap[data.facilitytype] == null)
+							{
+								//console.log('icon for '+data.facilitytype+' not found for layerId:'+layerId+'.');
+								continue;
+							}
 							iconurl = layerStyleMap[data.facilitytype].iconurl;
+						}
 						
 						console.log(iconurl);
 						
@@ -731,6 +745,18 @@ function showlayer(){
 	else {
 		$("#main_checkbox").hide();
 	}
+}
+
+
+function isFacilityLayer(layerId)
+{
+	if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer12_3'||layerId == 'layer16_2'
+						||layerId == 'layer13_7'||layerId == 'layer13_5'
+						||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')
+	{
+		return true;
+	}
+	return false;
 }
 </script>
 </body>

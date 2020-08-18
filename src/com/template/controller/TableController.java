@@ -670,6 +670,8 @@ public class TableController {
 				jsonAttr.put("parentValue", sla.getparentValue());
 				jsonAttr.put("appListDisplay", sla.getAppListDisplay());
 				jsonAttr.put("appDisplay", sla.getAppDisplay());
+				jsonAttr.put("showalgo", sla.getshowalgo());
+				jsonAttr.put("encryption", sla.getencryption());
 				/*if(sSource != null && sSource.equalsIgnoreCase("app") && sla.getAppDisplay().equalsIgnoreCase("否"))
 				{
 					continue;
