@@ -761,14 +761,14 @@ function forkme(){
 		$("#card-body").show();
 		$("#firstshow").hide();
 		$("#searchtype").val(2);
-		$("#forktool").show();
+		//$("#forktool").show();
 	}
 	else {
 		$("#showicon").attr("class", "fas fa-chevron-down");
 		$("#card-body").hide();
 		$("#firstshow").show();
 		$("#searchtype").val(1);
-		$("#forktool").hide();
+		//$("#forktool").hide();
 	}
 	
 }
