@@ -292,6 +292,29 @@ $(document).ready(function (){
 		
     });
 	
+//小区出入口
+	$('#xqcrkAnchor').click(function () {
+		
+		curJCSQSJType = '小区出入口';	
+		loadxqcrk();
+		
+    });
+	
+	//其他楼宇
+	$('#qtlyAnchor').click(function () {
+		
+		curJCSQSJType = '其他楼宇';	
+		loadqtly();
+		
+    });
+	
+	//易积水点
+	$('#yjsdAnchor').click(function () {
+		
+		curJCSQSJType = '易积水点';	
+		loadyjsd();
+		
+    });
 });
 
 loadJCSQSJ();
@@ -404,6 +427,15 @@ function loadJCSQSJ()
 	
 	else if(curJCSQSJType == '道路停车场')
 		loaddltcc();
+	
+	else if(curJCSQSJType == '小区出入口')
+		loadxqcrk();
+	
+	else if(curJCSQSJType == '其他楼宇')
+		loadqtly();
+	
+	else if(curJCSQSJType == '易积水点')
+		loadyjsd();
 	
 	$.get(getContextPath()+"/jcsqsjController/get",
 	function(result){
@@ -701,6 +733,27 @@ function loaddltcc()
 	});
 }
 
+//小区出入口
+function loadxqcrk()
+{
+	$('#jcsqsjDiv').load("./jcsqsj/jc_xqway/jc_xqway.html", function () {
+	
+	});
+}
+//其他楼宇
+function loadqtly()
+{
+	$('#jcsqsjDiv').load("./jcsqsj/jc_qtbuilding/jc_qtbuilding.html", function () {
+	
+	});
+}
+//易积水点
+function loadyjsd()
+{
+	$('#jcsqsjDiv').load("./jcsqsj/jc_waterpoint/jc_waterpoint.html", function () {
+	
+	});
+}
 
 function forkme(){
 	if($('#card-body').is(':hidden')){

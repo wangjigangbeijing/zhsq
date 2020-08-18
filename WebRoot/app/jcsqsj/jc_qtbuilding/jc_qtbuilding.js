@@ -30,10 +30,11 @@ function load()
  var buildtype = $('#buildtypeQuery').val();
  var buildframework = $('#buildframeworkQuery').val();
  var constructiontype = $('#constructiontypeQuery').val();
+ var propertymanagecontact = $('#propertymanagecontactQuery').val();
  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/bizbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_qtbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&propertymanagecontact='+propertymanagecontact+'&status='+status+'&',
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -83,6 +84,7 @@ function load()
 					{ 'data': 'constructiontype' ,'sClass':'text-center'},
 					{ 'data': 'units' ,'sClass':'text-center'},
 					{ 'data': 'levels' ,'sClass':'text-center'},
+					{ 'data': 'gralevels' ,'sClass':'text-center'},
 					{ 'data': 'elevators' ,'sClass':'text-center'},
 					{ 'data': 'area' ,'sClass':'text-center'},
 					{ 'data': 'developer' ,'sClass':'text-center'},
@@ -93,8 +95,6 @@ function load()
 					{ 'data': 'propertymanage' ,'sClass':'text-center'},
 					{ 'data': 'propertymanagecontact' ,'sClass':'text-center'},
 					{ 'data': 'propertymanagecontacttel' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': 'orginbuilding' ,'sClass':'text-center'},
@@ -113,7 +113,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  29,//从0开始
+					targets:  28,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
@@ -134,7 +134,7 @@ function load()
 function viewData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jc_pubfacilities_gy/jc_pubfacilities_gyDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
 		$('#confirmBtn').hide();
 		
 		$("select").attr("disabled","disabled");
@@ -150,7 +150,7 @@ function viewData(id)
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/bizbuilding/bizbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
 		
     });
 }
@@ -161,7 +161,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jcsqsj/bizbuilding/bizbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
 		
     });
 	
@@ -178,7 +178,7 @@ function deleteData(id)
 		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/bizbuildingController/delete",
+			$.post(getContextPath()+"/jc_qtbuildingController/delete",
 			{
 				id:id
 			},
