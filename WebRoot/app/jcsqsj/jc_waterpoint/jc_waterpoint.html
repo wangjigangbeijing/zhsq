@@ -24,7 +24,13 @@
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>类别</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='typeQuery'>
+ 					<!--input type='text' class='form-control' id='typeQuery'-->
+					
+					<select class='form-control field' name='typeQuery' id='typeQuery'>
+ 						<option value='小区内'>小区内</option>
+ 						<option value='道路'>道路</option>
+ 						<option value='其他'>其他</option>
+						</select>					
 </div>
 
 					
@@ -46,7 +52,7 @@
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>数据编码</th>
+                    <!--th style='text-align:center;'>数据编码</th-->
 <th style='text-align:center;'>积水点名称</th>
 <th style='text-align:center;'>位置描述</th>
 <th style='text-align:center;'>类别</th>

@@ -70,7 +70,7 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
+										//{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'address' ,'sClass':'text-center'},
 					{ 'data': 'year' ,'sClass':'text-center'},
@@ -113,7 +113,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  28,//从0开始
+					targets:  27,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
