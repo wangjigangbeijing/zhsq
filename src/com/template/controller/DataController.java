@@ -998,17 +998,22 @@ public class DataController {
 				
 				String infoFields = mapLayer.getinfofields();
 				
-				if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7"))
-					infoFields += ",type as facilitytype";
-				if(layerId.equalsIgnoreCase("layer15_3"))
-					infoFields += ",sxxl as facilitytype";
-				if(layerId.equalsIgnoreCase("layer4_3")) {
+				if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || 
+						layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer4_3") ||
+						layerId.equalsIgnoreCase("layer12_3") || layerId.equalsIgnoreCase("layer16_2"))
+				{
 					infoFields += ",type as facilitytype";
 				}
-				if(layerId.equalsIgnoreCase("layer2_5")) {
+				else if(layerId.equalsIgnoreCase("layer15_3"))
+				{
+					infoFields += ",sxxl as facilitytype";
+				}
+				else if(layerId.equalsIgnoreCase("layer2_5")) 
+				{
 					infoFields += ",characteristics as facilitytype";
 				}
-				if(layerId.equalsIgnoreCase("layer7_4")) {
+				else if(layerId.equalsIgnoreCase("layer7_4")) 
+				{
 					infoFields += ",kind as facilitytype";
 				}
 				
@@ -1094,7 +1099,13 @@ public class DataController {
 					{
 						JSONObject jsonTmp = new JSONObject();
 
-						if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer15_3") || layerId.equalsIgnoreCase("layer4_3") || layerId.equalsIgnoreCase("layer2_5") || layerId.equalsIgnoreCase("layer7_4"))					
+						/*if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer15_3") || layerId.equalsIgnoreCase("layer4_3") || layerId.equalsIgnoreCase("layer2_5") || layerId.equalsIgnoreCase("layer7_4"))					
+						{
+							String facilitytype = (String)hm.get("facilitytype");
+							jsonTmp.put("facilitytype", facilitytype);
+						}*/
+						
+						if(hm.containsKey("facilitytype"))
 						{
 							String facilitytype = (String)hm.get("facilitytype");
 							jsonTmp.put("facilitytype", facilitytype);

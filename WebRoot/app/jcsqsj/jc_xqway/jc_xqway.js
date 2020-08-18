@@ -2,7 +2,8 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +11,44 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
+	
+	load();	
+	
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'ofcommunity'}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ssxqQuery').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#ssxqQuery').html(filterArr.join(''));
+			}
+			else
+			{
+				jError("获取小区列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
 	
 	load();
 });
@@ -19,17 +57,35 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+
+	
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
- var type = $('#typeQuery').val();
- var sfymj = $('#sfymjQuery').val();
- var mjlx = $('#mjlxQuery').val();
- var ssxq = $('#ssxqQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
+	var type = $('#typeQuery').val();
+	var sfymj = $('#sfymjQuery').val();
+	var mjlx = $('#mjlxQuery').val();
+	var ssxq = $('#ssxqQuery').val();
 
 	
 	$.get(getContextPath()+'/jc_xqwayController/load?name='+name+'&type='+type+'&sfymj='+sfymj+'&mjlx='+mjlx+'&ssxq='+ssxq+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -63,7 +119,7 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dataid' ,'sClass':'text-center'},
+										//{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
 					{ 'data': 'sfymj' ,'sClass':'text-center'},
@@ -85,7 +141,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  7,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						

@@ -3,65 +3,112 @@
 <script src="./jcsqsj/jc_xqway/jc_xqway.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
+	<div class="container-fluid">
         <div class="row">
           <div class="col-12">
 			
-			<div class="card">
+			<div class="card" style="margin-bottom:0px;">
 			 
-              <div class="card-body">
+
+	 
+          <div class="card-body">
                 
 				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>出入口名称</label>
+
+    			<input type='hidden' class='form-control' id='searchtype' value="1">
+			
+			<div class="form-group row" id="firstshow">
+
+				<label class='col-md-1 control-label' style='text-align:right;'>出入口名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='nameQuery'>
 </div>
+
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+								
+<button id="btnAdd1" class="btn btn-info" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+<button id="btnQuery" type="button" class="btn  pull-right" style="position:absolute; right:10px;" onclick="forkme()"><image src="../images/query.png"/></button>
+
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+	<label class='col-md-1 control-label' style='text-align:right;'>出入口名称</label>
+	<div class='col-sm-2'>
+						 <input type='text' class='form-control' id='nameQuery2'>	</div>
+
+
 						<label class='col-md-1 control-label' style='text-align:right;'>类型</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='typeQuery'>
+ 					<!--input type='text' class='form-control' id='typeQuery'-->
+					<select class='form-control field' name='typeQuery' id='typeQuery'>
+							<option value=''>请选择</option>
+							<option value='行人'>行人</option>
+						<option value='车辆'>车辆</option>
+						<option value='综合'>综合</option>
+						</select>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>是否有门禁</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='sfymjQuery'>
+ 					<!--input type='text' class='form-control' id='sfymjQuery'-->
+					<select class='form-control field' name='sfymjQuery' id='sfymjQuery'>
+							<option value=''>请选择</option>
+							<option value='是'>是</option>
+						<option value='否'>否</option>						
+						</select>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>门禁类型</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='mjlxQuery'>
+ 					<!--input type='text' class='form-control' id='mjlxQuery'-->
+					<select class='form-control field' name='mjlxQuery' id='mjlxQuery'>
+							<option value=''>请选择</option>
+							<option value='刷卡'>刷卡</option>
+						<option value='刷脸'>刷脸</option>						
+						<option value='其他'>其他</option>						
+						</select>
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ssxqQuery'>
+ 					<!--input type='text' class='form-control' id='ssxqQuery'-->
+					<select class='form-control field' name='ssxqQuery' id='ssxqQuery'>
+							
+						</select>
 </div>
 
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>
 					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
+								
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+<button id="btnQuery" type="button" class="btn  pull-right" style="position:absolute; right: 15px; bottom: 20px;" onclick="forkme()"><image src="../images/query.png"/></button>
+
+</div>
+
+
+</form>
+
+</div>
+
+
+
+</div>
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>数据编码</th>
-<th style='text-align:center;'>出入口名称</th>
-<th style='text-align:center;'>类型</th>
-<th style='text-align:center;'>是否有门禁</th>
-<th style='text-align:center;'>门禁类型</th>
-<th style='text-align:center;'>所属小区</th>
-<th style='text-align:center;'>备注</th>
-<th style='text-align:center;'>操作</th>
+                    <!--th style='text-align:center;'>数据编码</th-->
+					<th style='text-align:center;'>出入口名称</th>
+					<th style='text-align:center;'>类型</th>
+					<th style='text-align:center;'>是否有门禁</th>
+					<th style='text-align:center;'>门禁类型</th>
+					<th style='text-align:center;'>所属小区</th>
+					<th style='text-align:center;'>备注</th>
+					<th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>
 				  <tbody></tbody>

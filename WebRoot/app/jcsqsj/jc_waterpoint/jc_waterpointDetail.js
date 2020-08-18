@@ -27,11 +27,11 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#dataid').val(obj.dataid);
+				$('#dataid').val(obj.dataid);
 				$('#name').val(obj.name);
 				$('#address').val(obj.address);
-				$('#type').val(obj.type);
+				//$('#type').val(obj.type);
+				$("input[name='type'][value='"+obj.type+"']").attr("checked",true); 
 				$('#depth').val(obj.depth);
 				$('#plan').val(obj.plan);
 				$('#note').val(obj.note);
@@ -68,10 +68,10 @@ function addOrUpdate()
 	$.post(getContextPath()+"/jc_waterpointController/addOrUpdate",
 	{
 		id:curId,
-				dataid:$('#dataid').val(),
+		dataid:$('#dataid').val(),
 		name:$('#name').val(),
 		address:$('#address').val(),
-		type:$('#type').val(),
+		type:$('input:radio[name="type"]:checked').val(), //$('#type').val(),
 		depth:$('#depth').val(),
 		plan:$('#plan').val(),
 		note:$('#note').val(),

@@ -27,17 +27,22 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#dataid').val(obj.dataid);
+				$('#dataid').val(obj.dataid);
 				$('#name').val(obj.name);
 				$('#address').val(obj.address);
 				$('#year').val(obj.year);
 				$('#purpose').val(obj.purpose);
-				$('#propertyyears').val(obj.propertyyears);
-				$('#propertyrights').val(obj.propertyrights);
-				$('#heatingsystem').val(obj.heatingsystem);
+				//$('#propertyyears').val(obj.propertyyears);	
+				$("input[name='propertyyears'][value='"+obj.propertyyears+"']").attr("checked",true); 
+				
+				$('#propertyrights').val(obj.propertyrights);				
+				//$('#heatingsystem').val(obj.heatingsystem);
+				$("input[name='heatingsystem'][value='"+obj.heatingsystem+"']").attr("checked",true); 
+				
 				$('#ofcommunity').val(obj.ofcommunity);
-				$('#buildtype').val(obj.buildtype);
+				//$('#buildtype').val(obj.buildtype);
+				$("input[name='buildtype'][value='"+obj.buildtype+"']").attr("checked",true); 
+				
 				$('#buildframework').val(obj.buildframework);
 				$('#constructiontype').val(obj.constructiontype);
 				$('#units').val(obj.units);
@@ -53,7 +58,9 @@ function viewDetail(id)
 				$('#propertymanage').val(obj.propertymanage);
 				$('#propertymanagecontact').val(obj.propertymanagecontact);
 				$('#propertymanagecontacttel').val(obj.propertymanagecontacttel);
-				$('#status').val(obj.status);
+				//$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
+				
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 				$('#orginbuilding').val(obj.orginbuilding);
 
@@ -86,20 +93,19 @@ function ShowAddModal()
 function addOrUpdate()
 {
 	
-	
 	$.post(getContextPath()+"/jc_qtbuildingController/addOrUpdate",
 	{
 		id:curId,
-				dataid:$('#dataid').val(),
+		dataid:$('#dataid').val(),
 		name:$('#name').val(),
 		address:$('#address').val(),
 		year:$('#year').val(),
 		purpose:$('#purpose').val(),
-		propertyyears:$('#propertyyears').val(),
+		propertyyears:$('input:radio[name="propertyyears"]:checked').val(),//$('#propertyyears').val(),
 		propertyrights:$('#propertyrights').val(),
-		heatingsystem:$('#heatingsystem').val(),
+		heatingsystem:$('input:radio[name="heatingsystem"]:checked').val(),//$('#heatingsystem').val(),
 		ofcommunity:$('#ofcommunity').val(),
-		buildtype:$('#buildtype').val(),
+		buildtype:$('input:radio[name="buildtype"]:checked').val(),//$('#buildtype').val(),
 		buildframework:$('#buildframework').val(),
 		constructiontype:$('#constructiontype').val(),
 		units:$('#units').val(),
@@ -115,7 +121,7 @@ function addOrUpdate()
 		propertymanage:$('#propertymanage').val(),
 		propertymanagecontact:$('#propertymanagecontact').val(),
 		propertymanagecontacttel:$('#propertymanagecontacttel').val(),
-		status:$('#status').val(),
+		status:$('input:radio[name="status"]:checked').val(),//$('#status').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val(),
 		orginbuilding:$('#orginbuilding').val()

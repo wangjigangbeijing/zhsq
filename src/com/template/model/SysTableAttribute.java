@@ -216,4 +216,29 @@ public class SysTableAttribute implements java.io.Serializable {
 	{
 		this.parentValue = parentValue;
 	}
+	
+	@Column(name = "encryption", nullable = true)
+	public String encryption;
+	
+	public String getencryption()
+	{
+		return encryption;
+	}
+	public void setencryption(String encryption)
+	{
+		this.encryption = encryption;
+	}
+	
+	@Column(name = "showalgo", nullable = true)
+	public String showalgo;
+	
+	public String getshowalgo()
+	{
+		return showalgo;
+	}
+	public void setshowalgo(String showalgo)
+	{
+		this.showalgo = showalgo;
+	}
+	
 }

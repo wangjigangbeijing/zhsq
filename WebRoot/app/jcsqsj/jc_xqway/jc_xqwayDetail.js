@@ -27,8 +27,11 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
+				$("input[name='type'][value='"+obj.type+"']").attr("checked",true); 
+				$("input[name='sfymj'][value='"+obj.sfymj+"']").attr("checked",true); 
+				$("input[name='mjlx'][value='"+obj.mjlx+"']").attr("checked",true); 
 				
-								$('#dataid').val(obj.dataid);
+				$('#dataid').val(obj.dataid);
 				$('#name').val(obj.name);
 				$('#type').val(obj.type);
 				$('#sfymj').val(obj.sfymj);
@@ -64,16 +67,14 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
-	
-	
 	$.post(getContextPath()+"/jc_xqwayController/addOrUpdate",
 	{
 		id:curId,
 				dataid:$('#dataid').val(),
 		name:$('#name').val(),
-		type:$('#type').val(),
-		sfymj:$('#sfymj').val(),
-		mjlx:$('#mjlx').val(),
+		type:$('input:radio[name="type"]:checked').val(),
+		sfymj:$('input:radio[name="sfymj"]:checked').val(),
+		mjlx:$('input:radio[name="mjlx"]:checked').val(),
 		ssxq:$('#ssxq').val(),
 		pictures:$('#pictures').val(),
 		note:$('#note').val()

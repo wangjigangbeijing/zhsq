@@ -3,21 +3,40 @@
 <script src="./jcsqsj/jc_qtbuilding/jc_qtbuilding.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
+	<div class="container-fluid">
         <div class="row">
           <div class="col-12">
 			
 			<div class="card">
-			 
-              <div class="card-body">
+
+				<div class="card-body">
                 
 				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    						<label class='col-md-1 control-label' style='text-align:right;'>楼栋名称</label>
+				
+				<input type='hidden' class='form-control' id='searchtype' value="1">
+
+				 <div class="form-group row" id="firstshow">
+   
+		<label class='col-md-1 control-label' style='text-align:right;'>楼栋名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='nameQuery'>
 </div>
+
+<button id="btnSearch1" class="btn btn-success">查询</button>&nbsp;
+							
+<button id="btnAdd1" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+<button id="btnQuery" type="button" class="btn  pull-right" style="position:absolute; right:10px;" onclick="forkme()"><image src="../images/query.png"/></button>
+
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+	<label class='col-md-1 control-label' style='text-align:right;'>楼栋名称</label>
+	<div class='col-sm-2'>
+						 <input type='text' class='form-control' id='nameQuery2'>
+	</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>楼栋地址</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='addressQuery'>
@@ -26,18 +45,27 @@
 <div class='col-sm-2'>
 						<select class='form-control field' name='purposeQuery' id='purposeQuery'>
  						<option value=''>全部</option>
- 						<option value='住宅'>住宅</option>
+ 						<option value='综合'>综合</option>
  						<option value='商业'>商业</option>
- 						<option value='商住混合'>商住混合</option>
+ 						<option value='厂房'>厂房</option>
  						<option value='仓库'>仓库</option>
+ 						<option value='办公'>办公</option>
  						<option value='临时建筑'>临时建筑</option>
- 						<option value='其他'>其他</option>
+ 						<option value='9其他'>9其他</option>
 						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>产权年限</label>
+
+<label class='col-md-1 control-label' style='text-align:right;'>产权年限</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='propertyyearsQuery'>
+						<select class='form-control field' name='propertyyearsQuery' id='propertyyearsQuery'>
+ 						<option value=''>全部</option>
+ 						<option value='40年'>40年</option>
+						<option value='50年'>50年</option>
+						<option value='70年'>70年</option>
+						<option value='不详'>不详</option>
+						</select>
 </div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>产权性质</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='propertyrightsQuery' id='propertyrightsQuery'>
@@ -48,18 +76,34 @@
  						<option value='其他'>其他</option>
 						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>采暖方式</label>
+
+
+<label class='col-md-1 control-label' style='text-align:right;'>采暖方式</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='heatingsystemQuery'>
+						<select class='form-control field' name='heatingsystemQuery' id='heatingsystemQuery'>
+						 <option value=''>全部</option>
+						 <option value='自采暖'>自采暖</option>
+						 <option value='集体采暖'>集体采暖</option>
+						 <option value='其他'>其他</option>
+						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
+
+<label class='col-md-1 control-label' style='text-align:right;'>所属小区</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='ofcommunityQuery'>
+					<select class='form-control field' name='ofcommunity' id='ofcommunityQuery'> 						
+						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>楼栋类型</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='buildtypeQuery'>
-</div>
+
+
+			<label class='col-md-1 control-label' style='text-align:right;'>楼栋类型</label>
+			<div class='col-sm-2'>
+						<select class='form-control field' name='buildtypeQuery' id='buildtypeQuery'>
+						 <option value=''>全部</option>
+						 <option value='楼房'>楼房</option>
+						 <option value='平房'>平房</option>
+						</select>
+			</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>楼栋结构</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='buildframeworkQuery' id='buildframeworkQuery'>
@@ -78,73 +122,74 @@
 <div class='col-sm-2'>
 						<select class='form-control field' name='constructiontypeQuery' id='constructiontypeQuery'>
  						<option value=''>全部</option>
- 						<option value='超高层楼宇'>超高层楼宇</option>
  						<option value='高层楼宇'>高层楼宇</option>
  						<option value='小高层建筑'>小高层建筑</option>
  						<option value='多层建筑'>多层建筑</option>
- 						<option value='低层建筑'>低层建筑</option>
  						<option value='居民自建房'>居民自建房</option>
  						<option value='临时建筑'>临时建筑</option>
  						<option value='其他'>其他</option>
 						</select>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>物业公司联系人</label>
+
+<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='propertymanagecontactQuery'>
-</div>
-						<label class='col-md-1 control-label' style='text-align:right;'>状态</label>
-<div class='col-sm-2'>
- 					<input type='text' class='form-control' id='statusQuery'>
+						<select class='form-control field' name='statusQuery' id='statusQuery'>
+						<option value=''>全部</option>
+						<option value='正常'>正常</option>
+						<option value='关闭'>关闭</option>
+						<option value='拆除'>拆除</option>
+						</select>
 </div>
 
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>
+<button id="btnSearch2" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+<button id="btnAdd2" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+<button id="btnQuery" type="button" class="btn  pull-right" style="position:absolute; right: 15px; bottom: 20px;" onclick="forkme()"><image src="../images/query.png"/></button>
+
+</div>
+
+
+</form>
+
+</div>
+
+</div>
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>数据编码</th>
-<th style='text-align:center;'>楼栋名称</th>
-<th style='text-align:center;'>楼栋地址</th>
-<th style='text-align:center;'>建设年代</th>
-<th style='text-align:center;'>建设用途</th>
-<th style='text-align:center;'>产权年限</th>
-<th style='text-align:center;'>产权性质</th>
-<th style='text-align:center;'>采暖方式</th>
-<th style='text-align:center;'>所属小区</th>
-<th style='text-align:center;'>楼栋类型</th>
-<th style='text-align:center;'>楼栋结构</th>
-<th style='text-align:center;'>建筑类型</th>
-<th style='text-align:center;'>单元号</th>
-<th style='text-align:center;'>地上层数</th>
-<th style='text-align:center;'>地下层数</th>
-<th style='text-align:center;'>电梯数</th>
-<th style='text-align:center;'>建筑面积（平方米）</th>
-<th style='text-align:center;'>开发商</th>
-<th style='text-align:center;'>产权人</th>
-<th style='text-align:center;'>产权人联系电话</th>
-<th style='text-align:center;'>使用人</th>
-<th style='text-align:center;'>使用人联系电话</th>
-<th style='text-align:center;'>物业管理公司</th>
-<th style='text-align:center;'>物业公司联系人</th>
-<th style='text-align:center;'>物业公司电话</th>
-<th style='text-align:center;'>状态</th>
-<th style='text-align:center;'>备注</th>
-<th style='text-align:center;'>入驻法人单位数量</th>
-<th style='text-align:center;'>操作</th>
+                    <!--th style='text-align:center;'>数据编码</th-->
+					<th style='text-align:center;'>楼栋名称</th>
+					<!--th style='text-align:center;'>楼栋地址</th>
+					<th style='text-align:center;'>建设年代</th-->
+					<th style='text-align:center;'>建设用途</th>
+					<th style='text-align:center;'>产权年限</th>
+					<!--th style='text-align:center;'>产权性质</th>
+					<th style='text-align:center;'>采暖方式</th-->
+					<th style='text-align:center;'>所属小区</th>
+					<th style='text-align:center;'>楼栋类型</th>
+					<!--th style='text-align:center;'>楼栋结构</th>
+					<th style='text-align:center;'>建筑类型</th>
+					<th style='text-align:center;'>单元号</th-->
+					<th style='text-align:center;'>层数</th>
+					<!--th style='text-align:center;'>电梯数</th>
+					<th style='text-align:center;'>建筑面积（平方米）</th>
+					<th style='text-align:center;'>开发商</th>
+					<th style='text-align:center;'>产权人</th>
+					<th style='text-align:center;'>产权人联系电话</th>
+					<th style='text-align:center;'>使用人</th>
+					<th style='text-align:center;'>使用人联系电话</th-->
+					<th style='text-align:center;'>物业管理公司</th>
+					<!--th style='text-align:center;'>物业公司联系人</th>
+					<th style='text-align:center;'>物业公司电话</th-->
+					<th style='text-align:center;'>状态</th>
+					<!--th style='text-align:center;'>备注</th>
+					<th style='text-align:center;'>入驻法人单位数量</th-->
+					<th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>
 				  <tbody></tbody>
