@@ -301,7 +301,7 @@ $(document).ready(function (){
     });
 	
 	//其他楼宇
-	$('#dltccAnchor').click(function () {
+	$('#qtlyAnchor').click(function () {
 		
 		curJCSQSJType = '其他楼宇';	
 		loadqtly();
