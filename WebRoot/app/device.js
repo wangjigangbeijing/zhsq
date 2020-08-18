@@ -54,7 +54,7 @@ function openSocket() {
 					var dot = message.indexOf(":");
 					if(dot >= 0)
 					{
-						document.getElementById("blrname").value = message.substr(dot + 1);
+						//document.getElementById("blrname").value = message.substr(dot + 1);
 						var strs = new Array(); //定义一数组
 						strs = message.substr(dot + 1).split(" "); //字符分割
 						
@@ -127,12 +127,14 @@ function openSocket2() {
 			//反初始化
 			
 			//主摄像头拍照按钮点击
-			document.getElementById("photographPri").onclick = function() {
-				//dialog.get_actionType("setdeskew");	
-				dialog.photoBtnClicked("primaryDev_");
-				//dialog.get_actionType("savePhotoPriDev");
-				//dialog.get_actionType("setdeskew");	
-			};
+			if(document.getElementById("photographPri") != null){
+				document.getElementById("photographPri").onclick = function() {
+					//dialog.get_actionType("setdeskew");	
+					dialog.photoBtnClicked("primaryDev_");
+					//dialog.get_actionType("savePhotoPriDev");
+					//dialog.get_actionType("setdeskew");	
+				};
+			}
 		
 			
 			//服务器返回消息
@@ -153,7 +155,7 @@ function openSocket2() {
 					var dot = message.indexOf(":");
 					if(dot >= 0)
 					{
-						document.getElementById("blrname").value = message.substr(dot + 1);
+						//document.getElementById("blrname").value = message.substr(dot + 1);
 						var strs = new Array(); //定义一数组
 						strs = message.substr(dot + 1).split(" "); //字符分割
 						
@@ -194,7 +196,6 @@ function openSocket2() {
 				//console.log(element);
 				//上传图像
 				uploadimage(message);
-				console.log(message);
 			});
 			
 			//output("ready to send/receive messages!");
