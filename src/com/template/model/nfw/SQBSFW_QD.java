@@ -230,4 +230,15 @@ public class SQBSFW_QD implements java.io.Serializable {
 	{
 		this.status = status;
 	}
+	
+	@Column(name = "owner", nullable = true)
+	public String owner;
+
+	public String getowner() {
+		return owner;
+	}
+	public void setowner(String owner) {
+		this.owner = owner;
+	}
+	
 }

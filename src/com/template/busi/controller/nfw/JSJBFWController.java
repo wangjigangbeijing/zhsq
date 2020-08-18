@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mysql.cj.util.StringUtils;
 import com.template.model.nfw.JSJBFW;
 import com.template.service.nfw.JSJBFWService;
+import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
 import com.template.util.Utility;
 @Controller
@@ -66,6 +67,7 @@ public class JSJBFWController {
 			jsjbfw.setsjlyjb(sjlyjb);
 			jsjbfw.setsjnr(sjnr);
 			jsjbfw.setwtfl(wtfl);
+			jsjbfw.setowner(getOrganization());
 			
 			jsjbfwService.save(jsjbfw);
 			
@@ -102,16 +104,39 @@ public class JSJBFWController {
 	    return jsonObj.toString();
 	}
 	
+	/**
+	 * 获取用户社区
+	 * @return
+	 */
+	private String getOrganization() {
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String sql = "select a.organization from sys_user_organization a where a.user=?";
+		List<Object> params = new ArrayList<Object>();
+		params.add(userid);
+		List<HashMap> list = this.jsjbfwService.findBySql(sql, params);
+		if(list == null || list.size() == 0) {
+			return null;
+		}
+		else {
+			return (String) list.get(0).get("organization");
+		}
+	}
+	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String load(String sjbt,String sjly,String sjlybh,String dsr, String status)
 	{
+		String organization = getOrganization();
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
 			List<Object> params = new ArrayList<Object>();
 			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from kz_jsjbfw a where 1=1";
-			
+			if(!StringUtils.isNullOrEmpty(organization)) {
+				sql += " and a.owner=?";
+				params.add(organization);
+			}
 			if(!StringUtils.isNullOrEmpty(sjbt)) {
 				sql += " and a.sjbt like ?";
 				params.add("%" + sjbt + "%");

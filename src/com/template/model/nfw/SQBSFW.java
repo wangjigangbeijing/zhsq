@@ -142,4 +142,15 @@ public class SQBSFW implements java.io.Serializable {
 	{
 		this.bz = bz;
 	}
+	
+	@Column(name = "owner", nullable = true)
+	public String owner;
+
+	public String getowner() {
+		return owner;
+	}
+	public void setowner(String owner) {
+		this.owner = owner;
+	}
+	
 }

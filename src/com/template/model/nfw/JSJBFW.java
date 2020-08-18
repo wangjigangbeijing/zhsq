@@ -219,5 +219,15 @@ public class JSJBFW implements java.io.Serializable
 	{
 		this.fj = fj;
 	}
+	
+	@Column(name = "owner", nullable = true)
+	public String owner;
+	public String getowner() {
+		return owner;
+	}
+	public void setowner(String owner) {
+		this.owner = owner;
+	}
+	
 }
 

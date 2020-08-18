@@ -2,6 +2,8 @@ package com.template.busi.controller.jcsqsj;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.template.busi.safe.SafeFieldChecker;
 import com.template.model.jcsqsj.Resident;
 import com.template.service.jcsqsj.ResidentService;
 import com.template.util.HqlFilter;
@@ -142,6 +144,8 @@ public String addOrUpdate(String id,String dataid,String name,String identitytyp
 		resident.setjmdb_endofterm(TimeUtil.parseDate(jmdb_endofterm, "yyyy-MM-dd"));
 		resident.setwtgg_skill_type(wtgg_skill_type);
 		resident.setwtgg_special_skill(wtgg_special_skill);
+		
+		new SafeFieldChecker().checkModel(residentService, resident);
 
 		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 		
@@ -191,13 +195,15 @@ public String load(String name,String identitytype,String idnumber,String charac
 		String dy_movemember,String zdr_type,String jzr_correctioncontent,String sy_unemployedreemployment,String lnr_economicsources,String lnr_livingconditions,
 		String cj_disabilitytype,String cj_disabilitylevel,String jsb_type)
 {
+	String tablen_id = "jc_resident";
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
 		if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
 		{
-			hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+			//hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+			hqlFilter.addQryCond("name", HqlFilter.Operator.EQ, new SafeFieldChecker().checkField(residentService, tablen_id, "name", name));
 		}
 		if(identitytype != null && identitytype.equalsIgnoreCase("") == false && identitytype.equalsIgnoreCase("null") == false)
 		{
@@ -205,7 +211,8 @@ public String load(String name,String identitytype,String idnumber,String charac
 		}
 		if(idnumber != null && idnumber.equalsIgnoreCase("") == false && idnumber.equalsIgnoreCase("null") == false)
 		{
-			hqlFilter.addQryCond("idnumber", HqlFilter.Operator.LIKE, "%"+idnumber+"%");
+			//hqlFilter.addQryCond("idnumber", HqlFilter.Operator.LIKE, "%"+idnumber+"%");
+			hqlFilter.addQryCond("idnumber", HqlFilter.Operator.EQ, new SafeFieldChecker().checkField(residentService, tablen_id, "idnumber", idnumber));
 		}
 		if(characteristics != null && characteristics.equalsIgnoreCase("") == false && characteristics.equalsIgnoreCase("null") == false)
 		{
@@ -299,11 +306,13 @@ public String load(String name,String identitytype,String idnumber,String charac
 		}
 		if(tel != null && tel.equalsIgnoreCase("") == false && tel.equalsIgnoreCase("null") == false)
 		{
-			hqlFilter.addQryCond("tel", HqlFilter.Operator.LIKE, "%"+tel+"%");
+			//hqlFilter.addQryCond("tel", HqlFilter.Operator.LIKE, "%"+tel+"%");
+			hqlFilter.addQryCond("tel", HqlFilter.Operator.EQ, new SafeFieldChecker().checkField(residentService, tablen_id, "tel", tel));
 		}
 		if(mobile != null && mobile.equalsIgnoreCase("") == false && mobile.equalsIgnoreCase("null") == false)
 		{
-			hqlFilter.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
+			//hqlFilter.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
+			hqlFilter.addQryCond("mobile", HqlFilter.Operator.EQ, new SafeFieldChecker().checkField(residentService, tablen_id, "mobile", mobile));
 		}
 		if(marriage != null && marriage.equalsIgnoreCase("") == false && marriage.equalsIgnoreCase("null") == false)
 		{
@@ -407,6 +416,8 @@ if(alOrg != null && alOrg.size() != 0)
 
 hqlFilter.setSort("created_at");
 hqlFilter.setOrder("desc");
+
+logger.debug("SQL:" + hqlFilter.toString());
 
         List<Resident> listObj = residentService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

@@ -120,8 +120,8 @@
 						<label class='col-md-2 control-label'>性别</label>
   				<div class='col-md-9'>
 					<label class='radio-inline'>
-						<input type='radio' name='sex' value='男性'> 男性
-						<input type='radio' name='sex' value='女性'> 女性
+						<input type='radio' name='sex' value='男'> 男性
+						<input type='radio' name='sex' value='女'> 女性
 					</label>
  						</div>
  					</div>
@@ -428,15 +428,19 @@
  					</div>
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>照片</label>
-  				<div class='col-md-9'>
-<div id='picturesdiv' class='wu-example'>
-<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
-<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
-<div class='btns'>
-<div id='picturespick'>选择文件</div>
-</div>
-</div>
- 						</div>
+						<div class='col-md-9'>
+							<div id='picturesdiv' class='wu-example'>
+							<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
+							<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+							<div class='row'>
+							<div id='picturespick' style="col-sm-1">选择文件</div>
+							<div style="col-sm-1">
+						<button class="btn btn-success" type="button" data-toggle="modal" data-target="#deviceDialog" onclick="startdevice();" style="height:35px; font-size:14px;" >高拍仪</button>
+						</div>
+							</div>
+							
+							</div>
+						</div>
  					</div>
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>备注</label>
@@ -864,6 +868,43 @@
         </div>
       </div>
       </div>
+	  
+	  <div class="modal fade" id="deviceDialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+              <h4 class="modal-title">人脸拍照</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+			  <form class="form-horizontal">
+                <!--div class="card-body"-->
+				  <div class='form-group row'>
+                  <img class='col-md-8' id="bigSubDev" width="640" height="480"  /></img>
+				
+				  <img class='col-md-4' id="devPhoto2" width="360" height="270"  /></img>
+				  </div>
+				  <textarea id="output"></textarea><br />	
+				
+              </form>
+			 </div> 
+			 
+			 <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-primary" onclick="doPhoto2();return false;">拍照</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+            </div>
+			  
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+	  
     </section>
 	
 	
@@ -901,6 +942,10 @@ function startidcard(){
 	openSocket2();
 	
 	doIdCard();
+}
+
+function startdevice(){
+	openSocket();
 }
 
 </script>

@@ -254,7 +254,7 @@ function loaddata(){
 	
 	loadbaseinfo6();
 	
-	//loadsqbs();
+	loadsqbs();
 }
 
 function loadbaseinfo1(){
@@ -284,6 +284,8 @@ function getsqname(){
 			{
 				$("#sqname").html("(" + obj.data + ")");
 				$("#username").html(obj.username);
+				
+				$("#sqtitle").html(obj.data);
 			}
 		});	
 }

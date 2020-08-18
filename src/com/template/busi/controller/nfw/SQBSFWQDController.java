@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,6 +33,7 @@ import com.template.util.TimeUtil;
 import com.template.util.Utility;
 import com.template.model.nfw.SQBSFW;
 import com.template.model.nfw.SQBSFW_QD;
+import com.mysql.cj.util.StringUtils;
 import com.template.model.SysUser;
 import com.template.service.nfw.SQBSFWQDService;
 import com.template.service.nfw.SQBSFWService;
@@ -48,6 +50,25 @@ public class SQBSFWQDController {
 	
 	@Autowired
 	private SQBSFWQDService sqbsfwqdService;
+	
+	/**
+	 * 获取用户社区
+	 * @return
+	 */
+	private String getOrganization() {
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String sql = "select a.organization from sys_user_organization a where a.user=?";
+		List<Object> params = new ArrayList<Object>();
+		params.add(userid);
+		List<HashMap> list = this.sqbsfwqdService.findBySql(sql, params);
+		if(list == null || list.size() == 0) {
+			return null;
+		}
+		else {
+			return (String) list.get(0).get("organization");
+		}
+	}
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
@@ -101,6 +122,7 @@ public class SQBSFWQDController {
 			sqbsfw_qd.setsxmc(sxmc);
 			sqbsfw_qd.settysj(tysj);
 			sqbsfw_qd.setywzgbm(ywzgbm);
+			sqbsfw_qd.setowner(getOrganization());
 			
 			sqbsfwqdService.saveOrUpdate(sqbsfw_qd);
 			
@@ -153,7 +175,13 @@ public class SQBSFWQDController {
     	
 		try
 		{
-	        List<SQBSFW_QD> listObj = sqbsfwqdService.findByFilter(new HqlFilter());
+			String organization = getOrganization();
+			
+			HqlFilter filter = new HqlFilter();
+			if(!StringUtils.isNullOrEmpty(organization)) {
+				filter.addQryCond("owner", HqlFilter.Operator.EQ, organization);
+			}
+	        List<SQBSFW_QD> listObj = sqbsfwqdService.findByFilter(filter);
 			
 	        JSONArray jsonArr = new JSONArray();
 	        
