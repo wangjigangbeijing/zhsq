@@ -21,19 +21,13 @@ function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
 	 var name = $('#nameQuery').val();
- var address = $('#addressQuery').val();
- var purpose = $('#purposeQuery').val();
- var propertyyears = $('#propertyyearsQuery').val();
- var propertyrights = $('#propertyrightsQuery').val();
- var heatingsystem = $('#heatingsystemQuery').val();
- var ofcommunity = $('#ofcommunityQuery').val();
- var buildtype = $('#buildtypeQuery').val();
- var buildframework = $('#buildframeworkQuery').val();
- var constructiontype = $('#constructiontypeQuery').val();
- var status = $('#statusQuery').val();
+ var type = $('#typeQuery').val();
+ var sfymj = $('#sfymjQuery').val();
+ var mjlx = $('#mjlxQuery').val();
+ var ssxq = $('#ssxqQuery').val();
 
 	
-	$.get(getContextPath()+'/bizbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_xqwayController/load?name='+name+'&type='+type+'&sfymj='+sfymj+'&mjlx='+mjlx+'&ssxq='+ssxq+'&',
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -71,33 +65,11 @@ function load()
 				"columns": [
 										{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
-					{ 'data': 'year' ,'sClass':'text-center'},
-					{ 'data': 'purpose' ,'sClass':'text-center'},
-					{ 'data': 'propertyyears' ,'sClass':'text-center'},
-					{ 'data': 'propertyrights' ,'sClass':'text-center'},
-					{ 'data': 'heatingsystem' ,'sClass':'text-center'},
-					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
-					{ 'data': 'buildtype' ,'sClass':'text-center'},
-					{ 'data': 'buildframework' ,'sClass':'text-center'},
-					{ 'data': 'constructiontype' ,'sClass':'text-center'},
-					{ 'data': 'units' ,'sClass':'text-center'},
-					{ 'data': 'levels' ,'sClass':'text-center'},
-					{ 'data': 'elevators' ,'sClass':'text-center'},
-					{ 'data': 'area' ,'sClass':'text-center'},
-					{ 'data': 'developer' ,'sClass':'text-center'},
-					{ 'data': 'propertyowner' ,'sClass':'text-center'},
-					{ 'data': 'propertyownertel' ,'sClass':'text-center'},
-					{ 'data': 'user' ,'sClass':'text-center'},
-					{ 'data': 'usertel' ,'sClass':'text-center'},
-					{ 'data': 'propertymanage' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontact' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontacttel' ,'sClass':'text-center'},
-					{ 'data': 'longitude' ,'sClass':'text-center'},
-					{ 'data': 'latitude' ,'sClass':'text-center'},
-					{ 'data': 'status' ,'sClass':'text-center'},
+					{ 'data': 'type' ,'sClass':'text-center'},
+					{ 'data': 'sfymj' ,'sClass':'text-center'},
+					{ 'data': 'mjlx' ,'sClass':'text-center'},
+					{ 'data': 'ssxq' ,'sClass':'text-center'},
 					{ 'data': 'note' ,'sClass':'text-center'},
-					{ 'data': 'orginbuilding' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -113,7 +85,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  29,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
@@ -134,7 +106,7 @@ function load()
 function viewData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jc_pubfacilities_gy/jc_pubfacilities_gyDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_xqway/jc_xqwayDetail.html", function () {
 		$('#confirmBtn').hide();
 		
 		$("select").attr("disabled","disabled");
@@ -150,7 +122,7 @@ function viewData(id)
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/bizbuilding/bizbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_xqway/jc_xqwayDetail.html", function () {
 		
     });
 }
@@ -161,7 +133,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jcsqsj/bizbuilding/bizbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_xqway/jc_xqwayDetail.html", function () {
 		
     });
 	
@@ -178,7 +150,7 @@ function deleteData(id)
 		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/bizbuildingController/delete",
+			$.post(getContextPath()+"/jc_xqwayController/delete",
 			{
 				id:id
 			},
