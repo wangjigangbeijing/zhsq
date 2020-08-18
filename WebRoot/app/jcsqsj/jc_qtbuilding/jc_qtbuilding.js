@@ -1,8 +1,10 @@
 
 
+
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +12,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,8 +22,19 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
-	 var name = $('#nameQuery').val();
+
+	 var searchtype = $("#searchtype").val();
+	 if(searchtype == 1){
+		 $('#btnSearch1').attr('disabled','disabled');
+	 }
+	 else {
+		 $('#btnSearch2').attr('disabled','disabled');
+	 }
+	  var name = $('#nameQuery').val();
+	 if(searchtype == 2){
+		 name = $('#nameQuery2').val();
+	 }
+
  var address = $('#addressQuery').val();
  var purpose = $('#purposeQuery').val();
  var propertyyears = $('#propertyyearsQuery').val();
@@ -30,13 +44,19 @@ function load()
  var buildtype = $('#buildtypeQuery').val();
  var buildframework = $('#buildframeworkQuery').val();
  var constructiontype = $('#constructiontypeQuery').val();
- var propertymanagecontact = $('#propertymanagecontactQuery').val();
  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_qtbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&propertymanagecontact='+propertymanagecontact+'&status='+status+'&',
+	$.get(getContextPath()+'/jcqtbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
+
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -70,34 +90,20 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										//{ 'data': 'dataid' ,'sClass':'text-center'},
+					
 					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
-					{ 'data': 'year' ,'sClass':'text-center'},
+					
+					
 					{ 'data': 'purpose' ,'sClass':'text-center'},
 					{ 'data': 'propertyyears' ,'sClass':'text-center'},
-					{ 'data': 'propertyrights' ,'sClass':'text-center'},
-					{ 'data': 'heatingsystem' ,'sClass':'text-center'},
+					
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
 					{ 'data': 'buildtype' ,'sClass':'text-center'},
-					{ 'data': 'buildframework' ,'sClass':'text-center'},
-					{ 'data': 'constructiontype' ,'sClass':'text-center'},
-					{ 'data': 'units' ,'sClass':'text-center'},
+					
 					{ 'data': 'levels' ,'sClass':'text-center'},
-					{ 'data': 'gralevels' ,'sClass':'text-center'},
-					{ 'data': 'elevators' ,'sClass':'text-center'},
-					{ 'data': 'area' ,'sClass':'text-center'},
-					{ 'data': 'developer' ,'sClass':'text-center'},
-					{ 'data': 'propertyowner' ,'sClass':'text-center'},
-					{ 'data': 'propertyownertel' ,'sClass':'text-center'},
-					{ 'data': 'user' ,'sClass':'text-center'},
-					{ 'data': 'usertel' ,'sClass':'text-center'},
+					
 					{ 'data': 'propertymanage' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontact' ,'sClass':'text-center'},
-					{ 'data': 'propertymanagecontacttel' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
-					{ 'data': 'orginbuilding' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -113,7 +119,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  27,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
@@ -130,11 +136,93 @@ function load()
 	});
 }
 
+/*
+function viewDetail(id)
+{
+	//$('#modalTitle').text('修改用户信息');
+	curId = id;
+	$.get(getContextPath()+"/jcqtbuildingController/get?id="+curId,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				$('#modalDetail').show();
+				
+								$('#dataid').val(obj.dataid);
+				$('#name').val(obj.name);
+				$('#address').val(obj.address);
+				$('#year').val(obj.year);
+				$('#purpose').val(obj.purpose);
+				$('#propertyyears').val(obj.propertyyears);
+				$('#propertyrights').val(obj.propertyrights);
+				$('#heatingsystem').val(obj.heatingsystem);
+				$('#ofcommunity').val(obj.ofcommunity);
+				$('#buildtype').val(obj.buildtype);
+				$('#buildframework').val(obj.buildframework);
+				$('#constructiontype').val(obj.constructiontype);
+				$('#units').val(obj.units);
+				$('#levels').val(obj.levels);
+				$('#elevators').val(obj.elevators);
+				$('#area').val(obj.area);
+				$('#developer').val(obj.developer);
+				$('#propertyowner').val(obj.propertyowner);
+				$('#propertyownertel').val(obj.propertyownertel);
+				$('#user').val(obj.user);
+				$('#usertel').val(obj.usertel);
+				$('#propertymanage').val(obj.propertymanage);
+				$('#propertymanagecontact').val(obj.propertymanagecontact);
+				$('#propertymanagecontacttel').val(obj.propertymanagecontacttel);
+				$('#status').val(obj.status);
+				$('#pictures').val(obj.pictures);
+				$('#note').val(obj.note);
+				$('#orginbuilding').val(obj.orginbuilding);
+
+			}
+		});
+}
+
+function closeModalDetail()
+{
+	$('#modalDetail').hide();
+	curId = '';
+	
+		$('#dataid').val('');
+	$('#name').val('');
+	$('#address').val('');
+	$('#year').val('');
+	$('#purpose').val('');
+	$('#propertyyears').val('');
+	$('#propertyrights').val('');
+	$('#heatingsystem').val('');
+	$('#ofcommunity').val('');
+	$('#buildtype').val('');
+	$('#buildframework').val('');
+	$('#constructiontype').val('');
+	$('#units').val('');
+	$('#levels').val('');
+	$('#elevators').val('');
+	$('#area').val('');
+	$('#developer').val('');
+	$('#propertyowner').val('');
+	$('#propertyownertel').val('');
+	$('#user').val('');
+	$('#usertel').val('');
+	$('#propertymanage').val('');
+	$('#propertymanagecontact').val('');
+	$('#propertymanagecontacttel').val('');
+	$('#status').val('');
+	$('#pictures').val('');
+	$('#note').val('');
+	$('#orginbuilding').val('');
+
+}
+*/
+
 
 function viewData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jcqtbuilding/jcqtbuildingDetail.html", function () {
 		$('#confirmBtn').hide();
 		
 		$("select").attr("disabled","disabled");
@@ -146,11 +234,10 @@ function viewData(id)
     });
 }
 
-
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jcqtbuilding/jcqtbuildingDetail.html", function () {
 		
     });
 }
@@ -161,7 +248,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jcqtbuilding/jcqtbuildingDetail.html", function () {
 		
     });
 	
@@ -178,7 +265,7 @@ function deleteData(id)
 		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/jc_qtbuildingController/delete",
+			$.post(getContextPath()+"/jcqtbuildingController/delete",
 			{
 				id:id
 			},
