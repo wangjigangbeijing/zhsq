@@ -144,6 +144,6 @@ public class SafeFieldChecker {
 		resident.setname("张三");
 		checker.checkModel(null, resident);
 		System.out.println(resident.getname());
-		System.out.println(AES.decrypt(ParseUtil.parseHexStr2Byte(resident.getname())));
+		System.out.println(AES.decrypt(resident.getname()));
 	}
 }

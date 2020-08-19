@@ -285,6 +285,8 @@ function viewDetail(id)
 				$('#modalDetail').show();
 				
 								$('#dataid').val(obj.dataid);
+				var ename = aesDecrypt(obj.name);
+				console.log(ename);
 				$('#name').val(obj.name);
 				$('#identitytype').val(obj.identitytype);
 				$('#idnumber').val(obj.idnumber);
