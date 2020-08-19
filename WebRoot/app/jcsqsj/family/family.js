@@ -403,7 +403,14 @@ var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-inf
 				},
 				"success" : function(resp) {
 					
-					$('#btnSearch').removeAttr('disabled');
+					
+					if(searchtype == 1){
+						$('#btnSearch1').removeAttr('disabled');
+					}
+					else {
+						$('#btnSearch2').removeAttr('disabled');
+					}
+					
 					if(resp.success == true)
 					{
 						fnCallback(resp);

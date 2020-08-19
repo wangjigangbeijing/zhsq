@@ -232,7 +232,9 @@ public class LoginController {
 			String sUserId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 			String sUserName = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_NAME);
 			Integer userType = (Integer)request.getSession().getAttribute(ConstValue.SESSION_USER_TYPE);
+			String sOrgid = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ORG);
 			
+			jsonObj.put("userOrg", sOrgid);
 			jsonObj.put("userId", sUserId);
 			jsonObj.put("userType", userType);
 			jsonObj.put("userName", sUserName);
