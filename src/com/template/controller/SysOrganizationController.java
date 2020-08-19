@@ -203,6 +203,8 @@ public class SysOrganizationController {
 			String sSql = "SELECT * FROM SYS_ORGANIZATION ";
 
 			JSONArray jsonArr = new JSONArray();
+
+			ArrayList<String> alParentOrg = new ArrayList<String>();
 			
 			if(rootOrgId == null || rootOrgId.equalsIgnoreCase(""))
 			{
@@ -215,8 +217,29 @@ public class SysOrganizationController {
 			}
 			else
 			{
-				
+				if(ConstValue.orgMap.containsKey(rootOrgId))
+				{
+					JSONObject jsonRoot = new JSONObject();
+					jsonRoot.put("id", rootOrgId);
+					jsonRoot.put("pId", "");
+					jsonRoot.put("name", ConstValue.orgMap.get(rootOrgId));
+					jsonRoot.put("open", true);
+					jsonArr.put(jsonRoot);
+					
+					sSql += " WHERE PARENT_ID = '"+rootOrgId+"' ";
+					
+					alParentOrg.add(rootOrgId);
+				}
+				else
+				{
+					jsonObj.put("errMsg", "获取部门树失败");	
+					jsonObj.put("success", false);
+					
+					return jsonObj.toString();
+				}
 			}
+			
+			sSql += " ORDER BY CREATED_AT ";
 			
 			ArrayList<String> alOrg = new ArrayList<String>();
 			
@@ -230,9 +253,17 @@ public class SysOrganizationController {
 				String sParentOrgId = (String)hmRec.get("parent_id");
 				String sOrgName = (String)hmRec.get("name");
 				
-				//checkAndAddPrantOrg(sOrgId,jsonArr,alOrg);
+				if(rootOrgId != null && rootOrgId.equalsIgnoreCase("") == false && (sParentOrgId == null || sParentOrgId.equalsIgnoreCase("")))//当加载某一个社区树，parentId为空的不加载
+				{
+					continue;
+				}
 				
-				//id  pId   name
+				if(rootOrgId != null && rootOrgId.equalsIgnoreCase("") == false && alParentOrg.contains(sParentOrgId) == false)
+				{
+					continue;
+				}
+
+				alParentOrg.add(sOrgId);
 				
 				if(alOrg.contains(sOrgId) == false)
 				{
