@@ -5,6 +5,8 @@ var curTableId;//在动态表单显示的时候有用
 
 var curUserName;
 
+var ip = '127.0.0.1';
+
 
 $(document).ready(function (){
 	
@@ -255,6 +257,8 @@ function loaddata(){
 	loadbaseinfo6();
 	
 	loadsqbs();
+	
+	getgpyip();
 }
 
 function loadbaseinfo1(){
@@ -285,6 +289,18 @@ function getsqname(){
 				$("#sqname").html("(" + obj.data + ")");
 				$("#sqtitle").html(obj.data);
 				$("#username").html(obj.username);
+			}
+		});	
+}
+
+function getgpyip(){
+	$.get(getContextPath()+'/homeController/getgpyip',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				ip = obj.ip;
 			}
 		});	
 }

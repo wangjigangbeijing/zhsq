@@ -1,10 +1,13 @@
-﻿var baseUrl = "ws://127.0.0.1:12345";	
-
+﻿var baseUrl = "ws://" + ip + ":12345";	
+ 
 var piclist = new Array();
 
 var dialog;
 
+var hasuse = false;
+
 function openSocket() {				
+	console.log("socket:" + baseUrl);
 	socket = new WebSocket(baseUrl);
 	socket.onclose = function()
 	{
@@ -208,14 +211,12 @@ function openSocket2() {
 function doPhoto1(){
 	piclist.length = 0;
 	dialog.photoBtnClicked("primaryDev_");
-	dialog.get_actionType("savePhotoPriDev");
 }
 
 //副摄像头拍照
 function doPhoto2(){
 	piclist.length = 0;
 	dialog.photoBtnClicked("subDev_");
-	dialog.get_actionType("savePhotoSubDev");
 }
 
 //读取身份证
@@ -264,6 +265,9 @@ function queryresident(idnumber){
 }
 
 function uploadimage(img){
+	
+	dialog.get_actionType("closeSignal");
+	
 	$.post(getContextPath()+"/fileController/uploadfilestring",
 	{
 		imgstr:img

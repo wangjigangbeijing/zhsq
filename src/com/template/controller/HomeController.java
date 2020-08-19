@@ -129,6 +129,32 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	    return jsonObj.toString();
 	}
 	
+	@RequestMapping(value="getgpyip",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String getGpyip()
+	{		
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			
+			String sql = "select b.gpy_ip from sys_user_organization a, sys_organization b where a.organization=b.id and a.user=?";
+			List<Object> params = new ArrayList<Object>();
+			params.add(userid);
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0) {
+				jsonObj.put("ip", list.get(0).get("gpy_ip"));
+			}
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
 	@RequestMapping(value="loadbaseinfo1",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String loadBaseInfo1()
