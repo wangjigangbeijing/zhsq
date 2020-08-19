@@ -64,29 +64,30 @@ function load()
 										{ 'data': 'title' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
 					{ 'data': 'authorityorg' ,'sClass':'text-center'},
-					{ 'data': 'body' ,'sClass':'text-center'},
-					{ 'data': 'attach' ,'sClass':'text-center'},
+					{ 'data': 'bodyShort' ,'sClass':'text-center'},
 					{ 'data': 'time' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ /*{
+				columnDefs: [ {
 					className: 'control',
 					orderable: false,
-					targets:   0,//从0开始
+					targets:   3,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
+						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.body+"\">"+full.bodyShort+"</a>";
 						return btn;
 					}
-					},*/
+					},
 					{
 					className: 'control',
 					orderable: false,
-					targets:  6,//从0开始
+					targets:  5,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
-						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						var btn = "<a href=\"#\" onclick=\"view('"+full.id+"')\" class=\"lk-a\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+
+						//btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\"  class=\"lk-c\"><i class=\"fa fa-trash-o\"></i>编辑</a>&nbsp;";
+
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"lk-b\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
@@ -97,43 +98,21 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
+function view(id)
 {
-	//$('#modalTitle').text('修改用户信息');
 	curId = id;
-	$.get(getContextPath()+"/noticeController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#title').val(obj.title);
-				$('#type').val(obj.type);
-				$('#authorityorg').val(obj.authorityorg);
-				$('#body').val(obj.body);
-				$('#attach').val(obj.attach);
-				$('#time').val(obj.time);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
 	
-		$('#title').val('');
-	$('#type').val('');
-	$('#authorityorg').val('');
-	$('#body').val('');
-	$('#attach').val('');
-	$('#time').val('');
-
+	$('#main-content').load("./oa/notice/noticeDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
 }
-*/
 
 function editData(id)
 {

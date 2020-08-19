@@ -21,6 +21,8 @@ var curUserType = -1;
 
 var curJCSQSJType = '';//基础社情数据类型
 
+var curUserOrgId = '';
+
 $.ajax({
   type: 'POST',
   url: getContextPath()+"/dictionaryController/getDataOfDic",

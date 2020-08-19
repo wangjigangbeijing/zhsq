@@ -96,7 +96,28 @@ public String load(String name,String registrationcategory,String registrationad
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
-		HqlFilter hqlFilter = new HqlFilter();
+		int iPageSize = 10;
+		int iDisplayStart = 0;
+		
+		String aoData = request.getParameter("aoData");
+		
+		if(aoData != null && aoData.equalsIgnoreCase("") == false)
+		{
+			JSONArray jsonArrParam = new JSONArray(aoData);
+			for(int i=0;i<jsonArrParam.length();i++)
+			{
+				if("iDisplayLength".equalsIgnoreCase(jsonArrParam.getJSONObject(i).get("name").toString()))
+				{
+					iPageSize = jsonArrParam.getJSONObject(i).getInt("value");
+				}
+				else if("iDisplayStart".equalsIgnoreCase(jsonArrParam.getJSONObject(i).get("name").toString()))
+				{
+					iDisplayStart = jsonArrParam.getJSONObject(i).getInt("value");
+				}
+			}
+		}
+		
+		HqlFilter hqlFilter = new HqlFilter(iDisplayStart/iPageSize+1,iPageSize);
 if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
 {
 	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
@@ -159,7 +180,9 @@ hqlFilter.setOrder("desc");
 
         List<Family> listObj = familyService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
-        int iTotalCnt = 0;
+
+		long iTotalCnt = familyService.countByFilter(hqlFilter);
+		
 		for(int i=0;i<listObj.size();i++)
 		{
 			Family family = listObj.get(i);
@@ -187,11 +210,14 @@ hqlFilter.setOrder("desc");
 			jsonTmp.put("status",family.getstatus());
 
        		jsonArr.put(jsonTmp);
-        	iTotalCnt++;
 		}
         jsonObj.put("totalCount", iTotalCnt);
         jsonObj.put("list", jsonArr);
         jsonObj.put("success", true);
+        
+        jsonObj.put("aaData", jsonArr);
+		jsonObj.put("iTotalRecords", iTotalCnt);
+		jsonObj.put("iTotalDisplayRecords", iTotalCnt);
 	}
 	catch(Exception e)
 	{

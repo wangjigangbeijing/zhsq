@@ -118,6 +118,14 @@ public String delete(String id)
 				jsonTmp.put("type",notice.gettype());
 				jsonTmp.put("authorityorg",notice.getauthorityorg());
 				jsonTmp.put("body",notice.getbody());
+				
+				String bodyTxt = notice.getbody();
+				String bodyShort = bodyTxt;
+				if(bodyShort != null && bodyShort.length() > 10)
+					bodyShort = bodyShort.substring(0, 10) + "...";
+				
+				jsonTmp.put("bodyShort", bodyShort);
+				
 				jsonTmp.put("attach",notice.getattach());
 				jsonTmp.put("time",TimeUtil.formatDate(notice.gettime(),"yyyy-MM-dd HH:mm"));
 	

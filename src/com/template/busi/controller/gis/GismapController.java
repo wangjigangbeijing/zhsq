@@ -181,7 +181,8 @@ public String get(String id)
 			jsonObj.put("mapurl",geoserverURL);
 
 			HqlFilter hqlFilter = new HqlFilter();
-			hqlFilter.addQryCond("mapid", HqlFilter.Operator.EQ, id);
+			hqlFilter.addQryCond("mapid", HqlFilter.Operator.EQ, id);			
+			hqlFilter.setSort("order");
 
 	        List<Gismaplayers> listObj = gismaplayersService.findByFilter(hqlFilter);
 	        JSONArray jsonArr = new JSONArray();
@@ -200,8 +201,8 @@ public String get(String id)
 				jsonTmp.put("labelfields",gismaplayers.getlabelfields());
 				jsonTmp.put("infofields",gismaplayers.getinfofields());
 				jsonTmp.put("queryfields",gismaplayers.getqueryfields());
-				jsonTmp.put("note",gismaplayers.getnote());
-				
+				jsonTmp.put("note",gismaplayers.getnote());				
+				jsonTmp.put("order",gismaplayers.getorder());				
 				jsonTmp.put("geoserver",geoserverURL);
 				
 	       		jsonArr.put(jsonTmp);

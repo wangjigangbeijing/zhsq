@@ -19,6 +19,8 @@ $(document).ready(function (){
 
 var curId;
 
+var dataGridTable;
+
 function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
@@ -42,8 +44,9 @@ function load()
 	var material = $('#materialQuery').val();
 	var form = $('#formQuery').val();
 	var objState = $('#objStateQuery').val();
-
-	$.get(getContextPath()+'/jc_pubfacilities_gyController/load?type='+type+'&objid='+objid+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
+	
+	
+	/*$.get(getContextPath()+'/jc_pubfacilities_gyController/load?type='+type+'&objid='+objid+'&deptname1='+deptname1+'&isincommunity='+isincommunity+'&material='+material+'&form='+form+'&objState='+objState+'&',
 
 	function(result){
 		
@@ -100,15 +103,7 @@ function load()
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ /*{
-					className: 'control',
-					orderable: false,
-					targets:   0,//从0开始
-					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"·\">"+full.name+"</a>";
-						return btn;
-					}
-					},*/
+				columnDefs: [ 
 					{
 					className: 'control',
 					orderable: false,
@@ -126,7 +121,119 @@ function load()
 				]
 			} );
 		}
+	});*/
+	
+	lTotalCnt = 0;
+			
+	if(dataGridTable!=null){  
+		dataGridTable.fnClearTable(0);  
+	}
+	
+	dataGridTable = $("#dataTable").dataTable({	
+		destroy: true,
+		stateSave: false,
+		iDisplayLength: 10,
+		lengthChange: false,
+		"paging": true,
+		"lengthChange": false,
+		"searching": false,
+		"bProcessing" : true,  
+		"aaSorting": [[ 0, "asc" ]],  
+		"ordering": true,
+		"info": true,
+		"oLanguage": { 
+					"sProcessing": "正在加载中......", 
+					"sLengthMenu": "每页显示 _MENU_ 条记录", 
+					"sZeroRecords": "对不起，查询不到相关数据！", 
+					"sInfoEmpty":"",
+					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+					"sSearch": "搜索", 
+					"oPaginate":  
+					{ 
+						"sFirst": "首页", 
+						"sPrevious": "上一页", 
+						"sNext": "下一页", 
+						"sLast": "末页" 
+					}
+				}, //多语言配置					
+		"autoWidth": false,
+		"bServerSide" : true,
+		"sAjaxSource" : getContextPath()+'/jc_pubfacilities_gyController/load',
+		"fnServerParams" : function(aoData) {  
+			aoData.push({  
+				"name" : "statId",  
+				"value" : "abc"
+			});  
+		},  
+		"columns": [
+					{ 'data': 'type' ,'sClass':'text-center'},
+					{ 'data': 'objid' ,'sClass':'text-center'},
+					{ 'data': 'locatedsc' ,'sClass':'text-center'},
+					{ 'data': 'deptname1' ,'sClass':'text-center'},
+					{ 'data': 'isincommunity' ,'sClass':'text-center'},
+					{ 'data': 'material' ,'sClass':'text-center'},
+					{ 'data': 'form' ,'sClass':'text-center'},
+					{ 'data': 'objState' ,'sClass':'text-center'},
+					{ 'data': '' ,'sClass':'text-center'}
+				],
+		columnDefs: [
+				{
+			className: 'control',
+			orderable: false,
+			targets:  8,//从0开始
+			mRender : function(data,type,full){
+				var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+				
+				btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+
+				btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+				
+				return btn;
+			}
+			}
+		],
+		"fnServerData" : function(sSource, aoData, fnCallback) {  
+			$('#btnSearch').attr('disabled','disabled');
+			
+			$.ajax({
+				"type" : 'get',  
+				"url" : sSource,  
+				"dataType" : "json",  
+				"data" : {  
+					aoData : JSON.stringify(aoData),
+					totalCnt : lTotalCnt,
+					objid:objid,
+					deptname1:deptname1,
+					isincommunity:isincommunity,
+					material:material,
+					form:form,
+					objState:objState
+				},
+				"success" : function(resp) {
+					
+					$('#btnSearch').removeAttr('disabled');
+					if(resp.success == true)
+					{
+						fnCallback(resp);
+					
+						lTotalCnt = resp.iTotalRecords;
+					}
+					else
+					{
+						jError("加载数据出错!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+					}
+				},
+				"failure":function (result) {
+					$('#btnSearch').removeAttr('disabled');
+				}
+			});  
+		}
 	});
+	
 }
 
 /*

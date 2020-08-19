@@ -160,7 +160,9 @@ hqlFilter.setOrder("desc");
 
         List<Jc_pubfacilities_hj> listObj = jc_pubfacilities_hjService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
-        int iTotalCnt = 0;
+
+		long iTotalCnt = jc_pubfacilities_hjService.countByFilter(hqlFilter);
+		
 		for(int i=0;i<listObj.size();i++)
 		{
 			Jc_pubfacilities_hj jc_pubfacilities_hj = listObj.get(i);
@@ -182,11 +184,14 @@ hqlFilter.setOrder("desc");
 			jsonTmp.put("note",jc_pubfacilities_hj.getnote());
 
        		jsonArr.put(jsonTmp);
-        	iTotalCnt++;
 		}
         jsonObj.put("totalCount", iTotalCnt);
         jsonObj.put("list", jsonArr);
         jsonObj.put("success", true);
+
+        jsonObj.put("aaData", jsonArr);
+		jsonObj.put("iTotalRecords", iTotalCnt);
+		jsonObj.put("iTotalDisplayRecords", iTotalCnt);
 	}
 	catch(Exception e)
 	{

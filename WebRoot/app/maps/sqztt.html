@@ -409,7 +409,6 @@ function loadMap(mapName)
 									iconFeature.setId(data.id);
 									iconFeature.set('info', data.info);
 									
-									
 									var strokeColor = '#1E90FF';
 									if(layerStyleObj.style != null)
 										strokeColor = layerStyleObj.style['stroke-color'];
@@ -710,6 +709,7 @@ $(function ()
 	
 	loadboundary();
 	
+	loadMap('先锋党建图');
 })
 
 function loadboundary(){

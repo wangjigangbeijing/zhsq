@@ -8,14 +8,20 @@ $(document).ready(function (){
 		autoclose: true
 	});
 	
-	//$('#btnReset').click(Reset);
+	initialOrganizationTree(curUserOrgId,'');
 	
 	$('#btnSearch').click(load);
 	
-	//load();
-	
 	if(curId != '')
 		viewDetail(curId);
+	else
+	{
+		var now = new Date();
+		 var year = now.getFullYear();
+		 var month = now.getMonth()+1;
+		 var date = now.getDate();
+		$('#time').val(year+'-'+month+'-'+date);
+	}
 });
 
 
@@ -36,8 +42,6 @@ function viewDetail(id)
 				
 				var attachArr = obj.attach.split(VALUE_SPLITTER);		
 
-				debugger;
-				
 				for(var j=0;j<attachArr.length;j++)				
 				{					
 					if(attachArr[j] != '')					
@@ -49,8 +53,6 @@ function viewDetail(id)
 						
 				$('#note').val(obj.note);
 				$('#time').val(obj.time);
-
-					
 			}
 		});
 }
@@ -78,14 +80,12 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
-	
-	
 	$.post(getContextPath()+"/noticeController/addOrUpdate",
 	{
 		id:curId,
 		title:$('#title').val(),
 		type:$('#type').val(),
-		authorityorg:$('#authorityorg').val(),
+		authorityorg:$("#parentOrgInput").val(),//$('#authorityorg').val(),
 		body:$('#body').val(),
 		attach:$('#attach').val(),
 		time:$('#time').val()
@@ -121,4 +121,91 @@ function downloadAttach(fileName)
 	window.open(encodeURI(url));
 	
 	//window.open(getContextPath()+"/fileController/downLoad/"+encodeURI(obj.fileName));
+}
+
+
+
+
+var setting = {
+	view: {
+		dblClickExpand: false
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeClick: beforeClick,
+		onClick: onClick
+	}
+};
+
+function beforeClick(treeId, treeNode) {
+	/*var check = (treeNode && !treeNode.isParent);
+	if (!check) alert("只能选择城市...");
+	return check;*/
+}
+
+function onClick(e, treeId, treeNode) {
+	//var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+	/*
+	debugger;
+	nodes = orgTree.getSelectedNodes(),
+	v = "";
+	nodes.sort(function compare(a,b){return a.id-b.id;});
+	for (var i=0, l=nodes.length; i<l; i++) {
+		v += nodes[i].name + ",";
+	}
+	if (v.length > 0 ) v = v.substring(0, v.length-1);*/
+
+	$("#parentOrgNameInput").val(treeNode.name);
+	
+	 $("#parentOrgInput").val(treeNode.id);
+}
+		 
+		 
+function showMenu() {	
+	$("#menuContent").slideDown("fast");
+	
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#menuContent").fadeOut("fast");
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+		hideMenu();
+	}
+}
+	
+var orgTree;
+
+function initialOrganizationTree(rootOrgId,selectedOrgId)
+{
+	$.get(getContextPath()+"/sysOrganizationController/loadOrganizationTree?rootOrgId="+rootOrgId,
+		function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			orgTree = $.fn.zTree.init($("#treeDemo"), setting, obj.organizationList);
+			if(selectedOrgId != null && selectedOrgId != '')
+			{
+				var nodes = orgTree.getNodesByParam("id", selectedOrgId, null);
+				if (nodes.length > 0)
+				{
+					orgTree.selectNode(nodes[0]);
+					
+					$("#parentOrgNameInput").val(nodes[0].name);
+					$("#parentOrgInput").val(selectedOrgId);
+				}
+			}
+			else{
+				var node = orgTree.getNodesByFilter(function (node) { return node.level == 0 }, true);  
+				$("#parentOrgNameInput").val(node.name);
+				$("#parentOrgInput").val(node.id);				
+			}
+		}
+	});
 }

@@ -114,7 +114,8 @@ function addOrUpdate()
 		directorname:$('#directorname').val(),
 		directorphone:$('#directorphone').val(),
 		note:$('#note').val(),
-		orgtype:$('input:radio[name="orgtype"]:checked').val()
+		orgtype:$('input:radio[name="orgtype"]:checked').val(),
+		parent_id:$("#parentOrgInput").val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  

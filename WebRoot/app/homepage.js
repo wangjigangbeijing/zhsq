@@ -843,6 +843,8 @@ function getCurrentLoginUserInfo()
 			
 			if(obj.userId != 'admin')
 				$('#sysMenu').hide();
+			
+			curUserOrgId = obj.userOrg;
 			/*if(obj.userType != USER_TYPE_WEB_CUSTOMER)
 			{
 				//$('#DataStatAnchor').hide();

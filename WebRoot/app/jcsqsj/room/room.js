@@ -140,6 +140,7 @@ $('#ofresidebuildingQuery').change(function(){
 });
 
 var curId;
+var dataGridTable;;
 
 function load()
 {
@@ -162,9 +163,7 @@ function load()
  var status = $('#statusQuery').val();
  var isgrouporiented = $('#isgrouporientedQuery').val();
 
-
-	
-	$.get(getContextPath()+'/roomController/load?number='+number+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&status='+status+'&isgrouporiented='+isgrouporiented+'&',
+	/*$.get(getContextPath()+'/roomController/load?number='+number+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&status='+status+'&isgrouporiented='+isgrouporiented+'&',
 	function(result){
 	
 		if(searchtype == 1){
@@ -174,7 +173,6 @@ function load()
 		else {
 			$('#btnSearch2').removeAttr('disabled');
 		}
-
 
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
@@ -225,15 +223,7 @@ function load()
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
-				columnDefs: [ /*{
-					className: 'control',
-					orderable: false,
-					targets:   0,//从0开始
-					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
-						return btn;
-					}
-					},*/
+				columnDefs: [ 
 					{
 					className: 'control',
 					orderable: false,
@@ -250,6 +240,121 @@ function load()
 					}
 				]
 			} );
+		}
+	});*/
+	
+	lTotalCnt = 0;
+			
+	if(dataGridTable!=null){  
+		dataGridTable.fnClearTable(0);  
+	}
+	
+	dataGridTable = $("#dataTable").dataTable({	
+		destroy: true,
+		stateSave: false,
+		iDisplayLength: 10,
+		lengthChange: false,
+		"paging": true,
+		"lengthChange": false,
+		"searching": false,
+		"bProcessing" : true,  
+		"aaSorting": [[ 0, "asc" ]],  
+		"ordering": true,
+		"info": true,
+		"oLanguage": { 
+					"sProcessing": "正在加载中......", 
+					"sLengthMenu": "每页显示 _MENU_ 条记录", 
+					"sZeroRecords": "对不起，查询不到相关数据！", 
+					"sInfoEmpty":"",
+					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+					"sSearch": "搜索", 
+					"oPaginate":  
+					{ 
+						"sFirst": "首页", 
+						"sPrevious": "上一页", 
+						"sNext": "下一页", 
+						"sLast": "末页" 
+					}
+				}, //多语言配置					
+		"autoWidth": false,
+		"bServerSide" : true,
+		"sAjaxSource" : getContextPath()+'/roomController/load',
+		"fnServerParams" : function(aoData) {  
+			aoData.push({  
+				"name" : "statId",  
+				"value" : "abc"
+			});  
+		},  
+		"columns": [
+					//{ 'data': 'dataid' ,'sClass':'text-center'},
+					{ 'data': 'number' ,'sClass':'text-center'},
+					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
+					//{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
+					//{ 'data': 'ofunit' ,'sClass':'text-center'},
+					//{ 'data': 'level' ,'sClass':'text-center'},
+					{ 'data': 'status' ,'sClass':'text-center'},
+					{ 'data': 'isgrouporiented' ,'sClass':'text-center'},
+					{ 'data': 'ownertype' ,'sClass':'text-center'},
+					//{ 'data': 'propertypapertype' ,'sClass':'text-center'},
+					//{ 'data': 'propertypaperid' ,'sClass':'text-center'},
+					//{ 'data': 'address' ,'sClass':'text-center'},
+					//{ 'data': 'note' ,'sClass':'text-center'},
+					{ 'data': '' ,'sClass':'text-center'}
+				],
+		columnDefs: [
+				{
+					className: 'control',
+					orderable: false,
+					targets:  5,//从0开始
+					mRender : function(data,type,full){
+						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+						
+						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+
+						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						
+						return btn;
+					}
+					}
+		],
+		"fnServerData" : function(sSource, aoData, fnCallback) {  
+			$('#btnSearch').attr('disabled','disabled');
+			
+			$.ajax({
+				"type" : 'get',  
+				"url" : sSource,  
+				"dataType" : "json",  
+				"data" : {  
+					aoData : JSON.stringify(aoData),
+					totalCnt : lTotalCnt,
+					ofcommunity:ofcommunity,
+					ofresidebuilding:ofresidebuilding,
+					ofunit:ofunit,
+					status:status,
+					isgrouporiented:isgrouporiented
+				},
+				"success" : function(resp) {
+					
+					$('#btnSearch').removeAttr('disabled');
+					if(resp.success == true)
+					{
+						fnCallback(resp);
+					
+						lTotalCnt = resp.iTotalRecords;
+					}
+					else
+					{
+						jError("加载数据出错!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+					}
+				},
+				"failure":function (result) {
+					$('#btnSearch').removeAttr('disabled');
+				}
+			});  
 		}
 	});
 }

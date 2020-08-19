@@ -211,6 +211,61 @@ $(document).ready(function (){
 		});
 	});
 	
+	
+	$("input[name='characteristics']").change(function() {
+		
+		$(".zgdy").hide();
+		$(".zyz").hide();
+		$(".jmdb").hide();
+		$(".wtgg").hide();
+		$(".lnr").hide();
+		$(".syry").hide();
+		$(".zdry").hide();
+		$(".jsbr").hide();
+		$(".cjr").hide();
+		
+		$('input[name="characteristics"]:checked').each(function () {
+            var val = $(this).val();
+			
+			if(val == '中共党员')
+			{
+				$(".zgdy").show();
+			}			
+			else if(val == '志愿者')
+			{
+				$(".zyz").show();
+			}
+			else if(val == '居民代表')
+			{
+				$(".jmdb").show();
+			}
+			else if(val == '文体骨干')
+			{
+				$(".wtgg").show();
+			}
+			else if(val == '老年人' || val == '80岁以上老人' || val == '90岁以上老人' || val == '独居老人' || val == '失独老人' || val == '空巢老人')
+			{
+				$(".lnr").show();
+			}
+			else if(val == '失业人员')
+			{
+				$(".syry").show();
+			}
+			else if(val == '残疾人')
+			{
+				$(".cjr").show();
+			}
+			else if(val == '精神病人')
+			{
+				$(".jsbr").show();
+			}
+			else if(val == '重点人员')
+			{
+				$(".zdry").show();
+			}
+        });
+	});
+	
 	if(curId != '')
 	{
 		setTimeout(function(){ 

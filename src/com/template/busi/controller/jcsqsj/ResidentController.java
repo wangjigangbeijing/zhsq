@@ -215,7 +215,7 @@ public String load(String name,String identitytype,String idnumber,String charac
 			}
 		}
 		
-		HqlFilter hqlFilter = new HqlFilter(iDisplayStart,iPageSize);
+		HqlFilter hqlFilter = new HqlFilter(iDisplayStart/iPageSize+1,iPageSize);
 		if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
 		{
 			hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
@@ -403,7 +403,6 @@ public String load(String name,String identitytype,String idnumber,String charac
 			hqlFilter.addQryCond("jsb_type", HqlFilter.Operator.EQ, jsb_type);
 		}
 
-
 		String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
 		
 		String organization = "";
@@ -431,11 +430,6 @@ public String load(String name,String identitytype,String idnumber,String charac
 		
 		long iTotalCnt = residentService.countByFilter(hqlFilter);
 		
-		
-		
-		
-		
-
         List<Resident> listObj = residentService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
         

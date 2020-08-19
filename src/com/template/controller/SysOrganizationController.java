@@ -191,7 +191,7 @@ public class SysOrganizationController {
 	
 	@RequestMapping(value="loadOrganizationTree",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String loadOrganizationTree()
+	public String loadOrganizationTree(String rootOrgId)
 	{
 		logger.debug("loadOrganizationTree");
     	JSONObject jsonObj = new JSONObject();
@@ -204,26 +204,19 @@ public class SysOrganizationController {
 
 			JSONArray jsonArr = new JSONArray();
 			
-			/*if(iUserType == ConstValue.USER_TYPE_ORG_ADMIN) JiGang  在公共通讯录处应该看到全部组织
+			if(rootOrgId == null || rootOrgId.equalsIgnoreCase(""))
 			{
-				String sOrgId = ConstValue.getCurrentUserOrgId();
-				
-				if(sOrgId.length() > 4)
-					sOrgId = sOrgId.substring(0, 4);
-				
-				sSql += " WHERE ORG_ID LIKE '"+sOrgId+"%' ";
-			}
-			else
-			{*/
 				JSONObject jsonRoot = new JSONObject();
 				jsonRoot.put("id", "0");
 				jsonRoot.put("pId", "");
 				jsonRoot.put("name", "大红门街道");
 				jsonRoot.put("open", true);
 				jsonArr.put(jsonRoot);
-			//}
-			
-			//sSql += "ORDER BY SEQ,ORG_ID";
+			}
+			else
+			{
+				
+			}
 			
 			ArrayList<String> alOrg = new ArrayList<String>();
 			

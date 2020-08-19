@@ -115,6 +115,18 @@ public class Gismaplayers implements java.io.Serializable {
 	}
 	
 
+	@Column(name = "order", nullable = true)
+	public String order;
+	public String getorder()
+	{
+		return order;
+	}
+	public void setorder(String order)
+	{
+		this.order = order;
+	}
+	
+
 	@Column(name = "layertype", nullable = true)
 	public String layertype;
 	public String getlayertype()
