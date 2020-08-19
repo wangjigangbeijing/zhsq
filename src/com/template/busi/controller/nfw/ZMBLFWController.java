@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.cj.util.StringUtils;
 import com.template.service.SysUserService;
+import com.template.util.ConstValue;
 import com.template.util.Utility;
 
 @Controller
@@ -31,15 +32,40 @@ public class ZMBLFWController {
 	@Autowired
 	private SysUserService userService;
 	
+	/**
+	 * 获取用户社区
+	 * @return
+	 */
+	private String getOrganization() {
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String sql = "select a.organization from sys_user_organization a where a.user=?";
+		List<Object> params = new ArrayList<Object>();
+		params.add(userid);
+		List<HashMap> list = this.userService.findBySql(sql, params);
+		if(list == null || list.size() == 0) {
+			return null;
+		}
+		else {
+			return (String) list.get(0).get("organization");
+		}
+	}
+	
 	@RequestMapping(value="getzmbldatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String getDataList(String zmsxdl, String zmsxxl, String blrname, String status) {
 		logger.info("getzmbldatalist");
 		
+		String organization = this.getOrganization();
+		
 		JSONObject jsonObj = new JSONObject();
 		try {
 			List<Object> params = new ArrayList<Object>();
 			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_zmblfw a where 1=1";
+			if(!StringUtils.isNullOrEmpty(organization)) {
+				sql += " and a.owner=?";
+				params.add(organization);
+			}
 			if(!StringUtils.isNullOrEmpty(zmsxdl)  && !"null".equals(zmsxdl)) {
 				sql += " and a.zmsxdl=?";
 				params.add(zmsxdl);
@@ -95,6 +121,7 @@ public class ZMBLFWController {
 					map.put("xq", xq);
 					map.put("bz", bz);
 					map.put("fj", fj);
+					map.put("owner", getOrganization());
 					
 					int ret = this.userService.addData(map, "nfw_zmblfw");
 					if(ret > 0) {
@@ -121,7 +148,7 @@ public class ZMBLFWController {
 					map.put("xq", xq);
 					map.put("bz", bz);
 					map.put("fj", fj);
-					
+					map.put("owner", getOrganization());
 					
 					int ret = this.userService.updateData(map, kvs, "nfw_zmblfw");
 					if(ret > 0) {
@@ -146,7 +173,7 @@ public class ZMBLFWController {
 				map.put("xq", xq);
 				map.put("bz", bz);
 				map.put("fj", fj);
-				
+				map.put("owner", getOrganization());
 				
 				int ret = this.userService.addData(map, "nfw_zmblfw");
 				if(ret > 0) {

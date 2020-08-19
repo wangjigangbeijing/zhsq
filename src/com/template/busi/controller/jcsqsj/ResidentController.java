@@ -1,25 +1,25 @@
 package com.template.busi.controller.jcsqsj;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.template.busi.safe.SafeFieldChecker;
-import com.template.model.jcsqsj.Resident;
-import com.template.service.jcsqsj.ResidentService;
-import com.template.util.HqlFilter;
-import com.template.util.ConstValue;
-import com.template.util.Utility;
-import com.template.util.TimeUtil;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.template.busi.safe.SafeFieldChecker;
+import com.template.model.jcsqsj.Resident;
+import com.template.service.jcsqsj.ResidentService;
+import com.template.util.ConstValue;
+import com.template.util.HqlFilter;
+import com.template.util.TimeUtil;
+import com.template.util.Utility;
 @Controller
 @RequestMapping("residentController")
 public class ResidentController {

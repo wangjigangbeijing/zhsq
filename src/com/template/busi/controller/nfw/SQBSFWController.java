@@ -49,6 +49,25 @@ public class SQBSFWController {
 	@Autowired
 	private SQBSFWService sqbsfwService;
 	
+	/**
+	 * 获取用户社区
+	 * @return
+	 */
+	private String getOrganization() {
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String sql = "select a.organization from sys_user_organization a where a.user=?";
+		List<Object> params = new ArrayList<Object>();
+		params.add(userid);
+		List<HashMap> list = this.sqbsfwService.findBySql(sql, params);
+		if(list == null || list.size() == 0) {
+			return null;
+		}
+		else {
+			return (String) list.get(0).get("organization");
+		}
+	}
+	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String addOrUpdate(String id,String blr, String blrname,
@@ -87,6 +106,7 @@ public class SQBSFWController {
 			sqbsfw.setxq(xq);
 			sqbsfw.setbz(bz);
 			sqbsfw.setFj(fj);
+			sqbsfw.setowner(getOrganization());
 			
 			sqbsfwService.saveOrUpdate(sqbsfw);
 			
@@ -136,11 +156,17 @@ public class SQBSFWController {
 	{
 		logger.info("load: " + blsxdl + "-" + blsxxl + "-" + blrname);
 		
+		String organization = this.getOrganization();
+		
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
 			List<Object> params = new ArrayList<Object>();
 			String sql = "select a.*, (select status from fw_flowdatainfo where dataid=a.id order by inserttime desc LIMIT 0, 1) as status from nfw_sqbsfw a where 1=1";
+			if(!StringUtils.isNullOrEmpty(organization)) {
+				sql += " and a.owner=?";
+				params.add(organization);
+			}
 			if(!StringUtils.isNullOrEmpty(blsxdl)) {
 				sql += " and a.blsxdl=?";
 				params.add(blsxdl);

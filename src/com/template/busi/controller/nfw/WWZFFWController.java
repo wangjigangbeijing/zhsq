@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.cj.util.StringUtils;
 import com.template.service.SysUserService;
+import com.template.util.ConstValue;
 import com.template.util.Utility;
 
 @Controller
@@ -31,15 +32,40 @@ public class WWZFFWController {
 	@Autowired
 	private SysUserService userService;
 	
+	/**
+	 * 获取用户社区
+	 * @return
+	 */
+	private String getOrganization() {
+		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String sql = "select a.organization from sys_user_organization a where a.user=?";
+		List<Object> params = new ArrayList<Object>();
+		params.add(userid);
+		List<HashMap> list = this.userService.findBySql(sql, params);
+		if(list == null || list.size() == 0) {
+			return null;
+		}
+		else {
+			return (String) list.get(0).get("organization");
+		}
+	}
+	
 	@RequestMapping(value="getwwzfdatalist",method = {RequestMethod.GET,RequestMethod.GET},produces="text/html;charset=UTF-8")
     @ResponseBody
 	public String getDataList(String wwzfdxname, String wwlx, String wwfs) {
 		logger.info("getwwzfdatalist");
 		
+		String organization = this.getOrganization();
+		
 		JSONObject jsonObj = new JSONObject();
 		try {
 			List<Object> params = new ArrayList<Object>();
 			String sql = "select a.* from nfw_wwzffw a where 1=1";
+			if(!StringUtils.isNullOrEmpty(organization)) {
+				sql += " and a.owner=?";
+				params.add(organization);
+			}
 			if(!StringUtils.isNullOrEmpty(wwzfdxname)) {
 				sql += " and a.wwzfdxname like ?";
 				params.add("%" + wwzfdxname + "%");
@@ -93,6 +119,7 @@ public class WWZFFWController {
 					map.put("wwzfxq", wwzfxq);
 					map.put("bz", bz);
 					map.put("fj", fj);
+					map.put("owner", getOrganization());
 					
 					int ret = this.userService.addData(map, "nfw_wwzffw");
 					if(ret > 0) {
@@ -122,6 +149,7 @@ public class WWZFFWController {
 					map.put("wwzfxq", wwzfxq);
 					map.put("bz", bz);
 					map.put("fj", fj);
+					map.put("owner", getOrganization());
 					
 					int ret = this.userService.updateData(map, kvs, "nfw_wwzffw");
 					if(ret > 0) {
@@ -149,6 +177,7 @@ public class WWZFFWController {
 				map.put("wwzfxq", wwzfxq);
 				map.put("bz", bz);
 				map.put("fj", fj);
+				map.put("owner", getOrganization());
 				
 				int ret = this.userService.addData(map, "nfw_wwzffw");
 				if(ret > 0) {

@@ -1,5 +1,7 @@
 ﻿var baseUrl = "ws://127.0.0.1:12345";	
 
+var piclist = new Array();
+
 var dialog;
 
 function openSocket() {				
@@ -26,14 +28,6 @@ function openSocket() {
 				dialog.get_actionType("closeSignal");
 			}
 			//反初始化
-			
-			//主摄像头拍照按钮点击
-			document.getElementById("photographPri").onclick = function() {
-				//dialog.get_actionType("setdeskew");	
-				dialog.photoBtnClicked("primaryDev_");
-				//dialog.get_actionType("savePhotoPriDev");
-				//dialog.get_actionType("setdeskew");	
-			};
 		
 			
 			//服务器返回消息
@@ -80,6 +74,11 @@ function openSocket() {
 				}
 			});
 			
+			dialog.send_subImgData.connect(function(message) {
+				var element = document.getElementById("bigSubDev");
+				element.src = "data:image/jpg;base64," + message;							
+			});
+			
 			//接收拍照base64，主头数据
 			dialog.send_priPhotoData.connect(function(message) {
 				var element = document.getElementById("devPhoto");
@@ -90,7 +89,16 @@ function openSocket() {
 				//console.log(element);
 				//上传图像
 				uploadimage(message);
-				console.log(message);
+				//console.log(message);
+			});
+			
+			//接收拍照base64，副头数据
+			dialog.send_subPhotoData.connect(function(message) {
+				var element = document.getElementById("devPhoto2");
+				element.src = "data:image/jpg;base64," + message;	
+
+				uploadimage(message);
+				//console.log(message);
 			});
 			
 			//output("ready to send/receive messages!");
@@ -125,16 +133,6 @@ function openSocket2() {
 				dialog.get_actionType("closeSignal");
 			}
 			//反初始化
-			
-			//主摄像头拍照按钮点击
-			if(document.getElementById("photographPri") != null){
-				document.getElementById("photographPri").onclick = function() {
-					//dialog.get_actionType("setdeskew");	
-					dialog.photoBtnClicked("primaryDev_");
-					//dialog.get_actionType("savePhotoPriDev");
-					//dialog.get_actionType("setdeskew");	
-				};
-			}
 		
 			
 			//服务器返回消息
@@ -208,10 +206,16 @@ function openSocket2() {
 
 //主摄像头拍照
 function doPhoto1(){
+	piclist.length = 0;
+	dialog.photoBtnClicked("primaryDev_");
+	dialog.get_actionType("savePhotoPriDev");
 }
 
 //副摄像头拍照
 function doPhoto2(){
+	piclist.length = 0;
+	dialog.photoBtnClicked("subDev_");
+	dialog.get_actionType("savePhotoSubDev");
 }
 
 //读取身份证
@@ -271,17 +275,33 @@ function uploadimage(img){
 			jSuccess("图片上传成功!",{
 						VerticalPosition : 'center',
 						HorizontalPosition : 'center'});
+						
+			//判断文件名是否存在
+			for(var i = 0; i < piclist.length; i++){
+				if(piclist[i] == obj.fileName)
+				{
+					$("#deviceDialog").modal("hide");
+					return;
+				}
+			}
+			
+			piclist.push(obj.fileName);
 				
 			var header = getContextPath()+"/fileController/download?fileName=";
 			var url = header + obj.fileName;
 			var val = $('#pictures').val();
-			$( '#pictures').val(val + VALUE_SPLITTER+ obj.fileName);
+			if(val == ''){
+				$('#pictures').val(obj.fileName);
+			}
+			else {
+				$('#pictures').val(val + VALUE_SPLITTER+ obj.fileName);
+			}
 						
 			$('#picturespicktable').append('<tr><td><a href="' + url + '" data-lightbox="' + obj.fileName + '" data-title="' + obj.fileName + '" style="color:#64A600; font-size: 12px;">'+obj.fileName+'</a></td><td>已上传</td>'+
 					"<td><button type='button' id='Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach('" + obj.fileName + "');return false;'><i class='fa fa-check'></i></button></td>"+
 					'</tr>');
 			
-			$("#deviceDialog").dialog("close");
+			$("#deviceDialog").modal("hide");
 		}
 		else
 		{
