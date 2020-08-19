@@ -382,14 +382,22 @@ function load()
 					});  
 				},  
 				"columns": [
-							{ 'data': 'name' ,'sClass':'text-center'},					
+							{ 'data': 'name' ,'sClass':'text-center',
+								mRender : function(data,type,full){
+									return showData(aesDecrypt(full.name), 1);
+								}
+							},					
 							{ 'data': 'characteristics' ,'sClass':'text-center'},	
 							{ 'data': 'ofcommunity' ,'sClass':'text-center'},					
 							{ 'data': 'sex' ,'sClass':'text-center'},
 							{ 'data': 'residencestatus' ,'sClass':'text-center'},					
 							{ 'data': 'age' ,'sClass':'text-center'},
 							{ 'data': 'professionstatus' ,'sClass':'text-center'},
-							{ 'data': 'mobile' ,'sClass':'text-center'},
+							{ 'data': 'mobile' ,'sClass':'text-center',
+								mRender : function(data,type,full){
+									return showData(aesDecrypt(full.mobile), 2);
+								}
+							},
 							{ 'data': '' ,'sClass':'text-center'}
 						],
 				columnDefs: [

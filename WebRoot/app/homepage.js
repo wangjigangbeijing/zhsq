@@ -1,4 +1,4 @@
-
+﻿
 
 
 var curTableId;//在动态表单显示的时候有用
@@ -346,7 +346,7 @@ function loadbaseinfo4(){
 		function(result){
 		
 			var obj = jQuery.parseJSON(result);  
-			console.log(obj);
+			//console.log(obj);
 			if(obj.success)
 			{
 				$("#b41").html(obj.data[0]);
@@ -372,7 +372,7 @@ function loadbaseinfo5(){
 		function(result){
 		
 			var obj = jQuery.parseJSON(result);  
-			console.log(obj);
+			//console.log(obj);
 			if(obj.success)
 			{
 				$("#b51").html(obj.data[0]);
@@ -386,7 +386,7 @@ function loadbaseinfo6(){
 		function(result){
 		
 			var obj = jQuery.parseJSON(result);  
-			console.log(obj);
+			//console.log(obj);
 			if(obj.success)
 			{
 				$("#b61").html(obj.data[0]);
@@ -440,7 +440,7 @@ function loadsxsq(){
 		function(result){
 		
 			var obj = jQuery.parseJSON(result);  
-			console.log(obj);
+			//console.log(obj);
 			if(obj.success)
 			{
 				$("#s1").html(obj.data[0]);
@@ -458,7 +458,7 @@ function loadsqbs(){
 		function(result){
 		
 			var obj = jQuery.parseJSON(result);  
-			console.log(obj);
+			//console.log(obj);
 			if(obj.success)
 			{
 				$("#bs1").html(obj.data[0]);
@@ -478,7 +478,7 @@ function loadinfodata(){
 		function(result){
 		
 			var obj = jQuery.parseJSON(result);  
-			console.log(obj);
+			//console.log(obj);
 			if(obj.success)
 			{
 				$("#bi1").html(obj.data[0]);

@@ -126,7 +126,9 @@ public class SafeFieldChecker {
 					Method m1 = o.getClass().getMethod(getmethod);
 					Method m2 = o.getClass().getMethod(setmethod, String.class);
 					String content = (String) m1.invoke(o, null);
+					System.out.println("加密前：" + content);
 					String s = AES.encrypt(content);
+					System.out.println("加密后：" + s);
 					m2.invoke(o, s);			
 					
 				} catch(Exception e) {

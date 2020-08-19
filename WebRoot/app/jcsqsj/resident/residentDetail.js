@@ -1,4 +1,4 @@
-
+﻿
 
 $(document).ready(function (){
 	
@@ -286,10 +286,9 @@ function viewDetail(id)
 				
 								$('#dataid').val(obj.dataid);
 				var ename = aesDecrypt(obj.name);
-				console.log(ename);
-				$('#name').val(obj.name);
+				$('#name').val(showData(ename, 1));
 				$('#identitytype').val(obj.identitytype);
-				$('#idnumber').val(obj.idnumber);
+				$('#idnumber').val(showData(aesDecrypt(obj.idnumber), 5));
 				if(obj.characteristics != null){
 					var characteristicsArr = obj.characteristics.split(VALUE_SPLITTER);
 					for(var j=0;j<characteristicsArr.length;j++)
@@ -362,10 +361,10 @@ function viewDetail(id)
 				//$('#issocialsecurity').val(obj.issocialsecurity);
 				$("input[name='issocialsecurity'][value='"+obj.issocialsecurity+"']").attr("checked",true); 
 				
-				$('#email').val(obj.email);
-				$('#tel').val(obj.tel);
+				$('#email').val(showData(aesDecrypt(obj.email), 4));
+				$('#tel').val(showData(aesDecrypt(obj.tel), 3));
 				$('#fax').val(obj.fax);
-				$('#mobile').val(obj.mobile);
+				$('#mobile').val(showData(aesDecrypt(obj.mobile), 2));
 				$('#eligiousbelief').val(obj.eligiousbelief);
 				//$('#marriage').val(obj.marriage);
 				$("input[name='marriage'][value='"+obj.marriage+"']").attr("checked",true); 
