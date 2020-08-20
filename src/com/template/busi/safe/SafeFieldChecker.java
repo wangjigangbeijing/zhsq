@@ -30,6 +30,8 @@ public class SafeFieldChecker {
 		
 		try {
 			for(int i = 0; i < as.length; i++) {
+				System.out.println(as[i].annotationType());
+				System.out.println(as[i].annotationType().getName());
 				if("javax.persistence.Table".equals(as[i].annotationType().getName())) {
 					String s = as[i].toString();
 					int dot = s.indexOf("(");
@@ -85,7 +87,7 @@ public class SafeFieldChecker {
 	 * @param service
 	 * @param o
 	 */
-	public void checkModel(BaseServiceImpl service, Object o) {
+	public void checkModel(BaseServiceImpl service, String tablename, Object o) {
 		this.service = service;
 		Field[] fields = o.getClass().getDeclaredFields();
 		if(fields == null || fields.length == 0) {
@@ -93,11 +95,11 @@ public class SafeFieldChecker {
 			return;
 		}
 		
-		String tablename = getTableName(o);
-		if(tablename == null) {
-			System.out.println("没有获取到实体对象表名");
-			return;
-		}
+//		String tablename = getTableName(o);
+//		if(tablename == null) {
+//			System.out.println("没有获取到实体对象表名");
+//			return;
+//		}
 		
 		List fieldlist = getSafeFields(tablename);
 		if(fieldlist == null || fieldlist.size() == 0) {
@@ -126,9 +128,7 @@ public class SafeFieldChecker {
 					Method m1 = o.getClass().getMethod(getmethod);
 					Method m2 = o.getClass().getMethod(setmethod, String.class);
 					String content = (String) m1.invoke(o, null);
-					System.out.println("加密前：" + content);
 					String s = AES.encrypt(content);
-					System.out.println("加密后：" + s);
 					m2.invoke(o, s);			
 					
 				} catch(Exception e) {
@@ -144,7 +144,7 @@ public class SafeFieldChecker {
 		SafeFieldChecker checker = new SafeFieldChecker();
 		Resident resident = new Resident();
 		resident.setname("张三");
-		checker.checkModel(null, resident);
+		checker.checkModel(null, "", resident);
 		System.out.println(resident.getname());
 		System.out.println(AES.decrypt(resident.getname()));
 	}

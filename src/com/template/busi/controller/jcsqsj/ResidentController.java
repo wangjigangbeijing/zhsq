@@ -32,6 +32,7 @@ public class ResidentController {
 @ResponseBody
 public String addOrUpdate(String id,String dataid,String name,String identitytype,String idnumber,String characteristics,String ofcommunity,String ofresidebuilding,String ofunit,String ofroom,String offamily,String sex,String residencestatus,String ishouseholder,String relationshiphouseholder,String registrationcategory,String nationality,String homeplace,String birthday,String age,String nation,String politicalstatus,String usedname,String residenceaddress,String residentialaddress,String education,String professionstatus,String professiontype,String workunit,String job,String issocialsecurity,String email,String tel,String fax,String mobile,String eligiousbelief,String marriage,String isforeignmarriage,String health,String military,String stature,String blood,String hobby,String reasonnotresidence,String custodian,String custodiantel,String custodianrelationship,String custodianincommunity,String pictures,String note,String dy_partymembertype,String dy_of_partyorganization,String dy_joinpartydate,String dy_inpartydate,String dy_membership,String dy_islost,String dy_lostdate,String dy_movemember,String dy_moveto,String zdr_type,String zdr_reason,String zdr_custodian,String zdr_custodiantel,String jzr_correctioncontent,String jzr_correctiondate,String jzr_correctionaddress,String sy_unemployedreason,String sy_unemployedreemployment,String sy_reemploymentunit,String ylfn_firstmarriagedate,Integer ylfn_children,Integer ylfn_bornchildren,String ylfn_pregnancy,String ylfn_lastmenstruation,String ylfn_terminationpregnancy,String lnr_oldid,String lnr_economicsources,String lnr_livingconditions,String lnr_selfcare,String lnr_specialsubsidies,String lnr_emergencycontact,String lnr_emergencycontactrelated,String lnr_emergencycontacttel,String lnr_physicalcondition,String lnr_medicationcondition,String cj_disabilitytype,String cj_disabilitylevel,String cj_disabilityreason,String cj_disabilityemployment,String jsb_type,String jsb_medicalhistory,String jhr_name,String hjr_tel,String zyz_certificate_id,String zyz_special_skill,String jmdb_representative_level,String jmdb_startofterm,String jmdb_endofterm,String wtgg_skill_type,String wtgg_special_skill)
 {
+	logger.debug("测试数据加密。。。。。");
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
@@ -145,7 +146,7 @@ public String addOrUpdate(String id,String dataid,String name,String identitytyp
 		resident.setwtgg_skill_type(wtgg_skill_type);
 		resident.setwtgg_special_skill(wtgg_special_skill);
 		
-		new SafeFieldChecker().checkModel(residentService, resident);
+		new SafeFieldChecker().checkModel(residentService, "jc_resident", resident);
 
 		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 		
