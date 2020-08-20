@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,15 @@ public String addOrUpdate(String id,String dataid,String name,String address,Str
 		jc_waterpoint.setnote(note);
 		jc_waterpoint.setpicture(picture);
 		jc_waterpoint.setfile(file);
+		
+
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_waterpoint.setowner(organization);
+		
 
         jc_waterpointService.save(jc_waterpoint);
         jsonObj.put("success", true);
@@ -102,6 +112,26 @@ if(type != null && type.equalsIgnoreCase("") == false && type.equalsIgnoreCase("
 {
 	hqlFilter.addQryCond("type", HqlFilter.Operator.LIKE, "%"+type+"%");
 }
+
+
+String organization = Utility.getInstance().getOrganization(request);
+
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null && organization.equalsIgnoreCase("") == false)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 
         List<Jc_waterpoint> listObj = jc_waterpointService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

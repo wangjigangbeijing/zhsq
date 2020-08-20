@@ -413,12 +413,8 @@ public String load(String name,String identitytype,String idnumber,String charac
 			hqlFilter.addQryCond("jsb_type", HqlFilter.Operator.EQ, jsb_type);
 		}
 
-		String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
-		
-		String organization = "";
-		if(ConstValue.userToOrgMap.containsKey(userId))
-			organization = ConstValue.userToOrgMap.get(userId);
-		
+		String organization = Utility.getInstance().getOrganization(request);
+
 		ArrayList<String> alOrg = new ArrayList<String>(); 
 		
 		if(organization != null && organization.equalsIgnoreCase("") == false)

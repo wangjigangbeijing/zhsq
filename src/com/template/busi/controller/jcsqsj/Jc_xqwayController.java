@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,13 @@ public String addOrUpdate(String id,String dataid,String name,String type,String
 		jc_xqway.setpictures(pictures);
 		jc_xqway.setnote(note);
 
+		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
+		String organization = "";
+		if(ConstValue.userToOrgMap.containsKey(userId))
+			organization = ConstValue.userToOrgMap.get(userId);
+		jc_xqway.setowner(organization);
+		
         jc_xqwayService.save(jc_xqway);
         jsonObj.put("success", true);
 	}
@@ -109,6 +117,26 @@ if(ssxq != null && ssxq.equalsIgnoreCase("") == false && ssxq.equalsIgnoreCase("
 {
 	hqlFilter.addQryCond("ssxq", HqlFilter.Operator.LIKE, "%"+ssxq+"%");
 }
+
+
+String organization = Utility.getInstance().getOrganization(request);
+
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null && organization.equalsIgnoreCase("") == false)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 
         List<Jc_xqway> listObj = jc_xqwayService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

@@ -141,11 +141,7 @@ if(duoxuan != null && duoxuan.equalsIgnoreCase("") == false && duoxuan.equalsIgn
 	hqlFilter.addQryCond("duoxuan", HqlFilter.Operator.LIKE, "%"+duoxuan+"%");
 }
 
-String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
-
-String organization = "";
-if(ConstValue.userToOrgMap.containsKey(userId))
-	organization = ConstValue.userToOrgMap.get(userId);
+String organization = Utility.getInstance().getOrganization(request);
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 

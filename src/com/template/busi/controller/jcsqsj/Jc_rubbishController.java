@@ -129,11 +129,8 @@ if(departtel != null && departtel.equalsIgnoreCase("") == false && departtel.equ
 }
 
 
-String userId = (String)request.getSession().getAttribute(ConstValue.HTTP_HEADER_USERID);
+String organization = Utility.getInstance().getOrganization(request);
 
-String organization = "";
-if(ConstValue.userToOrgMap.containsKey(userId))
-	organization = ConstValue.userToOrgMap.get(userId);
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 

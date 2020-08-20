@@ -47,7 +47,7 @@ function load()
  var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/jcqtbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_qtbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
 	function(result){
 		if(searchtype == 1){
 			
@@ -265,7 +265,7 @@ function deleteData(id)
 		text:"确认删除数据?",
 		confirm: function(button) {
 			
-			$.post(getContextPath()+"/jcqtbuildingController/delete",
+			$.post(getContextPath()+"/jc_qtbuildingController/delete",
 			{
 				id:id
 			},

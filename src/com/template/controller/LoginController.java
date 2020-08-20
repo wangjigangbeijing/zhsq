@@ -115,6 +115,7 @@ public class LoginController {
 				jsonObj.put(ConstValue.HTTP_HEADER_USERID, sysUser.getId());	
 				jsonObj.put("token", sysUser.getId());	
 				jsonObj.put("homePage", "/app/homepage.html");
+				jsonObj.put("userName", sysUser.getname());
 				//jsonObj.put("mobile", sysUser.getMobile());
 				//jsonObj.put("nickName", sysUser.getUsername());
 				

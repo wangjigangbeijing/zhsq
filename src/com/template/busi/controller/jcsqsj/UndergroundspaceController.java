@@ -129,11 +129,7 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 }
 
 
-String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
-
-String organization = "";
-if(ConstValue.userToOrgMap.containsKey(userId))
-	organization = ConstValue.userToOrgMap.get(userId);
+String organization = Utility.getInstance().getOrganization(request);
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
