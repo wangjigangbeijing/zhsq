@@ -443,10 +443,8 @@ function load()
 							education : education,
 							professionstatus : professionstatus,
 							professiontype : professiontype,
-							tel : tel,
 							mobile : mobile,
 							marriage : marriage,
-							health : health,
 							zdr_type : zdr_type,
 							cj_disabilitytype : cj_disabilitytype
 						},
