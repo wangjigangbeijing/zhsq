@@ -449,6 +449,16 @@ function loadsxsq(){
 				$("#s4").html(obj.data[3]);
 				$("#s5").html(obj.data[4]);
 				$("#s6").html(obj.data[5]);
+				
+				myChart.setOption({
+					series: [{
+						// 根据名字对应到相应的系列
+						name: '数量',
+						data: obj.data
+					}]
+				});
+				
+				
 			}
 		});	
 }
@@ -469,6 +479,21 @@ function loadsqbs(){
 				$("#bs6").html(obj.data[5]);
 				$("#bs7").html(obj.data[6]);
 				$("#bs8").html(obj.data[7]);
+				
+				/*
+				var arr = new Array();
+				for(var i = 0; i < 7; i++){
+					arr.push(obj.data[0]);
+				}
+				*/
+				myChart2.setOption({
+					series: [{
+						// 根据名字对应到相应的系列
+						name: '数量',
+						type: 'bar',
+						data: obj.data
+					}]
+				});
 			}
 		});	
 }
