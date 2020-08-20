@@ -251,7 +251,9 @@ function loadMap(mapName)
 {
 	curMap = mapName;
 	
-	dataLayer.getSource().clear();
+	if(dataLayer != null){
+		dataLayer.getSource().clear();
+	}
 	
 	$.get(getContextPath()+"/gismapController/getMapByName?name="+mapName,
 			function(response)

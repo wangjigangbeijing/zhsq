@@ -62,6 +62,7 @@
 						<div class='form-group row'>
 						
 						<div class='col-md-10'>
+						<input type="hidden" name="realmobileList" id="realMobileList"/>
 						<textarea class="form-control" name="mobileList" rows="9" id="mobileList"></textarea>
 						</div>
 						
@@ -155,6 +156,7 @@
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
+					<th style='text-align:center;'><input type="checkbox" class="checkall"/></th>
                     <th style='text-align:center;'>姓名</th>
 					<th style='text-align:center;'>居民特征</th>
 					<th style='text-align:center;'>手机号</th>
@@ -168,7 +170,7 @@
 			  
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" onclick="javascript:addAllResident();">添加全部</button>
+              <button type="button" class="btn btn-default" onclick="javascript:addAllResident();">添加选中</button>
               <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
             </div>
           </div>
@@ -273,9 +275,24 @@ function searchResident()
 				}, *///多语言配置					
 				"data":obj.list,
 				"columns": [
-					{ 'data': 'name' ,'sClass':'text-center'},
+					{
+						"sClass": "text-center",
+						"data": "id",
+						"render": function (data, type, row, meta) {
+							return '<input type="checkbox" name="resid" value="' + data + '"/>';
+						},
+					},
+					{ 'data': 'name' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.name), 1);
+						}
+					},
 					{ 'data': 'characteristics' ,'sClass':'text-center'},
-					{ 'data': 'mobile' ,'sClass':'text-center'},
+					{ 'data': 'mobile' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.mobile), 2);
+						}
+					},
 					{ 'data': 'address' ,'sClass':'text-center'}
 				],
 				columnDefs: [
@@ -360,7 +377,9 @@ function searchUser()
 function addAllResident()
 {
 	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realmobileList').val();
 	
+	/*
 	var users = '';
 	for(var i=0;i<userList.length;i++)
 	{
@@ -368,8 +387,33 @@ function addAllResident()
 		
 		mobileList += user+',';
 	}
+	*/
+	$('input:checkbox[name=resid]:checked').each(function (i) {
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+				}
+				if(mobileList == '') {
+					mobileList = phone;
+					realMobileList = realphone;
+				}
+				else {
+					mobileList += ", " + phone;
+					realMobileList +=", " + realphone;
+				}
+			}
+		}
+		
+	});
 	
+	console.log(realMobileList);
 	$('#mobileList').val(mobileList);
+	 $('#realmobileList').val(realMobileList);
 }
 
 function addAllUser()
@@ -386,5 +430,26 @@ function addAllUser()
 	
 	$('#mobileList').val(mobileList);
 }
+
+$(document).ready(function (){
+	//使用live绑定数据，因为checkAll还没有加载好
+	$(".checkall").on("click", function () {
+		if (this.checked) {
+			$(this).attr('checked', 'checked')
+			$("input[name='resid']").each(function () {
+				this.checked = true;
+			});
+
+		   
+		} else {
+			$(this).removeAttr('checked')
+			$("input[name='resid']").each(function () {
+				this.checked = false;
+			   
+			});
+		}
+	});
+	
+});
 
 </script>		

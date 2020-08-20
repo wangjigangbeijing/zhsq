@@ -283,9 +283,17 @@
 									return '<input type="checkbox" name="resid" value="' + data + '"/>';
 								},
 							},
-							{ 'data': 'name' ,'sClass':'text-center'},
+							{ 'data': 'name' ,'sClass':'text-center',
+								mRender : function(data,type,full){
+									return showData(aesDecrypt(full.name), 1);
+								}
+							},
 							{ 'data': 'characteristics' ,'sClass':'text-center'},
-							{ 'data': 'mobile' ,'sClass':'text-center'},
+							{ 'data': 'mobile' ,'sClass':'text-center',
+								mRender : function(data,type,full){
+									return showData(aesDecrypt(full.mobile), 2);
+								}
+							},
 							{ 'data': 'address' ,'sClass':'text-center'}
 						],
 						columnDefs: [
@@ -316,8 +324,8 @@
 				{
 					if(userList[i].id == val){
 						var name = '', phone = '';
-						if(typeof(userList[i].name)!="undefined") name = userList[i].name;
-						if(typeof(userList[i].mobile)!="undefined") phone = userList[i].mobile;
+						if(typeof(userList[i].name)!="undefined") name = showData(aesDecrypt(userList[i].name), 1);
+						if(typeof(userList[i].mobile)!="undefined") phone = showData(aesDecrypt(userList[i].mobile), 2);
 						if(users == '') users = name;
 						else users += ", " + name;
 						if(phones == '') phones = phone;
@@ -330,7 +338,7 @@
 				
 			});
 			
-			$('#bfkrname').val(users);
+			$('#fkrname').val(users);
 			$('#fkr').val(ids);
 			$('#lxdh').val(phones);
 		}

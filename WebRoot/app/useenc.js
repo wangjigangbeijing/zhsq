@@ -31,7 +31,7 @@ function replacechar(source, start, end){
 	if(source == null){
 		return null;
 	}
-	if(start < 0 || end >= source.length){
+	if(start < 0 || end > source.length){
 		return source;
 	}
 	if(start > end){

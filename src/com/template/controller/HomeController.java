@@ -672,7 +672,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//3
-			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.parkName from jc_tc_ybtcc t2 where t2.OWNER = ?)";
+			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_ybtcc t2 where t2.OWNER = ?)";
 			params.clear();
 			params.add(owner);
 			list = this.userService.findBySql(sql, params);
@@ -690,7 +690,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//4
-			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.name from jc_tc_dltcc t2 where t2.OWNER = ?)";
+			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_dltcc t2 where t2.OWNER = ?)";
 			params.clear();
 			params.add(owner);
 			list = this.userService.findBySql(sql, params);
