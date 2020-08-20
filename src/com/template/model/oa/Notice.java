@@ -84,5 +84,17 @@ public void settime(Date time)
 {
 	this.time = time;
 }
+
+@Column(name = "owner", nullable = true)
+public String owner;
+
+public String getowner()
+{
+	return owner;
+}
+public void setowner(String owner)
+{
+	this.owner = owner;
+}
 }
 

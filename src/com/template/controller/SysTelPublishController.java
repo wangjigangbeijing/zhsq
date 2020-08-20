@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public String addOrUpdate(String id,String title,String category,String content,
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
+		String sOrgId = Utility.getInstance().getOrganization(request);
+		
 		SysTelPublish sys_tel_publish;
 		if(id==null || id.equalsIgnoreCase(""))
 		{
@@ -48,6 +51,7 @@ public String addOrUpdate(String id,String title,String category,String content,
 		sys_tel_publish.settarget(target);
 		sys_tel_publish.setpublishtime(TimeUtil.formatDate(new Date(),"yyyy-MM-dd HH:mm"));
 		sys_tel_publish.setstatus(status);
+		sys_tel_publish.setowner(sOrgId);
 
         sys_tel_publishService.save(sys_tel_publish);
         jsonObj.put("success", true);
@@ -96,6 +100,24 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 {
 	hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 }
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+String organization = Utility.getInstance().getOrganization(request);
+
+if(organization != null && organization.equalsIgnoreCase("") == false)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);			
 
         List<SysTelPublish> listObj = sys_tel_publishService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

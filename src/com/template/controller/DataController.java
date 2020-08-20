@@ -935,7 +935,7 @@ public class DataController {
 						
 						jsonObj.put(sla.getENName(), objValue);
 						
-						if(ConstValue.dicList.contains(enName))
+						if(ConstValue.dicList.contains(enName) && objValue != null)
 						{
 							JSONObject jsonDict = new JSONObject();
 							String sVal = objValue.toString();

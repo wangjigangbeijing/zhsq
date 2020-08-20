@@ -115,4 +115,17 @@ public class SQZZQD implements java.io.Serializable {
 		this.FJ = FJ;
 	}
 	
+	
+
+	@Column(name = "owner", nullable = true)
+	public String owner;
+	
+	public String getowner()
+	{
+		return owner;
+	}
+	public void setowner(String owner)
+	{
+		this.owner = owner;
+	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -54,6 +55,8 @@ public class SQZZQDController {
     	
 		try
 		{
+			String sOrgId = Utility.getInstance().getOrganization(request);
+			
 			SQZZQD sqzzqd = new SQZZQD();
 			
 			if(id != null && id.equalsIgnoreCase("") == false)
@@ -72,6 +75,7 @@ public class SQZZQDController {
 			sqzzqd.setlb(lb);
 			sqzzqd.setyjflfgmc(yjflfgmc);
 			sqzzqd.setFJ(fj);
+			sqzzqd.setowner(sOrgId);
 			
 			sqzzqdService.saveOrUpdate(sqzzqd);
 			
@@ -130,6 +134,24 @@ public class SQZZQDController {
 				hqlFilter.addQryCond("zzy", HqlFilter.Operator.EQ, zzy);
 			if(lb != null && lb.equalsIgnoreCase("") == false)
 				hqlFilter.addQryCond("lb", HqlFilter.Operator.EQ, lb);
+			
+			ArrayList<String> alOrg = new ArrayList<String>(); 
+			
+			String organization = Utility.getInstance().getOrganization(request);
+			
+			if(organization != null && organization.equalsIgnoreCase("") == false)
+			{
+				String [] organizationArr = organization.split(",");
+				
+
+				for(int i=0;i<organizationArr.length;i++)
+				{
+					alOrg.add("%"+organizationArr[i]+"%");
+				}
+			}
+
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 			
 	        List<SQZZQD> listObj = sqzzqdService.findByFilter(hqlFilter);
 			

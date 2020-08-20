@@ -15,6 +15,7 @@ import com.template.util.Utility;
 import com.template.util.TimeUtil;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,8 @@ public class SMSController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
+			String sOrgId = Utility.getInstance().getOrganization(request);
+			
 			String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 			
 			SMSMessage smsMessage = new SMSMessage();
@@ -62,6 +65,7 @@ public class SMSController {
 			smsMessage.setTimerSend(new Date());
 			smsMessage.setTarget(mobileList);
 			smsMessage.setSMSType(smsType);
+			smsMessage.setowner(sOrgId);
 			
 			String msgId = Utility.getUniStr();
 			smsMessage.setId(msgId);
@@ -137,6 +141,24 @@ public class SMSController {
 			{
 				hqlFilter.addQryCond("messageContent", HqlFilter.Operator.LIKE, "%"+smsContent+"%");
 			}
+			
+			ArrayList<String> alOrg = new ArrayList<String>(); 
+			
+			String organization = Utility.getInstance().getOrganization(request);
+			
+			if(organization != null && organization.equalsIgnoreCase("") == false)
+			{
+				String [] organizationArr = organization.split(",");
+				
+
+				for(int i=0;i<organizationArr.length;i++)
+				{
+					alOrg.add("%"+organizationArr[i]+"%");
+				}
+			}
+
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);			
 			
 	        List<SMSMessage> listObj = smsService.findByFilter(hqlFilter);
 	        

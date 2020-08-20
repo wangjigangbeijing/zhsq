@@ -255,10 +255,8 @@ function load()
  var education = $('#educationQuery').val();
  var professionstatus = $('#professionstatusQuery').val();
  var professiontype = $('#professiontypeQuery').val();
- var tel = $('#telQuery').val();
  var mobile = $('#mobileQuery').val();
  var marriage = $('#marriageQuery').val();
- var health = $('#healthQuery').val();
  var zdr_type = $('#zdr_typeQuery').val();
  var cj_disabilitytype = $('#cj_disabilitytypeQuery').val();
 

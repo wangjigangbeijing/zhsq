@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class NoticeController {
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
+			String sOrgId = Utility.getInstance().getOrganization(request);
+			
 			Notice notice;
 			if(id==null || id.equalsIgnoreCase(""))
 			{
@@ -46,6 +49,7 @@ public class NoticeController {
 			notice.setauthorityorg(authorityorg);
 			notice.setbody(body);
 			notice.setattach(attach);
+			notice.setowner(sOrgId);
 			
 			if(time != null)
 				notice.settime(TimeUtil.parseDate(time + " 00:00:00", "yyyy-MM-dd HH:mm:ss"));
@@ -106,6 +110,24 @@ public String delete(String id)
 				hqlFilter.addQryCond("body", HqlFilter.Operator.LIKE, "%"+body+"%");
 			}
 	
+			ArrayList<String> alOrg = new ArrayList<String>(); 
+			
+			String organization = Utility.getInstance().getOrganization(request);
+			
+			if(organization != null && organization.equalsIgnoreCase("") == false)
+			{
+				String [] organizationArr = organization.split(",");
+				
+
+				for(int i=0;i<organizationArr.length;i++)
+				{
+					alOrg.add("%"+organizationArr[i]+"%");
+				}
+			}
+
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+			
 	        List<Notice> listObj = noticeService.findByFilter(hqlFilter);
 	        JSONArray jsonArr = new JSONArray();
 	        int iTotalCnt = 0;

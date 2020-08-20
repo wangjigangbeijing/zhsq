@@ -116,6 +116,7 @@ public void setnote(String note)
 {
 	this.note = note;
 }
+
 @Column(name = "authoritystaffid", nullable = true)
 public String authoritystaffid;
 public String getauthoritystaffid()
@@ -125,6 +126,19 @@ public String getauthoritystaffid()
 public void setauthoritystaffid(String authoritystaffid)
 {
 	this.authoritystaffid = authoritystaffid;
+}
+
+
+@Column(name = "owner", nullable = true)
+public String owner;
+
+public String getowner()
+{
+	return owner;
+}
+public void setowner(String owner)
+{
+	this.owner = owner;
 }
 }
 

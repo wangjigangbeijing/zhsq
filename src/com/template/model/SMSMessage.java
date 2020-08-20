@@ -142,4 +142,15 @@ public class SMSMessage implements java.io.Serializable {
 		this.sender = sender;
 	}
 	
+	@Column(name = "owner", nullable = true)
+	public String owner;
+	
+	public String getowner()
+	{
+		return owner;
+	}
+	public void setowner(String owner)
+	{
+		this.owner = owner;
+	}
 }
