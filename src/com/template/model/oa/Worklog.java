@@ -94,5 +94,18 @@ public void setowner(String owner)
 {
 	this.owner = owner;
 }
+
+
+@Column(name = "created_by", nullable = true)
+public String created_by;
+public String getcreated_by()
+{
+	return created_by;
+}
+public void setcreated_by(String created_by)
+{
+	this.created_by = created_by;
+}
+
 }
 

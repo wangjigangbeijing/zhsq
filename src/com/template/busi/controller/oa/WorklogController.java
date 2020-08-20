@@ -50,7 +50,10 @@ public String addOrUpdate(String id,String title,String date,String type,String 
 		worklog.sethours(hours);
 		worklog.setcontent(content);
 		worklog.setfiles(files);
-		worklog.setowner(userId);
+		worklog.setcreated_by(userId);
+		
+		String org = Utility.getInstance().getOrganization(request);
+		worklog.setowner(org);
 
         worklogService.save(worklog);
         jsonObj.put("success", true);
@@ -119,7 +122,13 @@ public String load(String title,String date,String type,String hours,String cont
 		{
 			hqlFilter.addQryCond("owner", HqlFilter.Operator.LIKE, "%"+owner+"%");
 		}
-
+		
+		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+		if(userId != null && userId.equalsIgnoreCase("") == false && userId.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("created_by", HqlFilter.Operator.EQ, userId);
+		}
+		
 		hqlFilter.setSort("date");
 		hqlFilter.setOrder("desc");
 

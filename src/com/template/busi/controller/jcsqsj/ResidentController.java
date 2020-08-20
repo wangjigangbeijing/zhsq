@@ -658,6 +658,22 @@ public String get(String id)
 				jsonObj.put("birthday",TimeUtil.formatDate(resident.getbirthday(),"yyyy-MM-dd"));
 			else
 				jsonObj.put("birthday","-");
+			
+			if(ConstValue.hmDicMap.containsKey(resident.getofroom()))
+			{
+				jsonObj.put("roomname",ConstValue.hmDicMap.get(resident.getofroom()));
+			}
+			
+			if(ConstValue.hmDicMap.containsKey(resident.getoffamily()))
+			{
+				jsonObj.put("offamilyname",ConstValue.hmDicMap.get(resident.getoffamily()));
+			}
+			
+			if(ConstValue.hmDicMap.containsKey(resident.getofresidebuilding()))
+			{
+				jsonObj.put("ofresidebuildingname",ConstValue.hmDicMap.get(resident.getofresidebuilding()));
+			}
+			
 			jsonObj.put("age",resident.getage());
 			jsonObj.put("nation",resident.getnation());
 			jsonObj.put("politicalstatus",resident.getpoliticalstatus());
