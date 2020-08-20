@@ -51,7 +51,7 @@ public class JSJBFWController {
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String addOrUpdate(String id,String sjbt,String sjjjcd,String sjlyjb,String sjly,
-			String sjlybh,String sjfl,String wtfl,String fsdz,String dsr,String dsrdh,String sfyqhf,
+			String sjlybh,String sjfl,String wtfl,String fsdz,String dsr, String dsrname, String dsrdh,String sfyqhf,
 			String pdsj,String clsx,String cljzsj,String sjnr,String bz,String fj)
 	{
 		JSONObject jsonObj = new JSONObject();
@@ -72,7 +72,8 @@ public class JSJBFWController {
 			jsjbfw.setbz(bz);
 			jsjbfw.setcljzsj(cljzsj);
 			jsjbfw.setclsx(clsx);
-			jsjbfw.setdsr(dsrdh);
+			jsjbfw.setdsr(dsr);
+			jsjbfw.setdsrname(dsrname);
 			jsjbfw.setdsrdh(dsrdh);
 			jsjbfw.setfj(fj);
 			jsjbfw.setfsdz(fsdz);
@@ -125,7 +126,7 @@ public class JSJBFWController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String load(String sjbt,String sjly,String sjlybh,String dsr, String status)
+	public String load(String sjbt,String sjly,String sjlybh,String dsrname, String status)
 	{
 		String organization = this.getOrganization();
 		
@@ -150,9 +151,9 @@ public class JSJBFWController {
 				sql += " and a.sjlybh=?";
 				params.add(sjlybh);
 			}
-			if(!StringUtils.isNullOrEmpty(dsr)) {
-				sql += " and a.dsr=?";
-				params.add(dsr);
+			if(!StringUtils.isNullOrEmpty(dsrname)) {
+				sql += " and a.dsrname like ?";
+				params.add("%" + dsrname + "%");
 			}
 			sql += " order by a.pdsj desc";
 			if(!StringUtils.isNullOrEmpty(status)) {

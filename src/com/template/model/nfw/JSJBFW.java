@@ -126,7 +126,17 @@ public class JSJBFW implements java.io.Serializable
 	{
 		this.dsr = dsr;
 	}
+	
+	@Column(name = "dsrname", nullable = true)
+	public String dsrname;
+	
 
+	public String getdsrname() {
+		return dsrname;
+	}
+	public void setdsrname(String dsrname) {
+		this.dsrname = dsrname;
+	}
 
 	@Column(name = "dsrdh", nullable = true)
 	public String dsrdh;

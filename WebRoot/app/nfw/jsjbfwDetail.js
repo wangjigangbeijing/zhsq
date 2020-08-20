@@ -2,6 +2,12 @@
 
 $(document).ready(function (){
 	
+	$("#characterQry").select2({	 
+		multiple: true
+	});
+	
+	$("#characterQry").val('abc').trigger("change"); //赋值一个不存在的value,解决默认选择第一个的问题
+	
 	$('#btnAdd').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
@@ -67,6 +73,7 @@ function viewDetail(id)
 				$('#wtfl').val(obj.data.wtfl);
 				$('#fsdz').val(obj.data.fsdz);
 				$('#dsr').val(obj.data.dsr);
+				$('#dsrname').val(obj.data.dsrname);
 				$('#dsrdh').val(obj.data.dsrdh);
 				$('#sfyqhf').val(obj.data.sfyqhf);
 				$('#pdsj').val(obj.data.pdsj);
@@ -135,6 +142,7 @@ function addOrUpdate()
 		wtfl:$('#wtfl').val(),
 		fsdz:$('#fsdz').val(),
 		dsr:$('#dsr').val(),
+		dsrname:$('#dsrname').val(),
 		dsrdh:$('#dsrdh').val(),
 		sfyqhf:$('#sfyqhf').val(),
 		pdsj:$('#pdsj').val(),

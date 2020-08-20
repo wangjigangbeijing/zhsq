@@ -27,11 +27,11 @@ function load()
 	 var sjbt = $('#sjbt').val();
 	 var sjly = $('#sjly').val();
 	 var sjlybh = $('#sjlybh').val();
-	 var dsr = $('#dsr').val();
+	 var dsrname = $('#dsrname').val();
 	 var status=$('#status').val();
 
 	
-	$.get(getContextPath()+'/jsjbfwController/load?sjbt='+sjbt+'&sjly='+sjly+'&sjlybh='+sjlybh+'&dsr='+dsr + '&status=' + status,
+	$.get(getContextPath()+'/jsjbfwController/load?sjbt='+sjbt+'&sjly='+sjly+'&sjlybh='+sjlybh+'&dsrname='+dsrname + '&status=' + status,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -68,7 +68,7 @@ function load()
 				"data":obj.list,
 				"columns": [
 					{ 'data': 'sjbt' ,'sClass':'text-center'},
-					{ 'data': 'dsr' ,'sClass':'text-center'},
+					{ 'data': 'dsrname' ,'sClass':'text-center'},
 					{ 'data': 'dsrdh' ,'sClass':'text-center'},
 					{ 'data': 'sjly' ,'sClass':'text-center'},
 					{ 'data': 'sjlybh' ,'sClass':'text-center'},
