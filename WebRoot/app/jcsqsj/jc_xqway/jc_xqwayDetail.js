@@ -14,8 +14,43 @@ $(document).ready(function (){
 	
 	//load();
 	
-	if(curId != '')
-		viewDetail(curId);
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/communityController/load",
+	  data: JSON.stringify({id:'ofcommunity',params:[{'enname':'ofcommunity',value:curUserOrgId}]}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ssxq').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.list.length;i++)
+				{
+					var filter = result.list[i];
+					
+					filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.name + "</option>";						
+				}
+				$('#ssxq').html(filterArr.join(''));
+				
+				if(curId != '')
+					viewDetail(curId);
+			}
+			else
+			{
+				jError("获取小区列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
+	
 });
 
 
@@ -36,7 +71,11 @@ function viewDetail(id)
 				$('#type').val(obj.type);
 				$('#sfymj').val(obj.sfymj);
 				$('#mjlx').val(obj.mjlx);
+				
+				debugger;
+				
 				$('#ssxq').val(obj.ssxq);
+				
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);				for(var j=0;j<picturesArr.length;j++)				{					if(picturesArr[j] != '')					{						$('#picturespicktable').append('<tr><td>'+picturesArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+picturesArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 
 					

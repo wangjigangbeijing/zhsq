@@ -100,7 +100,7 @@ if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("
 }
 if(parkName != null && parkName.equalsIgnoreCase("") == false && parkName.equalsIgnoreCase("null") == false)
 {
-	hqlFilter.addQryCond("parkName", HqlFilter.Operator.LIKE, "%"+parkName+"%");
+	hqlFilter.addQryCond("parkName", HqlFilter.Operator.EQ, parkName);
 }
 
 
@@ -136,7 +136,8 @@ hqlFilter.setOrder("desc");
 			jsonTmp.put("id", jc_tc_tcccrk.getId());
 			jsonTmp.put("rkType",jc_tc_tcccrk.getrkType());
 			jsonTmp.put("name",jc_tc_tcccrk.getname());
-			jsonTmp.put("parkName",jc_tc_tcccrk.getparkName());
+			jsonTmp.put("parkId",jc_tc_tcccrk.getparkName());
+			jsonTmp.put("parkName",ConstValue.hmDicMap.get(jc_tc_tcccrk.getparkName()));
 			jsonTmp.put("picture",jc_tc_tcccrk.getpicture());
 			jsonTmp.put("note",jc_tc_tcccrk.getnote());
 
@@ -166,7 +167,10 @@ public String get(String id)
 		{
 			jsonObj.put("rkType",jc_tc_tcccrk.getrkType());
 			jsonObj.put("name",jc_tc_tcccrk.getname());
-			jsonObj.put("parkName",jc_tc_tcccrk.getparkName());
+			jsonObj.put("parkId",jc_tc_tcccrk.getparkName());
+			
+			jsonObj.put("parkName",ConstValue.hmDicMap.get(jc_tc_tcccrk.getparkName()));
+			
 			jsonObj.put("picture",jc_tc_tcccrk.getpicture());
 			jsonObj.put("note",jc_tc_tcccrk.getnote());
 

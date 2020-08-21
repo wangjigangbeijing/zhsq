@@ -191,6 +191,7 @@ public class DaemonService
 	
 	public void loadResidentInfo()
 	{
+		logger.debug("loadResidentInfo");
 		try
 		{
 			List<Resident> residentList = residentService.findByFilter(new HqlFilter());
@@ -214,6 +215,7 @@ public class DaemonService
 
 	public void loadRoleInfo()
 	{
+		logger.debug("loadRoleInfo");
 		try
 		{
 			List<SysRole> roleList = roleService.findByFilter(new HqlFilter());
@@ -236,6 +238,7 @@ public class DaemonService
 	
 	public void loadUserInfo()
 	{
+		logger.debug("loadUserInfo");
 		try
 		{
 			List<SysUser> userList = userService.findByFilter(new HqlFilter());
@@ -272,6 +275,7 @@ public class DaemonService
 	
 	public void loadOrganizationInfo()
 	{
+		logger.debug("loadOrganizationInfo");
 		try
 		{
 			List<SysOrganization> orgList = organizationService.findByFilter(new HqlFilter());
@@ -294,6 +298,7 @@ public class DaemonService
 	
 	public void loadAdvertisementInfo()
 	{
+		logger.debug("loadAdvertisementInfo");
 		try
 		{
 			List<Jc_advertisement> orgList = jc_advertisementService.findByFilter(new HqlFilter());
@@ -316,6 +321,7 @@ public class DaemonService
 	
 	public void refreshResident()
 	{
+		logger.debug("refreshResident");
 		try
 		{
 			List<Room> roomList = roomService.findByFilter(new HqlFilter());
@@ -440,6 +446,7 @@ public class DaemonService
 	
 	public void refreshResidentBuilding()
 	{
+		logger.debug("refreshResidentBuilding");
 		try
 		{
 			List<Residebuilding> resideBuildingList = residebuildingService.findByFilter(new HqlFilter());

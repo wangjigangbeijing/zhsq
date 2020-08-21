@@ -17,7 +17,7 @@ $(document).ready(function (){
 	$.ajax({
 	  type: 'POST',
 	  url: getContextPath()+"/dictionaryController/getDataOfDic",
-	  data: JSON.stringify({id:'ofresidebuilding'}),
+	  data: JSON.stringify({id:'ofresidebuilding',params:[{'enname':'ofcommunity',value:curUserOrgId}]}),
 	  contentType: "application/json",
 	  success:function(result){
 				
@@ -52,7 +52,7 @@ $(document).ready(function (){
 	$.ajax({
 	  type: 'POST',
 	  url: getContextPath()+"/dictionaryController/getDataOfDic",
-	  data: JSON.stringify({id:'ofbizbuilding'}),
+	  data: JSON.stringify({id:'ofbizbuilding',params:[{'enname':'ofcommunity',value:curUserOrgId}]}),
 	  contentType: "application/json",
 	  success:function(result){
 				
@@ -127,7 +127,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/undergroundspace/undergroundspace.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

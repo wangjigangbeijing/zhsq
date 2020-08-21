@@ -216,7 +216,11 @@ hqlFilter.setOrder("desc");
 			jsonTmp.put("mobile",jc_partymember.getmobile());
 			jsonTmp.put("education",jc_partymember.geteducation());
 			jsonTmp.put("partymembertype",jc_partymember.getpartymembertype());
+			
 			jsonTmp.put("of_partyorganization",jc_partymember.getof_partyorganization());
+			
+			jsonTmp.put("of_partyorganizationname",ConstValue.hmDicMap.get(jc_partymember.getof_partyorganization()));
+			
 			jsonTmp.put("isincommunity",jc_partymember.getisincommunity());
 			jsonTmp.put("homeaddress",jc_partymember.gethomeaddress());
 			jsonTmp.put("zhiwu",jc_partymember.getzhiwu());

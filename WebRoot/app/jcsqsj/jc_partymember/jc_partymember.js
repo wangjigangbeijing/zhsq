@@ -98,7 +98,7 @@ function load()
 					{ 'data': 'age' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
 					{ 'data': 'partymembertype' ,'sClass':'text-center'},
-					{ 'data': 'of_partyorganization' ,'sClass':'text-center'},
+					{ 'data': 'of_partyorganizationname' ,'sClass':'text-center'},
 					{ 'data': 'isincommunity' ,'sClass':'text-center'},
 					{ 'data': 'zhiwu' ,'sClass':'text-center'},
 					{ 'data': 'dyage' ,'sClass':'text-center'},

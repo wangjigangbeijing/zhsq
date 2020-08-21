@@ -14,8 +14,43 @@ $(document).ready(function (){
 	
 	//load();
 	
-	if(curId != '')
-		viewDetail(curId);
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/communityController/load",
+	  data: JSON.stringify({id:'ofcommunity',params:[{'enname':'ofcommunity',value:curUserOrgId}]}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#ofcommunity').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.list.length;i++)
+				{
+					var filter = result.list[i];
+					
+					filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.name + "</option>";						
+				}
+				$('#ofcommunity').html(filterArr.join(''));
+				
+				if(curId != '')
+					viewDetail(curId);
+			}
+			else
+			{
+				jError("获取小区列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
+	
+	
 });
 
 

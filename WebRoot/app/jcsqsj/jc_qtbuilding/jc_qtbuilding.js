@@ -222,7 +222,7 @@ function closeModalDetail()
 function viewData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jcqtbuilding/jcqtbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
 		$('#confirmBtn').hide();
 		
 		$("select").attr("disabled","disabled");
@@ -237,7 +237,7 @@ function viewData(id)
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jcsqsj/jcqtbuilding/jcqtbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
 		
     });
 }
@@ -248,7 +248,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jcsqsj/jcqtbuilding/jcqtbuildingDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_qtbuilding/jc_qtbuildingDetail.html", function () {
 		
     });
 	

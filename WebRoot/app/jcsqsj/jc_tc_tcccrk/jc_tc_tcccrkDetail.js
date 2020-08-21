@@ -12,10 +12,42 @@ $(document).ready(function (){
 	
 	$('#btnSearch').click(load);
 	
-	//load();
+	$.ajax({
+	  type: 'POST',
+	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  data: JSON.stringify({id:'inparkname',params:[{'enname':'ofcommunity',value:curUserOrgId}]}),
+	  contentType: "application/json",
+	  success:function(result){
+				
+			if(result.success)
+			{
+				$('#parkName').html('');
+				var filterArr = [];
+				
+				filterArr[0] = "<option value=''></option>";				
+				
+				for(var i=0;i<result.value.length;i++)
+				{
+					var filter = result.value[i];
+					
+					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+				}
+				$('#parkName').html(filterArr.join(''));
+				
+				if(curId != '')
+					viewDetail(curId);
+			}
+			else
+			{
+				jError("获取停车场列表失败!",{
+					VerticalPosition : 'center',
+					HorizontalPosition : 'center'
+				});
+			}
+		},
+	  dataType: "json"
+	});
 	
-	if(curId != '')
-		viewDetail(curId);
 });
 
 
@@ -27,10 +59,10 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				
-								$('#rkType').val(obj.rkType);
+				$("input[name='rkType'][value='"+obj.rkType+"']").attr("checked",true);
+				//$('#rkType').val(obj.rkType);
 				$('#name').val(obj.name);
-				$('#parkName').val(obj.parkName);
+				$('#parkName').val(obj.parkId);
 				var pictureArr = obj.picture.split(VALUE_SPLITTER);				for(var j=0;j<pictureArr.length;j++)				{					if(pictureArr[j] != '')					{						$('#picturepicktable').append('<tr><td>'+pictureArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pictureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
 
 					
@@ -43,7 +75,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_tc_tcccrk/jc_tc_tcccrk.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	
@@ -61,12 +93,10 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
-	
-	
 	$.post(getContextPath()+"/jc_tc_tcccrkController/addOrUpdate",
 	{
 		id:curId,
-				rkType:$('#rkType').val(),
+		rkType:$('input:radio[name="rkType"]:checked').val(),    //$('#rkType').val(),
 		name:$('#name').val(),
 		parkName:$('#parkName').val(),
 		picture:$('#picture').val(),

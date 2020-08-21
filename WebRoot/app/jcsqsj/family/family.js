@@ -18,7 +18,7 @@ $(document).ready(function (){
 	
 	$.ajax({
 	  type: 'POST',
-	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  url: getContextPath()+"/communityController/load",
 	  data: JSON.stringify({id:'ofcommunity'}),
 	  contentType: "application/json",
 	  success:function(result){
@@ -30,11 +30,11 @@ $(document).ready(function (){
 				
 				filterArr[0] = "<option value=''></option>";				
 				
-				for(var i=0;i<result.value.length;i++)
+				for(var i=0;i<result.list.length;i++)
 				{
-					var filter = result.value[i];
+					var filter = result.list[i];
 					
-					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+					filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.value + "</option>";						
 				}
 				$('#ofcommunityQuery').html(filterArr.join(''));
 				

@@ -16,7 +16,7 @@ $(document).ready(function (){
 	
 	$.ajax({
 	  type: 'POST',
-	  url: getContextPath()+"/dictionaryController/getDataOfDic",
+	  url: getContextPath()+"/communityController/load",
 	  data: JSON.stringify({id:'ofcommunity'}),
 	  contentType: "application/json",
 	  success:function(result){
@@ -28,11 +28,11 @@ $(document).ready(function (){
 				
 				filterArr[0] = "<option value=''></option>";				
 				
-				for(var i=0;i<result.value.length;i++)
+				for(var i=0;i<result.list.length;i++)
 				{
-					var filter = result.value[i];
+					var filter = result.list[i];
 					
-					filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
+					filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.value + "</option>";						
 				}
 				$('#ofcommunity').html(filterArr.join(''));
 				
@@ -50,6 +50,41 @@ $(document).ready(function (){
 		},
 	  dataType: "json"
 	});
+	
+	
+	$.ajax({
+		  type: 'POST',
+		  url: getContextPath()+"/residebuildingController/load",
+		  data: JSON.stringify({id:'ofresidebuilding'}),
+		  contentType: "application/json",
+		  success:function(result){
+					
+				if(result.success)
+				{
+					$('#ofresidebuilding').html('');
+					var filterArr = [];
+					filterArr[0] = "<option value=''></option>";				
+					for(var i=0;i<result.list.length;i++)
+					{
+						var filter = result.list[i];
+						
+						filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.value + "</option>";						
+					}
+					$('#ofresidebuilding').html(filterArr.join(''));
+					
+					$('#ofunit').html('');
+					$('#ofroom').html('');
+				}
+				else
+				{
+					jError("获取居民楼列表失败!",{
+						VerticalPosition : 'center',
+						HorizontalPosition : 'center'
+					});
+				}
+			},
+		  dataType: "json"
+		});
 	
 	$('#ofcommunity').change(function(){
 		
@@ -188,36 +223,38 @@ function viewDetail(id)
 				$('#name').val(obj.name);
 				$('#registrationcategory').val(obj.registrationcategory);
 				$('#registrationaddress').val(obj.registrationaddress);
-				//$('#ofcommunity').val(obj.ofcommunity);
-				//$('#ofresidebuilding').val(obj.ofresidebuilding);
+				$('#ofcommunity').val(obj.ofcommunity);
+				$('#ofresidebuilding').val(obj.ofresidebuilding);
 				//$('#ofunit').val(obj.ofunit);
 				//$('#ofroom').val(obj.ofroom);
 				//$('#status').val(obj.status);
 				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
 
+				/*
 				$('#ofcommunity').html('');
 				var filterArr = [];				
 				filterArr[0] = "<option value='"+obj.ofcommunity+"'>"+obj.ofcommunity+"</option>";				
 				$('#ofcommunity').html(filterArr.join(''));
-				$('#ofcommunity').attr("readonly","readonly");
+				//$('#ofcommunity').attr("readonly","readonly");
 				
 				$('#ofresidebuilding').html('');
 				var filterArr = [];				
 				filterArr[0] = "<option value='"+obj.ofresidebuilding+"'>"+obj.ofresidebuildingname+"</option>";				
 				$('#ofresidebuilding').html(filterArr.join(''));
-				$('#ofresidebuilding').attr("readonly","readonly");
-				
+				//$('#ofresidebuilding').attr("readonly","readonly");
+				*/
 				$('#ofunit').html('');
 				var filterArr = [];				
 				filterArr[0] = "<option value='"+obj.ofunit+"'>"+obj.ofunit+"</option>";				
 				$('#ofunit').html(filterArr.join(''));
-				$('#ofunit').attr("readonly","readonly");	
+				//$('#ofunit').attr("readonly","readonly");	
 				
 				$('#ofroom').html('');
 				var filterArr = [];				
 				filterArr[0] = "<option value='"+obj.ofroom+"'>"+obj.ofroomname+"</option>";				
 				$('#ofroom').html(filterArr.join(''));
-				$('#ofroom').attr("readonly","readonly");	
+				//$('#ofroom').attr("readonly","readonly");	
+				
 			}
 		});
 }

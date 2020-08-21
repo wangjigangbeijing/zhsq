@@ -45,6 +45,8 @@ $(document).ready(function (){
 				}
 				$('#inparkname').html(filterArr.join(''));
 				
+				if(curId != '')
+					viewDetail(curId);
 			}
 			else
 			{
@@ -57,8 +59,6 @@ $(document).ready(function (){
 	  dataType: "json"
 	});
 	
-	if(curId != '')
-		viewDetail(curId);
 });
 
 

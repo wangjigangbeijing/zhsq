@@ -29,7 +29,10 @@ function viewDetail(id)
 				$('#modalDetail').show();
 				
 								$('#dateid').val(obj.dateid);
+										
 				$('#type').val(obj.type);
+				
+				
 				$('#objid').val(obj.objid);
 				$('#objname').val(obj.objname);
 				$('#locatedsc').val(obj.locatedsc);

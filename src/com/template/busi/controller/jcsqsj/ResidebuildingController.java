@@ -122,14 +122,14 @@ public String delete(String id)
 	}
     return jsonObj.toString();
 }
-@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+@RequestMapping(value="load",method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
 @ResponseBody
 public String load(String name,String address,String propertyyears,String propertyrights,String heatingsystem,String ofcommunity,String buildtype,String buildframework,String constructiontype,String status)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
-		int iPageSize = 10;
+		int iPageSize = 1000;
 		int iDisplayStart = 0;
 		
 		String aoData = request.getParameter("aoData");
