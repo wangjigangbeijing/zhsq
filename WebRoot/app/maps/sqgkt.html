@@ -62,9 +62,10 @@
 				</div>
 			</div>
 
-			<img src="../images/label.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg"/>
-			<img src="../images/layer.png" style="position:absolute; right: 15px; top:145px; z-index:1000;" onclick="showlayer();"/>
-			<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 145px; width: 150px; background-color:#d0d0d0; opacity:0.8;  border-radius:5px;">
+			<img src="../images/label2.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg"/>
+			<img src="../images/map.png" style="position:absolute; right: 15px; top:145px; z-index:1000;" onclick="changemap();"/>
+			<img src="../images/layer.png" style="position:absolute; right: 15px; top:185px; z-index:1000;" onclick="showlayer();"/>
+			<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 185px; width: 150px; background-color:#d0d0d0; opacity:0.8;  border-radius:5px;">
 				<ul id="main_checkbox" style="padding-top:10px;">
 				
 				</ul>
@@ -144,13 +145,29 @@
 <!-- page script -->
 <script>
 
-var labelshow = true; //默认显示label
+var labelshow = false; //默认显示label
 
 var boundary = new Array();
 
 var draw;
 
+var selected = null;
+
+var prevstyle = null; //前点中样式
+
 var map, interaction, feature;
+
+var maptype = 1; 
+
+var highlightStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(255,255,255,0.7)',
+  }),
+  stroke: new ol.style.Stroke({
+    color: '#FF2D2D',
+    width: 3,
+  }),
+});
 
 $(function () 
 {
@@ -576,11 +593,27 @@ function initMap(){
 		if(draw != null){
 			return;
 		}
+		if (selected !== null) {
+			//selected.setStyle(undefined);
+			selected.setStyle(prevstyle);
+			selected = null;
+		  }
+
+		  map.forEachFeatureAtPixel(evt.pixel, function (f) {
+			selected = f;
+			prevstyle = f.getStyle();
+			f.setStyle(highlightStyle);
+			return true;
+		  });
+		
+		/*
 		var feature = map.forEachFeatureAtPixel(evt.pixel,
 			function(feature) {
 			
 				return feature;
 		});
+		*/
+		feature = selected;
 		
 		if(feature != null && feature != undefined)
 		{
@@ -634,6 +667,29 @@ function initMap(){
 		
 		drawLayers(checkedLayerId);
 	});
+}
+
+function changemap(){
+	if(maptype == 1){
+		var source = new ol.source.TileSuperMapRest({
+				//url: "http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai"
+				url: "http://219.143.76.46:8089/iserver/services/map-tianditu/rest/maps/影像底图_经纬度"
+			});
+			
+		var baseLayer = map.getLayers().item(0);
+		baseLayer.setSource(source);
+		maptype = 2;
+	}
+	else {
+		var source = new ol.source.TileSuperMapRest({
+				//url: "http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai"
+				url: "http://219.143.76.46:8089/iserver/services/map-tianditu/rest/maps/矢量底图_经纬度"
+			});
+			
+		var baseLayer = map.getLayers().item(0);
+		baseLayer.setSource(source);
+		maptype = 1;
+	}
 }
 
 function showlayer(){

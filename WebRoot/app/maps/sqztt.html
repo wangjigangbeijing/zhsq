@@ -9,7 +9,7 @@
 	
 
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header" id="section1">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -29,7 +29,7 @@
     </section>
 
     <!-- Main content -->
-        <section class="content">
+        <section class="content" id="section2">
       <div class="container-fluid">
         <!-- Info boxes -->
         <div class="row">
@@ -136,7 +136,7 @@
                   <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button-->
                 
               </div>
-         	 <div class="card-body" id="sqzttDiv" style="height:800px;">
+         	 <div class="card-body" id="sqzttDiv" style="width: 100%; height:800px;">
 			 
 				<div style="position:absolute; right: 15px; top:65px; z-index:999;">
 					<div class="btn-group" role="group" aria-label="...">
@@ -149,10 +149,13 @@
 						<button id="clear" value='Clear' type="button" class="btn btn-default"><img src="../images/icon/map/clear.png" title="清除" style="width:24px;"/></button>
 					</div>
 				</div>
+				
+				<img src="../images/fullscreen.png" style="position:absolute; left: 15px; top:145px; z-index:1000;" onclick="fullscreen();"/>
 
-				<img src="../images/label.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg" onclick="showlayerlabel();"/>
-				<img src="../images/layer.png" style="position:absolute; right: 15px; top:145px; z-index:1000;" onclick="showlayer();"/>
-				<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 145px; width: 150px; background-color:#d0d0d0; opacity:0.8; display:none; border-radius:5px;">
+				<img src="../images/label2.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg" onclick="showlayerlabel();"/>
+				<img src="../images/map.png" style="position:absolute; right: 15px; top:145px; z-index:1000;" onclick="changemap();"/>
+				<img src="../images/layer.png" style="position:absolute; right: 15px; top:185px; z-index:1000;" onclick="showlayer();"/>
+				<div id="layerDiv" style="position: absolute; z-index: 999; right: 15px; top: 185px; width: 150px; background-color:#d0d0d0; opacity:0.8; display:none; border-radius:5px;">
 					<ul id="main_checkbox" style="padding-top:10px;">
 					
 					</ul>
@@ -240,9 +243,27 @@ var curMap = '';
 var baseLayer = null;
 var dataLayer = null;
 
-var labelshow = true; //默认显示label
+var labelshow = false; //默认显示label
+
+var selected = null;
+
+var prevstyle = null; //前点中样式
 
 var boundary = new Array();
+
+var map;
+
+var maptype = 1; 
+
+var highlightStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(255,255,255,0.7)',
+  }),
+  stroke: new ol.style.Stroke({
+    color: '#FF2D2D',
+    width: 3,
+  }),
+});
 
 var layerStyleMap = {};
 var draw;
@@ -735,6 +756,29 @@ function loadboundary(){
 		});
 }
 
+function changemap(){
+	if(maptype == 1){
+		var source = new ol.source.TileSuperMapRest({
+				//url: "http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai"
+				url: "http://219.143.76.46:8089/iserver/services/map-tianditu/rest/maps/影像底图_经纬度"
+			});
+			
+		var baseLayer = map.getLayers().item(0);
+		baseLayer.setSource(source);
+		maptype = 2;
+	}
+	else {
+		var source = new ol.source.TileSuperMapRest({
+				//url: "http://219.143.76.46:8089/iserver/services/map-agscache-fengtai/rest/maps/fengtai"
+				url: "http://219.143.76.46:8089/iserver/services/map-tianditu/rest/maps/矢量底图_经纬度"
+			});
+			
+		var baseLayer = map.getLayers().item(0);
+		baseLayer.setSource(source);
+		maptype = 1;
+	}
+}
+
 function initMap(){
 	var url = "https://iserver.supermap.io/iserver/services/map-world/rest/maps/World";
 	var container = document.getElementById('popup');
@@ -762,7 +806,7 @@ function initMap(){
 	  }
 	});
 	
-	var map, interaction, feature;
+	var interaction, feature;
 	if(boundary.length == 0){
 		map = new ol.Map({
 			overlays: [overlay],
@@ -939,12 +983,28 @@ function initMap(){
 		if(draw != null){
 			return;
 		}
+		
+		if (selected !== null) {
+			//selected.setStyle(undefined);
+			selected.setStyle(prevstyle);
+			selected = null;
+		  }
+
+		  map.forEachFeatureAtPixel(evt.pixel, function (f) {
+			selected = f;
+			prevstyle = f.getStyle();
+			f.setStyle(highlightStyle);
+			return true;
+		  });
+		
+		/*
 		var feature = map.forEachFeatureAtPixel(evt.pixel,
 			function(feature) {
 			
 				return feature;
 		});
-		
+		*/
+		feature = selected;
 		if(feature != null && feature != undefined)
 		{
 			var gid = feature.getId();
@@ -995,7 +1055,6 @@ function showlayerlabel(){
 	else {
 		$('#labelimg').attr("src", "../images/label2.png");
 	}
-	console.log("labelshow:" + labelshow);
 	reloadlayer();
 }
 
@@ -1009,6 +1068,24 @@ function isFacilityLayer(layerId)
 	}
 	return false;
 }
+
+function fullscreen(){
+	if($("#headpart").is(":hidden")){
+		$("#headpart").css('display','block');//隐藏;
+		$("#leftpart").css('display','block');
+		$("#section1").css('display','block');
+		$("#section2").css('display','block');
+		$("#main-content").css("margin-left", "200px");
+	}
+	else {
+		$("#headpart").css('display','none');//隐藏;
+		$("#leftpart").css('display','none');
+		$("#section1").css('display','none');
+		$("#section2").css('display','none');
+		$("#main-content").css("margin-left", "0px");
+	}
+}
 </script>
+
 </body>
 </html>
