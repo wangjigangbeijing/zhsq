@@ -200,5 +200,17 @@ public void setorg_type(String org_type)
 {
 	this.org_type = org_type;
 }
+
+@Column(name = "seq", nullable = true)
+public String seq;
+public String getseq()
+{
+	return seq;
+}
+public void setseq(String seq)
+{
+	this.seq = seq;
+}
+
 }
 

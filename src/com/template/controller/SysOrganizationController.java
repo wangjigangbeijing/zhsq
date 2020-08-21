@@ -98,10 +98,12 @@ public class SysOrganizationController {
 		try
 		{
 			HqlFilter hqlFilter = new HqlFilter();
-	if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
-	{
-		hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
-	}
+			if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+			{
+				hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+			}
+			
+			hqlFilter.setSort("seq");
 	
 	        List<SysOrganization> listObj = organizationService.findByFilter(hqlFilter);
 	        JSONArray jsonArr = new JSONArray();

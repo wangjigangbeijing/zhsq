@@ -144,7 +144,7 @@ function load()
 				trData += '">';
 				trData += '<td>'+org.name+'</td><td>'+org.parentName+'</td><td>'+org.address+'</td><td>'+org.telphone+'</td>';
 				
-				var btn = "<a href=\"#\" onclick=\"editOrganizaiton('"+org.id+"')\" data-toggle=\"tooltip\"><i class=\"fa fa-edit text-blue\"></i></a>&nbsp;&nbsp;";						
+				var btn = "<a href=\"#\" onclick=\"editData('"+org.id+"')\" data-toggle=\"tooltip\"><i class=\"fa fa-edit text-blue\"></i></a>&nbsp;&nbsp;";						
 				//用户不能删除自己归属的组织
 				/*if(curUserOrgId != org.id)
 				{					
@@ -163,7 +163,9 @@ function load()
 			$('#dataTable').html(tableHtml);			
 			$('#dataTable').treegrid({initialState:'collapsed'});
 			
-			$('#progressbar').hide();
+			$('#dataTable').treegrid('expandAll');
+			
+			//$('#progressbar').hide();
 		}
 	});
 }
