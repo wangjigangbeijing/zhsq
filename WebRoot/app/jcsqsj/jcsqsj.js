@@ -252,34 +252,34 @@ $(document).ready(function (){
     });
 	
 	
-	//停车位区域
+	//停车位
 	$('#tcwqyAnchor').click(function () {
 		
-		curJCSQSJType = '停车位区域';	
+		curJCSQSJType = '停车位';	
 		loadtcwqy();
 		
     });
 	
-	//一般停车场出入口
+	//居住区停车场出入口
 	$('#ybtcccrkAnchor').click(function () {
 		
-		curJCSQSJType = '一般停车场出入口';	
+		curJCSQSJType = '居住区停车场出入口';	
 		loadybtcccrk();
 		
     });
 	
-	//一般停车场
+	//居住区停车场
 	$('#ybtccAnchor').click(function () {
 		
-		curJCSQSJType = '一般停车场';	
+		curJCSQSJType = '居住区停车场';	
 		loadybtcc();
 		
     });
 	
-	//非机动车停车位
+	//非机动车停放位
 	$('#fjdctcwAnchor').click(function () {
 		
-		curJCSQSJType = '非机动车停车位';	
+		curJCSQSJType = '非机动车停放位';	
 		loadfjdctcw();
 		
     });
@@ -413,16 +413,16 @@ function loadJCSQSJ()
 	else if(curJCSQSJType == '消防设施')
 		loadxfss();
 	
-	else if(curJCSQSJType == '停车位区域')
+	else if(curJCSQSJType == '停车位')
 		loadtcwqy();
 	
-	else if(curJCSQSJType == '一般停车场出入口')
+	else if(curJCSQSJType == '居住区停车场出入口')
 		loadybtcccrk();
 	
-	else if(curJCSQSJType == '一般停车场')
+	else if(curJCSQSJType == '居住区停车场')
 		loadybtcc();
 	
-	else if(curJCSQSJType == '非机动车停车位')
+	else if(curJCSQSJType == '非机动车停放位')
 		loadfjdctcw();
 	
 	else if(curJCSQSJType == '道路停车场')
@@ -473,10 +473,10 @@ function loadJCSQSJ()
 			$('#qtszssSpan').html(obj.qtszss);//	其他市政设施	
 			$('#xftdSpan').html(obj.xftd);//		消防通道	
 			$('#xfssSpan').html(obj.xfss);//		消防设施	
-			$('#tcwqySpan').html(obj.tcwqy);//		停车位区域	
-			$('#ybtcccrkSpan').html(obj.ybtcccrk);//	一般停车场出入口	
-			$('#ybtccSpan').html(obj.ybtcc);//	一般停车场	
-			$('#fjdctcwSpan').html(obj.fjdctcw);//	非机动车停车位	
+			$('#tcwqySpan').html(obj.tcwqy);//		停车位	
+			$('#ybtcccrkSpan').html(obj.ybtcccrk);//	居住区停车场出入口	
+			$('#ybtccSpan').html(obj.ybtcc);//	居住区停车场	
+			$('#fjdctcwSpan').html(obj.fjdctcw);//	非机动车停放位	
 			$('#dltccSpan').html(obj.dltcc);//		道路停车场	
 			
 		}
@@ -697,28 +697,28 @@ function loadxfss()
 	
 	});
 }
-//停车位区域
+//停车位
 function loadtcwqy()
 {
 	$('#jcsqsjDiv').load("./jcsqsj/jc_tc_tcw/jc_tc_tcw.html", function () {
 	
 	});
 }
-//一般停车场出入口
+//居住区停车场出入口
 function loadybtcccrk()
 {
 	$('#jcsqsjDiv').load("./jcsqsj/jc_tc_tcccrk/jc_tc_tcccrk.html", function () {
 	
 	});
 }
-//一般停车场
+//居住区停车场
 function loadybtcc()
 {
 	$('#jcsqsjDiv').load("./jcsqsj/jc_tc_ybtcc/jc_tc_ybtcc.html", function () {
 	
 	});
 }
-//非机动车停车位
+//非机动车停放位
 function loadfjdctcw()
 {
 	$('#jcsqsjDiv').load("./jcsqsj/jc_tc_fjdctcw/jc_tc_fjdctcw.html", function () {
