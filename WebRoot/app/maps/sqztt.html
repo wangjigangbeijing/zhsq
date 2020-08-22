@@ -233,7 +233,7 @@
 
 <div id="popup" class="ol-popup" style="width: 450px;">
       <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-      <div id="popup-content"></div>
+      <div id="popup-content" style="overflow:auto height: 400px;"></div>
     </div>
 
 <!-- page script -->
@@ -503,6 +503,8 @@ function editData(gid)
 	var arr2 = new Array();
 	arr2 = arr[0].split('_');
 	var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
+	
+	console.log(url);
 	
 	$('#main-content').load(url, function () {
 		
@@ -785,6 +787,8 @@ function changemap(){
 	}
 }
 
+var overlay = null;
+
 function initMap(){
 	var url = "https://iserver.supermap.io/iserver/services/map-world/rest/maps/World";
 	var container = document.getElementById('popup');
@@ -804,7 +808,7 @@ function initMap(){
 	/**
 	 * Create an overlay to anchor the popup to the map.
 	 */
-	var overlay = new ol.Overlay({
+	overlay = new ol.Overlay({
 	  element: container,
 	  autoPan: true,
 	  autoPanAnimation: {
@@ -1041,7 +1045,8 @@ function initMap(){
 				tableinfo += "<tr><td style='width:30%; text-align:right; padding:.3rem .3rem'>" + feature.get('info')[i].attribute_zhname + "：</td><td style='width:70%; text-align:left; padding:.3rem .3rem''>";
 				if(feature.get('info')[i].attribute_enname == 'pictures'){
 					var pics = feature.get('info')[i].attribute_value.split(',');
-					tableinfo += "<img width='300px' src='" + getContextPath()+"/fileController/download?fileName="+pics[0] + "'>";
+					var url = getContextPath()+"/fileController/download?fileName="+pics[0];
+					tableinfo += "<a href='" + url + "' data-lightbox='" + pics[0] + "' data-title='" + pics[0] + "'><img width='150px' src='" + url + "'></a>";
 					
 				}
 				else {
@@ -1060,8 +1065,11 @@ function initMap(){
 				content.innerHTML = '<p tyle="font-weight:bold;">信息:</p><p>' + tableinfo +
 				  '</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>';
 			  }
-			overlay.setPosition(coordinate);
-		
+			overlay.setPosition(coordinate);		
+		}
+		else {
+			overlay.setPosition(undefined);
+			document.getElementById('popup-closer').blur();
 		}
 	});
 }
