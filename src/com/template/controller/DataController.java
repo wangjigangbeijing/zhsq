@@ -1,31 +1,19 @@
 package com.template.controller;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.w3c.dom.Document;  
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;  
-import org.w3c.dom.NodeList;  
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -37,16 +25,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
+import com.mysql.cj.util.StringUtils;
 import com.template.model.SysTable;
 import com.template.model.SysTableAttribute;
 import com.template.model.gis.Gismaplayers;
+import com.template.service.SysUserService;
 import com.template.service.TableAttributeService;
 import com.template.service.TableService;
-import com.template.service.SysUserService;
 import com.template.service.gis.GismaplayersService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
@@ -998,6 +986,29 @@ public class DataController {
 				
 				String infoFields = mapLayer.getinfofields();
 				
+				net.sf.json.JSONArray arr = null;
+				//将json的infofields转换
+				if(infoFields.startsWith("[")) { //表示当前字段为json数组
+					try {
+						String s = "";
+						arr = net.sf.json.JSONArray.fromObject(infoFields);
+						logger.debug(arr.toString());
+						for(int i = 0; i < arr.size(); i++) {
+							if(s.length() == 0) {
+								s = arr.getJSONObject(i).getString("attribute_enname");
+							}
+							else {
+								s += "," + arr.getJSONObject(i).getString("attribute_enname");
+							}
+						}
+						
+						infoFields = s;
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+					
+				}
+				
 				if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || 
 						layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer4_3") ||
 						layerId.equalsIgnoreCase("layer12_3") || layerId.equalsIgnoreCase("layer16_2") || layerId.equalsIgnoreCase("layer7_4"))
@@ -1024,6 +1035,9 @@ public class DataController {
 				//String sSql = "select id,st_astext(geom) as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
 				
 				String sSql = "select id,point as geom,"+infoFields+" from "+sTableName+" where 1 = 1";
+				if(StringUtils.isNullOrEmpty(infoFields)) {
+					sSql = "select id,point as geom from "+sTableName+" where 1 = 1";
+				}
 				
 				String sCond = "";
 				
@@ -1089,7 +1103,7 @@ public class DataController {
 
 					if(sGeom == null || sGeom.equalsIgnoreCase("") || sGeom.equalsIgnoreCase("null"))
 					{
-						logger.error("geom is null");
+						//logger.error("geom is null");
 						continue;
 					}
 
@@ -1111,6 +1125,7 @@ public class DataController {
 							jsonTmp.put("facilitytype", facilitytype);
 						}
 						
+						Map<String, String> kvs = new HashMap<String, String>();
 						String info = "";
 						for(int j=0;j<infoFieldArr.length;j++)
 						{
@@ -1122,12 +1137,30 @@ public class DataController {
 							
 							info += val + "\r\n";
 							
+							kvs.put(field, val);
+							
 							jsonTmp.put(field, val);
+						}
+						
+						if(arr != null) {
+							for(int k = 0; k < arr.size(); k++) {
+								String s = arr.getJSONObject(k).getString("attribute_enname");
+								if(kvs.containsKey(s)) {
+									arr.getJSONObject(k).put("attribute_value", kvs.get(s));
+								}
+								else {
+									arr.getJSONObject(k).put("attribute_value", "");
+								}
+							}
+							jsonTmp.put("info", arr);
+						}
+						else {
+							jsonTmp.put("info", info);
 						}
 						
 						//sGeom = sGeom.replaceAll("\\ ", ",").replaceAll("POINT", "").replaceAll("POLYGON", "").replaceAll("MULTIPOLYGON", "").replaceAll("MULTILINESTRING", "").replaceAll(",,", " ").trim();
 						
-						jsonTmp.put("info", info);
+						
 						jsonTmp.put("layerId", layerId);
 						jsonTmp.put("type", sLayerType);
 						jsonTmp.put("id", sTableName+"."+gid);

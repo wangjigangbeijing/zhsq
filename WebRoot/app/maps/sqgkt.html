@@ -645,13 +645,32 @@ function initMap(){
 
 			var arr=new Array();
 			arr = gid.split('.');
+			
+			var tableinfo = "<table class='table' style='word-wrap: break-word;word-break: break-all'>";
+			for(var i = 0; i < feature.get('info').length; i++){
+				if(feature.get('info')[i].attribute_value == ''){
+					continue;
+				}
+				tableinfo += "<tr><td style='width:30%; text-align:right; padding:.3rem .3rem'>" + feature.get('info')[i].attribute_zhname + "：</td><td style='width:70%; text-align:left; padding:.3rem .3rem''>";
+				if(feature.get('info')[i].attribute_enname == 'pictures'){
+					var pics = feature.get('info')[i].attribute_value.split(',');
+					tableinfo += "<img width='300px' src='" + getContextPath()+"/fileController/download?fileName="+pics[0] + "'>";
+					
+				}
+				else {
+					tableinfo += feature.get('info')[i].attribute_value;
+				}
+				
+				tableinfo += "</td></tr>";
+			}
+			tableinfo += "</table>";
 
 			if(gid.indexOf('jc_residebuilding') >= 0){
-								content.innerHTML = '<p>信息:</p><p>' + feature.get('info') +
+								content.innerHTML = '<p style="font-weight:bold;">信息:</p><p>' + tableinfo +
 				'</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>' + '<button id="btnSearch" class="btn btn-info" style="margin-left:15px; float:right;" onclick="mingqing(\'' + arr[1] + '\')">民情图</button>';
 			}
 			else {
-				content.innerHTML = '<p>信息:</p><p>' + feature.get('info') +
+				content.innerHTML = '<p style="font-weight:bold;">信息:</p><p>' + tableinfo +
 				'</p>' + '<button id="btnSearch" class="btn btn-success" style="margin-left:15px; float:right;" onclick="editData(\'' + gid + '\')">详情</button>';
 			}
 			overlay.setPosition(coordinate);		
