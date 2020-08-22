@@ -2,6 +2,8 @@ package com.template.busi.controller.jcsqsj;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.template.busi.safe.AES;
 import com.template.model.jcsqsj.Residebuilding;
 import com.template.model.jcsqsj.Room;
 import com.template.service.jcsqsj.ResidebuildingService;
@@ -406,7 +408,21 @@ hqlFilter.setOrder("desc");
 						if(residentIds == null)
 							residentIds = "";
 						
-						jsonRoom.put("residentNames", residentNames);
+						String residentsDecode = "";
+						
+						String [] residentArr = residentNames.split(",");
+						
+						for(int k=0;k<residentArr.length;k++)
+						{
+							String residentEncoded = residentArr[k];
+							
+							residentsDecode += AES.decrypt(residentEncoded) + ",";
+						}
+						
+						if(residentsDecode.endsWith(","))
+							residentsDecode = residentsDecode.substring(0, residentsDecode.length() - 1);
+						
+						jsonRoom.put("residentNames", residentsDecode);
 						
 						jsonRoom.put("residentIds", residentIds);
 						
