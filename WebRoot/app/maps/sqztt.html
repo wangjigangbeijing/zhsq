@@ -262,7 +262,13 @@ var highlightStyle = new ol.style.Style({
   stroke: new ol.style.Stroke({
     color: '#FF2D2D',
     width: 3,
-  }),
+  })
+});
+
+var highlightPointStyle = new ol.style.Style({
+  image: new ol.style.Icon({
+		src: '../images/selected.png'
+	})
 });
 
 var layerStyleMap = {};
@@ -993,13 +999,21 @@ function initMap(){
 		  map.forEachFeatureAtPixel(evt.pixel, function (f) {
 			selected = f;
 			prevstyle = f.getStyle();
-			f.setStyle(highlightStyle);
+			var geometry = f.getGeometry();
+			if(geometry instanceof ol.geom.Polygon){
+				f.setStyle(highlightStyle);
+			}
+			else if(geometry instanceof ol.geom.Point){
+				f.setStyle(highlightPointStyle);
+			}
+			
+			
 			return true;
 		  });
 		
 		/*
 		var feature = map.forEachFeatureAtPixel(evt.pixel,
-			function(feature) {
+			function(feature) {0
 			
 				return feature;
 		});
@@ -1084,6 +1098,8 @@ function fullscreen(){
 		$("#section2").css('display','none');
 		$("#main-content").css("margin-left", "0px");
 	}
+	
+	setTimeout( function() { map.updateSize();}, 400);
 }
 </script>
 

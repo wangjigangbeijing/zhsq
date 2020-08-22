@@ -35,12 +35,12 @@ public void settitle(String title)
 	this.title = title;
 }
 @Column(name = "date", nullable = true)
-public Date date;
-public Date getdate()
+public String date;
+public String getdate()
 {
 	return date;
 }
-public void setdate(Date date)
+public void setdate(String date)
 {
 	this.date = date;
 }
