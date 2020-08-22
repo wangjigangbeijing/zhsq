@@ -45,7 +45,8 @@ public String addOrUpdate(String id,String title,String date,String type,String 
 		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
 		
 		worklog.settitle(title);
-		worklog.setdate(TimeUtil.parseDate(date, "yyyy-MM-dd"));
+		//worklog.setdate(TimeUtil.parseDate(date, "yyyy-MM-dd"));
+		worklog.setdate(date);
 		worklog.settype(type);
 		worklog.sethours(hours);
 		worklog.setcontent(content);
@@ -141,7 +142,8 @@ public String load(String title,String date,String type,String hours,String cont
 			JSONObject jsonTmp = new JSONObject();
 			jsonTmp.put("id", worklog.getId());
 			jsonTmp.put("title",worklog.gettitle());
-			jsonTmp.put("date",TimeUtil.formatDate(worklog.getdate(),"yyyy-MM-dd"));
+			//jsonTmp.put("date",TimeUtil.formatDate(worklog.getdate(),"yyyy-MM-dd"));
+			jsonTmp.put("date", worklog.getdate());
 			jsonTmp.put("type",worklog.gettype());
 			jsonTmp.put("hours",worklog.gethours());
 			jsonTmp.put("content",worklog.getcontent());
@@ -173,7 +175,8 @@ public String get(String id)
 		if(worklog != null)
 		{
 			jsonObj.put("title",worklog.gettitle());
-			jsonObj.put("date",TimeUtil.formatDate(worklog.getdate(),"yyyy-MM-dd"));
+			//jsonObj.put("date",TimeUtil.formatDate(worklog.getdate(),"yyyy-MM-dd"));
+			jsonObj.put("date", worklog.getdate());
 			jsonObj.put("type",worklog.gettype());
 			jsonObj.put("hours",worklog.gethours());
 			jsonObj.put("content",worklog.getcontent());

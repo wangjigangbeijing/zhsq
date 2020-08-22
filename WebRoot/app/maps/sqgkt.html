@@ -61,6 +61,8 @@
 						<button id="clear" value='Clear' type="button" class="btn btn-default"><img src="../images/icon/map/clear.png" title="清除" style="width:24px;"/></button>
 				</div>
 			</div>
+			
+			<img src="../images/fullscreen.png" style="position:absolute; left: 15px; top:145px; z-index:1000;" onclick="fullscreen();"/>
 
 			<img src="../images/label2.png" style="position:absolute; right: 15px; top:105px; z-index:1000;" id="labelimg"/>
 			<img src="../images/map.png" style="position:absolute; right: 15px; top:145px; z-index:1000;" onclick="changemap();"/>
@@ -168,6 +170,13 @@ var highlightStyle = new ol.style.Style({
     width: 3,
   }),
 });
+
+var highlightPointStyle = new ol.style.Style({
+  image: new ol.style.Icon({
+		src: '../images/selected.png'
+	})
+});
+
 
 $(function () 
 {
@@ -602,7 +611,13 @@ function initMap(){
 		  map.forEachFeatureAtPixel(evt.pixel, function (f) {
 			selected = f;
 			prevstyle = f.getStyle();
-			f.setStyle(highlightStyle);
+			var geometry = f.getGeometry();
+			if(geometry instanceof ol.geom.Polygon){
+				f.setStyle(highlightStyle);
+			}
+			else if(geometry instanceof ol.geom.Point){
+				f.setStyle(highlightPointStyle);
+			}
 			return true;
 		  });
 		
@@ -700,4 +715,25 @@ function showlayer(){
 		$("#main_checkbox").hide();
 	}
 }
+
+function fullscreen(){
+	if($("#headpart").is(":hidden")){
+		$("#headpart").css('display','block');//隐藏;
+		$("#leftpart").css('display','block');
+		$("#section1").css('display','block');
+		$("#section2").css('display','block');
+		$("#main-content").css("margin-left", "200px");
+	}
+	else {
+		$("#headpart").css('display','none');//隐藏;
+		$("#leftpart").css('display','none');
+		$("#section1").css('display','none');
+		$("#section2").css('display','none');
+		$("#main-content").css("margin-left", "0px");
+	}
+	
+	setTimeout( function() { map.updateSize();}, 400);
+	console.log("fullsize");
+}
+</script>
 </script>
