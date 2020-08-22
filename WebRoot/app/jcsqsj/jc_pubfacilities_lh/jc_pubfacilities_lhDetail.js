@@ -56,7 +56,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_pubfacilities_lh/jc_pubfacilities_lh.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

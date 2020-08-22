@@ -201,7 +201,7 @@ public class TableController {
 	        	jsonTmp.put("dataSubType", sysTable.getDataSubType());
 	        	jsonTmp.put("seq", sysTable.getseq());
 	        	jsonTmp.put("icon", sysTable.getIcon());
-	        	
+	        	/*
 	        	String sSql = "SELECT COUNT(*) CNT FROM "+sysTable.getTableENName();
 				
 	        	List<HashMap> listCnt = tableService.findBySql(sSql);
@@ -215,7 +215,7 @@ public class TableController {
 	        	{
 	        		jsonTmp.put("cnt", 0);
 	        	}
-	        	
+	        	*/
 	        	jsonArr.put(jsonTmp);
 	        	
 	        	iTotalCnt++;

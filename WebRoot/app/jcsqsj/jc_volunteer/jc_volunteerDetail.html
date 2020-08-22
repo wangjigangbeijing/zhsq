@@ -1,0 +1,192 @@
+
+
+<script src="./jcsqsj/jc_volunteer/jc_volunteerDetail.js"></script>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+			 <div class="card">
+              <div class="card card-info">
+              <form class="form-horizontal">
+                <div class="card-body">
+                    
+										<div class='form-group row'>
+						<label class='col-md-2 control-label'>姓名</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='name'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>身份证件号码</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='idnumber'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>性别</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='sex' value='男性'> 男性
+						<input type='radio' name='sex' value='女性'> 女性
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>出生日期</label>
+  				<div class='col-md-9'>
+					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='birthday'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>年龄</label>
+  				<div class='col-md-9'>
+ 					<input type='number' class='form-control' id='age'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>移动电话号码</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='mobile'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>居民文化程度</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='education' id='education'>
+ 						<option value='高中以下'>高中以下</option>
+ 						<option value='高中'>高中</option>
+ 						<option value='大专'>大专</option>
+ 						<option value='本科'>本科</option>
+ 						<option value='硕士'>硕士</option>
+ 						<option value='博士'>博士</option>
+ 						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>政治面貌</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='politicalstatus' id='politicalstatus'>
+ 						<option value='群众'>群众</option>
+ 						<option value='中国共产党党员'>中国共产党党员</option>
+ 						<option value='中国国民党革命委员会会员'>中国国民党革命委员会会员</option>
+ 						<option value='中国共产主义青年团团员'>中国共产主义青年团团员</option>
+ 						<option value='中国共产党预备党员'>中国共产党预备党员</option>
+ 						<option value='中国农工民主党党员'>中国农工民主党党员</option>
+ 						<option value='其他'>其他</option>
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>所属志愿者团体</label>
+						<div class='col-md-9'>				
+						<select class='form-control field' name='of_volunteerteam' id='of_volunteerteam'> 						
+						</select>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>加入时间</label>
+  				<div class='col-md-9'>
+					<div data-date-viewmode='years' data-date-format='yyyy-mm-dd' class='input-append date dpYears'>
+						<input type='text' size='16' class='form-control' id='join_date'>
+						<span class='input-group-btn add-on'>
+							<button class='btn btn-danger' type='button'><i class='fa fa-calendar'></i></button>
+						</span>
+					</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>资格证号</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='certificate_id'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>本人特长</label>
+  				<div class='col-md-9'>
+ 					<input type='text' class='form-control' id='special_skill'>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>状态</label>
+  				<div class='col-md-9'>
+					<label class='radio-inline'>
+						<input type='radio' name='status' value='在岗'> 在岗
+						<input type='radio' name='status' value='离岗'> 离岗
+					</label>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>照片</label>
+  				<div class='col-md-9'>
+<div id='picturesdiv' class='wu-example'>
+<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
+<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div class='btns'>
+<div id='picturespick'>选择文件</div>
+</div>
+</div>
+ 						</div>
+ 					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>备注</label>
+  				<div class='col-md-9'>
+					<textarea class='form-control ckeditor field' name='note' id='note' rows='6'></textarea>
+ 						</div>
+ 					</div>
+
+					
+                </div>
+                <div class="card-footer">
+				
+				 <button class="btn btn-info" type="button" onclick="addOrUpdate();">确定</button>
+                  <button class="btn btn-default float-right" type="button" onclick="gobackPage();">取消</button>
+				  
+                </div>
+              </form>
+            </div>
+			  
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+	
+	
+<script>
+
+var uploaderpictures = WebUploader.create({
+	auto: true,
+// swf文件路径
+//swf: BASE_URL + '/js/Uploader.swf',
+// 文件接收服务端
+server: getContextPath()+'/fileController/upload',
+// 选择文件的按钮。可选。
+// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+pick: '#picturespick',
+formData:{
+attributeName:'pictures'
+}
+});
+uploaderpictures.on( 'fileQueued', function( file ) {
+	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
+						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
+						'</tr>');
+});
+uploaderpictures.on( 'uploadSuccess', function( file,response ) {
+	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
+	console.log($( '#'+response.attributeName ).val());
+	$( '#'+file.id ).text('已上传');
+	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
+});
+uploaderpictures.on( 'uploadError', function( file,response ) {
+});	
+
+
+</script>

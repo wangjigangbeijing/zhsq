@@ -97,7 +97,7 @@ function gobackPage()
 {
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_tc_tcw/jc_tc_tcw.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

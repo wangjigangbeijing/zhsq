@@ -315,6 +315,33 @@ $(document).ready(function (){
 		loadyjsd();
 		
     });
+	
+	
+	//社区组织信息
+	$('#sqzzsxAnchor').click(function () {
+		
+		curJCSQSJType = '社区组织信息';	
+		loadsqzzxx();
+		
+    });
+	
+	
+	//社区组织人员
+	$('#sqzzryAnchor').click(function () {
+		
+		curJCSQSJType = '社区组织人员';	
+		loadsqzzry();
+		
+    });
+	
+	
+	//志愿者	
+	$('#zyzAnchor').click(function () {
+		
+		curJCSQSJType = '志愿者';	
+		loadzyz();
+		
+    });
 });
 
 loadJCSQSJ();
@@ -324,10 +351,12 @@ function loadJCSQSJ()
 	
 	if(curJCSQSJType == '' || curJCSQSJType == '居民信息')
 	{
+		
 		loadResident();
 	}
 	else if(curJCSQSJType == '小区信息')
 	{
+		activeModel('tabl_1','xqxxAnchor');
 		loadCommunity();
 	}
 	else if(curJCSQSJType == '房屋信息')
@@ -436,6 +465,15 @@ function loadJCSQSJ()
 	
 	else if(curJCSQSJType == '易积水点')
 		loadyjsd();
+	
+	else if(curJCSQSJType == '社区组织信息')
+		loadsqzzxx();
+	
+	else if(curJCSQSJType == '社区组织人员')
+		loadsqzzry();
+	
+	else if(curJCSQSJType == '志愿者')
+		loadzyz();
 	
 	$.get(getContextPath()+"/jcsqsjController/get",
 	function(result){
@@ -755,6 +793,31 @@ function loadyjsd()
 	});
 }
 
+
+//社区组织信息
+function loadsqzzxx()
+{
+	$('#jcsqsjDiv').load("./jcsqsj/jc_sqorganization/jc_sqorganization.html", function () {
+	
+	});
+}
+
+//社区组织人员
+function loadsqzzry()
+{
+	$('#jcsqsjDiv').load("./jcsqsj/jc_sqorgmember/jc_sqorgmember.html", function () {
+	
+	});
+}
+
+//志愿者
+function loadzyz()
+{
+	$('#jcsqsjDiv').load("./jcsqsj/jc_volunteer/jc_volunteer.html", function () {
+	
+	});
+}
+
 function forkme(){
 	if($('#card-body').is(':hidden')){
 		$("#showicon").attr("class", "fas fa-chevron-up");
@@ -773,6 +836,64 @@ function forkme(){
 	
 }
 
+function activeModel(tab,anchor)
+{
+	debugger;
+	$("#tabs1").removeClass('tj-cd');
+	$("#tabs2").removeClass('tj-cd');
+	$("#tabs3").removeClass('tj-cd');
+	$("#tabs4").removeClass('tj-cd');
+	$("#tabs5").removeClass('tj-cd');
+	$("#tabs6").removeClass('tj-cd');
+	
+	$('#xqxxAnchor').removeClass('tj-rexz');
+	$('#xqcrkAnchor').removeClass('tj-rexz');
+	$('#zzlyAnchor').removeClass('tj-rexz');
+	$('#fwxxAnchor').removeClass('tj-rexz');
+	$('#swlyAnchor').removeClass('tj-rexz');
+	$('#qtlyAnchor').removeClass('tj-rexz');
+	$('#dxkjAnchor').removeClass('tj-rexz');
+	$('#zbdlAnchor').removeClass('tj-rexz');
+	$('#hhsxAnchor').removeClass('tj-rexz');
+	
+	$('#jtxxAnchor').removeClass('tj-rexz');
+	$('#jmxxAnchor').removeClass('tj-rexz');
+	$('#clxxAnchor').removeClass('tj-rexz');
+	
+	$('#dzzAnchor').removeClass('tj-rexz');
+	$('#dyxxAnchor').removeClass('tj-rexz');
+	$('#sqzzsxAnchor').removeClass('tj-rexz');
+	$('#sqzzryAnchor').removeClass('tj-rexz');
 
+	$('#frzzAnchor').removeClass('tj-rexz');
+	$('#zyzdwAnchor').removeClass('tj-rexz');
+	$('#zyzAnchor').removeClass('tj-rexz');
+	$('#jmttAnchor').removeClass('tj-rexz');
 
+	$('#wtssAnchor').removeClass('tj-rexz');
+	$('#bncsAnchor').removeClass('tj-rexz');
+	$('#ljzAnchor').removeClass('tj-rexz');
+	$('#xcssAnchor').removeClass('tj-rexz');
+	$('#gyszssAnchor').removeClass('tj-rexz');
+	$('#jtszssAnchor').removeClass('tj-rexz');
+	$('#srhjszssAnchor').removeClass('tj-rexz');
+	$('#yllhszssAnchor').removeClass('tj-rexz');
+	$('#qtszssAnchor').removeClass('tj-rexz');
+
+	$('#ffwdAnchor').removeClass('tj-rexz');
+	$('#xftdAnchor').removeClass('tj-rexz');
+	$('#xfssAnchor').removeClass('tj-rexz');
+
+	$('#ybtccAnchor').removeClass('tj-rexz');
+	$('#ybtcccrkAnchor').removeClass('tj-rexz');
+	$('#dltccAnchor').removeClass('tj-rexz');
+	$('#tcwqyAnchor').removeClass('tj-rexz');
+	$('#fjdctcwAnchor').removeClass('tj-rexz');
+
+	$('#yjsdAnchor').removeClass('tj-rexz');
+	
+	$('#'+anchor).addClass('tj-rexz');
+	$('#'+tab).addClass('tj-cd');
+	$('#'+tab).show();
+}
 
