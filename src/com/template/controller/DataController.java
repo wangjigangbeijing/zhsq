@@ -986,13 +986,15 @@ public class DataController {
 				
 				String infoFields = mapLayer.getinfofields();
 				
+				String labelFields = mapLayer.getlabelfields();
+				
 				net.sf.json.JSONArray arr = null;
 				//将json的infofields转换
 				if(infoFields.startsWith("[")) { //表示当前字段为json数组
 					try {
 						String s = "";
 						arr = net.sf.json.JSONArray.fromObject(infoFields);
-						logger.debug(arr.toString());
+						//logger.debug(arr.toString());
 						for(int i = 0; i < arr.size(); i++) {
 							if(s.length() == 0) {
 								s = arr.getJSONObject(i).getString("attribute_enname");
@@ -1031,6 +1033,8 @@ public class DataController {
 				String sTableName = mapLayer.getlayersource();
 				
 				String [] infoFieldArr = infoFields.split(",");
+				
+				String[] labelFieldArr = labelFields.split(",");
 				
 				//String sSql = "select id,st_astext(geom) as geom,"+infoFields+" from "+sTableName+" where 1 = 1 AND ";
 				
@@ -1126,7 +1130,7 @@ public class DataController {
 						}
 						
 						Map<String, String> kvs = new HashMap<String, String>();
-						String info = "";
+						String info = "", label = "";
 						for(int j=0;j<infoFieldArr.length;j++)
 						{
 							String field = infoFieldArr[j];
@@ -1140,6 +1144,15 @@ public class DataController {
 							kvs.put(field, val);
 							
 							jsonTmp.put(field, val);
+						}
+						
+						for(int j = 0; j < labelFieldArr.length; j++) {
+							String field = labelFieldArr[j];
+							String val = "";
+							if(hm.containsKey(field) && hm.get(field) != null)
+								val = hm.get(field).toString();
+							
+							label += val + "\r\n";
 						}
 						
 						if(arr != null) {
@@ -1157,6 +1170,8 @@ public class DataController {
 						else {
 							jsonTmp.put("info", info);
 						}
+						
+						jsonTmp.put("label", label);
 						
 						//sGeom = sGeom.replaceAll("\\ ", ",").replaceAll("POINT", "").replaceAll("POLYGON", "").replaceAll("MULTIPOLYGON", "").replaceAll("MULTILINESTRING", "").replaceAll(",,", " ").trim();
 						

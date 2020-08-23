@@ -356,10 +356,18 @@ function initMap(){
 					$('#layerDiv').append(layerCtl);
 					*/
 					
-					var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
-                          '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
-					
-					$('#main_checkbox').append(layerCtl);
+					if(layer.checked == '否'){
+						var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'">' + 
+							  '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
+						
+						$('#main_checkbox').append(layerCtl);
+					}
+					else {
+						var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
+							  '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
+						
+						$('#main_checkbox').append(layerCtl);
+					}
 					
 					var layerType = layer.layertype;
 					
@@ -368,6 +376,10 @@ function initMap(){
 					var layerStyleObj = jQuery.parseJSON(layerStyle); 
 					
 					layerStyleMap[layerId] = layerStyleObj;
+					
+					if(layer.checked == '否'){
+						continue;
+					}
 					
 					layerIds += layerId + ',';
 				}
@@ -420,6 +432,7 @@ function initMap(){
 						
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
+						iconFeature.set("label", data.label);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 					else if(data.type == 'Point')
@@ -439,7 +452,7 @@ function initMap(){
 								text: new ol.style.Text({
 									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 									// and show only under certain resolution
-									text: data.info
+									text: data.label
 								  })
 							}));
 						}
@@ -453,6 +466,7 @@ function initMap(){
 						
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
+						iconFeature.set("label", data.label);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 					else if(data.type == 'MultiPolygon')
@@ -483,7 +497,7 @@ function initMap(){
 								text: new ol.style.Text({
 									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 									// and show only under certain resolution
-									text: data.info
+									text: data.label
 								  })
 							}));
 						}
@@ -501,6 +515,7 @@ function initMap(){
 						
 						iconFeature.setId(data.info);
 						iconFeature.set('info', data.info);
+						iconFeature.set("label", data.label);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 				}
@@ -654,7 +669,7 @@ function initMap(){
 					continue;
 				}
 				tableinfo += "<tr><td style='width:30%; text-align:right; padding:.3rem .3rem'>" + feature.get('info')[i].attribute_zhname + "：</td><td style='width:70%; text-align:left; padding:.3rem .3rem''>";
-				if(feature.get('info')[i].attribute_enname == 'pictures'){
+				if(feature.get('info')[i].attribute_enname == 'pictures' || feature.get('info')[i].attribute_enname == 'picture'){
 					var pics = feature.get('info')[i].attribute_value.split(',');
 					var url = getContextPath()+"/fileController/download?fileName="+pics[0];
 					tableinfo += "<a href='" + url + "' data-lightbox='" + pics[0] + "' data-title='" + pics[0] + "'><img width='150px' src='" + url + "'></a>";

@@ -167,9 +167,9 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			
 			//1
-			String sql = "select count(*) as num from jc_community t where t.OWNER=?";
+			String sql = "select count(*) as num from jc_community t where t.OWNER like ?";
 			List<Object> params = new ArrayList<Object>();
-			params.add(owner);
+			params.add("%" + owner + "%");
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{

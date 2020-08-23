@@ -137,5 +137,15 @@ public class Gismaplayers implements java.io.Serializable {
 	{
 		this.layertype = layertype;
 	}
+	
+	@Column(name = "defaultchecked", nullable = true)
+	public String defaultchecked;
+	public String getdefaultchecked() {
+		return defaultchecked;
+	}
+	public void setdefaultchecked(String defaultchecked) {
+		this.defaultchecked = defaultchecked;
+	}
+	
 }
 
