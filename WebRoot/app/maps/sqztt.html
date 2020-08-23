@@ -161,6 +161,15 @@
 					</ul>
 				</div>
               </div>
+			  
+			  <div class="row" style="padding:10px;">
+					<span>点图例：</span>
+					<img src="../images/icon/map/clear.png">
+					<img src="../images/icon/map/clear.png">
+				</div>
+				<div class="row" style="padding:10px;">
+					<span>面图例：</span>
+				</div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -365,6 +374,7 @@ function loadMap(mapName)
 									});
 									
 									iconFeature.setId(data.id);
+									iconFeature.set("label", data.label);
 									iconFeature.set('info', data.info);
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
@@ -413,7 +423,7 @@ function loadMap(mapName)
 											text: new ol.style.Text({
 												font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 												// and show only under certain resolution
-												text: data.info
+												text: data.label
 											  })
 										}));
 									}
@@ -427,6 +437,7 @@ function loadMap(mapName)
 									
 									iconFeature.setId(data.id);
 									iconFeature.set('info', data.info);
+									iconFeature.set("label", data.label);
 									dataLayer.getSource().addFeature(iconFeature);	
 								}
 								else if(data.type == 'MultiPolygon')
@@ -449,6 +460,7 @@ function loadMap(mapName)
 									//iconFeature.setId(data.info);
 									iconFeature.setId(data.id);
 									iconFeature.set('info', data.info);
+									iconFeature.set("label", data.label);
 									
 									var strokeColor = '#1E90FF';
 									if(layerStyleObj.style != null)
@@ -471,7 +483,7 @@ function loadMap(mapName)
 											text: new ol.style.Text({
 												font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 												// and show only under certain resolution
-												text: data.info
+												text: data.label
 											  })
 										}));
 									}
@@ -495,6 +507,8 @@ function loadMap(mapName)
 					});
 				}
 				
+				console.log(layerStyleMap);
+				
 				var height = respObj.list.length * 25;
 				$('#main_checkbox').css("height", height +"px");
 				
@@ -515,8 +529,6 @@ function editData(gid)
 	var arr2 = new Array();
 	arr2 = arr[0].split('_');
 	var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
-	
-	console.log(url);
 	
 	$('#main-content').load(url, function () {
 		
@@ -573,7 +585,7 @@ function reloadlayer(){
 					});
 					
 					iconFeature.setId(data.id);
-					
+					iconFeature.set("label", data.label);
 					dataLayer.getSource().addFeature(iconFeature);	
 				}
 				else if(data.type == 'Point')
@@ -601,7 +613,7 @@ function reloadlayer(){
 						iconurl = layerStyleMap[data.facilitytype].iconurl;
 					}
 					
-					console.log(iconurl);
+					//console.log(iconurl);
 					
 					if(labelshow){
 						iconFeature.setStyle(new ol.style.Style({
@@ -611,7 +623,7 @@ function reloadlayer(){
 							text: new ol.style.Text({
 								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 								// and show only under certain resolution
-								text: data.info
+								text: data.label
 							  })
 						}));
 					}
@@ -626,6 +638,7 @@ function reloadlayer(){
 					
 					iconFeature.setId(data.id);
 					iconFeature.set('info', data.info);
+					iconFeature.set("label", data.label);
 					dataLayer.getSource().addFeature(iconFeature);	
 				}
 				else if(data.type == 'MultiPolygon')
@@ -641,6 +654,7 @@ function reloadlayer(){
 					//iconFeature.setId(data.info);
 					iconFeature.setId(data.id);
 					iconFeature.set('info', data.info);
+					iconFeature.set("label", data.label);
 					
 					var strokeColor = '#1E90FF';
 					if(layerStyleObj.style != null)
@@ -664,7 +678,7 @@ function reloadlayer(){
 							text: new ol.style.Text({
 								font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 								// and show only under certain resolution
-								text: data.info
+								text: data.label
 							  })
 						}));
 					}
@@ -1039,7 +1053,7 @@ function initMap(){
 		{
 			var gid = feature.getId();
 	
-			console.log(feature.get('info'));
+			//console.log(feature.get('info'));
 			
 			//curId = gid.substring(gid.indexOf('\.')+1);
 			
@@ -1055,7 +1069,7 @@ function initMap(){
 					continue;
 				}
 				tableinfo += "<tr><td style='width:30%; text-align:right; padding:.3rem .3rem'>" + feature.get('info')[i].attribute_zhname + "：</td><td style='width:70%; text-align:left; padding:.3rem .3rem''>";
-				if(feature.get('info')[i].attribute_enname == 'pictures'){
+				if(feature.get('info')[i].attribute_enname == 'pictures' || feature.get('info')[i].attribute_enname == 'picture'){
 					var pics = feature.get('info')[i].attribute_value.split(',');
 					var url = getContextPath()+"/fileController/download?fileName="+pics[0];
 					tableinfo += "<a href='" + url + "' data-lightbox='" + pics[0] + "' data-title='" + pics[0] + "'><img width='150px' src='" + url + "'></a>";

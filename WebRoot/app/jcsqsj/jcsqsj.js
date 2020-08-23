@@ -1,4 +1,5 @@
-﻿
+﻿var maintab = null, secondtab = null;
+
 $(document).ready(function (){
 	
 	//$('#btnAdd').click(addsqzzqd);
@@ -356,7 +357,7 @@ function loadJCSQSJ()
 	}
 	else if(curJCSQSJType == '小区信息')
 	{
-		activeModel('tabl_1','xqxxAnchor');
+		//activeModel('tabl_1','xqxxAnchor');
 		loadCommunity();
 	}
 	else if(curJCSQSJType == '房屋信息')
