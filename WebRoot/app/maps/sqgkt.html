@@ -513,7 +513,7 @@ function initMap(){
 							}));
 						}
 						
-						iconFeature.setId(data.info);
+						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
 						iconFeature.set("label", data.label);
 						dataLayer.getSource().addFeature(iconFeature);	
@@ -775,6 +775,28 @@ function fullscreen(){
 	
 	setTimeout( function() { map.updateSize();}, 400);
 	console.log("fullsize");
+}
+
+function editData(gid)
+{
+	var arr=new Array();
+	arr = gid.split('.');
+	curId = arr[1];
+	var arr2 = new Array();
+	arr2 = arr[0].split('_');
+	var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
+	
+	$('#main-content').load(url, function () {
+		
+    });
+}
+
+function mingqing(id)
+{
+	curId = id;
+	$('#main-content').load("./jcsqsj/residebuilding/residebuildingMinqing.html", function () {
+		
+    });
 }
 </script>
 </script>

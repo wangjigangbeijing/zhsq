@@ -321,6 +321,9 @@ function loadbaseinfo2(){
 				$("#b23").html(obj.data[2]);
 				$("#b24").html(obj.data[3]);
 				$("#b25").html(obj.data[4]);
+				$("#b26").html(obj.data[5]);
+				$("#b27").html(obj.data[6]);
+				$("#b28").html(obj.data[7]);
 			}
 		});	
 }
