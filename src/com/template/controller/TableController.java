@@ -201,8 +201,30 @@ public class TableController {
 	        	jsonTmp.put("dataSubType", sysTable.getDataSubType());
 	        	jsonTmp.put("seq", sysTable.getseq());
 	        	jsonTmp.put("icon", sysTable.getIcon());
-	        	/*
-	        	String sSql = "SELECT COUNT(*) CNT FROM "+sysTable.getTableENName();
+	        	
+	        	String sSql = "SELECT COUNT(*) CNT FROM "+sysTable.getTableENName()+" WHERE 1 = 1 ";
+
+				String organization = Utility.getInstance().getOrganization(request);
+				if(organization != null && organization.equalsIgnoreCase("") == false)
+				{
+					String [] organizationArr = organization.split(",");
+					
+					String ownerCond = "";
+					
+					for(int j=0;j<organizationArr.length;j++)
+					{
+						if(ownerCond.length() == 0) {
+							ownerCond = " OWNER LIKE '%"+organizationArr[j]+"%'";
+						}
+						else {
+							ownerCond += " OR OWNER LIKE '%"+organizationArr[j]+"%'";
+						}
+					}
+					
+					if(ownerCond.length() > 0) {
+						sSql += " AND ("+ownerCond+") ";
+					}	
+				}
 				
 	        	List<HashMap> listCnt = tableService.findBySql(sSql);
 				
@@ -215,7 +237,7 @@ public class TableController {
 	        	{
 	        		jsonTmp.put("cnt", 0);
 	        	}
-	        	*/
+	        	
 	        	jsonArr.put(jsonTmp);
 	        	
 	        	iTotalCnt++;

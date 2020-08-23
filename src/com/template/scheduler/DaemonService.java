@@ -380,12 +380,12 @@ public class DaemonService
 							
 							String curChar = resident.getcharacteristics();
 							
-							curChar.replaceAll("0-6岁儿童", "");
-							curChar.replaceAll("7-13岁青少年", "");
-							curChar.replaceAll("13-18岁青少年", "");
-							curChar.replaceAll("老年人", "");
-							curChar.replaceAll("80岁以上老人", "");
-							curChar.replaceAll("90岁以上老人", "");
+							curChar = curChar.replaceAll("0-6岁儿童,*", "");
+							curChar = curChar.replaceAll("7-13岁青少年,*", "");
+							curChar = curChar.replaceAll("13-18岁青少年,*", "");
+							curChar = curChar.replaceAll("老年人,*", "");
+							curChar = curChar.replaceAll("80岁以上老人,*", "");
+							curChar = curChar.replaceAll("90岁以上老人,*", "");
 							
 							if(curChar.endsWith(",") == false && curChar.equalsIgnoreCase("") == false)
 								curChar += ",";
@@ -393,7 +393,7 @@ public class DaemonService
 							resident.setcharacteristics(curChar);
 						}
 						
-						//residentService.save(resident);  JiGang
+						residentService.save(resident);  
 						
 						String residentcharacteristic = resident.characteristics;
 						
