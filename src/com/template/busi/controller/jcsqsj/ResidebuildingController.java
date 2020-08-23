@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.template.busi.safe.AES;
+import com.template.busi.safe.DataProcess;
 import com.template.model.jcsqsj.Residebuilding;
 import com.template.model.jcsqsj.Room;
 import com.template.service.jcsqsj.ResidebuildingService;
@@ -416,7 +417,17 @@ hqlFilter.setOrder("desc");
 						{
 							String residentEncoded = residentArr[k];
 							
-							residentsDecode += AES.decrypt(residentEncoded) + ",";
+							try {
+								String s = AES.decrypt(residentEncoded);
+								if(residentsDecode.length() == 0) {
+									residentsDecode = DataProcess.processData(s, 1);
+								}
+								else {
+									residentsDecode += "," + DataProcess.processData(s, 1);
+								}
+							} catch(Exception e) {
+								
+							}
 						}
 						
 						if(residentsDecode.endsWith(","))
