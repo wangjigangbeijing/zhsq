@@ -418,6 +418,8 @@ function initMap(){
 				for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 				{
 					var data = dataList.features[p];
+					
+					console.log(data);
 				
 					layerStyleObj = layerStyleMap[data.layerId];
 				
@@ -447,7 +449,7 @@ function initMap(){
 						if(labelshow){
 							iconFeature.setStyle(new ol.style.Style({
 								image: new ol.style.Icon({
-									src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
+									src: getContextPath()+"/fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
 								}),
 								text: new ol.style.Text({
 									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
@@ -459,7 +461,7 @@ function initMap(){
 						else {
 							iconFeature.setStyle(new ol.style.Style({
 								image: new ol.style.Icon({
-									src: getContextPath()+"fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
+									src: getContextPath()+"/fileController/downloadIcon?fileName="+layerStyleObj.style.iconurl//'../icons/point.png'
 								})
 							}));
 						}
@@ -467,6 +469,7 @@ function initMap(){
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
 						iconFeature.set("label", data.label);
+						console.log(iconFeature);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 					else if(data.type == 'MultiPolygon')
