@@ -457,5 +457,28 @@ hqlFilter.setOrder("desc");
 
 
 
+	public String replacechar(String source, int start, int end){
+		if(source == null){
+			return null;
+		}
+		if(start < 0 || end > source.length()){
+			return source;
+		}
+		if(start > end){
+			return source;
+		}
+		
+		String result = "";
+		for(int i = 0; i < source.length(); i++){
+			if(i < start || i >= end){
+				result += source.substring(i, i+1);
+			}
+			else if(i >= start && i < end){
+				result += "*";
+			}
+		}
+		return result;
+	}
+
 
 }

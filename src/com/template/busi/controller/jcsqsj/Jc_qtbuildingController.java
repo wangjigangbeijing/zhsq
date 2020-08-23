@@ -167,9 +167,7 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 	hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 }
 
-
 String organization = Utility.getInstance().getOrganization(request);
-
 
 ArrayList<String> alOrg = new ArrayList<String>(); 
 
@@ -183,6 +181,10 @@ if(organization != null && organization.equalsIgnoreCase("") == false)
 		alOrg.add("%"+organizationArr[i]+"%");
 	}
 }
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
         List<Jc_qtbuilding> listObj = jc_qtbuildingService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
         int iTotalCnt = 0;

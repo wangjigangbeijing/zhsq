@@ -95,9 +95,9 @@ public class DaemonService
 			
 			loadAdvertisementInfo();
 			
-			//refreshResident();//定期刷民情图数据
+			refreshResident();//定期刷民情图数据
 			
-			//refreshResidentBuilding();//定期刷民情图数据
+			refreshResidentBuilding();//定期刷民情图数据
 		}
 		catch(Exception e)
 		{
@@ -387,11 +387,13 @@ public class DaemonService
 							curChar.replaceAll("80岁以上老人", "");
 							curChar.replaceAll("90岁以上老人", "");
 							
-							curChar += ","+yearChar;
-							
+							if(curChar.endsWith(",") == false && curChar.equalsIgnoreCase("") == false)
+								curChar += ",";
+							curChar += yearChar;
 							resident.setcharacteristics(curChar);
 						}
-						residentService.save(resident);
+						
+						//residentService.save(resident);  JiGang
 						
 						String residentcharacteristic = resident.characteristics;
 						

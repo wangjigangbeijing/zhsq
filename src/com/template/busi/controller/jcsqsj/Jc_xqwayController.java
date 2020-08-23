@@ -152,6 +152,12 @@ if(alOrg != null && alOrg.size() != 0)
 			jsonTmp.put("sfymj",jc_xqway.getsfymj());
 			jsonTmp.put("mjlx",jc_xqway.getmjlx());
 			jsonTmp.put("ssxq",jc_xqway.getssxq());
+			
+			if(ConstValue.hmDicMap.containsKey(jc_xqway.getssxq()))
+			{
+				jsonTmp.put("ssxqname",ConstValue.hmDicMap.get(jc_xqway.getssxq()));
+			}
+			
 			jsonTmp.put("pictures",jc_xqway.getpictures());
 			jsonTmp.put("note",jc_xqway.getnote());
 
