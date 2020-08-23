@@ -418,8 +418,6 @@ function initMap(){
 				for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 				{
 					var data = dataList.features[p];
-					
-					console.log(data);
 				
 					layerStyleObj = layerStyleMap[data.layerId];
 				
@@ -469,7 +467,6 @@ function initMap(){
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
 						iconFeature.set("label", data.label);
-						console.log(iconFeature);
 						dataLayer.getSource().addFeature(iconFeature);	
 					}
 					else if(data.type == 'MultiPolygon')
