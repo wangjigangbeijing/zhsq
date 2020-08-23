@@ -1,29 +1,35 @@
-﻿var maintab = null, secondtab = null;
-
-$(document).ready(function (){
+﻿$(document).ready(function (){
 	
 	//$('#btnAdd').click(addsqzzqd);
 	
 	//小区信息
 	$('#xqxxAnchor').click(function () {
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '小区信息';		
 		loadCommunity();
     });
 	
 	//房屋信息
 	$('#fwxxAnchor').click(function () {		
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '房屋信息';		
 		loadRoom();        
     });
 	
 	//家庭信息
 	$('#jtxxAnchor').click(function () {
+		maintab = 'tabl_2';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '家庭信息';		
 		loadFamily();  
     });
 	
 	//居民信息
 	$('#jmxxAnchor').click(function () {
+		maintab = 'tabl_2';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '居民信息';	
 		loadResident();
     });
@@ -47,13 +53,16 @@ $(document).ready(function (){
 	
 	//周边道路
 	$('#zbdlAnchor').click(function () {
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '周边道路';	
 		loadRoad();
     });
 	
 	//党组织
 	$('#dzzAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '党组织';	
 		loadPartyOrganization();
        
@@ -61,7 +70,8 @@ $(document).ready(function (){
 	
 	//市政设施
 	$('#szbjAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '市政设施';	
 		loadPublicFacilities();
 		
@@ -69,7 +79,8 @@ $(document).ready(function (){
 	
 	//住宅楼宇
 	$('#zzlyAnchor').click(function () {
-		
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '住宅楼宇';	
 		loadResidebuilding();
 		
@@ -77,7 +88,8 @@ $(document).ready(function (){
 	
 	//商务楼宇
 	$('#swlyAnchor').click(function () {
-		
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '商务楼宇';	
 		loadBizbuilding();
 		
@@ -85,7 +97,8 @@ $(document).ready(function (){
 	
 	//地下空间
 	$('#dxkjAnchor').click(function () {
-		
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '地下空间';	
 		loadUndergroundspace();
 		
@@ -93,7 +106,8 @@ $(document).ready(function (){
 	
 	//车辆信息
 	$('#clxxAnchor').click(function () {
-		
+		maintab = 'tabl_2';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '车辆信息';	
 		loadVehicle();
 		
@@ -101,7 +115,8 @@ $(document).ready(function (){
 	
 	//文体设施
 	$('#wtssAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '文体设施';	
 		loadCultureFacilities();
 		
@@ -118,7 +133,8 @@ $(document).ready(function (){
 	
 	//停车资源
 	$('#tczyAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '停车资源';	
 		loadParking();
 		
@@ -126,7 +142,8 @@ $(document).ready(function (){
 	
 	//法人组织
 	$('#frzzAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '法人组织';	
 		loadOrganization();
 		
@@ -134,7 +151,8 @@ $(document).ready(function (){
 	
 	//志愿者队伍
 	$('#zyzdwAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '志愿者队伍';	
 		loadVolunteerteam();
 		
@@ -142,7 +160,8 @@ $(document).ready(function (){
 	
 	//居民团体
 	$('#jmttAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '居民团体';	
 		loadPopulationgroup();
 		
@@ -150,7 +169,8 @@ $(document).ready(function (){
 	
 	//服务网点
 	$('#ffwdAnchor').click(function () {
-		
+		maintab = 'tabl_5';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '服务网点';	
 		loadServicestore();
 		
@@ -158,7 +178,8 @@ $(document).ready(function (){
 	
 	//垃圾站
 	$('#ljzAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '垃圾站';	
 		loadRubbish();
 		
@@ -166,7 +187,8 @@ $(document).ready(function (){
 	
 	//河湖水系
 	$('#hhsxAnchor').click(function () {
-		
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '河湖水系';	
 		loadWatersystem();
 		
@@ -174,7 +196,8 @@ $(document).ready(function (){
 	
 	//避难场所
 	$('#bncsAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '避难场所';	
 		loadShelter();
 		
@@ -182,7 +205,8 @@ $(document).ready(function (){
 	
 	//党员信息
 	$('#dyxxAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '党员信息';	
 		loaddyxx();
 		
@@ -190,7 +214,8 @@ $(document).ready(function (){
 	
 	//宣传设施
 	$('#xcssAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '宣传设施';	
 		loadxcss();
 		
@@ -198,7 +223,8 @@ $(document).ready(function (){
 	
 	//公用市政设施
 	$('#gyszssAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '公用市政设施';	
 		loadgyszss();
 		
@@ -206,7 +232,8 @@ $(document).ready(function (){
 	
 	//交通市政设施
 	$('#jtszssAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '交通市政设施';	
 		loadjtszss();
 		
@@ -214,7 +241,8 @@ $(document).ready(function (){
 	
 	//市容环境市政设施
 	$('#srhjszssAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '市容环境市政设施';	
 		loadsrhjszss();
 		
@@ -222,7 +250,8 @@ $(document).ready(function (){
 	
 	//园林绿化市政设施
 	$('#yllhszssAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '园林绿化市政设施';	
 		loadyllhszss();
 		
@@ -230,7 +259,8 @@ $(document).ready(function (){
 	
 	//其他市政设施
 	$('#qtszssAnchor').click(function () {
-		
+		maintab = 'tabl_4';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '其他市政设施';	
 		loadqtszss();
 		
@@ -238,7 +268,8 @@ $(document).ready(function (){
 	
 	//消防通道
 	$('#xftdAnchor').click(function () {
-		
+		maintab = 'tabl_6';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '消防通道';	
 		loadxftd();
 		
@@ -246,7 +277,8 @@ $(document).ready(function (){
 	
 	//消防设施
 	$('#xfssAnchor').click(function () {
-		
+		maintab = 'tabl_6';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '消防设施';	
 		loadxfss();
 		
@@ -255,7 +287,8 @@ $(document).ready(function (){
 	
 	//停车位
 	$('#tcwqyAnchor').click(function () {
-		
+		maintab = 'tabl_7';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '停车位';	
 		loadtcwqy();
 		
@@ -263,7 +296,8 @@ $(document).ready(function (){
 	
 	//居住区停车场出入口
 	$('#ybtcccrkAnchor').click(function () {
-		
+		maintab = 'tabl_7';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '居住区停车场出入口';	
 		loadybtcccrk();
 		
@@ -271,7 +305,8 @@ $(document).ready(function (){
 	
 	//居住区停车场
 	$('#ybtccAnchor').click(function () {
-		
+		maintab = 'tabl_7';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '居住区停车场';	
 		loadybtcc();
 		
@@ -279,7 +314,8 @@ $(document).ready(function (){
 	
 	//非机动车停放位
 	$('#fjdctcwAnchor').click(function () {
-		
+		maintab = 'tabl_7';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '非机动车停放位';	
 		loadfjdctcw();
 		
@@ -287,7 +323,8 @@ $(document).ready(function (){
 	
 	//道路停车场
 	$('#dltccAnchor').click(function () {
-		
+		maintab = 'tabl_7';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '道路停车场';	
 		loaddltcc();
 		
@@ -295,7 +332,8 @@ $(document).ready(function (){
 	
 //小区出入口
 	$('#xqcrkAnchor').click(function () {
-		
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '小区出入口';	
 		loadxqcrk();
 		
@@ -303,7 +341,8 @@ $(document).ready(function (){
 	
 	//其他楼宇
 	$('#qtlyAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '其他楼宇';	
 		loadqtly();
 		
@@ -311,7 +350,8 @@ $(document).ready(function (){
 	
 	//易积水点
 	$('#yjsdAnchor').click(function () {
-		
+		maintab = 'tabl_1';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '易积水点';	
 		loadyjsd();
 		
@@ -320,7 +360,8 @@ $(document).ready(function (){
 	
 	//社区组织信息
 	$('#sqzzsxAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '社区组织信息';	
 		loadsqzzxx();
 		
@@ -329,7 +370,8 @@ $(document).ready(function (){
 	
 	//社区组织人员
 	$('#sqzzryAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '社区组织人员';	
 		loadsqzzry();
 		
@@ -338,7 +380,8 @@ $(document).ready(function (){
 	
 	//志愿者	
 	$('#zyzAnchor').click(function () {
-		
+		maintab = 'tabl_3';
+		secondtab = $(this).attr('id');
 		curJCSQSJType = '志愿者';	
 		loadzyz();
 		

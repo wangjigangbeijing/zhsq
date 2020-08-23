@@ -7,6 +7,8 @@ var curUserName;
 
 var ip = '127.0.0.1';
 
+var maintab = 'tabl_2', secondtab = null;
+
 
 $(document).ready(function (){
 	
@@ -63,6 +65,8 @@ $(document).ready(function (){
 	$('#jcsqsjAnchor').click(function () {
 		updateActiveMenu('jcsqsjAnchor');
         loadJcsqsjPage();
+		maintab = 'tabl_2';
+		secondtab = null;
     });
 	
 	$('#sxsqsjAnchor').click(function () {
