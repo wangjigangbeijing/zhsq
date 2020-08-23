@@ -182,7 +182,9 @@ public String get(String id)
 
 			HqlFilter hqlFilter = new HqlFilter();
 			hqlFilter.addQryCond("mapid", HqlFilter.Operator.EQ, id);			
+			//hqlFilter.addQryCond("defaultchecked", HqlFilter.Operator.EQ, "是");
 			hqlFilter.setSort("order");
+			
 
 	        List<Gismaplayers> listObj = gismaplayersService.findByFilter(hqlFilter);
 	        JSONArray jsonArr = new JSONArray();
@@ -202,7 +204,8 @@ public String get(String id)
 				jsonTmp.put("infofields",gismaplayers.getinfofields());
 				jsonTmp.put("queryfields",gismaplayers.getqueryfields());
 				jsonTmp.put("note",gismaplayers.getnote());				
-				jsonTmp.put("order",gismaplayers.getorder());				
+				jsonTmp.put("order",gismaplayers.getorder());	
+				jsonTmp.put("checked", gismaplayers.getdefaultchecked());
 				jsonTmp.put("geoserver",geoserverURL);
 				
 	       		jsonArr.put(jsonTmp);

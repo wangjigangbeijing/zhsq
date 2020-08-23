@@ -992,7 +992,7 @@ public class DataController {
 					try {
 						String s = "";
 						arr = net.sf.json.JSONArray.fromObject(infoFields);
-						logger.debug(arr.toString());
+						//logger.debug(arr.toString());
 						for(int i = 0; i < arr.size(); i++) {
 							if(s.length() == 0) {
 								s = arr.getJSONObject(i).getString("attribute_enname");

@@ -303,10 +303,18 @@ function loadMap(mapName)
 					
 					var checkboxWidth = layer.note.length * 22;
 					//图层列表
-					var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
-                          '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
-					
-					$('#main_checkbox').append(layerCtl);
+					if(layer.checked == '否'){
+						var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'">' + 
+							  '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
+						
+						$('#main_checkbox').append(layerCtl);
+					}
+					else {
+						var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
+							  '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
+						
+						$('#main_checkbox').append(layerCtl);
+					}
 					
 					var layerType = layer.layertype;
 					
@@ -326,6 +334,10 @@ function loadMap(mapName)
 						{
 							layerStyleMap[layerStyleObj[k].type] = layerStyleObj[k].style;
 						}
+					}
+					
+					if(layer.checked == '否'){
+						continue;
 					}
 					
 					$.ajax({
