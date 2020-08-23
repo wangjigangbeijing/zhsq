@@ -454,26 +454,30 @@ public String load(String name,String identitytype,String idnumber,String charac
 			jsonTmp.put("ofunit",resident.getofunit());
 			jsonTmp.put("ofroom",resident.getofroom());
 			
+			String buildingName = "";			
 			if(ConstValue.hmDicMap.containsKey(resident.getofresidebuilding()))
 			{
 				jsonTmp.put("ofresidebuildingname",ConstValue.hmDicMap.get(resident.getofresidebuilding()));
+				buildingName = ConstValue.hmDicMap.get(resident.getofresidebuilding());
 			}
 			
 			jsonTmp.put("ofunit",resident.getofunit());
 			jsonTmp.put("ofroom",resident.getofroom());
 
+			String roomName = "";
 			if(ConstValue.hmDicMap.containsKey(resident.getofroom()))
 			{
 				jsonTmp.put("roomname",ConstValue.hmDicMap.get(resident.getofroom()));
+				roomName = ConstValue.hmDicMap.get(resident.getofroom());
 			}
 			
 			jsonTmp.put("offamily",resident.getoffamily());
 			if(ConstValue.hmDicMap.containsKey(resident.getoffamily()))
 			{
-				jsonTmp.put("offamilyname",ConstValue.hmDicMap.get(resident.getoffamily()));
+				jsonTmp.put("offamilyname",ConstValue.hmDicMap.get(resident.getoffamily()));				
 			}
 			
-			jsonTmp.put("address",resident.getofcommunity() + resident.getofresidebuilding() + resident.getofunit() + resident.getofroom());
+			jsonTmp.put("address",resident.getofcommunity() + buildingName + resident.getofunit() + roomName);
 			
 			jsonTmp.put("sex",resident.getsex());
 			jsonTmp.put("residencestatus",resident.getresidencestatus());

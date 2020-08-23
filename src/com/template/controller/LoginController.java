@@ -131,12 +131,13 @@ public class LoginController {
 				{
 					String orgid = userOrgList.get(i).getorganization();
 					
-					SysOrganization organization = organizationService.getById(orgid);
+					SysOrganization organization = getCommunityOrgByOrgId(orgid);//organizationService.getById(orgid);
 					
 					if(organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
 					{
 						border = organization.getboundary();
 						organizationNames  = organization.getname();
+						organizations += organization.getId()+",";
 					}
 					
 					organizations += userOrgList.get(i).getorganization()+",";
@@ -207,6 +208,25 @@ public class LoginController {
 		
         return jsonObj.toString();
     }
+	
+	private SysOrganization getCommunityOrgByOrgId(String orgId)
+	{
+		SysOrganization organization = organizationService.getById(orgId);
+		
+		if(organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
+		{
+			return organization;
+		}
+		else
+		{
+			String parentId = organization.getparentid();
+			
+			if(parentId == null || parentId.equalsIgnoreCase(""))
+				return organization;
+			else
+				return getCommunityOrgByOrgId(parentId);
+		}
+	}
 	
 	@RequestMapping(value=ConstValue.LOGIN_CONTROLLER_LOGOUT,method = RequestMethod.GET,produces="text/html;charset=UTF-8")
     @ResponseBody

@@ -62,12 +62,24 @@ function get()
 */
 function addOrUpdate()
 {
+	var residentList = $('#realMobileList').val();
+	var internalMobileList = $('#internalMobileList').val();
+	
+	var mobileList = residentList;
+	
+	debugger;
+	
+	if(mobileList != null && mobileList != '')
+		mobileList += ',';
+	
+	mobileList += internalMobileList;
+	
 	$.post(getContextPath()+"/smsController/addOrUpdate",
 	{
 		id:curId,
 		smsContent:$('#smsContent').val(),
 		smsType:$('#smsType').val(),
-		mobileList:$('#mobileList').val()
+		mobileList:mobileList  //$('#mobileList').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  

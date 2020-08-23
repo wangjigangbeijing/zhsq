@@ -106,12 +106,21 @@ var curTargetIndex = 0;
 
 function addOrUpdate()
 {
-	var target = $('#target').val();
+	var residentList = $('#realMobileList').val();
+	var internalMobileList = $('#internalMobileList').val();
+	
+	var target = residentList;
+	
+	if(target != null && mobileList != '')
+		target += ','+internalMobileList;
+	
+	//var target = $('#target').val();
 	
 	audioLocalPath = $('#audioLocalPath').val();
 	
 	targetArr = target.split(',');
 	
+	debugger;
 	/*
 	for(var i=0;i<targetArr.length;i++)
 	{

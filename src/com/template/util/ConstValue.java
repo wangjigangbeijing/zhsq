@@ -3,6 +3,8 @@ package com.template.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.template.model.SysOrganization;
+
 public class ConstValue {
 	
 	public final static String TABLE_CONTROLLER = "tableController";
@@ -133,6 +135,8 @@ public class ConstValue {
 	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
 	
 	public static HashMap<String,String> orgMap = new HashMap<String,String>();
+
+	public static HashMap<String,SysOrganization> orgIdToOrganization = new HashMap<String,SysOrganization>();
 	
 	public static HashMap<String,String> advertisementMap = new HashMap<String,String>();
 }

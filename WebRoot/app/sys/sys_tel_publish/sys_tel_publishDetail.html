@@ -61,28 +61,45 @@
  						</div>
  					</div>
 					
-					<div class='form-group row'>
-						<label class='col-md-2 control-label'>通知人</label>
-						<!--div class='col-md-9'>
-							<textarea class='form-control ckeditor field' name='target' id='target' rows='6'></textarea>
- 						</div-->
+					<div class="form-group row">
+                    <label class='col-md-2 col-form-label'>发送目标(逗号分隔手机号码列表)</label>
+					
+					<div class='col-md-9'>
+						<div class='form-group row'>
 						
-						<div class='col-md-9'>
-							<div class='form-group row'>
-							
-							<div class='col-md-10'>
-							<textarea class="form-control" name="target" rows="9" id="target"></textarea>
-							</div>
-							
-							<div class='col-md-2'>
-							<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident();">选择居民</button>&nbsp;
-							<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button>						
-							</div>
-							
-							</div>
+						<div class='col-md-10'>
+						<input type="hidden" name="realmobileList" id="realMobileList"/>
+						<textarea class="form-control" name="mobileList" rows="9" id="mobileList" readonly></textarea>
+						</div>
+						
+						<div class='col-md-2'>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident();">选择居民</button>&nbsp;
+						<!--button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button-->
+						</div>
+						
 						</div>
  					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>发送目标(逗号分隔手机号码列表)</label>
 					
+					<div class='col-md-9'>
+						<div class='form-group row'>
+						
+						<div class='col-md-10'>
+						<!--input type="hidden" name="realmobileList" id="realMobileList"/-->
+						<textarea class="form-control" name="mobileList" rows="9" id="internalMobileList"></textarea>
+						</div>
+						
+						<div class='col-md-2'>
+						<!--button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident();">选择居民</button>&nbsp;  -->
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button>
+						</div>
+						
+						</div>
+ 					</div>
+                  </div>
 					
 					
  					</div>
@@ -297,8 +314,6 @@ uploaderaudio.on( 'beforeFileQueued', function( file ) {
 });
 uploaderaudio.on( 'fileQueued', function( file ) {
 	
-	debugger;
-
 	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
 						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
 						'</tr>');
@@ -313,18 +328,123 @@ uploaderaudio.on( 'uploadError', function( file,response ) {
 });	
 
 
-	  
-	  
-	  
-	  
+  
 var userList = null;
+
+var lTotalCnt = 0;
+
+var dataGridTable = null;
 
 function searchResident()
 {
 	var residentName = $('#residentNameQry').val();
 	var characteristics = $('#characterQry').val();
 	
-	$.get(getContextPath()+'/residentController/load?name='+residentName+'&characteristics='+characteristics,
+	lTotalCnt = 0;
+			
+	if(dataGridTable!=null){  
+		dataGridTable.fnClearTable(0);  
+	}
+	
+	dataGridTable = $("#dataTable").dataTable({	
+		destroy: true,
+		stateSave: false,
+		iDisplayLength: 10,
+		lengthChange: false,
+		"paging": true,
+		"lengthChange": false,
+		"searching": false,
+		"bProcessing" : true,  
+		"aaSorting": [[ 0, "asc" ]],  
+		"ordering": true,
+		"info": true,
+		"oLanguage": { 
+					"sProcessing": "正在加载中......", 
+					"sLengthMenu": "每页显示 _MENU_ 条记录", 
+					"sZeroRecords": "对不起，查询不到相关数据！", 
+					"sInfoEmpty":"",
+					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+					"sSearch": "搜索", 
+					"oPaginate":  
+					{ 
+						"sFirst": "首页", 
+						"sPrevious": "上一页", 
+						"sNext": "下一页", 
+						"sLast": "末页" 
+					}
+				}, //多语言配置					
+		"autoWidth": false,
+		"bServerSide" : true,
+		"sAjaxSource" : getContextPath()+'/residentController/load',
+		"fnServerParams" : function(aoData) {  
+			aoData.push({  
+				"name" : "statId",  
+				"value" : "abc"
+			});  
+		},  
+		"columns": [
+					{
+						"sClass": "text-center",
+						"data": "id",
+						"render": function (data, type, row, meta) {
+							return '<input type="checkbox" name="resid" value="' + data + '"/>';
+						},
+					},
+					{ 'data': 'name' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.name), 1);
+						}
+					},
+					{ 'data': 'characteristics' ,'sClass':'text-center'},
+					{ 'data': 'mobile' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.mobile), 2);
+						}
+					},
+					{ 'data': 'address' ,'sClass':'text-center'}
+				],
+		columnDefs: [],
+		"fnServerData" : function(sSource, aoData, fnCallback) {  
+			$('#btnSearch').attr('disabled','disabled');
+			
+			$.ajax({
+				"type" : 'get',  
+				"url" : sSource,  
+				"dataType" : "json",  
+				"data" : {  
+					aoData : JSON.stringify(aoData),
+					totalCnt : lTotalCnt,
+					name : residentName,
+					characteristics : characteristics
+				},
+				"success" : function(resp) {
+					$('#btnSearch').removeAttr('disabled');
+					if(resp.success == true)
+					{
+						userList = resp.list;
+					
+						fnCallback(resp);
+					
+						lTotalCnt = resp.iTotalRecords;
+					}
+					else
+					{
+						jError("加载数据出错!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+					}
+				},
+				"failure":function (result) {
+					$('#btnSearch').removeAttr('disabled');
+				}
+			});  
+		}
+	});
+	
+	
+	/*$.get(getContextPath()+'/residentController/load?name='+residentName+'&characteristics='+characteristics,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -341,23 +461,7 @@ function searchResident()
 				lengthChange: false,
 				"bProcessing": true, 
 				"bDestroy":true,
-				"bSort": false, //是否使用排序 		
-				/*"oLanguage": { 
-					"sProcessing": "正在加载中......", 
-					"sLengthMenu": "每页显示 _MENU_ 条记录", 
-					"sZeroRecords": "对不起，查询不到相关数据！", 
-					"sInfoEmpty":"",
-					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
-					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
-					"sSearch": "搜索", 
-					"oPaginate":  
-					{ 
-						"sFirst": "首页", 
-						"sPrevious": "上一页", 
-						"sNext": "下一页", 
-						"sLast": "末页" 
-					}
-				}, *///多语言配置					
+				"bSort": false, //是否使用排序
 				"data":obj.list,
 				"columns": [
 					{ 'data': 'name' ,'sClass':'text-center'},
@@ -366,19 +470,11 @@ function searchResident()
 					{ 'data': 'address' ,'sClass':'text-center'}
 				],
 				columnDefs: [
-					/*{
-					className: 'control',
-					orderable: false,
-					targets:  0,//从0开始
-					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"selectUser('"+full.name+"','"+full.idnumber+"','"+full.mobile+"','"+full.address+"')\" data-toggle=\"tooltip\" title=\"查看\">"+full.name+"</a>";
-						return btn;
-					}
-					}*/
+					
 				]
 			} );
 		}
-	});
+	});*/
 }
 
 
@@ -446,7 +542,7 @@ function searchUser()
 
 function addAllResident()
 {
-	var mobileList = $('#target').val();
+	/*var mobileList = $('#target').val();
 	
 	var users = '';
 	for(var i=0;i<userList.length;i++)
@@ -456,12 +552,51 @@ function addAllResident()
 		mobileList += user+',';
 	}
 	
-	$('#target').val(mobileList);
+	$('#target').val(mobileList);*/
+	
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realmobileList').val();
+	
+	/*
+	var users = '';
+	for(var i=0;i<userList.length;i++)
+	{
+		var user = userList[i].name+'-'+userList[i].mobile;
+		
+		mobileList += user+',';
+	}
+	*/
+	$('input:checkbox[name=resid]:checked').each(function (i) {
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+				}
+				if(mobileList == '') {
+					mobileList = phone;
+					realMobileList = realphone;
+				}
+				else {
+					mobileList += ", " + phone;
+					realMobileList +=", " + realphone;
+				}
+			}
+		}
+		
+	});
+	
+	console.log(realMobileList);
+	$('#mobileList').val(mobileList);
+	 $('#realmobileList').val(realMobileList);
 }
 
 function addAllUser()
 {
-	var mobileList = $('#target').val();
+	/*var mobileList = $('#target').val();
 	
 	var users = '';
 	for(var i=0;i<userList.length;i++)
@@ -471,7 +606,19 @@ function addAllUser()
 		mobileList += user+',';
 	}
 	
-	$('#target').val(mobileList);
+	$('#target').val(mobileList);*/
+	
+	var mobileList = $('#internalMobileList').val();
+	
+	var users = '';
+	for(var i=0;i<userList.length;i++)
+	{
+		var user = userList[i].name+'-'+userList[i].mobile;
+		
+		mobileList += user+',';
+	}
+	
+	$('#internalMobileList').val(mobileList);
 }
 
 </script>

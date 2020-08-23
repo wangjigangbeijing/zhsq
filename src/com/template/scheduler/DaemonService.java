@@ -290,6 +290,8 @@ public class DaemonService
 				String name = sysOrganization.getname();
 				
 				ConstValue.orgMap.put(id,name);
+				
+				ConstValue.orgIdToOrganization.put(id,sysOrganization);
 			}
 		}
 		catch(Exception e)

@@ -11,6 +11,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,8 @@ public String addOrUpdate(String id,String name,String loginid,String password,S
 		
 		sys_user.setjob(job);
 		sys_user.setrole(role);
+		String curUserOrgIds = Utility.getInstance().getOrganization(request);
+		sys_user.setowner(curUserOrgIds);
 
         sys_userService.save(sys_user);
         jsonObj.put("success", true);
@@ -127,6 +130,24 @@ public String load(String name,String status)
 		{
 			hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 		}
+		
+		String organization = Utility.getInstance().getOrganization(request);
+		
+		ArrayList<String> alOrg = new ArrayList<String>(); 
+		
+		if(organization != null && organization.equalsIgnoreCase("") == false)
+		{
+			String [] organizationArr = organization.split(",");
+			
+		
+			for(int i=0;i<organizationArr.length;i++)
+			{
+				alOrg.add("%"+organizationArr[i]+"%");
+			}
+		}
+		
+		if(alOrg != null && alOrg.size() != 0)
+			hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 
         List<SysUser> listObj = sys_userService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
@@ -183,6 +204,10 @@ public String load(String name,String status)
 			HqlFilter hqlFilterUser = new HqlFilter();
 			hqlFilterUser.addQryCond("user", HqlFilter.Operator.EQ, sys_user.getId());
 			List<SysUserOrganization> userOrgList = sys_userOrgService.findByFilter(hqlFilterUser);
+			
+			if(userOrgList.size() == 0)//当前用户不属于要查询的组织
+				continue;
+			
 			for(int j=0;j<userOrgList.size();j++)
 			{
 				SysUserOrganization userOrg = userOrgList.get(j);
