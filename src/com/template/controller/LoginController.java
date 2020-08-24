@@ -1,11 +1,13 @@
 package com.template.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
+import com.template.util.Utility;
 
 @Controller
 @RequestMapping(ConstValue.LOGIN_CONTROLLER)
@@ -133,18 +136,17 @@ public class LoginController {
 					
 					SysOrganization organization = getCommunityOrgByOrgId(orgid);//organizationService.getById(orgid);
 					
+					organizationNames  = organization.getname();
+					organizations = organization.getId();
+					border = organization.getboundary();
 					if(organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
 					{
-						border = organization.getboundary();
-						organizationNames  = organization.getname();
-						organizations += organization.getId()+",";
-					}
-					
-					organizations += userOrgList.get(i).getorganization()+",";
+						break;
+					}					
 				}
 				
-				if(organizations.endsWith(","))
-					organizations = organizations.substring(0, organizations.length() - 1);
+				//if(organizations.endsWith(","))
+				//	organizations = organizations.substring(0, organizations.length() - 1);
 				
 				jsonObj.put("organizations", organizations);
 				jsonObj.put("organizationNames", organizationNames);
@@ -259,6 +261,42 @@ public class LoginController {
 			jsonObj.put("userId", sUserId);
 			jsonObj.put("userType", userType);
 			jsonObj.put("userName", sUserName);
+			
+			ArrayList<String> userRoleList = Utility.getInstance().getUserRole(request);
+			
+			String roleIds = "";
+			for(int i=0;i<userRoleList.size();i++)
+			{
+				roleIds += "'"+userRoleList.get(i)+"',";			
+			}
+			
+			if(roleIds.endsWith(","))
+				roleIds = roleIds.substring(0, roleIds.length() - 1);
+			
+			String sSql = "SELECT SYS_RIGHT.RIGHTID,RIGHTTYPE FROM SYS_RIGHT,SYS_ROLE_RIGHT WHERE "
+					+ "ROLEID IN ("+roleIds+") AND SYS_RIGHT.RIGHTID = SYS_ROLE_RIGHT.RIGHTID";
+			
+			List<HashMap> listObj = organizationService.findBySql(sSql);
+			
+			JSONArray jsonRight = new JSONArray();
+			
+			for(int i=0;i<listObj.size();i++)
+			{
+				HashMap hm = listObj.get(i);
+				
+				JSONObject jsonTmp = new JSONObject();
+				
+				String rightid = (String)hm.get("rightid");
+				String righttype = (String)hm.get("righttype");
+				
+				jsonTmp.put("rightid", rightid);
+				jsonTmp.put("righttype", righttype);
+				
+				jsonRight.put(jsonTmp);
+			}
+			
+	        jsonObj.put("success", true);
+	        jsonObj.put("rightArr", jsonRight);
 		}
 		catch(Exception e)
 		{

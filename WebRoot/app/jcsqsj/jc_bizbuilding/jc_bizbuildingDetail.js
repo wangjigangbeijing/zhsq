@@ -91,6 +91,8 @@ function viewDetail(id)
 				$('#propertymanagecontact').val(obj.propertymanagecontact);
 				$('#propertymanagecontacttel').val(obj.propertymanagecontacttel);
 				$('#status').val(obj.status);
+
+				
 				$('#pictures').val(obj.pictures);
 				var picturesArr = obj.pictures.split(VALUE_SPLITTER);  
 				var header = getContextPath()+"/fileController/download?fileName=";	

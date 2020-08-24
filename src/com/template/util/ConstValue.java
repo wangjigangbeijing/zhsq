@@ -134,6 +134,8 @@ public class ConstValue {
 	
 	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
 	
+	public static HashMap<String,ArrayList<String>> userToRoleMap = new HashMap<String,ArrayList<String>>();
+	
 	public static HashMap<String,String> orgMap = new HashMap<String,String>();
 
 	public static HashMap<String,SysOrganization> orgIdToOrganization = new HashMap<String,SysOrganization>();

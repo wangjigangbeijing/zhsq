@@ -1,6 +1,7 @@
 package com.template.scheduler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -252,6 +253,15 @@ public class DaemonService
 				String id = sysUser.getId();
 				String name = sysUser.getname();
 				
+				if(sysUser.getrole() != null)
+				{
+					String [] roleArr = sysUser.getrole().split(",");
+					
+					ArrayList<String> list= (ArrayList<String>)Arrays.asList(roleArr);
+					
+					ConstValue.userToRoleMap.put(id, list);
+				}
+				
 				ConstValue.userMap.put(id,name);
 				
 				HqlFilter hqlFilterOrganzation = new HqlFilter();
@@ -273,6 +283,8 @@ public class DaemonService
 						ConstValue.userToOrgMap.put(id,organization.getId());
 						break;
 					}
+					
+					
 				}
 			}
 		}

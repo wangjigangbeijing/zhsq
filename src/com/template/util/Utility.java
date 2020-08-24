@@ -256,6 +256,30 @@ public class Utility
 		return organization;
 	}
 	
-	
+	public ArrayList<String> getUserRole(HttpServletRequest request)
+	{
+		ArrayList<String> userRoleList = new ArrayList<String>(); 
+		
+		String userId = "";
+		
+		try
+		{
+			userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+			
+			if(userId == null || userId.equalsIgnoreCase(""))
+				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			
+			if(ConstValue.userToRoleMap.containsKey(userId))
+			{
+				return ConstValue.userToRoleMap.get(userId);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+		
+		return userRoleList;
+	}
 	
 }

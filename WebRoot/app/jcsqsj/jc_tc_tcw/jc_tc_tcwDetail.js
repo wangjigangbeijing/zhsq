@@ -86,7 +86,29 @@ function viewDetail(id)
 				$("input[name='hascharge'][value='"+obj.hascharge+"']").attr("checked",true); 
 				$('#chargenum').val(obj.chargenum);
 				$('#cwcode').val(obj.cwcode);
-				var pcitureArr = obj.pciture.split(VALUE_SPLITTER);				for(var j=0;j<pcitureArr.length;j++)				{					if(pcitureArr[j] != '')					{						$('#pciturepicktable').append('<tr><td>'+pcitureArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pcitureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#note').val(obj.note);
+				
+				
+				$('#pciture').val(obj.pciture);
+				var pcitureArr = obj.pciture.split(VALUE_SPLITTER);  
+				var header = getContextPath()+"/fileController/download?fileName=";	
+
+				for(var j=0;j<pcitureArr.length;j++)				
+				{if(pcitureArr[j] != '')	
+				{	
+					var url = header + pcitureArr[j];
+					if(url.indexOf('.pdf') >= 0 || url.indexOf('.PDF') >= 0){
+						var uurl = getContextPath() + "/dist/js/pdf.html?param=" + url;
+						$('#pciturepicktable').append('<tr><td><a href="' + uurl + '" target="_blank")>' + pcitureArr[j] + '</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pcitureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');											
+					}						
+					else 
+					{							
+						$('#pciturepicktable').append('<tr><td><a href="' + url + '" data-lightbox="' + pcitureArr[j] + '" data-title="' + pcitureArr[j] + '" style="color:#64A600; font-size: 12px;">'+pcitureArr[j]+'</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pcitureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');											
+					}					
+				}				
+			}	
+				
+				
+				('#note').val(obj.note);
 
 					
 			}
