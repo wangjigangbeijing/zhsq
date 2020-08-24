@@ -495,6 +495,9 @@ public class DaemonService
 	{
 		SysOrganization organization = organizationService.getById(orgId);
 		
+		if(organization == null)
+			return null;
+		
 		if(organization != null && organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
 		{
 			return organization;

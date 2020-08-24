@@ -358,7 +358,11 @@ var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-inf
 			});  
 		},  
 		"columns": [
-					{ 'data': 'name' ,'sClass':'text-center'},
+					{ 'data': 'name' ,'sClass':'text-center',
+					mRender : function(data,type,full){
+						return showData(aesDecrypt(full.name), 1);
+					}
+				},					
 					{ 'data': 'registrationcategory' ,'sClass':'text-center'},
 					{ 'data': 'registrationaddress' ,'sClass':'text-center'},
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},

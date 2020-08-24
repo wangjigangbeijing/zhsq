@@ -70,7 +70,13 @@ function load()
 				"data":obj.list,
 				"columns": [
 										{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'idnumber' ,'sClass':'text-center'},
+
+					{ 'data': 'idnumber' ,'sClass':'text-center',
+					mRender : function(data,type,full){
+						return showData(aesDecrypt(full.idnumber), 5);
+					}
+				},		
+
 					{ 'data': 'sex' ,'sClass':'text-center'},
 					{ 'data': 'birthday' ,'sClass':'text-center'},
 					{ 'data': 'age' ,'sClass':'text-center'},
