@@ -95,9 +95,9 @@ public class DaemonService
 			
 			loadAdvertisementInfo();
 			
-			refreshResident();//定期刷民情图数据
+			//refreshResident();//定期刷民情图数据
 			
-			refreshResidentBuilding();//定期刷民情图数据
+			//refreshResidentBuilding();//定期刷民情图数据
 		}
 		catch(Exception e)
 		{
@@ -259,14 +259,21 @@ public class DaemonService
 				
 				List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
 
-				String organizations = "";
-				
 				for(int j=0;j<userOrgList.size();j++)
 				{
-					organizations += userOrgList.get(j).getorganization()+",";
+					SysOrganization organization = getCommunityOrgByOrgId(userOrgList.get(j).getorganization());//organizationService.getById(orgid);
+					
+					if(organization == null)
+						continue;
+					
+					ConstValue.userToOrgMap.put(id,organization.getId());
+					
+					if(organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))//至少保证获取到一个用户和组织的映射,但是目的是要找到用户归属的社区
+					{
+						ConstValue.userToOrgMap.put(id,organization.getId());
+						break;
+					}
 				}
-				
-				ConstValue.userToOrgMap.put(id,organizations);
 			}
 		}
 		catch(Exception e)
@@ -484,4 +491,22 @@ public class DaemonService
 		}
 	}
 	
+	private SysOrganization getCommunityOrgByOrgId(String orgId)
+	{
+		SysOrganization organization = organizationService.getById(orgId);
+		
+		if(organization != null && organization.getorg_type() != null && organization.getorg_type().equalsIgnoreCase("社区"))
+		{
+			return organization;
+		}
+		else
+		{
+			String parentId = organization.getparentid();
+			
+			if(parentId == null || parentId.equalsIgnoreCase(""))
+				return organization;
+			else
+				return getCommunityOrgByOrgId(parentId);
+		}
+	}
 }

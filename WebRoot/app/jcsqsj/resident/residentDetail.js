@@ -325,7 +325,7 @@ function viewDetail(id)
 				
 				$('#ofroom').html('');
 				var filterArr = [];				
-				filterArr[0] = "<option value='"+obj.ofroom+"'>"+obj.ofroomname+"</option>";				
+				filterArr[0] = "<option value='"+obj.ofroom+"'>"+obj.roomname+"</option>";				
 				$('#ofroom').html(filterArr.join(''));
 				$('#ofroom').attr("readonly","readonly");	
 				
