@@ -397,6 +397,8 @@ function initMap(){
 					layerIds += layerId + ',';
 				}
 				
+				console.log(layerStyleMap);
+				
 				var height = respObj.list.length * 25;
 				$('#main_checkbox').css("height", height +"px");
 				
@@ -418,6 +420,16 @@ function initMap(){
 			}
 	);
 	
+	function unique(arr){
+		let hash=[];
+		for (let i = 0; i < arr.length; i++) {
+			if(hash.indexOf(arr[i]) === -1){
+				hash.push(arr[i]);
+			}
+		}
+		return hash;
+	}
+	
 	function drawLayers(layerIds)
 	{
 		$.ajax({
@@ -432,6 +444,8 @@ function initMap(){
 				for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 				{
 					var data = dataList.features[p];
+					
+					console.log(data);
 				
 					layerStyleObj = layerStyleMap[data.layerId];
 					
@@ -461,17 +475,16 @@ function initMap(){
 						if(layerStyleObj.style != null)
 							iconurl = layerStyleObj.style.iconurl;
 							
+						var arrs = data.facilitytype.split(',');
+						var arrs2 = unique(arrs);
 						if(isFacilityLayer(data.layerId))
-						/*if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
-							||layerId == 'layer13_7'||layerId == 'layer5_2'||layerId == 'layer13_5'
-							||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')*/
 						{
-							if(layerStyleMap[data.facilitytype] == null)
+							if(layerStyleMap[arrs2[0]] == null)
 							{
 								//console.log('icon for '+data.facilitytype+' not found for layerId:'+layerId+'.');
 								continue;
 							}
-							iconurl = layerStyleMap[data.facilitytype].iconurl;
+							iconurl = layerStyleMap[arrs2[0]].iconurl;
 						}
 						
 						console.log(iconurl);
@@ -484,7 +497,7 @@ function initMap(){
 								text: new ol.style.Text({
 									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 									// and show only under certain resolution
-									text: data.label
+									text: showData(aesDecrypt(data.label), 1)
 								  })
 							}));
 						}
@@ -499,7 +512,8 @@ function initMap(){
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
 						iconFeature.set("label", data.label);
-						dataLayer.getSource().addFeature(iconFeature);	
+						dataLayer.getSource().addFeature(iconFeature);					
+							
 					}
 					else if(data.type == 'MultiPolygon')
 					{

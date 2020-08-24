@@ -523,16 +523,44 @@ function loadMap(mapName)
 
 function editData(gid)
 {
+	console.log(gid);
 	var arr=new Array();
 	arr = gid.split('.');
 	curId = arr[1];
-	var arr2 = new Array();
-	arr2 = arr[0].split('_');
-	var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
+	var url = "";
+	if(arr[0] == 'jc_service_store'){
+		url = './jcsqsj/service_store/service_storeDetail.html';
+	}
+	else if(arr[0] == 'v_jc_pubfacilities_gy_jldzy'){
+		url = './jcsqsj/jc_pubfacilities_gy/jc_pubfacilities_gyDetail.html';
+	}
+	else if(arr[0] == 'jc_rubbish'){
+		url = './jcsqsj/jc_rubbish/jc_rubbishDetail.html';
+	}
+	else if(arr[0] == 'jc_xftd'){
+		url = './jcsqsj/jc_xftd/jc_xftdDetail.html';
+	}
+	else if(arr[0] == 'jc_advertisement'){
+		url = './jcsqsj/jc_advertisement/jc_advertisementDetail.html';
+	}
+	else if(arr[0] == 'jc_tc_tcccrk'){
+		url = './jcsqsj/jc_tc_tcccrk/jc_tc_tcccrkDetail.html';
+	}
+	else if(arr[0] == 'jc_tc_fjdctcw'){
+		url = './jcsqsj/jc_tc_fjdctcw/jc_tc_fjdctcwDetail.html';
+	}
+	else if(arr[0] == 'jc_tc_ybtcc'){
+		url = './jcsqsj/jc_tc_ybtcc/jc_tc_ybtccDetail.html';
+	}
+	else {		
+		var arr2 = new Array();
+		arr2 = arr[0].split('_');
+		var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
+	}
 	
 	$('#main-content').load(url, function () {
-		
-    });
+			
+		});
 }
 
 function mingqing(id)
