@@ -81,11 +81,11 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 		
 		try
 		{
-			String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			String owner = Utility.getInstance().getOrganization(request);
 			
-			String sql = "select b.boundry from sys_user_organization a, sys_organization b where a.organization=b.id and a.user=?";
+			String sql = "select b.boundry from sys_organization b where b.id=?";
 			List<Object> params = new ArrayList<Object>();
-			params.add(userid);
+			params.add(owner);
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
 				jsonObj.put("success", false);
