@@ -69,6 +69,19 @@
 				</div>
 			
               </div>
+			  
+			  <div class="row" style="padding:10px;">
+					<span style="width: 100px; padding-left:10px;">图例图层：</span>
+					<select class="col-sm-1" id="layernames" onchange="changelayers()">
+						<option value="">请选择</option>
+					</select>
+					<div class="col-sm-10" id="tuli">
+						<!--
+						<img src="../images/icon/map/clear.png">
+						<img src="../images/icon/map/clear.png">
+						-->
+					</div>
+				</div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -149,6 +162,9 @@ var labelshow = false; //默认显示label
 var boundary = new Array();
 
 var draw;
+
+var layerStyleMap = {};
+var layerNameMap = {};
 
 var selected = null;
 
@@ -324,8 +340,6 @@ function initMap(){
 	dataLayer.getSource().addFeature(iconFeature);	*/
 	map.addLayer(dataLayer);
 	
-	var layerStyleMap = {};
-	
 	$.get(getContextPath()+"/gismapController/getMapByName?name=社区民情图",
 			function(response)
 			{	
@@ -379,6 +393,7 @@ function initMap(){
 					var layerStyleObj = jQuery.parseJSON(layerStyle); 
 					
 					layerStyleMap[layerId] = layerStyleObj;
+					layerNameMap[layerId] = layer.note;
 					
 					if(isFacilityLayer(layerId))
 					/*if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
@@ -400,6 +415,8 @@ function initMap(){
 				}
 				
 				//console.log(layerStyleMap);
+				
+				showmapexp();
 				
 				var height = respObj.list.length * 25;
 				$('#main_checkbox').css("height", height +"px");
@@ -967,6 +984,59 @@ function mingqing(id)
 	$('#main-content').load("./jcsqsj/residebuilding/residebuildingMinqing.html", function () {
 		
     });
+}
+
+//显示图例
+function showmapexp(){
+	console.log(layerStyleMap);
+	console.log(layerNameMap);
+
+	$("#layernames").empty();  
+	$("#layernames").append("<option value=''>请选择</option>");
+	
+	for(var key in layerNameMap){
+        var content = "<option value='" + key + "'>" + layerNameMap[key] + "</option>"
+		$("#layernames").append(content);
+	}
+}
+
+function changelayers(){
+	var layerid = $("#layernames").val();
+	if(layerid == ''){
+		return;
+	}
+	$("#tuli").empty();
+	for(var key in layerStyleMap){
+		if(layerid == key){
+			console.log(layerStyleMap[key]);
+			if(layerStyleMap[key].length > 1){
+				for(var k = 0; k < layerStyleMap[key].length; k++){
+					if(layerStyleMap[key][k].style['iconurl'] != null){
+						var subs = layerStyleMap[key][k].style['iconurl'].split('/');						
+						var url = getContextPath()+"/fileController/downloadIcon?fileName=" + layerStyleMap[key][k].style['iconurl'];
+						var content = "<img src='" + url + "'/>" + layerStyleMap[key][k].type + "&nbsp;&nbsp;&nbsp;";
+						$("#tuli").append(content);
+					}
+					else {
+						var content = "<div style='width: 24px; height: 24px; color: " + layerStyleMap[key][k].style['fill-color'] + "; border: 1px solid " + layerStyleMap[key][k].style['stroke-color'] + "'></div>";
+						$("#tuli").append(content);
+					}
+				}
+			}
+			else {
+				if(layerStyleMap[key].style['iconurl'] != null){
+					var subs = layerStyleMap[key].style['iconurl'].split('/');
+					var url = getContextPath()+"/fileController/downloadIcon?fileName=" + layerStyleMap[key].style['iconurl'];
+					var content = "<img src='" + url + "'/>" + subs[subs.length - 1].substr(0, subs[subs.length - 1].length - 4) + "&nbsp;&nbsp;&nbsp;";
+					$("#tuli").append(content);
+				}
+				else {
+					var content = "<div style='width: 24px; height: 24px; color: " + layerStyleMap[key].style['fill-color'] + "; border: 1px solid " + layerStyleMap[key].style['stroke-color'] + "'></div>";
+					$("#tuli").append(content);
+				}
+			}
+		}
+	}
 }
 </script>
 </script>
