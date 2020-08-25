@@ -3,21 +3,40 @@
 <script src="./jcsqsj/jc_sqorganization/jc_sqorganization.js"></script>
 
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-			
-			<div class="card">
-			 
-              <div class="card-body">
-                
-				<form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-12">
+		  
+		  <div class="card">
+
+		  <div class="card-body">
+			  
+			  <form class="form-horizontal">
+			  
+			  <input type='hidden' class='form-control' id='searchtype' value="1">
+
+			   <div class="form-group row" id="firstshow">
+
                     						<label class='col-md-1 control-label' style='text-align:right;'>组织名称</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='nameQuery'>
 </div>
+
+<button id="btnSearch1" type="button" class="btn btn-success">查询</button>&nbsp;
+					
+<button id="btnAdd1" type="button" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+<button id="btnQuery" type="button" class="btn  pull-right" style="position:absolute; right:10px;" onclick="forkme()"><image src="../images/query.png"/></button>
+
+</div>
+
+<div class="form-group row" id="card-body" style="display:none;">
+
+<label class='col-md-1 control-label' style='text-align:right;'>组织名称</label>
+<div class='col-sm-2'>
+ 					<input type='text' class='form-control' id='nameQuery2'>
+</div>
+
 						<label class='col-md-1 control-label' style='text-align:right;'>登记状态</label>
 <div class='col-sm-2'>
 						<select class='form-control field' name='regstatusQuery' id='regstatusQuery'>
@@ -44,39 +63,36 @@
 </div>
 
 					
-					<button id="btnSearch" class="btn btn-success">查询</button>
+<button id="btnSearch2" type="button" class="btn btn-success">查询</button>&nbsp;
 					
-					<button id="btnAdd" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
-					
-                  </div>
-				  
-                </div>
-              </form>
-				
-              </div>
-			  
-			   </div>
+<button id="btnAdd2" type="button" class="btn btn-info pull-right" onclick="return false;" style="margin-right:20px;"><i class="fa fa-plus"></i> 增加</button>
+
+<button id="btnQuery" type="button" class="btn  pull-right" style="position:absolute; right: 15px; bottom: 20px;" onclick="forkme()"><image src="../images/query.png"/></button>
+
+</div>
+
+
+</form>
+
+</div>
+
+
+
+</div>
+
 			
             <div class="card">
               <div class="card-body">
                 <table class="table table-bordered table-striped" id="dataTable">
                   <thead>
                   <tr>
-                    <th style='text-align:center;'>数据编码</th>
+  
 <th style='text-align:center;'>组织名称</th>
 <th style='text-align:center;'>登记状态</th>
-<th style='text-align:center;'>登记机关</th>
-<th style='text-align:center;'>主管单位名称</th>
-<th style='text-align:center;'>详细地址</th>
 <th style='text-align:center;'>成立日期</th>
 <th style='text-align:center;'>人员规模</th>
-<th style='text-align:center;'>组织简介</th>
-<th style='text-align:center;'>负责人姓名</th>
-<th style='text-align:center;'>负责人身份证号</th>
-<th style='text-align:center;'>负责人手机</th>
 <th style='text-align:center;'>联系人姓名</th>
 <th style='text-align:center;'>联系人手机号</th>
-<th style='text-align:center;'>备注</th>
 <th style='text-align:center;'>操作</th>
                   </tr>
                   </thead>

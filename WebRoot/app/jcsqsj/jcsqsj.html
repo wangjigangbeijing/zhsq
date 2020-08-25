@@ -1,284 +1,339 @@
-﻿
-<script src="./jcsqsj/jcsqsj.js"></script>
-		
-		
-  
-   <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">基础社情数据</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">首页</a></li>
-              <li class="breadcrumb-item active"><a href="#" id="sqdjAnchor">基础社情数据</a></li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Info boxes -->
-        <div class="row">
-		
-	
-	 <div class="col-md-12">
-	 
-			<div class="card">
-				<div class="card-header" style="padding:10px; border:0px;">
-					<ul class="nav nav-tabs tj-nav02" role="tablist" style="border:0px;">
-						<li id="tabs1" class="nav-item"><a href="#tabl_1" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/小区信息.png" width="16px"  alt="" /></i>   &nbsp; 社区基本信息</a></li>
-						<li id="tabs2" class="nav-item"><a href="#tabl_2" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/家庭信息.png" width="16px"  alt="" /></i>  &nbsp; 家庭居民信息</a></li>
-						<li id="tabs3" class="nav-item"><a href="#tabl_3" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/法人组织.png" width="16px"  alt="" /></i>  &nbsp; 组织信息</a></li>
-						<li id="tabs4" class="nav-item"><a href="#tabl_4" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/文体设施.png" width="16px"  alt="" /></i>  &nbsp; 设施类信息</a></li>
-						<li id="tabs5" class="nav-item"><a href="#tabl_5" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/服务网点.png" width="16px"  alt="" /></i>  &nbsp; 服务网点信息</a></li>
-						<li id="tabs6" class="nav-item"><a href="#tabl_6" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/消防设施.png" width="16px"  alt="" /></i>  &nbsp; 消防设施类信息</a></li>
-						<li id="tabs7" class="nav-item"><a href="#tabl_7" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/居住区停车场.png" width="16px"  alt="" /></i>  &nbsp; 停车资源信息</a></li>
-						<li id="tabs8" class="nav-item"><a href="#tabl_8" data-toggle="tab" aria-expanded="false" role="tab"><i><img src="../images/icon/dataicon/易积水点.png" width="16px"  alt="" /></i>  &nbsp; 应急类信息</a></li>
-					  </ul>
-				</div>
-                <div class="card-body" style="padding-top:0px;">              
-                  	
-				  <div class="tab-content">
-						<div id="tabl_1" class="tab-pane card-body tj-body" role="tabpanel">
-							 <a href="#" id="xqxxAnchor"><i> <img src="../images/icon/dataicon/小区信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 小区信息</a>
-							 <a href="#" id="xqcrkAnchor"><img src="../images/icon/dataicon/小区出入口.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 小区出入口</a>
-							 <a href="#" id="zzlyAnchor"><img src="../images/icon/dataicon/住宅楼宇.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 住宅楼宇</a>
-							 <a href="#" id="fwxxAnchor"><img src="../images/icon/dataicon/房屋信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 房屋信息</a>
-							 <a href="#" id="swlyAnchor"><img src="../images/icon/dataicon/商务楼宇.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 商务楼宇</a>
-							 <a href="#" id="qtlyAnchor"><img src="../images/icon/dataicon/商务楼宇.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 其他楼宇</a>
-							 <a href="#" id="dxkjAnchor"><img src="../images/icon/dataicon/地下空间.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 地下空间</a>
-							 <a href="#" id="zbdlAnchor"><img src="../images/icon/dataicon/周边道路.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 周边道路</a>
-							 <a href="#" id="hhsxAnchor"><img src="../images/icon/dataicon/河湖水系.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 河湖水系</a>
-						  </div>
-						<div id="tabl_2" class="tab-pane card-body tj-body" role="tabpanel">
-							 <a href="#" id="jtxxAnchor"><img src="../images/icon/dataicon/家庭信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 家庭信息</a>
-							 <a href="#" id="jmxxAnchor" class="tj-rexz"><img src="../images/icon/dataicon/居民信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 居民信息</a>
-							 <a href="#" id="clxxAnchor"><img src="../images/icon/dataicon/车辆信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 车辆信息</a>							
-						  </div>
-						  <div id="tabl_3" class="tab-pane card-body tj-body" role="tabpanel">
-							 <a href="#" id="dzzAnchor"><img src="../images/icon/dataicon/党组织信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 党组织信息</a>
-							 <a href="#" id="dyxxAnchor"><img src="../images/icon/dataicon/党员信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 党员信息</a>							 
-							 <a href="#" id="sqzzsxAnchor"><img src="../images/icon/dataicon/党组织信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 社区组织信息</a>
-							 <a href="#" id="sqzzryAnchor"><img src="../images/icon/dataicon/党员信息.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 社区组织人员</a>						 
-							 <a href="#" id="frzzAnchor"><img src="../images/icon/dataicon/法人组织.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 法人组织</a>
-							 <a href="#" id="zyzdwAnchor"><img src="../images/icon/dataicon/志愿团体.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 志愿团体</a>
-							 <a href="#" id="zyzAnchor"><img src="../images/icon/dataicon/志愿团体.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 志愿者</a>							 
-							 <a href="#" id="jmttAnchor"><img src="../images/icon/dataicon/居民团体.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 居民团体</a>							 
-						  </div>
-						  <div id="tabl_4" class="tab-pane card-body tj-body" role="tabpanel">
-							 <a href="#" id="wtssAnchor"><img src="../images/icon/dataicon/文体设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 文体设施</a>
-							 <a href="#" id="bncsAnchor"><img src="../images/icon/dataicon/避难场所.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 避难场所</a>
-							 <a href="#" id="ljzAnchor"><img src="../images/icon/dataicon/垃圾站.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 垃圾站桶</a>
-							 <a href="#" id="xcssAnchor"><img src="../images/icon/dataicon/宣传设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 宣传设施</a>
-							 <a href="#" id="gyszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 公用市政设施</a>
-							 <a href="#" id="jtszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 交通市政设施</a>
-							 <a href="#" id="srhjszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 环境市政设施</a>
-							 <a href="#" id="yllhszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 绿化市政设施</a>
-							 <a href="#" id="qtszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 其他市政设施</a>							 
-						  </div>
-						  <div id="tabl_5" class="tab-pane card-body tj-body" role="tabpanel">
-							 <a href="#" id="ffwdAnchor"><img src="../images/icon/dataicon/服务网点.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 服务网点</a>					 
-						  </div>
-						  <div id="tabl_6" class="tab-pane card-body tj-body" role="tabpanel">
-							 <a href="#" id="xftdAnchor"><img src="../images/icon/dataicon/消防通道.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 消防通道</a>
-							 <a href="#" id="xfssAnchor"><img src="../images/icon/dataicon/消防设施.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 消防设施</a>							 
-						  </div>
-						  <div id="tabl_7" class="tab-pane card-body tj-body" role="tabpanel">
-							<a href="#" id="ybtccAnchor"><img src="../images/icon/dataicon/居住区停车场.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 居住区停车场</a>
-							<a href="#" id="ybtcccrkAnchor"><img src="../images/icon/dataicon/居住区停车场出入口.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 停车场出入口</a>
-							<a href="#" id="dltccAnchor"><img src="../images/icon/dataicon/道路停车场.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 道路停车场</a>	
-							<a href="#" id="tcwqyAnchor"><img src="../images/icon/dataicon/停车位.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 停车位</a>
-							 <a href="#" id="fjdctcwAnchor"><img src="../images/icon/dataicon/非机动车停放位.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 非机动车车位</a>						 
-						  </div>
-
-						  <div id="tabl_8" class="tab-pane card-body tj-body" role="tabpanel">
-							<a href="#" id="yjsdAnchor"><img src="../images/icon/dataicon/易积水点.png" width="16px"  style="margin-top:-4px;" /></i>&nbsp; 易积水点</a>						 
-						 </div>
+﻿<script src="./jcsqsj/jcsqsj.js"></script>
 
 
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0 text-dark">基础社情数据</h1>
+			</div><!-- /.col -->
+			<!-- <div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="#">首页</a></li>
+					<li class="breadcrumb-item active"><a href="#" id="sqdjAnchor">基础社情数据</a></li>
+				</ol>
+			</div> -->
+			<!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+	<div class="container-fluid">
+		<!-- Info boxes -->
+		<div class="row">
+
+
+			<div class="col-md-12">
+
+				<div class="card">
+					<div class="card-header" style="padding:10px; border:0px;">
+						<ul class="nav nav-tabs tj-nav02" role="tablist" style="border:0px;">
+							<li id="tabs1" class="nav-item"><a href="#tabl_1" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/小区信息.png" width="16px"  
+											alt="" /></i> &nbsp; 社区基本信息</a></li>
+							<li id="tabs2" class="nav-item"><a href="#tabl_2" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/家庭信息.png" width="16px"  
+											alt="" /></i> &nbsp; 家庭居民信息</a></li>
+							<li id="tabs3" class="nav-item"><a href="#tabl_3" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/法人组织.png" width="16px"  
+											alt="" /></i> &nbsp; 组织信息</a></li>
+							<li id="tabs4" class="nav-item"><a href="#tabl_4" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/文体设施.png" width="16px"  
+											alt="" /></i> &nbsp; 设施类信息</a></li>
+							<li id="tabs5" class="nav-item"><a href="#tabl_5" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/服务网点.png" width="16px"  
+											alt="" /></i> &nbsp; 服务网点信息</a></li>
+							<li id="tabs6" class="nav-item"><a href="#tabl_6" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/消防设施.png" width="16px"  
+											alt="" /></i> &nbsp; 消防设施类信息</a></li>
+							<li id="tabs7" class="nav-item"><a href="#tabl_7" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/居住区停车场.png" width="16px"  
+											alt="" /></i> &nbsp; 停车资源信息</a></li>
+							<li id="tabs8" class="nav-item"><a href="#tabl_8" data-toggle="tab" aria-expanded="false"
+									role="tab"><i><img src="../images/icon/dataicon/易积水点.png" width="16px"  
+											alt="" /></i> &nbsp; 应急类信息</a></li>
+						</ul>
 					</div>
-                </div>                
-					
-						
+					<div class="card-body" style="padding-top:0px;">
+
+						<div class="tab-content">
+							<div id="tabl_1" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="xqxxAnchor"><i> <img src="../images/icon/dataicon/小区信息.png" width="16px"
+											  style="margin-top:-4px;" /></i>&nbsp; 小区信息</a>
+								<a href="#" id="xqcrkAnchor"><img src="../images/icon/dataicon/小区出入口.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 小区出入口</a>
+								<a href="#" id="zzlyAnchor"><img src="../images/icon/dataicon/住宅楼宇.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 住宅楼宇</a>
+								<a href="#" id="fwxxAnchor"><img src="../images/icon/dataicon/房屋信息.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 房屋信息</a>
+								<a href="#" id="swlyAnchor"><img src="../images/icon/dataicon/商务楼宇.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 商务楼宇</a>
+								<a href="#" id="qtlyAnchor"><img src="../images/icon/dataicon/商务楼宇.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 其他楼宇</a>
+								<a href="#" id="dxkjAnchor"><img src="../images/icon/dataicon/地下空间.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 地下空间</a>
+								<a href="#" id="zbdlAnchor"><img src="../images/icon/dataicon/周边道路.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 周边道路</a>
+								<a href="#" id="hhsxAnchor"><img src="../images/icon/dataicon/河湖水系.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 河湖水系</a>
+							</div>
+							<div id="tabl_2" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="jtxxAnchor"><img src="../images/icon/dataicon/家庭信息.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 家庭信息</a>
+								<a href="#" id="jmxxAnchor" class="tj-rexz"><img src="../images/icon/dataicon/居民信息.png"
+										width="16px"   style="margin-top:-4px;" /></i>&nbsp; 居民信息</a>
+								<a href="#" id="clxxAnchor"><img src="../images/icon/dataicon/车辆信息.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 车辆信息</a>
+							</div>
+							<div id="tabl_3" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="dzzAnchor"><img src="../images/icon/dataicon/党组织信息.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 党组织信息</a>
+								<a href="#" id="dyxxAnchor"><img src="../images/icon/dataicon/党员信息.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 党员信息</a>
+								<a href="#" id="sqzzsxAnchor"><img src="../images/icon/dataicon/党组织信息.png" width="16px"
+										  style="margin-top:-4px;" /></i>&nbsp; 社区组织信息</a>
+								<a href="#" id="sqzzryAnchor"><img src="../images/icon/dataicon/党员信息.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 社区组织人员</a>
+								<a href="#" id="frzzAnchor"><img src="../images/icon/dataicon/法人组织.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 法人组织</a>
+								<a href="#" id="zyzdwAnchor"><img src="../images/icon/dataicon/志愿团体.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 志愿团体</a>
+								<a href="#" id="zyzAnchor"><img src="../images/icon/dataicon/志愿团体.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 志愿者</a>
+								<a href="#" id="jmttAnchor"><img src="../images/icon/dataicon/居民团体.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 居民团体</a>
+							</div>
+							<div id="tabl_4" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="wtssAnchor"><img src="../images/icon/dataicon/文体设施.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 文体设施</a>
+								<a href="#" id="bncsAnchor"><img src="../images/icon/dataicon/避难场所.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 避难场所</a>
+								<a href="#" id="ljzAnchor"><img src="../images/icon/dataicon/垃圾站.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 垃圾站桶</a>
+								<a href="#" id="xcssAnchor"><img src="../images/icon/dataicon/宣传设施.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 宣传设施</a>
+								<a href="#" id="gyszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 公用市政设施</a>
+								<a href="#" id="jtszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 交通市政设施</a>
+								<a href="#" id="srhjszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"
+										  style="margin-top:-4px;" /></i>&nbsp; 环境市政设施</a>
+								<a href="#" id="yllhszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"
+										  style="margin-top:-4px;" /></i>&nbsp; 绿化市政设施</a>
+								<a href="#" id="qtszssAnchor"><img src="../images/icon/dataicon/市政设施.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 其他市政设施</a>
+							</div>
+							<div id="tabl_5" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="ffwdAnchor"><img src="../images/icon/dataicon/服务网点.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 服务网点</a>
+							</div>
+							<div id="tabl_6" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="xftdAnchor"><img src="../images/icon/dataicon/消防通道.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 消防通道</a>
+								<a href="#" id="xfssAnchor"><img src="../images/icon/dataicon/消防设施.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 消防设施</a>
+							</div>
+							<div id="tabl_7" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="ybtccAnchor"><img src="../images/icon/dataicon/居住区停车场.png" width="16px"
+										  style="margin-top:-4px;" /></i>&nbsp; 居住区停车场</a>
+								<a href="#" id="ybtcccrkAnchor"><img src="../images/icon/dataicon/居住区停车场出入口.png"
+										width="16px"   style="margin-top:-4px;" /></i>&nbsp; 停车场出入口</a>
+								<a href="#" id="dltccAnchor"><img src="../images/icon/dataicon/道路停车场.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 道路停车场</a>
+								<a href="#" id="tcwqyAnchor"><img src="../images/icon/dataicon/停车位.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 停车位</a>
+								<a href="#" id="fjdctcwAnchor"><img src="../images/icon/dataicon/非机动车停放位.png"
+										width="16px"   style="margin-top:-4px;" /></i>&nbsp; 非机动车车位</a>
+							</div>
+
+							<div id="tabl_8" class="tab-pane card-body tj-body" role="tabpanel">
+								<a href="#" id="yjsdAnchor"><img src="../images/icon/dataicon/易积水点.png" width="16px"  
+										style="margin-top:-4px;" /></i>&nbsp; 易积水点</a>
+							</div>
+
+
+						</div>
+					</div>
+
+
+				</div>
+
 			</div>
 
-  </div>	
-		
+		</div>
+
 	</div>
-		
-        </div>
-		
-        <div class="row">
-          <div class="col-12">
-            <div class="card" id="jcsqsjDiv">
 
-            </div>
-          </div>
-        </div>
+	<div class="row">
+		<div class="col-12">
+			<div class="card" id="jcsqsjDiv">
 
-      </div><!--/. container-fluid -->
-    </section>
-    <!-- /.content -->
-	
-	<script>
-		$(function () {  
-			//鼠标移上去效果
-            $("#tabs1 a").mousemove(function (e) {  
-                $(this).tab('show');  
-            });  
-            $("#tabs2 a").mousemove(function (e) {  
-                $(this).tab('show');  
-            });  
-            $("#tabs3 a").mousemove(function (e) {  
-                $(this).tab('show');  
-            });  
-            $("#tabs4 a").mousemove(function (e) {  
-                $(this).tab('show');  
-            }); 
-            $("#tabs5 a").mousemove(function (e) {  
-                $(this).tab('show');  
-            }); 
-            $("#tabs6 a").mousemove(function (e) {  
-                $(this).tab('show');  
-            }); 
-			$("#tabs7 a").mousemove(function (e) {  
-                $(this).tab('show');  
-            }); 
-			
-			$("#tabl_1 a").click(function (e) {  
-				$("#tabs1").parent('ul').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				$("#tabs1").attr('class', 'tj-cd');
-				
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-                $(this).attr('class', 'tj-rexz'); 					
-            }); 
-			$("#tabl_2 a").click(function (e) {  
-				$("#tabs2").parent('ul').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				$("#tabs2").attr('class', 'tj-cd');
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-                $(this).attr('class', 'tj-rexz'); 					
-            }); 
-			$("#tabl_3 a").click(function (e) {  
-				$("#tabs3").parent('ul').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				$("#tabs3").attr('class', 'tj-cd');
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-                $(this).attr('class', 'tj-rexz'); 					
-            }); 
-			$("#tabl_4 a").click(function (e) {  
-				$("#tabs4").parent('ul').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				$("#tabs4").attr('class', 'tj-cd');
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-                $(this).attr('class', 'tj-rexz'); 					
-            }); 
-			$("#tabl_5 a").click(function (e) {  
-				$("#tabs5").parent('ul').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				$("#tabs5").attr('class', 'tj-cd');
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-                $(this).attr('class', 'tj-rexz'); 					
-            }); 
-			$("#tabl_6 a").click(function (e) {  
-				$("#tabs6").parent('ul').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				$("#tabs6").attr('class', 'tj-cd');
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-                $(this).attr('class', 'tj-rexz'); 					
-            }); 
-			$("#tabl_7 a").click(function (e) {  
-				$("#tabs7").parent('ul').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				$("#tabs7").attr('class', 'tj-cd');
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-                $(this).attr('class', 'tj-rexz'); 					
-            }); 
-			
-			console.log(maintab + ":" + secondtab);
-			
-			//第一排高亮
-			$('#' + maintab).tab('show');
-			var id = maintab.substr(0, 3) + "s" + maintab.substr(5);
-			$('#' + id).attr('class', 'tj-cd');
-			//第二排高亮
-			if(secondtab != null){
-				$('.tab-pane').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				/*
-				$(this).parent('div').children().each(function(i,n){
-					 $(n).removeAttr('class');
-					});
-				*/
-				$('#' + secondtab).attr('class', 'tj-rexz'); 
-				
-				$('#' + secondtab).click();
-			}
-			
-        });  
-	</script>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<!--/. container-fluid -->
+</section>
+<!-- /.content -->
+
+<script>
+	$(function () {
+		//鼠标移上去效果
+		$("#tabs1 a").mousemove(function (e) {
+			$(this).tab('show');
+		});
+		$("#tabs2 a").mousemove(function (e) {
+			$(this).tab('show');
+		});
+		$("#tabs3 a").mousemove(function (e) {
+			$(this).tab('show');
+		});
+		$("#tabs4 a").mousemove(function (e) {
+			$(this).tab('show');
+		});
+		$("#tabs5 a").mousemove(function (e) {
+			$(this).tab('show');
+		});
+		$("#tabs6 a").mousemove(function (e) {
+			$(this).tab('show');
+		});
+		$("#tabs7 a").mousemove(function (e) {
+			$(this).tab('show');
+		});
+
+		$("#tabl_1 a").click(function (e) {
+			$("#tabs1").parent('ul').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			$("#tabs1").attr('class', 'tj-cd');
+
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$(this).attr('class', 'tj-rexz');
+		});
+		$("#tabl_2 a").click(function (e) {
+			$("#tabs2").parent('ul').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			$("#tabs2").attr('class', 'tj-cd');
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$(this).attr('class', 'tj-rexz');
+		});
+		$("#tabl_3 a").click(function (e) {
+			$("#tabs3").parent('ul').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			$("#tabs3").attr('class', 'tj-cd');
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$(this).attr('class', 'tj-rexz');
+		});
+		$("#tabl_4 a").click(function (e) {
+			$("#tabs4").parent('ul').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			$("#tabs4").attr('class', 'tj-cd');
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$(this).attr('class', 'tj-rexz');
+		});
+		$("#tabl_5 a").click(function (e) {
+			$("#tabs5").parent('ul').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			$("#tabs5").attr('class', 'tj-cd');
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$(this).attr('class', 'tj-rexz');
+		});
+		$("#tabl_6 a").click(function (e) {
+			$("#tabs6").parent('ul').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			$("#tabs6").attr('class', 'tj-cd');
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$(this).attr('class', 'tj-rexz');
+		});
+		$("#tabl_7 a").click(function (e) {
+			$("#tabs7").parent('ul').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			$("#tabs7").attr('class', 'tj-cd');
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$(this).attr('class', 'tj-rexz');
+		});
+
+		console.log(maintab + ":" + secondtab);
+
+		//第一排高亮
+		$('#' + maintab).tab('show');
+		var id = maintab.substr(0, 3) + "s" + maintab.substr(5);
+		$('#' + id).attr('class', 'tj-cd');
+		//第二排高亮
+		if (secondtab != null) {
+			$('.tab-pane').children().each(function (i, n) {
+				$(n).removeAttr('class');
+			});
+			/*
+			$(this).parent('div').children().each(function(i,n){
+				 $(n).removeAttr('class');
+				});
+			*/
+			$('#' + secondtab).attr('class', 'tj-rexz');
+
+			$('#' + secondtab).click();
+		}
+
+	});  
+</script>

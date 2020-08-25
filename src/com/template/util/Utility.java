@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -256,7 +257,7 @@ public class Utility
 		return organization;
 	}
 	
-	public ArrayList<String> getUserRole(HttpServletRequest request)
+	public List<String> getUserRole(HttpServletRequest request)
 	{
 		ArrayList<String> userRoleList = new ArrayList<String>(); 
 		

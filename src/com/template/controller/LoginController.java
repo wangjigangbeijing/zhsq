@@ -262,7 +262,7 @@ public class LoginController {
 			jsonObj.put("userType", userType);
 			jsonObj.put("userName", sUserName);
 			
-			ArrayList<String> userRoleList = Utility.getInstance().getUserRole(request);
+			List<String> userRoleList = Utility.getInstance().getUserRole(request);
 			
 			String roleIds = "";
 			for(int i=0;i<userRoleList.size();i++)
@@ -276,6 +276,9 @@ public class LoginController {
 			String sSql = "SELECT SYS_RIGHT.RIGHTID,RIGHTTYPE FROM SYS_RIGHT,SYS_ROLE_RIGHT WHERE "
 					+ "ROLEID IN ("+roleIds+") AND SYS_RIGHT.RIGHTID = SYS_ROLE_RIGHT.RIGHTID";
 			
+			if(sUserId.equalsIgnoreCase("admin"))
+				sSql = "SELECT RIGHTID,RIGHTTYPE FROM SYS_RIGHT";
+				
 			List<HashMap> listObj = organizationService.findBySql(sSql);
 			
 			JSONArray jsonRight = new JSONArray();
@@ -286,8 +289,8 @@ public class LoginController {
 				
 				JSONObject jsonTmp = new JSONObject();
 				
-				String rightid = (String)hm.get("rightid");
-				String righttype = (String)hm.get("righttype");
+				String rightid = (String)hm.get("RIGHTID");
+				String righttype = (String)hm.get("RIGHTTYPE");
 				
 				jsonTmp.put("rightid", rightid);
 				jsonTmp.put("righttype", righttype);

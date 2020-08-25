@@ -2,7 +2,13 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	if(haveRight('jc_sqorganization_add') == false)
+	{
+		$('#btnAdd1').hide();
+		$('#btnAdd2').hide();
+	}
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +16,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,8 +26,19 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	 
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
  var regstatus = $('#regstatusQuery').val();
  var address = $('#addressQuery').val();
  var persionsize = $('#persionsizeQuery').val();
@@ -30,7 +48,13 @@ function load()
 	
 	$.get(getContextPath()+'/jc_sqorganizationController/load?name='+name+'&regstatus='+regstatus+'&address='+address+'&persionsize='+persionsize+'&leadername='+leadername+'&leadermobile='+leadermobile+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -64,21 +88,13 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'dateid' ,'sClass':'text-center'},
+	
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'regstatus' ,'sClass':'text-center'},
-					{ 'data': 'regunit' ,'sClass':'text-center'},
-					{ 'data': 'competentunit' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'},
 					{ 'data': 'establishdate' ,'sClass':'text-center'},
 					{ 'data': 'persionsize' ,'sClass':'text-center'},
-					{ 'data': 'introduction' ,'sClass':'text-center'},
-					{ 'data': 'leadername' ,'sClass':'text-center'},
-					{ 'data': 'leaderid' ,'sClass':'text-center'},
-					{ 'data': 'leadermobile' ,'sClass':'text-center'},
 					{ 'data': 'contact' ,'sClass':'text-center'},
 					{ 'data': 'contactmobile' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -94,13 +110,15 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  15,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
-				
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+						
+						if(haveRight('jc_sqorganization_edit') == true)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						if(haveRight('jc_sqorganization_del') == true)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}

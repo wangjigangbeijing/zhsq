@@ -257,7 +257,7 @@ public class DaemonService
 				{
 					String [] roleArr = sysUser.getrole().split(",");
 					
-					ArrayList<String> list= (ArrayList<String>)Arrays.asList(roleArr);
+					List<String> list= (List<String>)Arrays.asList(roleArr);
 					
 					ConstValue.userToRoleMap.put(id, list);
 				}

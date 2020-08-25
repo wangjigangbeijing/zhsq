@@ -1,6 +1,10 @@
 
 $(document).ready(function (){
-	
+	if(haveRight('jc_tc_ybtcc_add') == false)
+	{
+		$('#btnAdd1').hide();
+		$('#btnAdd2').hide();
+	}
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -117,9 +121,11 @@ function load()
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+						if(haveRight('jc_tc_ybtcc_edit') == true)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						if(haveRight('jc_tc_ybtcc_del') == true)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
@@ -130,99 +136,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_tc_ybtccController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#parkID').val(obj.parkID);
-				$('#parkName').val(obj.parkName);
-				$('#tradeName').val(obj.tradeName);
-				$('#jztype').val(obj.jztype);
-				$('#unitName').val(obj.unitName);
-				$('#unitAddres').val(obj.unitAddres);
-				$('#area').val(obj.area);
-				$('#adminDep').val(obj.adminDep);
-				$('#ownerDep').val(obj.ownerDep);
-				$('#maintDep').val(obj.maintDep);
-				$('#berthNum').val(obj.berthNum);
-				$('#UnberthNum').val(obj.UnberthNum);
-				$('#GrberthNum').val(obj.GrberthNum);
-				$('#ParkingNum').val(obj.ParkingNum);
-				$('#openNum').val(obj.openNum);
-				$('#parkTime').val(obj.parkTime);
-				$('#chpileNum').val(obj.chpileNum);
-				$('#BaFreeNum').val(obj.BaFreeNum);
-				$('#MecNum').val(obj.MecNum);
-if(obj.Chargetype != null){
-	var ChargetypeArr = obj.Chargetype.split(VALUE_SPLITTER);
-	for(var j=0;j<ChargetypeArr.length;j++)
-	{
-		if(ChargetypeArr[j] != '')
-		{
-			$("input[name='Chargetype'][value='"+ChargetypeArr[j]+"']").attr('checked','true');
-		}
-	}	
-}	
-				$('#LoLeChtype').val(obj.LoLeChtype);
-				$('#ShLeChtype').val(obj.ShLeChtype);
-if(obj.DyData != null){
-	var DyDataArr = obj.DyData.split(VALUE_SPLITTER);
-	for(var j=0;j<DyDataArr.length;j++)
-	{
-		if(DyDataArr[j] != '')
-		{
-			$("input[name='DyData'][value='"+DyDataArr[j]+"']").attr('checked','true');
-		}
-	}	
-}	
-				$('#picture').val(obj.picture);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#parkID').val('');
-	$('#parkName').val('');
-	$('#tradeName').val('');
-	$('#jztype').val('');
-	$('#unitName').val('');
-	$('#unitAddres').val('');
-	$('#area').val('');
-	$('#adminDep').val('');
-	$('#ownerDep').val('');
-	$('#maintDep').val('');
-	$('#berthNum').val('');
-	$('#UnberthNum').val('');
-	$('#GrberthNum').val('');
-	$('#ParkingNum').val('');
-	$('#openNum').val('');
-	$('#parkTime').val('');
-	$('#chpileNum').val('');
-	$('#BaFreeNum').val('');
-	$('#MecNum').val('');
-	$('#Chargetype').val('');
-	$('#LoLeChtype').val('');
-	$('#ShLeChtype').val('');
-	$('#DyData').val('');
-	$('#picture').val('');
-	$('#note').val('');
-
-}
-*/
 
 function viewData(id)
 {
