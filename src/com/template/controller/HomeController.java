@@ -21,6 +21,7 @@ import com.mysql.cj.util.StringUtils;
 import com.template.busi.controller.flow.FlowTemplateController;
 import com.template.service.SysUserService;
 import com.template.util.ConstValue;
+import com.template.util.Utility;
 
 @Controller
 @RequestMapping("homeController")
@@ -160,7 +161,8 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadBaseInfo1()
 	{
-		String owner = getOrganization();
+		//String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadBaseInfo owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -280,7 +282,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadBaseInfo2()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadBaseInfo2 owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -414,7 +416,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadBaseInfo3()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadBaseInfo3 owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -576,7 +578,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadBaseInfo4()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadbaseinfo4 owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -629,7 +631,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadBaseInfo5()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadBaseInfo5 owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -679,7 +681,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadBaseInfo6()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadBaseInfo6 owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -793,7 +795,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadMinqinInfo()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadminqininfo owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -860,7 +862,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadSxsq()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadsxsq owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -905,7 +907,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadSqbs()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadsqbs owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -1034,7 +1036,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	@ResponseBody
 	public String loadInfoData()
 	{
-		String owner = getOrganization();
+		String owner = Utility.getInstance().getOrganization(request);
 		logger.debug("loadinfodata owner:" + owner);
 		JSONObject jsonObj = new JSONObject();
 		try

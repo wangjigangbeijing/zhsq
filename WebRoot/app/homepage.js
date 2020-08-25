@@ -9,6 +9,9 @@ var ip = '127.0.0.1';
 
 var maintab = 'tabl_2', secondtab = null;
 
+var backditu = false;
+var ditutype = 0;
+
 
 $(document).ready(function (){
 	

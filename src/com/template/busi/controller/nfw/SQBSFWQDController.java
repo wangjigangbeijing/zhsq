@@ -55,18 +55,19 @@ public class SQBSFWQDController {
 	 * @return
 	 */
 	private String getOrganization() {
-		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
-		
-		String sql = "select a.organization from sys_user_organization a where a.user=?";
-		List<Object> params = new ArrayList<Object>();
-		params.add(userid);
-		List<HashMap> list = this.sqbsfwqdService.findBySql(sql, params);
-		if(list == null || list.size() == 0) {
-			return null;
-		}
-		else {
-			return (String) list.get(0).get("organization");
-		}
+//		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+//		
+//		String sql = "select a.organization from sys_user_organization a where a.user=?";
+//		List<Object> params = new ArrayList<Object>();
+//		params.add(userid);
+//		List<HashMap> list = this.jsjbfwService.findBySql(sql, params);
+//		if(list == null || list.size() == 0) {
+//			return null;
+//		}
+//		else {
+//			return (String) list.get(0).get("organization");
+//		}
+		return Utility.getInstance().getOrganization(request);
 	}
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")

@@ -1012,7 +1012,8 @@ public class DataController {
 				}
 				
 				if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || 
-						layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer4_3") ||
+						layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer13_8")
+						 || layerId.equalsIgnoreCase("layer13_10")|| layerId.equalsIgnoreCase("layer4_3") ||
 						layerId.equalsIgnoreCase("layer12_3") || layerId.equalsIgnoreCase("layer16_2") || layerId.equalsIgnoreCase("layer7_4"))
 				{
 					infoFields += ",type as facilitytype";

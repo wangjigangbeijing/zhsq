@@ -160,6 +160,8 @@ var measureTooltipElement;
 
 var maptype = 1; 
 
+var num = 0;
+
 var highlightStyle = new ol.style.Style({
   fill: new ol.style.Fill({
     color: 'rgba(255,255,255,0.7)',
@@ -397,7 +399,7 @@ function initMap(){
 					layerIds += layerId + ',';
 				}
 				
-				console.log(layerStyleMap);
+				//console.log(layerStyleMap);
 				
 				var height = respObj.list.length * 25;
 				$('#main_checkbox').css("height", height +"px");
@@ -445,7 +447,7 @@ function initMap(){
 				{
 					var data = dataList.features[p];
 					
-					console.log(data);
+					//console.log(data);
 				
 					layerStyleObj = layerStyleMap[data.layerId];
 					
@@ -487,7 +489,7 @@ function initMap(){
 							iconurl = layerStyleMap[arrs2[0]].iconurl;
 						}
 						
-						console.log(iconurl);
+						//console.log(iconurl);
 						
 						if(labelshow){
 							iconFeature.setStyle(new ol.style.Style({
@@ -509,10 +511,17 @@ function initMap(){
 							}));
 						}
 						
+						if(num > 380){
+							continue;
+						}
+						
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
 						iconFeature.set("label", data.label);
-						dataLayer.getSource().addFeature(iconFeature);					
+						console.log(iconFeature);
+						dataLayer.getSource().addFeature(iconFeature);	
+						
+						num++;
 							
 					}
 					else if(data.type == 'MultiPolygon')
@@ -769,7 +778,7 @@ function initMap(){
 		
 			var gid = feature.getId();
 
-			console.log("info: " + feature.get('info'));
+			//console.log("info: " + feature.get('info'));
 			
 			//curId = gid.substring(gid.indexOf('\.')+1);
 			
@@ -907,16 +916,49 @@ function fullscreen(){
 
 function editData(gid)
 {
+	console.log(gid);
 	var arr=new Array();
 	arr = gid.split('.');
 	curId = arr[1];
-	var arr2 = new Array();
-	arr2 = arr[0].split('_');
-	var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
+	var url = "";
+	if(arr[0] == 'jc_service_store'){
+		url = './jcsqsj/service_store/service_storeDetail.html';
+	}
+	else if(arr[0] == 'v_jc_pubfacilities_gy_jldzy'){
+		url = './jcsqsj/jc_pubfacilities_gy/jc_pubfacilities_gyDetail.html';
+	}
+	else if(arr[0] == 'jc_rubbish'){
+		url = './jcsqsj/jc_rubbish/jc_rubbishDetail.html';
+	}
+	else if(arr[0] == 'jc_xftd'){
+		url = './jcsqsj/jc_xftd/jc_xftdDetail.html';
+	}
+	else if(arr[0] == 'jc_advertisement'){
+		url = './jcsqsj/jc_advertisement/jc_advertisementDetail.html';
+	}
+	else if(arr[0] == 'jc_tc_tcccrk'){
+		url = './jcsqsj/jc_tc_tcccrk/jc_tc_tcccrkDetail.html';
+	}
+	else if(arr[0] == 'jc_tc_fjdctcw'){
+		url = './jcsqsj/jc_tc_fjdctcw/jc_tc_fjdctcwDetail.html';
+	}
+	else if(arr[0] == 'jc_tc_ybtcc'){
+		url = './jcsqsj/jc_tc_ybtcc/jc_tc_ybtccDetail.html';
+	}
+	else {		
+		var arr2 = new Array();
+		arr2 = arr[0].split('_');
+		var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
+	}
 	
 	$('#main-content').load(url, function () {
+		$('#confirmBtn').hide();
 		
-    });
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+	});
 }
 
 function mingqing(id)

@@ -466,9 +466,18 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
-		
-    });
+	if(backditu == true){
+		if(ditutype == 'ditu3'){
+			$('#main-content').load("./map/sqztt.html", function () {
+			
+			});
+		}
+	}
+	else {
+		$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
+			
+		});
+	}
 	
 }
 /*
