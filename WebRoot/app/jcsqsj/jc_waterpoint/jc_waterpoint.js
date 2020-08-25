@@ -2,6 +2,10 @@
 
 $(document).ready(function (){
 	
+	if(haveRight('jc_waterpoint_add') == false)
+	{
+		$('#btnAdd').hide();
+	}
 	$('#btnAdd').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
@@ -87,9 +91,11 @@ function load()
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
-
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						if(haveRight('jc_waterpoint_edit') == true)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+						
+						if(haveRight('jc_waterpoint_del') == true)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}

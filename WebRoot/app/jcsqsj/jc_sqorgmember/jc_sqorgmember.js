@@ -2,7 +2,13 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	if(haveRight('jc_sqorgmember_add') == false)
+	{
+		$('#btnAdd1').hide();
+		$('#btnAdd2').hide();
+	}
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +16,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	load();
 });
@@ -19,8 +26,19 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
+	 
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	
  var idnumber = $('#idnumberQuery').val();
  //var sex = $('#sexQuery').val();
  var birthday = $('#birthdayQuery').val();
@@ -35,7 +53,13 @@ function load()
 	
 	$.get(getContextPath()+'/jc_sqorgmemberController/load?name='+name+'&idnumber='+idnumber+'&birthday='+birthday+'&age='+age+'&mobile='+mobile+'&education='+education+'&politicalstatus='+politicalstatus,//+'&sex='+sex+'&of_sqorganization='+of_sqorganization+'&orgjob='+orgjob+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -69,26 +93,14 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-										{ 'data': 'name' ,'sClass':'text-center'},
-
-					{ 'data': 'idnumber' ,'sClass':'text-center',
-					mRender : function(data,type,full){
-						return showData(aesDecrypt(full.idnumber), 5);
-					}
-				},		
-
+					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'sex' ,'sClass':'text-center'},
-					{ 'data': 'birthday' ,'sClass':'text-center'},
 					{ 'data': 'age' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'education' ,'sClass':'text-center'},
 					{ 'data': 'politicalstatus' ,'sClass':'text-center'},
 					{ 'data': 'of_sqorganization' ,'sClass':'text-center'},
-					{ 'data': 'orgjob' ,'sClass':'text-center'},
 					{ 'data': 'duty' ,'sClass':'text-center'},
-					{ 'data': 'unit' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -104,11 +116,15 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  14,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
+						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						if(haveRight('jc_sqorganization_edit') == true)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+
+						if(haveRight('jc_sqorganization_del') == true)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
@@ -119,67 +135,27 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_sqorgmemberController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#name').val(obj.name);
-				$('#idnumber').val(obj.idnumber);
-				$('#sex').val(obj.sex);
-				$('#birthday').val(obj.birthday);
-				$('#age').val(obj.age);
-				$('#mobile').val(obj.mobile);
-				$('#education').val(obj.education);
-				$('#politicalstatus').val(obj.politicalstatus);
-				$('#of_sqorganization').val(obj.of_sqorganization);
-				$('#orgjob').val(obj.orgjob);
-				$('#duty').val(obj.duty);
-				$('#unit').val(obj.unit);
-				$('#status').val(obj.status);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#name').val('');
-	$('#idnumber').val('');
-	$('#sex').val('');
-	$('#birthday').val('');
-	$('#age').val('');
-	$('#mobile').val('');
-	$('#education').val('');
-	$('#politicalstatus').val('');
-	$('#of_sqorganization').val('');
-	$('#orgjob').val('');
-	$('#duty').val('');
-	$('#unit').val('');
-	$('#status').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
-
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jc_sqorgmember/jc_sqorgmemberDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_sqorgmember/jc_sqorgmemberDetail.html", function () {
 		
+    });
+}
+
+
+function viewData(id)
+{
+	curId = id;
+	$('#main-content').load("./jcsqsj/jc_sqorgmember/jc_sqorgmemberDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
     });
 }
 

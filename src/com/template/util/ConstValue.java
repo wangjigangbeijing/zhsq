@@ -2,6 +2,7 @@ package com.template.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.template.model.SysOrganization;
 
@@ -134,7 +135,7 @@ public class ConstValue {
 	
 	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
 	
-	public static HashMap<String,ArrayList<String>> userToRoleMap = new HashMap<String,ArrayList<String>>();
+	public static HashMap<String,List<String>> userToRoleMap = new HashMap<String,List<String>>();
 	
 	public static HashMap<String,String> orgMap = new HashMap<String,String>();
 

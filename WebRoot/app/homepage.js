@@ -894,6 +894,23 @@ function getCurrentLoginUserInfo()
 				$('#sysMenu').hide();
 			
 			curUserOrgId = obj.userOrg;
+			
+			for(var i=0;obj.rightArr != null && i<obj.rightArr.length;i++)
+			{
+				var rightObj = obj.rightArr[i];
+				
+				if(rightObj.righttype == 'MENU')
+				{
+					curUserMenuRightArr[curUserMenuRightArr.length+1] = rightObj.rightid;
+					
+					$("#"+rightObj.rightid).show();
+				}
+				else
+				{
+					curUserOptRightArr[curUserOptRightArr.length+1] = rightObj.rightid;
+				}
+			}
+			
 			/*if(obj.userType != USER_TYPE_WEB_CUSTOMER)
 			{
 				//$('#DataStatAnchor').hide();

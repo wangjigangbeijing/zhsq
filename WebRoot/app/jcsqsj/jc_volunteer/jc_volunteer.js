@@ -2,7 +2,13 @@
 
 $(document).ready(function (){
 	
-	$('#btnAdd').click(ShowAddModal);
+	if(haveRight('jc_volunteer_add') == false)
+	{
+		$('#btnAdd1').hide();
+		$('#btnAdd2').hide();
+	}
+	$('#btnAdd1').click(ShowAddModal);
+	$('#btnAdd2').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
 		autoclose: true
@@ -10,7 +16,8 @@ $(document).ready(function (){
 	
 	//$('#btnReset').click(Reset);
 	
-	$('#btnSearch').click(load);
+	$('#btnSearch1').click(load);
+	$('#btnSearch2').click(load);
 	
 	
 	$.ajax({
@@ -54,23 +61,38 @@ var curId;
 
 function load()
 {
-	$('#btnSearch').attr('disabled','disabled');
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
 	 var name = $('#nameQuery').val();
- var idnumber = $('#idnumberQuery').val();
+	 
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+
  var sex = $('#sexQuery').val();
- var birthday = $('#birthdayQuery').val();
  var age = $('#ageQuery').val();
  var mobile = $('#mobileQuery').val();
- var education = $('#educationQuery').val();
+
  var politicalstatus = $('#politicalstatusQuery').val();
  var of_volunteerteam = $('#of_volunteerteamQuery').val();
  //var join_date = $('#join_dateQuery').val();
  //var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_volunteerController/load?name='+name+'&idnumber='+idnumber+'&sex='+sex+'&birthday='+birthday+'&age='+age+'&mobile='+mobile+'&education='+education+'&politicalstatus='+politicalstatus+'&of_volunteerteam='+of_volunteerteam,//+'&join_date='+join_date+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_volunteerController/load?name='+name+'&sex='+sex+'&age='+age+'&mobile='+mobile+'&politicalstatus='+politicalstatus+'&of_volunteerteam='+of_volunteerteam,//+'&join_date='+join_date+'&status='+status+'&',
 	function(result){
-		$('#btnSearch').removeAttr('disabled');
+		if(searchtype == 1){
+			
+			$('#btnSearch1').removeAttr('disabled');
+		}
+		else {
+			$('#btnSearch2').removeAttr('disabled');
+		}
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
 		{
@@ -105,24 +127,13 @@ function load()
 				"data":obj.list,
 				"columns": [
 										{ 'data': 'name' ,'sClass':'text-center'},
-										{ 'data': 'idnumber' ,'sClass':'text-center',
-										mRender : function(data,type,full){
-											return showData(aesDecrypt(full.idnumber), 5);
-										}
-									},		
-
 					{ 'data': 'sex' ,'sClass':'text-center'},
-					{ 'data': 'birthday' ,'sClass':'text-center'},
 					{ 'data': 'age' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'education' ,'sClass':'text-center'},
 					{ 'data': 'politicalstatus' ,'sClass':'text-center'},
 					{ 'data': 'of_volunteerteam' ,'sClass':'text-center'},
 					{ 'data': 'join_date' ,'sClass':'text-center'},
-					{ 'data': 'certificate_id' ,'sClass':'text-center'},
-					{ 'data': 'special_skill' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'note' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
 				],
@@ -138,11 +149,15 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  14,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
+						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						if(haveRight('jc_volunteer_edit') == true)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+
+						if(haveRight('jc_volunteer_del') == true)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
@@ -153,66 +168,24 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
+function viewData(id)
 {
-	//$('#modalTitle').text('修改用户信息');
 	curId = id;
-	$.get(getContextPath()+"/jc_volunteerController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#name').val(obj.name);
-				$('#idnumber').val(obj.idnumber);
-				$('#sex').val(obj.sex);
-				$('#birthday').val(obj.birthday);
-				$('#age').val(obj.age);
-				$('#mobile').val(obj.mobile);
-				$('#education').val(obj.education);
-				$('#politicalstatus').val(obj.politicalstatus);
-				$('#of_volunteerteam').val(obj.of_volunteerteam);
-				$('#join_date').val(obj.join_date);
-				$('#certificate_id').val(obj.certificate_id);
-				$('#special_skill').val(obj.special_skill);
-				$('#status').val(obj.status);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
+	$('#main-content').load("./jcsqsj/jc_volunteer/jc_volunteerDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
 }
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#name').val('');
-	$('#idnumber').val('');
-	$('#sex').val('');
-	$('#birthday').val('');
-	$('#age').val('');
-	$('#mobile').val('');
-	$('#education').val('');
-	$('#politicalstatus').val('');
-	$('#of_volunteerteam').val('');
-	$('#join_date').val('');
-	$('#certificate_id').val('');
-	$('#special_skill').val('');
-	$('#status').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
-
 function editData(id)
 {
 	curId = id;
-	$('#main-content').load("./jc_volunteer/jc_volunteerDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_volunteer/jc_volunteerDetail.html", function () {
 		
     });
 }

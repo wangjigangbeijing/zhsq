@@ -23,6 +23,10 @@ var curJCSQSJType = '';//基础社情数据类型
 
 var curUserOrgId = '';
 
+var curUserMenuRightArr = [];//当前用户具有的菜单权限
+
+var curUserOptRightArr = [];//当前用户具有的操作权限
+
 $.ajax({
   type: 'POST',
   url: getContextPath()+"/dictionaryController/getDataOfDic",
@@ -434,4 +438,26 @@ function downloadAttach(fileName)
 	
 	//window.open(getContextPath()+"/fileController/downLoad/"+encodeURI(obj.fileName));
 }
+
+function refreshUserOptRight()
+{
+	for(var i=0;i<curUserOptRightArr.length;i++)
+	{
+		$('#'+curUserOptRightArr[i]).show();
+	}
+}
+
+function haveRight(rightid)
+{
+	if(curUserOptRightArr.includes(rightid))
+		return true;
+	
+	return false;
+}
+
+
+
+
+
+
 	

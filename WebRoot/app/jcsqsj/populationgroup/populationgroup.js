@@ -1,6 +1,12 @@
 
 $(document).ready(function (){
 	
+	if(haveRight('jc_populationgroup_add') == false)
+	{
+		$('#btnAdd1').hide();
+		$('#btnAdd2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -16,6 +22,7 @@ $(document).ready(function (){
 	load();
 });
 
+
 var curId;
 
 function load()
@@ -29,10 +36,10 @@ function load()
 		$('#btnSearch2').attr('disabled','disabled');
 	}
 	 var name = $('#nameQuery').val();
+	 
 	if(searchtype == 2){
 		name = $('#nameQuery2').val();
 	}
-
 
  var regstatus = $('#regstatusQuery').val();
  var address = $('#addressQuery').val();
@@ -40,13 +47,15 @@ function load()
 	
 	$.get(getContextPath()+'/populationgroupController/load?name='+name+'&regstatus='+regstatus+'&address='+address+'&',
 	function(result){
-		if(searchtype == 1){
+
+			if(searchtype == 1){
 			
 			$('#btnSearch1').removeAttr('disabled');
 		}
 		else {
 			$('#btnSearch2').removeAttr('disabled');
 		}
+
 
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)
@@ -109,9 +118,11 @@ function load()
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+						if(haveRight('jc_populationgroup_edit') == false)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						if(haveRight('jc_populationgroup_del') == false)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}

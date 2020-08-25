@@ -3,6 +3,12 @@
 
 $(document).ready(function (){
 	
+	if(haveRight('jc_bizbuilding_add') == false)
+	{
+		$('#btnAdd1').hide();
+		$('#btnAdd2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -123,9 +129,11 @@ function load()
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
-
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						if(haveRight('jc_bizbuilding_edit') == true)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+						
+						if(haveRight('jc_bizbuilding_del') == true)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
@@ -135,89 +143,6 @@ function load()
 		}
 	});
 }
-
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_bizbuildingController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dataid').val(obj.dataid);
-				$('#name').val(obj.name);
-				$('#address').val(obj.address);
-				$('#year').val(obj.year);
-				$('#purpose').val(obj.purpose);
-				$('#propertyyears').val(obj.propertyyears);
-				$('#propertyrights').val(obj.propertyrights);
-				$('#heatingsystem').val(obj.heatingsystem);
-				$('#ofcommunity').val(obj.ofcommunity);
-				$('#buildtype').val(obj.buildtype);
-				$('#buildframework').val(obj.buildframework);
-				$('#constructiontype').val(obj.constructiontype);
-				$('#units').val(obj.units);
-				$('#levels').val(obj.levels);
-				$('#elevators').val(obj.elevators);
-				$('#area').val(obj.area);
-				$('#developer').val(obj.developer);
-				$('#propertyowner').val(obj.propertyowner);
-				$('#propertyownertel').val(obj.propertyownertel);
-				$('#user').val(obj.user);
-				$('#usertel').val(obj.usertel);
-				$('#propertymanage').val(obj.propertymanage);
-				$('#propertymanagecontact').val(obj.propertymanagecontact);
-				$('#propertymanagecontacttel').val(obj.propertymanagecontacttel);
-				$('#status').val(obj.status);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-				$('#orginbuilding').val(obj.orginbuilding);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dataid').val('');
-	$('#name').val('');
-	$('#address').val('');
-	$('#year').val('');
-	$('#purpose').val('');
-	$('#propertyyears').val('');
-	$('#propertyrights').val('');
-	$('#heatingsystem').val('');
-	$('#ofcommunity').val('');
-	$('#buildtype').val('');
-	$('#buildframework').val('');
-	$('#constructiontype').val('');
-	$('#units').val('');
-	$('#levels').val('');
-	$('#elevators').val('');
-	$('#area').val('');
-	$('#developer').val('');
-	$('#propertyowner').val('');
-	$('#propertyownertel').val('');
-	$('#user').val('');
-	$('#usertel').val('');
-	$('#propertymanage').val('');
-	$('#propertymanagecontact').val('');
-	$('#propertymanagecontacttel').val('');
-	$('#status').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-	$('#orginbuilding').val('');
-
-}
-*/
-
 
 function viewData(id)
 {

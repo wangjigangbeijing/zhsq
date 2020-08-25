@@ -3,6 +3,11 @@
 
 $(document).ready(function (){
 	
+	if(haveRight('jc_room_add') == false)
+	{
+		$('#btnAdd1').hide();
+		$('#btnAdd2').hide();
+	}
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -163,86 +168,6 @@ function load()
  var status = $('#statusQuery').val();
  var isgrouporiented = $('#isgrouporientedQuery').val();
 
-	/*$.get(getContextPath()+'/roomController/load?number='+number+'&ofcommunity='+ofcommunity+'&ofresidebuilding='+ofresidebuilding+'&ofunit='+ofunit+'&status='+status+'&isgrouporiented='+isgrouporiented+'&',
-	function(result){
-	
-		if(searchtype == 1){
-			
-			$('#btnSearch1').removeAttr('disabled');
-		}
-		else {
-			$('#btnSearch2').removeAttr('disabled');
-		}
-
-		var obj = jQuery.parseJSON(result);  
-		if(obj.success)
-		{
-			dataTable = $('#dataTable').dataTable( {
-				"processing": true,
-				"bJQueryUI": false,
-				"bFilter": false,
-				"bStateSave":true,
-				"bAutoWidth": false, //自适应宽度 
-				//"sPaginationType": "full_numbers", 
-				iDisplayLength: 10,
-				lengthChange: false,
-				"bProcessing": true, 
-				"bDestroy":true,
-				"bSort": false, //是否使用排序 		
-				"oLanguage": { 
-					"sProcessing": "正在加载中......", 
-					"sLengthMenu": "每页显示 _MENU_ 条记录", 
-					"sZeroRecords": "对不起，查询不到相关数据！", 
-					"sInfoEmpty":"",
-					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
-					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
-					"sSearch": "搜索", 
-					"oPaginate":  
-					{ 
-						"sFirst": "首页", 
-						"sPrevious": "上一页", 
-						"sNext": "下一页", 
-						"sLast": "末页" 
-					}
-				}, //多语言配置					
-				"data":obj.list,
-				"columns": [
-					//{ 'data': 'dataid' ,'sClass':'text-center'},
-					{ 'data': 'number' ,'sClass':'text-center'},
-					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
-					//{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
-					//{ 'data': 'ofunit' ,'sClass':'text-center'},
-					//{ 'data': 'level' ,'sClass':'text-center'},
-					{ 'data': 'status' ,'sClass':'text-center'},
-					{ 'data': 'isgrouporiented' ,'sClass':'text-center'},
-					{ 'data': 'ownertype' ,'sClass':'text-center'},
-					//{ 'data': 'propertypapertype' ,'sClass':'text-center'},
-					//{ 'data': 'propertypaperid' ,'sClass':'text-center'},
-					//{ 'data': 'address' ,'sClass':'text-center'},
-					//{ 'data': 'note' ,'sClass':'text-center'},
-					{ 'data': '' ,'sClass':'text-center'}
-
-				],
-				columnDefs: [ 
-					{
-					className: 'control',
-					orderable: false,
-					targets:  5,//从0开始
-					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
-						
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
-
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
-						
-						return btn;
-					}
-					}
-				]
-			} );
-		}
-	});*/
-	
 	lTotalCnt = 0;
 			
 	if(dataGridTable!=null){  
@@ -310,9 +235,11 @@ function load()
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+						if(haveRight('jc_room_edit') == true)
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
 
-						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						if(haveRight('jc_room_del') == true)
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
 					}
