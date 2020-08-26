@@ -263,9 +263,7 @@ var dataGridTable = null;
 function searchResident()
 {
 	var residentName = $('#residentNameQry').val();
-	var characteristics = $('#characterQry').val();
-	
-	debugger;
+	var characteristics = $('#characterQry').select2().val();
 	
 	lTotalCnt = 0;
 			
@@ -343,7 +341,7 @@ function searchResident()
 					aoData : JSON.stringify(aoData),
 					totalCnt : lTotalCnt,
 					name : residentName,
-					characteristics : characteristics
+					characteristics : characteristics.join(',')
 				},
 				"success" : function(resp) {
 					$('#btnSearch').removeAttr('disabled');
@@ -498,14 +496,80 @@ function searchUser()
 	});
 }
 
-function addSelectedResident()
+function addAllResident()
 {
+	var residentName = $('#residentNameQry').val();
+	var characteristicsArr = $('#characterQry').select2().val();	
+	var characteristics = characteristicsArr.join(',');
 	
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realMobileList').val();
 	
+	$.get(getContextPath()+'/residentController/load?name='+residentName+'&characteristics='+characteristics,
+	function(result){
+		$('#btnSearch').removeAttr('disabled');
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			userList = obj.list;
+			
+			for(var i=0;i<userList.length;i++)
+			{
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+				}
+				if(mobileList == '') {
+					mobileList = phone;
+					realMobileList = realphone;
+				}
+				else {
+					mobileList += ", " + phone;
+					realMobileList +=", " + realphone;
+				}
+			}
+			
+			console.log(realMobileList);
+			$('#mobileList').val(mobileList);
+			$('#realMobileList').val(realMobileList);
+		}
+	});
 	
+	/*
+	var users = '';
+	for(var i=0;i<userList.length;i++)
+	{
+		var user = userList[i].name+'-'+userList[i].mobile;
+		
+		mobileList += user+',';
+	}
+	
+	$('input:checkbox[name=resid]:checked').each(function (i) {
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+				}
+				if(mobileList == '') {
+					mobileList = phone;
+					realMobileList = realphone;
+				}
+				else {
+					mobileList += ", " + phone;
+					realMobileList +=", " + realphone;
+				}
+			}
+		}
+	});
+	*/
 }
 
-function addAllResident()
+function addSelectedResident()
 {
 	var mobileList = $('#mobileList').val();
 	var realMobileList = $('#realMobileList').val();

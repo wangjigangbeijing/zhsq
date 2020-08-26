@@ -200,7 +200,7 @@ public String load(String name,String identitytype,String idnumber,String charac
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
-		int iPageSize = 10;
+		int iPageSize = 10000;
 		int iDisplayStart = 0;
 		
 		String aoData = request.getParameter("aoData");
