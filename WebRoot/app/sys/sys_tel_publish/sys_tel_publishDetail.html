@@ -225,7 +225,10 @@
 			  
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" onclick="javascript:addAllResident();">添加全部</button>
+              <div>
+              <button type="button" class="btn btn-default" onclick="javascript:addSelectedResident();">添加选中</button>
+			  <button type="button" class="btn btn-primary" onclick="javascript:addAllResident();">添加全部</button>
+			  </div>
               <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
             </div>
           </div>
@@ -356,7 +359,7 @@ function searchResident()
 		"searching": false,
 		"bProcessing" : true,  
 		"aaSorting": [[ 0, "asc" ]],  
-		//"ordering": true,
+		"ordering": false,
 		"info": true,
 		"oLanguage": { 
 					"sProcessing": "正在加载中......", 
@@ -443,38 +446,6 @@ function searchResident()
 		}
 	});
 	
-	
-	/*$.get(getContextPath()+'/residentController/load?name='+residentName+'&characteristics='+characteristics,
-	function(result){
-		$('#btnSearch').removeAttr('disabled');
-		var obj = jQuery.parseJSON(result);  
-		if(obj.success)
-		{
-			userList = obj.list;
-			dataTable = $('#dataTable').dataTable( {
-				"processing": true,
-				"bJQueryUI": false,
-				"bFilter": false,
-				"bStateSave":true,
-				"bAutoWidth": false, //自适应宽度 
-				iDisplayLength: 10,
-				lengthChange: false,
-				"bProcessing": true, 
-				"bDestroy":true,
-				"bSort": false, //是否使用排序
-				"data":obj.list,
-				"columns": [
-					{ 'data': 'name' ,'sClass':'text-center'},
-					{ 'data': 'characteristics' ,'sClass':'text-center'},
-					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'address' ,'sClass':'text-center'}
-				],
-				columnDefs: [
-					
-				]
-			} );
-		}
-	});*/
 }
 
 
@@ -540,20 +511,8 @@ function searchUser()
 	});
 }
 
-function addAllResident()
+function addSelectedResident()
 {
-	/*var mobileList = $('#target').val();
-	
-	var users = '';
-	for(var i=0;i<userList.length;i++)
-	{
-		var user = userList[i].name+'-'+userList[i].mobile;
-		
-		mobileList += user+',';
-	}
-	
-	$('#target').val(mobileList);*/
-	
 	var mobileList = $('#mobileList').val();
 	var realMobileList = $('#realmobileList').val();
 	
@@ -592,6 +551,79 @@ function addAllResident()
 	console.log(realMobileList);
 	$('#mobileList').val(mobileList);
 	 $('#realmobileList').val(realMobileList);
+}
+
+function addAllResident()
+{
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realmobileList').val();
+	
+	var residentName = $('#residentNameQry').val();
+	var characteristicsArr = $('#characterQry').select2().val();	
+	var characteristics = characteristicsArr.join(',');
+	
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realMobileList').val();
+	
+	$.get(getContextPath()+'/residentController/load?name='+residentName+'&characteristics='+characteristics,
+	function(result){
+		$('#btnSearch').removeAttr('disabled');
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			userList = obj.list;
+			
+			for(var i=0;i<userList.length;i++)
+			{
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+				}
+				if(mobileList == '') {
+					mobileList = phone;
+					realMobileList = realphone;
+				}
+				else {
+					mobileList += ", " + phone;
+					realMobileList +=", " + realphone;
+				}
+			}
+			
+			console.log(realMobileList);
+			$('#mobileList').val(mobileList);
+			$('#realMobileList').val(realMobileList);
+		}
+	});
+	
+	
+	/*
+	$('input:checkbox[name=resid]:checked').each(function (i) {
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+				}
+				if(mobileList == '') {
+					mobileList = phone;
+					realMobileList = realphone;
+				}
+				else {
+					mobileList += ", " + phone;
+					realMobileList +=", " + realphone;
+				}
+			}
+		}
+		
+	});
+	
+	console.log(realMobileList);
+	$('#mobileList').val(mobileList);
+	 $('#realmobileList').val(realMobileList);*/
 }
 
 function addAllUser()
