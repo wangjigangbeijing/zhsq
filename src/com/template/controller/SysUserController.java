@@ -131,6 +131,9 @@ public String load(String name,String status)
 			hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 		}
 		
+		hqlFilter.setSort("uorder");
+		hqlFilter.setOrder("asc");
+		
 		String organization = Utility.getInstance().getOrganization(request);
 		
 		ArrayList<String> alOrg = new ArrayList<String>(); 
