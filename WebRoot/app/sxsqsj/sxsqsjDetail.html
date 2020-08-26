@@ -342,7 +342,11 @@ function searchResident()
 									return '<input type="checkbox" name="resid" value="' + data + '"/>';
 								},
 							},
-					{ 'data': 'name' ,'sClass':'text-center'},
+					{ 'data': 'name' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.name), 1);
+						}
+					},	
 					{ 'data': 'idnumber' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
 					{ 'data': 'address' ,'sClass':'text-center'}
