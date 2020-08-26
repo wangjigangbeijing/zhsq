@@ -96,6 +96,15 @@ function load()
 function addsms()
 {
 	$('#main-content').load("./sms/smsDetail.html", function () {
+		
+		curId = '';
+		
+		$('#smsContent').val('');
+		$('#userName').val('');
+		$('#realMobileList').val('');
+		$('#mobileList').val('');
+		$('#internalMobileList').val('');
+		
 		//EditableTable.init();
 		//loadStyle();//如果放到ready方法里会出现加载了layerStyle被覆盖的情况
     });

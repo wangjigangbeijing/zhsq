@@ -41,8 +41,6 @@ function get()
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				debugger;
-				
 				$('#smsContent').val(obj.messageContent);
 				$('#mobileList').val(obj.mobileList);
 				$('#sender').val(obj.sender);
