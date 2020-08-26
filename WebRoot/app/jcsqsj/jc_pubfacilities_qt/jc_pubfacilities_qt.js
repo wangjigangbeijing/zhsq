@@ -2,7 +2,7 @@
 
 $(document).ready(function (){
 	
-	if(haveRight('jc_publicfacilities_qt_add') == false)
+	if(haveRight('jc_pubfacilities_qt_add') == false)
 	{
 		$('#btnAdd1').hide();
 		$('#btnAdd2').hide();
@@ -120,10 +120,10 @@ function load()
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						
-						if(haveRight('jc_publicfacilities_qt_edit') == true)
+						if(haveRight('jc_pubfacilities_qt_edit') == true)
 							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
 
-						if(haveRight('jc_publicfacilities_qt_del') == true)
+						if(haveRight('jc_pubfacilities_qt_del') == true)
 							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
 						
 						return btn;
