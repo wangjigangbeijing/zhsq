@@ -592,6 +592,9 @@ function editData(gid)
 	console.log(url);
 	
 	$('#main-content').load(url, function () {
+		if(arr[0] == 'sxsqsj'){
+			get();
+		}
 		$('#confirmBtn').hide();
 		
 		$("select").attr("disabled","disabled");
@@ -1140,7 +1143,7 @@ function initMap(){
 					tableinfo += showData(aesDecrypt(feature.get('info')[i].attribute_value), 1);
 				}
 				*/
-				if(feature.get('info')[i].attribute_enname == 'pictures' || feature.get('info')[i].attribute_enname == 'picture'){
+				if(feature.get('info')[i].attribute_enname == 'pictures' || feature.get('info')[i].attribute_enname == 'picture' || feature.get('info')[i].attribute_enname == 'fj'){
 					var pics = feature.get('info')[i].attribute_value.split(',');
 					var url = getContextPath()+"/fileController/download?fileName="+pics[0];
 					tableinfo += "<a href='" + url + "' data-lightbox='" + pics[0] + "' data-title='" + pics[0] + "'><img width='150px' src='" + url + "'></a>";

@@ -1,4 +1,4 @@
-
+﻿
 var curUserType = -1;
 
 $(document).ready(function (){
@@ -121,6 +121,13 @@ function view(id)
 	
 	$('#main-content').load("./sxsqsj/sxsqsjDetail.html", function () {
 		get();
+		
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
     });
 }
 

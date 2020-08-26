@@ -10,6 +10,7 @@
 
 $(document).ready(function (){
 	
+	/*
 	$("#sxkssj").datetimepicker({
 		format: 'yyyy-mm-dd hh:ii',
 		autoclose: true,
@@ -25,6 +26,7 @@ $(document).ready(function (){
 		pickerPosition: "bottom-left"
 
 	});
+	*/
 
 	
 		
