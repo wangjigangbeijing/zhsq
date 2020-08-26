@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,30 +98,51 @@ public String load(String name,String regstatus,String address,String persionsiz
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
 }
-if(regstatus != null && regstatus.equalsIgnoreCase("") == false && regstatus.equalsIgnoreCase("null") == false)
+if(regstatus != null && regstatus.equalsIgnoreCase("") == false && regstatus.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("regstatus", HqlFilter.Operator.EQ, regstatus);
 }
-if(address != null && address.equalsIgnoreCase("") == false && address.equalsIgnoreCase("null") == false)
+if(address != null && address.equalsIgnoreCase("") == false && address.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("address", HqlFilter.Operator.LIKE, "%"+address+"%");
 }
-if(persionsize != null && persionsize.equalsIgnoreCase("") == false && persionsize.equalsIgnoreCase("null") == false)
+if(persionsize != null && persionsize.equalsIgnoreCase("") == false && persionsize.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("persionsize", HqlFilter.Operator.LIKE, "%"+persionsize+"%");
 }
-if(leadername != null && leadername.equalsIgnoreCase("") == false && leadername.equalsIgnoreCase("null") == false)
+if(leadername != null && leadername.equalsIgnoreCase("") == false && leadername.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("leadername", HqlFilter.Operator.LIKE, "%"+leadername+"%");
 }
-if(leadermobile != null && leadermobile.equalsIgnoreCase("") == false && leadermobile.equalsIgnoreCase("null") == false)
+if(leadermobile != null && leadermobile.equalsIgnoreCase("") == false && leadermobile.equalsIgnoreCase("undefined") == false)
 {
 	hqlFilter.addQryCond("leadermobile", HqlFilter.Operator.LIKE, "%"+leadermobile+"%");
 }
+
+String organization = Utility.getInstance().getOrganization(request);
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null && organization.equalsIgnoreCase("") == false)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
+hqlFilter.setSort("created_at");
+hqlFilter.setOrder("desc");
 
         List<Jc_sqorganization> listObj = jc_sqorganizationService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();

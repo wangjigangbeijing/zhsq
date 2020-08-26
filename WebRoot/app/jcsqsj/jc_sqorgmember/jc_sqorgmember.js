@@ -39,19 +39,19 @@ function load()
 		name = $('#nameQuery2').val();
 	}
 	
- var idnumber = $('#idnumberQuery').val();
+ //var idnumber = $('#idnumberQuery').val();
  //var sex = $('#sexQuery').val();
- var birthday = $('#birthdayQuery').val();
+ //var birthday = $('#birthdayQuery').val();
  var age = $('#ageQuery').val();
  var mobile = $('#mobileQuery').val();
- var education = $('#educationQuery').val();
+ //var education = $('#educationQuery').val();
  var politicalstatus = $('#politicalstatusQuery').val();
  //var of_sqorganization = $('#of_sqorganizationQuery').val();
  //var orgjob = $('#orgjobQuery').val();
  //var status = $('#statusQuery').val();
 
 	
-	$.get(getContextPath()+'/jc_sqorgmemberController/load?name='+name+'&idnumber='+idnumber+'&birthday='+birthday+'&age='+age+'&mobile='+mobile+'&education='+education+'&politicalstatus='+politicalstatus,//+'&sex='+sex+'&of_sqorganization='+of_sqorganization+'&orgjob='+orgjob+'&status='+status+'&',
+	$.get(getContextPath()+'/jc_sqorgmemberController/load?name='+name+'&age='+age+'&mobile='+mobile+'&politicalstatus='+politicalstatus,
 	function(result){
 		if(searchtype == 1){
 			
