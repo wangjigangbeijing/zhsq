@@ -120,6 +120,18 @@ public class SXSQSJ implements java.io.Serializable {
 		this.SXDSR = SXDSR;
 	}
 	
+	@Column(name = "SXDSRNAME", nullable = true)
+	public String SXDSRNAME;
+	
+	public String getSXDSRNAME()
+	{
+		return SXDSRNAME;
+	}
+	public void setSXDSRNAME(String SXDSRNAME)
+	{
+		this.SXDSRNAME = SXDSRNAME;
+	}
+	
 	
 	@Column(name = "SXKSSJ", nullable = true)
 	public String SXKSSJ;
@@ -247,6 +259,18 @@ public class SXSQSJ implements java.io.Serializable {
 	public void setSXJBR(String SXJBR)
 	{
 		this.SXJBR = SXJBR;
+	}
+	
+	@Column(name = "SXJBRNAME", nullable = true)
+	public String SXJBRNAME;
+	
+	public String getSXJBRNAME()
+	{
+		return SXJBRNAME;
+	}
+	public void setSXJBRNAME(String SXJBRNAME)
+	{
+		this.SXJBRNAME = SXJBRNAME;
 	}
 	
 

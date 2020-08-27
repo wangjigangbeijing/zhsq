@@ -31,6 +31,7 @@ import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
 import com.template.util.TimeUtil;
 import com.template.util.Utility;
+import com.mysql.cj.util.StringUtils;
 import com.template.model.SXSQSJ;
 import com.template.model.SXSQSJ_FL;
 import com.template.model.SysSeq;
@@ -64,7 +65,10 @@ public class SXSQSJController {
 			String sxxl,
 			String sxxq,
 			String sxdd,
-			String sxdsr, 
+			String sxdsr,
+			String sxdsrname,
+			String sxjbr,
+			String sxjbrname,
 			String sxkssj,	
 			String sxjssj,
 			String sxzj, 
@@ -72,7 +76,7 @@ public class SXSQSJController {
 			String sxfj, 
 			String sxjf, 
 			String sxbz, 
-			String sxzt,String fj,String sxjbr,String point)
+			String sxzt,String fj,String point)
 	{
 		logger.debug("addOrUpdate");
     	JSONObject jsonObj = new JSONObject();
@@ -99,6 +103,7 @@ public class SXSQSJController {
 			sxsqsj.setSXXQ(sxxq);
 			sxsqsj.setSXDD(sxdd);
 			sxsqsj.setSXDSR(sxdsr);
+			sxsqsj.setSXDSRNAME(sxdsrname);
 			sxsqsj.setSXKSSJ(sxkssj);
 			sxsqsj.setSXJSSJ(sxjssj);
 			sxsqsj.setSXZJ(sxzj);
@@ -111,6 +116,7 @@ public class SXSQSJController {
 			sxsqsj.setSXZT(sxzt);
 			sxsqsj.setFJ(fj);
 			sxsqsj.setSXJBR(sxjbr);
+			sxsqsj.setSXJBRNAME(sxjbrname);
 			sxsqsj.setOWNER(organization);
 			sxsqsj.setPOINT(point);
 			
@@ -157,7 +163,7 @@ public class SXSQSJController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String load(String sxdl)
+	public String load(String sxdl, String sxbm, String sxmc, String sxxl)
 	{
 		logger.info("load sxdl:"+sxdl);
 		
@@ -168,6 +174,18 @@ public class SXSQSJController {
 			HqlFilter hqlFilter = new HqlFilter();
 			if(sxdl != null && sxdl.equalsIgnoreCase("") == false)
 				hqlFilter.addQryCond("SXDL", HqlFilter.Operator.EQ, sxdl);
+			
+			if(!StringUtils.isNullOrEmpty(sxbm)) {
+				hqlFilter.addQryCond("SXBM", HqlFilter.Operator.EQ, sxbm);
+			}
+			
+			if(!StringUtils.isNullOrEmpty(sxmc)) {
+				hqlFilter.addQryCond("SXMC", HqlFilter.Operator.LIKE, "%" + sxmc + "%");
+			}
+			
+			if(!StringUtils.isNullOrEmpty(sxxl)) {
+				hqlFilter.addQryCond("SXXL", HqlFilter.Operator.EQ, sxxl);
+			}
 			
 	    	String organization = Utility.getInstance().getOrganization(request);
 	    	
@@ -206,11 +224,13 @@ public class SXSQSJController {
 				jsonTmp.put("sxdl", sxsqsj.getSXDL());
 				jsonTmp.put("sxdsr", sxsqsj.getSXDSR());
 				
+				/*
 				if(ConstValue.residentMap.containsKey(sxsqsj.getSXDSR()))
 					jsonTmp.put("sxdsrname", ConstValue.residentMap.get(sxsqsj.getSXDSR()));
 				else
 					jsonTmp.put("sxdsrname", sxsqsj.getSXDSR());
-				
+				*/
+				jsonTmp.put("sxdsrname", sxsqsj.getSXDSRNAME());
 				jsonTmp.put("sxfj", sxsqsj.getSXFJ());
 				jsonTmp.put("sxjf", sxsqsj.getSXJF());
 				jsonTmp.put("sxjssj", sxsqsj.getSXJSSJ());
@@ -221,6 +241,8 @@ public class SXSQSJController {
 				jsonTmp.put("sxzj", sxsqsj.getSXZJ());
 				jsonTmp.put("sxzp", sxsqsj.getSXZP());
 				jsonTmp.put("sxzt", sxsqsj.getSXZT());
+				jsonTmp.put("sxjbr", sxsqsj.getSXJBR());
+				jsonTmp.put("sxjbrname", sxsqsj.getSXJBRNAME());
 				jsonTmp.put("point", sxsqsj.getPOINT());
 				
 	        	jsonArr.put(jsonTmp);
@@ -261,17 +283,20 @@ public class SXSQSJController {
 				jsonObj.put("sxdd", sxsqsj.getSXDD());
 				jsonObj.put("sxdl", sxsqsj.getSXDL());
 				jsonObj.put("sxdsr", sxsqsj.getSXDSR());
-				
-				if(ConstValue.residentMap.containsKey(sxsqsj.getSXDSR()))
-					jsonObj.put("sxdsrname", ConstValue.residentMap.get(sxsqsj.getSXDSR()));
-				else
-					jsonObj.put("sxdsrname", sxsqsj.getSXDSR());
-				
+				jsonObj.put("sxdsrname", sxsqsj.getSXDSRNAME());
 				jsonObj.put("sxjbr", sxsqsj.getSXJBR());
-				if(ConstValue.userMap.containsKey(sxsqsj.getSXJBR()))
-					jsonObj.put("sxjbrname", ConstValue.userMap.get(sxsqsj.getSXJBR()));
-				else
-					jsonObj.put("sxjbrname", sxsqsj.getSXJBR());
+				jsonObj.put("sxjbrname", sxsqsj.getSXJBRNAME());
+				
+//				if(ConstValue.residentMap.containsKey(sxsqsj.getSXDSR()))
+//					jsonObj.put("sxdsrname", ConstValue.residentMap.get(sxsqsj.getSXDSR()));
+//				else
+//					jsonObj.put("sxdsrname", sxsqsj.getSXDSR());
+//				
+//				jsonObj.put("sxjbr", sxsqsj.getSXJBR());
+//				if(ConstValue.userMap.containsKey(sxsqsj.getSXJBR()))
+//					jsonObj.put("sxjbrname", ConstValue.userMap.get(sxsqsj.getSXJBR()));
+//				else
+//					jsonObj.put("sxjbrname", sxsqsj.getSXJBR());
 				
 				jsonObj.put("sxfj", sxsqsj.getSXFJ());
 				jsonObj.put("sxjf", sxsqsj.getSXJF());

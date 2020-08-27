@@ -108,7 +108,7 @@ function get()
 				$('#sxjssj').val(obj.sxjssj);
 				$('#sxzj').val(obj.sxzj);
 				
-				$('#selectResidentDiv').hide();
+				//$('#selectResidentDiv').hide();
 
 
 				$('#fj').val(obj.fj);
@@ -139,6 +139,7 @@ function get()
 
 function addOrUpdate()
 {
+	/*
 	var sxdsr = $('#sxdsr').val();
 	if(sxdsr == null || sxdsr == undefined || sxdsr == '')
 		sxdsr = $('#sxdsrname').val();
@@ -146,7 +147,7 @@ function addOrUpdate()
 	var sxjbr = $('#sxjbr').val();
 	if(sxjbr == null || sxjbr == undefined || sxjbr == '')
 		sxjbr = $('#sxjbrname').val();
-	
+	*/
 	$.post(getContextPath()+"/sxsqsjController/addOrUpdate",
 	{
 		id:curId,		
@@ -155,8 +156,10 @@ function addOrUpdate()
 		sxxl:$('#sxxl').val(),
 		sxxq:$('#sxxq').val(),
 		sxdd:$('#sxdd').val(),
-		sxdsr:sxdsr,
-		sxjbr:sxjbr,
+		sxdsr:$('#sxdsr').val(),
+		sxdsrname:$('#sxdsrname').val(),
+		sxjbr:$('#sxjbr').val(),
+		sxjbrname:$('#sxjbrname').val(),
 		sxkssj:$('#sxkssj').val(),
 		sxjssj:$('#sxjssj').val(),
 		sxzj:$('#sxzj').val(),

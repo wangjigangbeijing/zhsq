@@ -380,7 +380,7 @@ function addAllRes()
 		{
 			if(userList[i].id == val){
 				var name = '';
-				if(typeof(userList[i].name)!="undefined") name = userList[i].name;
+				if(typeof(userList[i].name)!="undefined") name = showData(aesDecrypt(userList[i].name), 1);
 				if(users == '') users = name;
 				else users += ", " + name;
 				if(ids == '') ids = val;
