@@ -135,6 +135,17 @@ public void setstatus(String status)
 	this.status = status;
 }
 
+@Column(name = "uorder", nullable = true)
+public String uorder;
+public String getuorder()
+{
+	return uorder;
+}
+public void setuorder(String uorder)
+{
+	this.uorder = uorder;
+}
+
 @Column(name = "owner", nullable = true)
 public String owner;
 public String getowner()

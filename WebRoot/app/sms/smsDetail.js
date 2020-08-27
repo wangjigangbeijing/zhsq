@@ -89,8 +89,6 @@ function addOrUpdate()
 	
 	var mobileList = residentList;
 	
-	debugger;
-	
 	if(mobileList != null && mobileList != '')
 		mobileList += ',';
 	

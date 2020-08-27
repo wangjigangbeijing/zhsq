@@ -70,7 +70,7 @@ function load()
 					{ 'data': 'birthday' ,'sClass':'text-center'},
 					{ 'data': 'joinday' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'department' ,'sClass':'text-center'},
+					{ 'data': 'orgNames' ,'sClass':'text-center'},
 					{ 'data': 'job' ,'sClass':'text-center'},
 					{ 'data': 'roleTxt' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
