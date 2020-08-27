@@ -85,8 +85,8 @@ function viewDetail(id)
 				$('#officeaddress').val(obj.officeaddress);
 				$('#ofbizbuilding').val(obj.ofbizbuilding);
 				$('#legalname').val(obj.legalname);
-				$('#contactname').val(obj.contactname);
-				$('#contacttel').val(obj.contacttel);
+				$('#contactname').val(showData(aesDecrypt(obj.contactname), 1));
+				$('#contacttel').val(showData(aesDecrypt(obj.contacttel), 2));
 				$('#moveindate').val(obj.moveindate);
 				$('#responsibilityplateno').val(obj.responsibilityplateno);
 				$('#hasfirefacilities').val(obj.hasfirefacilities);
