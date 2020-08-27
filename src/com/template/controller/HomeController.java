@@ -1125,23 +1125,24 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			else {
 				for(int i = 0; i < list.size(); i++) {
 					String key = (String) list.get(i).get("sms_type");
+					
 					int num = ((BigInteger)list.get(i).get("num")).intValue();
 					
-					if("社区党建".equals(key)) 	numlist.set(0, num);
-					if("民主自治".equals(key)) 	numlist.set(1, num);
-					if("社区服务".equals(key)) 	numlist.set(2, num);
-					if("平安建设".equals(key)) 	numlist.set(3, num);
-					if("文化教育".equals(key)) 	numlist.set(4, num);
-					if("社区环境".equals(key)) 	numlist.set(5, num);
-					if("卫生健康".equals(key)) 	numlist.set(6, num);
-					if("社区工作".equals(key)) 	numlist.set(7, num);
+					if(key.contains("社区党建")) 	numlist.set(0, num);
+					if(key.contains("民主自治")) 	numlist.set(1, num);
+					if(key.contains("社区服务")) 	numlist.set(2, num);
+					if(key.contains("平安建设")) 	numlist.set(3, num);
+					if(key.contains("文化教育")) 	numlist.set(4, num);
+					if(key.contains("社区环境")) 	numlist.set(5, num);
+					if(key.contains("卫生健康")) 	numlist.set(6, num);
+					if(key.contains("社区组织")) 	numlist.set(7, num);
 					int total = numlist.get(0) + numlist.get(1) + numlist.get(2) + numlist.get(3) + numlist.get(4) + numlist.get(5) + numlist.get(6) + numlist.get(7);
 					numlist.set(8, total);
 				}
 			}
 			
 			//1
-			sql = "select sjfl, count(*) as num from sys_tel_publish t where t.owner like ? group by t.sjfl";
+			sql = "select category, count(*) as num from sys_tel_publish t where t.owner like ? group by t.category";
 			params.clear();
 			params.add("%" + owner + "%");
 			list = this.userService.findBySql(sql, params);
@@ -1150,17 +1151,17 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			else {
 				for(int i = 0; i < list.size(); i++) {
-					String key = (String) list.get(i).get("sjfl");
+					String key = (String) list.get(i).get("category");
 					int num = ((BigInteger)list.get(i).get("num")).intValue();
 					
-					if("社区党建".equals(key)) 	numlist.set(9, num);
-					if("民主自治".equals(key)) 	numlist.set(10, num);
-					if("社区服务".equals(key)) 	numlist.set(11, num);
-					if("平安建设".equals(key)) 	numlist.set(12, num);
-					if("文化教育".equals(key)) 	numlist.set(13, num);
-					if("社区环境".equals(key)) 	numlist.set(14, num);
-					if("卫生健康".equals(key)) 	numlist.set(15, num);
-					if("社区工作".equals(key)) 	numlist.set(16, num);
+					if(key.contains("社区党建"))  	numlist.set(9, num);
+					if(key.contains("民主自治")) 	numlist.set(10, num);
+					if(key.contains("社区服务")) 	numlist.set(11, num);
+					if(key.contains("平安建设")) 	numlist.set(12, num);
+					if(key.contains("文化教育")) 	numlist.set(13, num);
+					if(key.contains("社区环境")) 	numlist.set(14, num);
+					if(key.contains("卫生健康")) 	numlist.set(15, num);
+					if(key.contains("社区组织")) 	numlist.set(16, num);
 					int total = numlist.get(9) + numlist.get(10) + numlist.get(11) + numlist.get(12) + numlist.get(13) + numlist.get(14) + numlist.get(15) + numlist.get(16);
 					numlist.set(17, total);
 				}

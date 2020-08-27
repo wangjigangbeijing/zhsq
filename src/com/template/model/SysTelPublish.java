@@ -44,6 +44,18 @@ public void setcategory(String category)
 {
 	this.category = category;
 }
+
+@Column(name = "telxl", nullable = true)
+public String telxl;
+public String gettelxl()
+{
+	return telxl;
+}
+public void settelxl(String telxl)
+{
+	this.telxl = telxl;
+}
+
 @Column(name = "content", nullable = true)
 public String content;
 public String getcontent()

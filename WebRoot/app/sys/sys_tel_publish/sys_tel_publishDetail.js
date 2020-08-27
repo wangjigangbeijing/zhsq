@@ -1,4 +1,4 @@
-
+﻿
 
 $(document).ready(function (){
 	
@@ -33,7 +33,45 @@ $(document).ready(function (){
 	}
 	
 	getEvent(T_GetEvent);
+	
+	loadcategory();
 });
+
+function loadcategory()
+{
+	$.get(getContextPath()+"/utilController/getsxsqsjdl",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxdl + "'>" + obj.list[i].sxdl + "</option>"
+					$("#category").append(content);
+				}
+			}
+		});
+}
+
+function loadtelxl()
+{
+	$('#telxl option').not(":first").remove(); 
+	var dl = $("#category").val();
+	if(dl == ''){
+		return;
+	}
+	
+	$.get(getContextPath()+"/utilController/getsxsqsjxl?sxdl=" + dl,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxxl + "'>" + obj.list[i].sxxl + "</option>"
+					$("#telxl").append(content);
+				}
+			}
+		});
+}
 
 /*$(window).unload(function(){ 
 	TV_Disable(); 
@@ -54,6 +92,7 @@ function viewDetail(id)
 				$('#modalDetail').show();
 				$('#title').val(obj.title);
 				$('#category').val(obj.category);
+				$('#telxl').val(obj.telxl);
 				$('#content').val(obj.content);
 				var audioArr = obj.audio.split(VALUE_SPLITTER);				for(var j=0;j<audioArr.length;j++)				{					if(audioArr[j] != '')					{						$('#audiopicktable').append('<tr><td>'+audioArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+audioArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#target').val(obj.target);
 				$('#publishtime').val(obj.publishtime);
@@ -166,6 +205,7 @@ function postDataToServer()
 		id:curId,
 		title:$('#title').val(),
 		category:$('#category').val(),
+		telxl:$('#telxl').val(),
 		content:$('#content').val(),
 		audio:$('#audio').val(),
 		target:$('#target').val(),
