@@ -40,7 +40,7 @@ public class SMSController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST)
 	@ResponseBody
-	public String addOrUpdate(String id,String smsContent,String smsType,String mobileList)
+	public String addOrUpdate(String id,String smsContent,String smsType, String smsXl, String mobileList)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -65,6 +65,7 @@ public class SMSController {
 			smsMessage.setTimerSend(new Date());
 			smsMessage.setTarget(mobileList);
 			smsMessage.setSMSType(smsType);
+			smsMessage.setSMSXl(smsXl);
 			smsMessage.setowner(sOrgId);
 			
 			String msgId = Utility.getUniStr();
@@ -186,6 +187,7 @@ public class SMSController {
 				jsonTmp.put("failCnt", message.getFailCnt());
 				jsonTmp.put("mobileList", message.getTarget());
 				jsonTmp.put("messageType", message.getSMSType());
+				jsonTmp.put("messageXl", message.getSMSXl());
 				
 				String mobileListShort = message.getTarget();
 				if(mobileListShort != null && mobileListShort.length() > 20)

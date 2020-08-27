@@ -47,10 +47,17 @@
 				  <div class="form-group row">
                     <label class='col-md-2 col-form-label'>短信类别</label>
 					<div class='col-md-9'>
-						<select class='form-control field' name='smsType' id='smsType'>
-						<option value='日常通知' selected>日常通知</option>
-						<option value='党建通知'>党建通知</option>
-						<option value='紧急通知'>紧急通知</option>
+						<select class='form-control field' name='smsType' id='smsType' onchange="loadsmsxl(); return false;">
+						<option value=''>请选择</option>
+						</select>
+					</div>
+                  </div>
+				  
+				  <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>短信小类</label>
+					<div class='col-md-9'>
+						<select class='form-control field' name='smsXl' id='smsXl'>
+							<option value=''>请选择</option>
 						</select>
 					</div>
                   </div>

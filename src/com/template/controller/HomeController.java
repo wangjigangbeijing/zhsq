@@ -59,11 +59,11 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	 * @return
 	 */
 	private String getOrganizationName() {
-		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		String owner = Utility.getInstance().getOrganization(request);
 		
-		String sql = "select b.name from sys_user_organization a, sys_organization b where a.organization=b.id and a.user=?";
+		String sql = "select b.name from sys_organization b where b.id=?";
 		List<Object> params = new ArrayList<Object>();
-		params.add(userid);
+		params.add(owner);
 		List<HashMap> list = this.userService.findBySql(sql, params);
 		if(list == null || list.size() == 0) {
 			return null;
@@ -768,6 +768,76 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			
 			//6
 			sql = "select count(*) as num from jc_tc_fjdctcw t where t.OWNER = ?";
+			params.clear();
+			params.add(owner);
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			jsonObj.put("data", JSONArray.toJSON(numlist));
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadhomeinfo",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadHomeInfo()
+	{
+		String owner = Utility.getInstance().getOrganization(request);
+		logger.debug("loadBaseInfo6 owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			
+			//1
+			String sql = "select count(*) as num from jc_family where owner like ?";
+			List<Object> params = new ArrayList<Object>();
+			params.add("%" + owner + "%");
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//2
+			sql = "select count(*) as num from jc_resident t where t.OWNER like ?";
+			params.clear();
+			params.add("%" + owner + "%");
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//3
+			numlist.add(0);
+			
+			//4
+			numlist.add(0);
+			
+			//5
+			sql = "select count(*) as num from jc_vehicle t where t.OWNER = ?";
 			params.clear();
 			params.add(owner);
 			list = this.userService.findBySql(sql, params);

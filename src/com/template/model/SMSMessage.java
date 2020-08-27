@@ -53,6 +53,17 @@ public class SMSMessage implements java.io.Serializable {
 		this.smsType = smsType;
 	}
 	
+	@Column(name = "SMS_XL", nullable = true)
+	public String smsXl;
+	public String getSMSXl()
+	{
+		return smsXl;
+	}
+	public void setSMSXl(String smsXl)
+	{
+		this.smsXl = smsXl;
+	}
+	
 	
 	@Column(name = "TARGET", nullable = false)
 	public String target;

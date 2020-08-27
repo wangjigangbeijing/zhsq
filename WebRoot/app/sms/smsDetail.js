@@ -40,26 +40,48 @@ $(document).ready(function (){
 	
 	if(curId != null && curId != '')
 		get();
+	
+	loadsmstype();
 });
-/*
-function get()
+
+
+function loadsmstype()
 {
-	$.get(getContextPath()+"/smsController/get?id="+curId,
+	$.get(getContextPath()+"/utilController/getsxsqsjdl",
 		function(result){
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)
 			{
-				$('#menu_enname').val(obj.menu_enname);
-				$('#menu_zhname').val(obj.menu_zhname);
-				$('#menu_type').val(obj.menu_type);
-				$('#table_id').val(obj.table_id);
-				$('#file_name').val(obj.fifth);
-				$('#external_url').val(obj.external_url);
-
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxdl + "'>" + obj.list[i].sxdl + "</option>"
+					$("#smsType").append(content);
+				}
 			}
 		});
 }
-*/
+
+function loadsmsxl()
+{
+	$('#smsXl option').not(":first").remove(); 
+	var dl = $("#smsType").val();
+	if(dl == ''){
+		return;
+	}
+	
+	$.get(getContextPath()+"/utilController/getsxsqsjxl?sxdl=" + dl,
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				for(var i = 0; i < obj.list.length; i++){
+					var content = "<option value='" + obj.list[i].sxxl + "'>" + obj.list[i].sxxl + "</option>"
+					$("#smsXl").append(content);
+				}
+			}
+		});
+}
+
+
 function addOrUpdate()
 {
 	var residentList = $('#realMobileList').val();
@@ -79,6 +101,7 @@ function addOrUpdate()
 		id:curId,
 		smsContent:$('#smsContent').val(),
 		smsType:$('#smsType').val(),
+		smsXl: $('#smsXl').val(),
 		mobileList:mobileList  //$('#mobileList').val()
 	},
 	function(result){

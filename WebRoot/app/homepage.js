@@ -247,6 +247,8 @@ function loaddata(){
 	
 	loadbaseinfo1();
 	
+	loadhomeinfo();
+	
 	loadminqininfo();
 	
 	loadsxsq();
@@ -405,6 +407,23 @@ function loadbaseinfo6(){
 				$("#b64").html(obj.data[3]);
 				$("#b65").html(obj.data[4]);
 				$("#b66").html(obj.data[5]);
+			}
+		});	
+}
+
+function loadhomeinfo(){
+	$.get(getContextPath()+'/homeController/loadhomeinfo',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			//console.log(obj);
+			if(obj.success)
+			{
+				$("#h1").html(obj.data[0]);
+				$("#h2").html(obj.data[1]);
+				$("#h3").html(obj.data[2]);
+				$("#h4").html(obj.data[3]);
+				$("#h5").html(obj.data[4]);
 			}
 		});	
 }
