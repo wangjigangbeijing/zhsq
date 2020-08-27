@@ -195,28 +195,27 @@ public String load(String name,String address,String propertyyears,String proper
 		{
 			hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 		}
-
-
-String organization = Utility.getInstance().getOrganization(request);
-
-ArrayList<String> alOrg = new ArrayList<String>(); 
-
-if(organization != null && organization.equalsIgnoreCase("") == false)
-{
-	String [] organizationArr = organization.split(",");
-	
-
-	for(int i=0;i<organizationArr.length;i++)
-	{
-		alOrg.add("%"+organizationArr[i]+"%");
-	}
-}
-
-if(alOrg != null && alOrg.size() != 0)
-	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
-
-hqlFilter.setSort("created_at");
-hqlFilter.setOrder("desc");
+		
+		String organization = Utility.getInstance().getOrganization(request);
+		
+		ArrayList<String> alOrg = new ArrayList<String>(); 
+		
+		if(organization != null && organization.equalsIgnoreCase("") == false)
+		{
+			String [] organizationArr = organization.split(",");
+			
+		
+			for(int i=0;i<organizationArr.length;i++)
+			{
+				alOrg.add("%"+organizationArr[i]+"%");
+			}
+		}
+		
+		if(alOrg != null && alOrg.size() != 0)
+			hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+		
+		hqlFilter.setSort("created_at");
+		hqlFilter.setOrder("desc");
 
         List<Residebuilding> listObj = residebuildingService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
@@ -354,7 +353,7 @@ hqlFilter.setOrder("desc");
 				int maxRoomNum = 0;
 				int curRoomNum = 0;
 				
-				String curLevel = "1";
+				int curLevel = 1;
 				
 				for(int i=0;i<unitArr.length;i++)
 				{
@@ -368,7 +367,7 @@ hqlFilter.setOrder("desc");
 					
 					hqlFilter.addQryCond("ofresidebuilding", HqlFilter.Operator.EQ, residebuilding.getId());
 					
-					hqlFilter.setSort("number");
+					hqlFilter.setSort("level");
 					
 					//hqlFilter.setOrder("desc");
 					
@@ -388,7 +387,7 @@ hqlFilter.setOrder("desc");
 						
 						jsonRoom.put("level", room.getlevel());
 						
-						if(curLevel.equalsIgnoreCase(room.getlevel()))
+						if(curLevel == room.getlevel())
 							curRoomNum ++;
 						else
 						{

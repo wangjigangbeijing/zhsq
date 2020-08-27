@@ -172,7 +172,8 @@ function load()
 				"dataType" : "json",  
 				"data" : {  
 					aoData : JSON.stringify(aoData),
-					totalCnt : lTotalCnt,					
+					totalCnt : lTotalCnt,	
+					name:name,
 					address:address,
 					propertyyears:propertyyears,
 					propertyrights:propertyrights,

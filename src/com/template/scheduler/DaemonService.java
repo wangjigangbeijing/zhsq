@@ -96,9 +96,9 @@ public class DaemonService
 			
 			loadAdvertisementInfo();
 			
-			//refreshResident();//定期刷民情图数据
+			refreshResident();//定期刷民情图数据
 			
-			//refreshResidentBuilding();//定期刷民情图数据
+			refreshResidentBuilding();//定期刷民情图数据
 		}
 		catch(Exception e)
 		{
@@ -398,6 +398,9 @@ public class DaemonService
 								yearChar = "90岁以上老人"; 
 							
 							String curChar = resident.getcharacteristics();
+							
+							if(curChar == null)
+								curChar = "";
 							
 							curChar = curChar.replaceAll("0-6岁儿童,*", "");
 							curChar = curChar.replaceAll("7-13岁青少年,*", "");
