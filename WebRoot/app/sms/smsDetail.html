@@ -532,14 +532,17 @@ function addSelectedResident()
 				if(typeof(userList[i].mobile)!="undefined") {
 					phone = showData(aesDecrypt(userList[i].mobile), 2);
 					realphone = aesDecrypt(userList[i].mobile);
+					
+					name = showData(aesDecrypt(userList[i].name), 1);
+					realname = aesDecrypt(userList[i].name);
 				}
 				if(mobileList == '') {
-					mobileList = phone;
-					realMobileList = realphone;
+					mobileList = name + '-' + phone;
+					realMobileList = realname+'-'+realphone;
 				}
 				else {
-					mobileList += ", " + phone;
-					realMobileList +=", " + realphone;
+					mobileList += ", " + name + '-' + phone;
+					realMobileList +=", " +realname+'-'+ realphone;
 				}
 			}
 		}
@@ -553,7 +556,6 @@ function addSelectedResident()
 
 function removeSelected()
 {
-	debugger;
 	$('#mobileList').val('');
 	$('#realMobileList').val('');
 }

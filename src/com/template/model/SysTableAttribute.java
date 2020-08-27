@@ -241,4 +241,16 @@ public class SysTableAttribute implements java.io.Serializable {
 		this.showalgo = showalgo;
 	}
 	
+	@Column(name = "starrule", nullable = true)
+	public String starrule;
+	
+	public String getstarrule()
+	{
+		return starrule;
+	}
+	public void setstarrule(String starrule)
+	{
+		this.starrule = starrule;
+	}
+	
 }

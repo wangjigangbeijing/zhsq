@@ -102,6 +102,23 @@ public class SysOrganizationController {
 			{
 				hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
 			}
+
+			String userOrg = Utility.getInstance().getOrganization(request);
+			
+			ArrayList<String> alOrg = new ArrayList<String>(); 
+			
+			if(userOrg != null && userOrg.equalsIgnoreCase("") == false)
+			{
+				String [] organizationArr = userOrg.split(",");
+				
+				for(int i=0;i<organizationArr.length;i++)
+				{
+					alOrg.add("%"+organizationArr[i]+"%");
+				}
+			}
+			
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 			
 			hqlFilter.setSort("seq");
 	
@@ -139,6 +156,57 @@ public class SysOrganizationController {
 	       		jsonArr.put(jsonTmp);
 	        	iTotalCnt++;
 			}
+						
+			HqlFilter hqlFilterOwn = new HqlFilter();
+			if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+			{
+				hqlFilterOwn.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+			}
+
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilterOwn.addOrCondGroup("id", HqlFilter.Operator.LIKE, alOrg);
+			
+			hqlFilterOwn.setSort("seq");
+			
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilterOwn.addOrCondGroup("id", HqlFilter.Operator.LIKE, alOrg);
+			
+	        List<SysOrganization> listOwnObj = organizationService.findByFilter(hqlFilterOwn);
+
+			for(int i=0;i<listOwnObj.size();i++)
+			{
+				SysOrganization organization = listOwnObj.get(i);
+				JSONObject jsonTmp = new JSONObject();
+				jsonTmp.put("id", organization.getId());
+				jsonTmp.put("name",organization.getname());
+				jsonTmp.put("code",organization.getcode());
+				jsonTmp.put("type",organization.gettype());
+				jsonTmp.put("border",organization.getborder());
+				jsonTmp.put("area",organization.getarea());
+				jsonTmp.put("address",organization.getaddress());
+				jsonTmp.put("telphone",organization.gettelphone());
+				jsonTmp.put("secretary",organization.getsecretary());
+				jsonTmp.put("secretaryphone",organization.getsecretaryphone());
+				jsonTmp.put("directorname",organization.getdirectorname());
+				jsonTmp.put("directorphone",organization.getdirectorphone());
+				jsonTmp.put("note",organization.getnote());
+				jsonTmp.put("parentid",organization.getparentid());
+				
+				String parentId = organization.getparentid();
+				
+				String parentName = "";
+				
+				if(ConstValue.orgMap.containsKey(parentId))
+					parentName = ConstValue.orgMap.get(parentId);
+				
+				jsonTmp.put("parentName",parentName);
+				
+	       		jsonArr.put(jsonTmp);
+	        	iTotalCnt++;
+			}
+			
+			jsonArr = jsonArr.sortByStrField("seq");
+			
 	        jsonObj.put("totalCount", iTotalCnt);
 	        jsonObj.put("list", jsonArr);
 	        jsonObj.put("success", true);

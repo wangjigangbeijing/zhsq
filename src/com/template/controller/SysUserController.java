@@ -131,7 +131,6 @@ public String load(String name,String status)
 			hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 		}
 		
-		hqlFilter.setSort("uorder");
 		hqlFilter.setOrder("asc");
 		
 		String organization = Utility.getInstance().getOrganization(request);
@@ -152,6 +151,8 @@ public String load(String name,String status)
 		if(alOrg != null && alOrg.size() != 0)
 			hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 
+		hqlFilter.setSort("uorder");
+		
         List<SysUser> listObj = sys_userService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
         int iTotalCnt = 0;
@@ -202,8 +203,10 @@ public String load(String name,String status)
 			jsonTmp.put("status",sys_user.getstatus());
 			jsonTmp.put("roleTxt",roleTxt);
 			
-			String orgIds = "";
+			String orgIds = "";//ConstValue.userToOrgMap.get(sys_user.getId());
 			String orgNames = "";
+			
+			
 			HqlFilter hqlFilterUser = new HqlFilter();
 			hqlFilterUser.addQryCond("user", HqlFilter.Operator.EQ, sys_user.getId());
 			List<SysUserOrganization> userOrgList = sys_userOrgService.findByFilter(hqlFilterUser);
@@ -223,14 +226,30 @@ public String load(String name,String status)
 				orgNames += orgName + ",";
 			}
 			
-			if(orgIds.endsWith(","))
+			/*
+			String [] orgIdArr = orgIds.split(",");
+			
+			for(int k=0;k<orgIdArr.length;k++)
+			{
+				String orgId = orgIdArr[k];
+				
+				if(orgId != null && orgId.equalsIgnoreCase("") == false)
+				{
+					String orgName = ConstValue.orgMap.get(orgId);
+					
+					if(orgName != null && orgName.equalsIgnoreCase("") == false)
+						orgNames += orgName+",";
+				}
+			}
+			*/
+			if(orgIds != null && orgIds.endsWith(","))
 			{
 				orgIds = orgIds.substring(0, orgIds.length() - 1);
 				orgNames = orgNames.substring(0, orgNames.length() - 1);
 			}
 			
-			jsonObj.put("orgIds", orgIds);
-			jsonObj.put("orgNames", orgNames);
+			jsonTmp.put("orgIds", orgIds);
+			jsonTmp.put("orgNames", orgNames);
 
        		jsonArr.put(jsonTmp);
         	iTotalCnt++;
