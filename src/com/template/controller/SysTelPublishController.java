@@ -27,7 +27,7 @@ public class SysTelPublishController {
 	private SysTelPublishService sys_tel_publishService;
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String addOrUpdate(String id,String title,String category,String content,String audio,String target,String publishtime,String status)
+public String addOrUpdate(String id,String title,String category, String telxl, String content,String audio,String target,String publishtime,String status)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -46,6 +46,7 @@ public String addOrUpdate(String id,String title,String category,String content,
 		}
 		sys_tel_publish.settitle(title);
 		sys_tel_publish.setcategory(category);
+		sys_tel_publish.settelxl(telxl);
 		sys_tel_publish.setcontent(content);
 		sys_tel_publish.setaudio(audio);
 		sys_tel_publish.settarget(target);
@@ -129,6 +130,7 @@ if(alOrg != null && alOrg.size() != 0)
 			jsonTmp.put("id", sys_tel_publish.getId());
 			jsonTmp.put("title",sys_tel_publish.gettitle());
 			jsonTmp.put("category",sys_tel_publish.getcategory());
+			jsonTmp.put("telxl", sys_tel_publish.gettelxl());
 			jsonTmp.put("content",sys_tel_publish.getcontent());
 			
 			String contentShort = sys_tel_publish.getcontent();
@@ -175,6 +177,7 @@ public String get(String id)
 		{
 			jsonObj.put("title",sys_tel_publish.gettitle());
 			jsonObj.put("category",sys_tel_publish.getcategory());
+			jsonObj.put("telxl", sys_tel_publish.gettelxl());
 			jsonObj.put("content",sys_tel_publish.getcontent());
 			jsonObj.put("audio",sys_tel_publish.getaudio());
 			jsonObj.put("target",sys_tel_publish.gettarget());

@@ -1,4 +1,4 @@
-
+﻿
 
 <script src="./sys/sys_tel_publish/sys_tel_publishDetail.js"></script>
 
@@ -27,11 +27,21 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>类别</label>
   				<div class='col-md-9'>
-						<select class='form-control field' name='category' id='category'>
- 						<option value='民主自治'>民主自治</option>
+						<select class='form-control field' name='category' id='category' onchange="loadtelxl(); return false;">
+ 						<option value=''>请选择</option>
 						</select>
  						</div>
  					</div>
+					<div class='form-group row'>
+						<label class='col-md-2 control-label'>子类</label>
+  				<div class='col-md-9'>
+						<select class='form-control field' name='telxl' id='telxl'>
+ 						<option value=''>请选择</option>
+						</select>
+ 						</div>
+ 					</div>
+ 					</div>
+					
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>通知内容</label>
   				<div class='col-md-9'>

@@ -253,7 +253,7 @@ function loaddata(){
 	
 	loadsxsq();
 	
-	//loadinfodata();
+	loadinfodata();
 	
 	loadbaseinfo2();
 	
@@ -535,24 +535,24 @@ function loadinfodata(){
 			//console.log(obj);
 			if(obj.success)
 			{
-				$("#bi1").html(obj.data[0]);
-				$("#bi2").html(obj.data[1]);
-				$("#bi3").html(obj.data[2]);
-				$("#bi4").html(obj.data[3]);
-				$("#bi5").html(obj.data[4]);
-				$("#bi6").html(obj.data[5]);
-				$("#bi7").html(obj.data[6]);
-				$("#bi8").html(obj.data[7]);
-				$("#bi9").html(obj.data[8]);
-				$("#bi10").html(obj.data[9]);
-				$("#bi11").html(obj.data[10]);
-				$("#bi12").html(obj.data[11]);
-				$("#bi13").html(obj.data[12]);
-				$("#bi14").html(obj.data[13]);
-				$("#bi15").html(obj.data[14]);
-				$("#bi16").html(obj.data[15]);
-				$("#bi17").html(obj.data[16]);
-				$("#bi18").html(obj.data[17]);
+				$("#i1").html(obj.data[0]);
+				$("#i2").html(obj.data[1]);
+				$("#i3").html(obj.data[2]);
+				$("#i4").html(obj.data[3]);
+				$("#i5").html(obj.data[4]);
+				$("#i6").html(obj.data[5]);
+				$("#i7").html(obj.data[6]);
+				$("#i8").html(obj.data[7]);
+				$("#i9").html(obj.data[8]);
+				$("#i10").html(obj.data[9]);
+				$("#i11").html(obj.data[10]);
+				$("#i12").html(obj.data[11]);
+				$("#i13").html(obj.data[12]);
+				$("#i14").html(obj.data[13]);
+				$("#i15").html(obj.data[14]);
+				$("#i16").html(obj.data[15]);
+				$("#i17").html(obj.data[16]);
+				$("#i18").html(obj.data[17]);
 			}
 		});	
 }
