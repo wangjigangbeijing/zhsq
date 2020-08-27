@@ -109,8 +109,16 @@ function load()
 					{ 'data': 'scale' ,'sClass':'text-center'},
 					{ 'data': 'officeaddress' ,'sClass':'text-center'},
 					{ 'data': 'ofbizbuilding' ,'sClass':'text-center'},
-					{ 'data': 'contactname' ,'sClass':'text-center'},
-					{ 'data': 'contacttel' ,'sClass':'text-center'},
+					{ 'data': 'contactname' ,'sClass':'text-center',
+								mRender : function(data,type,full){
+									return showData(aesDecrypt(full.contactname), 1);
+								}
+							},	
+					{ 'data': 'contacttel' ,'sClass':'text-center',
+							mRender : function(data,type,full){
+								return showData(aesDecrypt(full.contacttel), 2);
+							}
+						},	
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 				],
