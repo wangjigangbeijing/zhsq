@@ -331,7 +331,7 @@ function viewDetail(id)
 				
 				$('#offamily').html('');
 				var filterArr = [];				
-				filterArr[0] = "<option value='"+obj.offamily+"'>"+obj.offamilyname+"</option>";				
+				filterArr[0] = "<option value='"+obj.offamily+"'>"+showData(aesDecrypt(obj.offamilyname), 1)+"</option>";				
 				$('#offamily').html(filterArr.join(''));
 				$('#offamily').attr("readonly","readonly");	
 				

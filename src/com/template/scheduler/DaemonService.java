@@ -96,9 +96,9 @@ public class DaemonService
 			
 			loadAdvertisementInfo();
 			
-			//refreshResident();//定期刷民情图数据
+			refreshResident();//定期刷民情图数据
 			
-			//refreshResidentBuilding();//定期刷民情图数据
+			refreshResidentBuilding();//定期刷民情图数据
 		}
 		catch(Exception e)
 		{
@@ -399,6 +399,9 @@ public class DaemonService
 							
 							String curChar = resident.getcharacteristics();
 							
+							if(curChar == null)
+								curChar = "";
+							
 							curChar = curChar.replaceAll("0-6岁儿童,*", "");
 							curChar = curChar.replaceAll("7-13岁青少年,*", "");
 							curChar = curChar.replaceAll("13-18岁青少年,*", "");
@@ -452,12 +455,12 @@ public class DaemonService
 				
 				room.setpeoplecharacteristics(characteristics);
 				
-				int nameLength = 63;
-				if(residentnames.length() < nameLength)
-					nameLength = residentnames.length();
+				//int nameLength = 63;
+				//if(residentnames.length() < nameLength)
+				//	nameLength = residentnames.length();
 				
 				if(residentnames.endsWith(","))
-					residentnames = residentnames.substring(0,nameLength - 1);
+					residentnames = residentnames.substring(0,residentnames.length() - 1);
 				
 				if(residentids.endsWith(","))
 					residentids = residentids.substring(0,residentids.length() - 1);

@@ -143,6 +143,7 @@ public class SysOrganizationController {
 				jsonTmp.put("directorphone",organization.getdirectorphone());
 				jsonTmp.put("note",organization.getnote());
 				jsonTmp.put("parentid",organization.getparentid());
+				jsonTmp.put("seq",organization.getseq());
 				
 				String parentId = organization.getparentid();
 				
@@ -191,6 +192,7 @@ public class SysOrganizationController {
 				jsonTmp.put("directorphone",organization.getdirectorphone());
 				jsonTmp.put("note",organization.getnote());
 				jsonTmp.put("parentid",organization.getparentid());
+				jsonTmp.put("seq",organization.getseq());
 				
 				String parentId = organization.getparentid();
 				

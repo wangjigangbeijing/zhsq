@@ -86,12 +86,12 @@ public void setofunit(String ofunit)
 	this.ofunit = ofunit;
 }
 @Column(name = "level", nullable = true)
-public String level;
-public String getlevel()
+public Integer level;
+public Integer getlevel()
 {
 	return level;
 }
-public void setlevel(String level)
+public void setlevel(Integer level)
 {
 	this.level = level;
 }
