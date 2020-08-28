@@ -38,7 +38,7 @@ $(document).ready(function (){
 				{
 					var filter = result.list[i];
 					
-					filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.value + "</option>";						
+					filterArr[i+1] = "<option value='" + filter.name + "'>" + filter.name + "</option>";						
 				}
 				$('#ssxqQuery').html(filterArr.join(''));
 			}

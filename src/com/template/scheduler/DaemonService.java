@@ -455,12 +455,12 @@ public class DaemonService
 				
 				room.setpeoplecharacteristics(characteristics);
 				
-				int nameLength = 63;
-				if(residentnames.length() < nameLength)
-					nameLength = residentnames.length();
+				//int nameLength = 63;
+				//if(residentnames.length() < nameLength)
+				//	nameLength = residentnames.length();
 				
 				if(residentnames.endsWith(","))
-					residentnames = residentnames.substring(0,nameLength - 1);
+					residentnames = residentnames.substring(0,residentnames.length() - 1);
 				
 				if(residentids.endsWith(","))
 					residentids = residentids.substring(0,residentids.length() - 1);

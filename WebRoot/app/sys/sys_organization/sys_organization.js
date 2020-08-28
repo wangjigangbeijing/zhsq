@@ -132,8 +132,8 @@ function load()
 		{
 			var tableData = '';
 			
-			//for(var i=0;i<obj.list.length;i++)
-			for(var i=obj.list.length-1;i>=0;i--)
+			for(var i=0;i<obj.list.length;i++)
+			//for(var i=obj.list.length-1;i>=0;i--)
 			{
 				var org = obj.list[i];
 				

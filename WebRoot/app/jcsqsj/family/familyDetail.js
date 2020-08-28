@@ -68,7 +68,7 @@ $(document).ready(function (){
 					{
 						var filter = result.list[i];
 						
-						filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.value + "</option>";						
+						filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.name + "</option>";						
 					}
 					$('#ofresidebuilding').html(filterArr.join(''));
 					
@@ -220,10 +220,12 @@ function viewDetail(id)
 			{
 				$('#modalDetail').show();
 				
-				$('#name').val(obj.name);
+				$('#name').val(showData(aesDecrypt(obj.name), 1));//obj.name
+				
 				$('#registrationcategory').val(obj.registrationcategory);
 				$('#registrationaddress').val(obj.registrationaddress);
 				$('#ofcommunity').val(obj.ofcommunity);
+				
 				$('#ofresidebuilding').val(obj.ofresidebuilding);
 				//$('#ofunit').val(obj.ofunit);
 				//$('#ofroom').val(obj.ofroom);
@@ -251,7 +253,7 @@ function viewDetail(id)
 				
 				$('#ofroom').html('');
 				var filterArr = [];				
-				filterArr[0] = "<option value='"+obj.ofroom+"'>"+obj.ofroomname+"</option>";				
+				filterArr[0] = "<option value='"+obj.ofroom+"'>"+obj.roomname+"</option>";				
 				$('#ofroom').html(filterArr.join(''));
 				//$('#ofroom').attr("readonly","readonly");	
 				
