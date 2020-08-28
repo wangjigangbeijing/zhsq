@@ -116,10 +116,6 @@
         </div>
       </div>
 	  
-	  
-	  
-	  
-	  
 	   <div class="modal fade" id="residentDialog">
         <div class="modal-dialog">
           <div class="modal-content" style="width:1000px;">
@@ -193,7 +189,6 @@
                 </table>
               </div>
 			  
-			  
             </div>
             <div class="modal-footer justify-content-between">
 				<div>
@@ -237,6 +232,7 @@
                 <table class="table table-bordered table-striped" id="userDataTable">
                   <thead>
                   <tr>
+					<th style='text-align:center;'><input type="checkbox" class="checkall"/></th>
                     <th style='text-align:center;'>姓名</th>
 					<th style='text-align:center;'>手机号</th>
 					<th style='text-align:center;'>职务</th>
@@ -249,7 +245,10 @@
 			  
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" onclick="javascript:addAllUser();">添加全部</button>
+			    <div>
+				<button type="button" class="btn btn-default" onclick="javascript:addSelectedUser();">添加选中</button>
+              <button type="button" class="btn btn-primary" onclick="javascript:addAllUser();">添加全部</button>
+			  </div>
               <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
             </div>
           </div>
@@ -418,12 +417,19 @@ function searchUser()
 					}
 				}, *///多语言配置					
 				"data":obj.list,
-				"columns": [
+				"columns": [{
+						"sClass": "text-center",
+						"data": "id",
+						"render": function (data, type, row, meta) {
+							return '<input type="checkbox" name="userid" value="' + data + '"/>';
+						},
+					},
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
 					{ 'data': 'job' ,'sClass':'text-center'}
 				],
 				columnDefs: [
+					
 					/*{
 					className: 'control',
 					orderable: false,
@@ -482,38 +488,6 @@ function addAllResident()
 			$('#realMobileList').val(realMobileList);
 		}
 	});
-	
-	/*
-	var users = '';
-	for(var i=0;i<userList.length;i++)
-	{
-		var user = userList[i].name+'-'+userList[i].mobile;
-		
-		mobileList += user+',';
-	}
-	
-	$('input:checkbox[name=resid]:checked').each(function (i) {
-		var val = $(this).val();
-		for(var i=0;i<userList.length;i++)
-		{
-			if(userList[i].id == val){
-				var phone = '', realphone = '';
-				if(typeof(userList[i].mobile)!="undefined") {
-					phone = showData(aesDecrypt(userList[i].mobile), 2);
-					realphone = aesDecrypt(userList[i].mobile);
-				}
-				if(mobileList == '') {
-					mobileList = phone;
-					realMobileList = realphone;
-				}
-				else {
-					mobileList += ", " + phone;
-					realMobileList +=", " + realphone;
-				}
-			}
-		}
-	});
-	*/
 }
 
 function addSelectedResident()
@@ -521,15 +495,6 @@ function addSelectedResident()
 	var mobileList = $('#mobileList').val();
 	var realMobileList = $('#realMobileList').val();
 	
-	/*
-	var users = '';
-	for(var i=0;i<userList.length;i++)
-	{
-		var user = userList[i].name+'-'+userList[i].mobile;
-		
-		mobileList += user+',';
-	}
-	*/
 	$('input:checkbox[name=resid]:checked').each(function (i) {
 		var val = $(this).val();
 		for(var i=0;i<userList.length;i++)
@@ -565,6 +530,23 @@ function removeSelected()
 {
 	$('#mobileList').val('');
 	$('#realMobileList').val('');
+}
+
+function addSelectedUser()
+{
+	var mobileList = $('#internalMobileList').val();
+	$('input:checkbox[name=userid]:checked').each(function (i) {
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var user = userList[i].name+'-'+userList[i].mobile;
+		
+				mobileList += user+',';
+			}
+		}
+	});
+	$('#internalMobileList').val(mobileList);
 }
 
 function addAllUser()
