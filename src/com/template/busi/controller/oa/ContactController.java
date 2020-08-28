@@ -34,6 +34,10 @@ public String addOrUpdate(String id,String contacttype,String name,String tel,St
 	try
 	{
 		String sOrgId = Utility.getInstance().getOrganization(request);
+		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+		
+		if(userId == null || userId.equalsIgnoreCase(""))
+			userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 		
 		Contact contact;
 		if(id==null || id.equalsIgnoreCase(""))
@@ -56,6 +60,7 @@ public String addOrUpdate(String id,String contacttype,String name,String tel,St
 		contact.setnote(note);
 		contact.setauthoritystaffid(authoritystaffid);
 		contact.setowner(sOrgId);
+		contact.setcreated_by(userId);
 
         contactService.save(contact);
         jsonObj.put("success", true);
@@ -96,45 +101,50 @@ public String load(String contacttype,String name,String mobile,String unitname,
 	try
 	{
 		HqlFilter hqlFilter = new HqlFilter();
-if(contacttype != null && contacttype.equalsIgnoreCase("") == false && contacttype.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("contacttype", HqlFilter.Operator.LIKE, "%"+contacttype+"%");
-}
-if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
-}
-if(mobile != null && mobile.equalsIgnoreCase("") == false && mobile.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
-}
-if(unitname != null && unitname.equalsIgnoreCase("") == false && unitname.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("unitname", HqlFilter.Operator.LIKE, "%"+unitname+"%");
-}
-if(note != null && note.equalsIgnoreCase("") == false && note.equalsIgnoreCase("null") == false)
-{
-	hqlFilter.addQryCond("note", HqlFilter.Operator.LIKE, "%"+note+"%");
-}
+		if(contacttype != null && contacttype.equalsIgnoreCase("") == false && contacttype.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("contacttype", HqlFilter.Operator.LIKE, "%"+contacttype+"%");
+		}
+		if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+		}
+		if(mobile != null && mobile.equalsIgnoreCase("") == false && mobile.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
+		}
+		if(unitname != null && unitname.equalsIgnoreCase("") == false && unitname.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("unitname", HqlFilter.Operator.LIKE, "%"+unitname+"%");
+		}
+		if(note != null && note.equalsIgnoreCase("") == false && note.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("note", HqlFilter.Operator.LIKE, "%"+note+"%");
+		}
+		
+		ArrayList<String> alOrg = new ArrayList<String>(); 
+		
+		String organization = Utility.getInstance().getOrganization(request);
+		
+		if(organization != null && organization.equalsIgnoreCase("") == false)
+		{
+			String [] organizationArr = organization.split(",");
+			
+		
+			for(int i=0;i<organizationArr.length;i++)
+			{
+				alOrg.add("%"+organizationArr[i]+"%");
+			}
+		}
+		
+		if(alOrg != null && alOrg.size() != 0)
+			hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);			
 
-ArrayList<String> alOrg = new ArrayList<String>(); 
-
-String organization = Utility.getInstance().getOrganization(request);
-
-if(organization != null && organization.equalsIgnoreCase("") == false)
-{
-	String [] organizationArr = organization.split(",");
-	
-
-	for(int i=0;i<organizationArr.length;i++)
-	{
-		alOrg.add("%"+organizationArr[i]+"%");
-	}
-}
-
-if(alOrg != null && alOrg.size() != 0)
-	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);			
-
+		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+		
+		if(userId == null || userId.equalsIgnoreCase(""))
+			userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+		
         List<Contact> listObj = contactService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
         int iTotalCnt = 0;
@@ -144,6 +154,19 @@ if(alOrg != null && alOrg.size() != 0)
 			JSONObject jsonTmp = new JSONObject();
 			jsonTmp.put("id", contact.getId());
 			jsonTmp.put("contacttype",contact.getcontacttype());
+			
+			String contactType = contact.getcontacttype();
+			String createdBy = contact.getcreated_by();
+			
+			if(contactType.equalsIgnoreCase("个人通讯录") && createdBy.equalsIgnoreCase(userId))
+				continue;
+			
+			String owner = contact.getowner();
+			String sOrgId = Utility.getInstance().getOrganization(request); 
+						
+			if(contactType.equalsIgnoreCase("内部通讯录") && sOrgId.equalsIgnoreCase(owner))
+				continue;
+			
 			jsonTmp.put("name",contact.getname());
 			jsonTmp.put("tel",contact.gettel());
 			jsonTmp.put("mobile",contact.getmobile());

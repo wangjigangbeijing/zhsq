@@ -66,7 +66,7 @@ function load()
 		"searching": false,
 		"bProcessing" : true,  
 		"aaSorting": [[ 0, "asc" ]],  
-		"ordering": true,
+		"ordering": false,
 		"info": true,
 		"oLanguage": { 
 					"sProcessing": "正在加载中......", 
@@ -132,7 +132,7 @@ function load()
 				"data" : {  
 					aoData : JSON.stringify(aoData),
 					totalCnt : lTotalCnt,
-					objid:objid,
+					objname:objname,
 					deptname1:deptname1,
 					isincommunity:isincommunity,
 					material:material,
