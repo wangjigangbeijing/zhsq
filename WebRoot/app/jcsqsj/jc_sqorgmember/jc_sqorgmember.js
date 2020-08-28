@@ -93,10 +93,18 @@ function load()
 				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
-					{ 'data': 'name' ,'sClass':'text-center'},
+					{ 'data': 'name' ,'sClass':'text-center',
+								mRender : function(data,type,full){
+									return showData(aesDecrypt(full.name), 1);
+								}
+					},		
 					{ 'data': 'sex' ,'sClass':'text-center'},
 					{ 'data': 'age' ,'sClass':'text-center'},
-					{ 'data': 'mobile' ,'sClass':'text-center'},
+					{ 'data': 'mobile' ,'sClass':'text-center',
+								mRender : function(data,type,full){
+									return showData(aesDecrypt(full.mobile), 2);
+								}
+					},
 					{ 'data': 'politicalstatus' ,'sClass':'text-center'},
 					{ 'data': 'of_sqorganization' ,'sClass':'text-center'},
 					{ 'data': 'duty' ,'sClass':'text-center'},

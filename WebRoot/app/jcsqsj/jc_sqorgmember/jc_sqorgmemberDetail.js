@@ -27,12 +27,12 @@ function viewDetail(id)
 			if(obj.success)
 			{
 				$('#modalDetail').show();
-				$('#name').val(obj.name);
-				$('#idnumber').val(obj.idnumber);
+				$('#name').val(showData(aesDecrypt(obj.name), 1));
+				$('#idnumber').val(showData(aesDecrypt(obj.idnumber), 5));
 				$('#sex').val(obj.sex);
 				$('#birthday').val(obj.birthday);
 				$('#age').val(obj.age);
-				$('#mobile').val(obj.mobile);
+				$('#mobile').val(showData(aesDecrypt(obj.mobile), 1));
 				$('#education').val(obj.education);
 				$('#politicalstatus').val(obj.politicalstatus);
 				$('#of_sqorganization').val(obj.of_sqorganization);
