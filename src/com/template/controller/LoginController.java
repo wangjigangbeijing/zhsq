@@ -309,4 +309,30 @@ public class LoginController {
     	return jsonObj.toString();
     }
 	
+	
+	@RequestMapping(value="checkSessionStatus",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+    @ResponseBody
+    public String checkSessionStatus()
+	{
+		logger.debug("checkSessionStatus");
+		JSONObject jsonObj = new JSONObject();
+		
+		try
+		{
+			if(request.getSession().getAttribute(ConstValue.SESSION_USER_ID) == null)
+			{
+				jsonObj.put("status", false);
+			}
+			else
+			{
+				jsonObj.put("status", true);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+		
+    	return jsonObj.toString();
+    }
 }

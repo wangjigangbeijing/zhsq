@@ -241,6 +241,7 @@ $(document).ready(function (){
 	//加载数据
 	loaddata();
 	
+	setInterval(checkSessionStatus,10000);
 });	
 
 function loaddata(){
@@ -863,47 +864,6 @@ function loadUserPage()
     });
 }
 
-/*
-var page = 'list';
-
-var PAGE_LIST = 'list';
-var PAGE_QUERY = 'query';
-var PAGE_DISTRIBUTE = 'distribute';
-var PAGE_EXECUTE = 'execute';
-function loadSsjsjListPage()
-{
-	page = PAGE_LIST;
-	loadSsjsjPage();
-}
-
-
-function loadDistributePage()
-{
-	page = PAGE_DISTRIBUTE;
-	loadSsjsjPage();
-}
-
-
-function loadExecutePage()
-{
-	page = PAGE_EXECUTE;
-	loadSsjsjPage();
-}
-
-function loadQueryPage()
-{
-	page = PAGE_QUERY;
-	loadSsjsjPage();
-}
-
-function loadSsjsjPage()
-{
-	$('#main-content').load("./ssjsj/ssjsj.html", function () {
-        
-    });
-	
-}
-*/
 function getCurrentLoginUserInfo()
 {
 	$.get(getContextPath()+"/loginController/getCurrentLoginUserInfo",
@@ -945,3 +905,18 @@ function logout()
 {
 	
 }
+
+function checkSessionStatus()
+{
+	$.get(getContextPath()+"/loginController/checkSessionStatus",
+		function(result){
+			var obj = jQuery.parseJSON(result);  
+			
+			if(obj.status == false)
+			{
+				window.open('../index.html','_self');
+			}
+	});
+	
+}
+
