@@ -115,15 +115,15 @@ public class Gismaplayers implements java.io.Serializable {
 	}
 	
 
-	@Column(name = "order", nullable = true)
-	public String order;
-	public String getorder()
+	@Column(name = "lorder", nullable = true)
+	public String lorder;
+	public String getlorder()
 	{
-		return order;
+		return lorder;
 	}
-	public void setorder(String order)
+	public void setlorder(String lorder)
 	{
-		this.order = order;
+		this.lorder = lorder;
 	}
 	
 
