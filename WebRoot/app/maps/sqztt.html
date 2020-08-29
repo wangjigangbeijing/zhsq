@@ -327,8 +327,9 @@ function loadMap(mapName)
 					
 					var layerId = layer.id;
 					
+					/*
 					var checkboxWidth = layer.note.length * 22;
-					//图层列表
+					
 					if(layer.checked == '否'){
 						var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'">' + 
 							  '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
@@ -341,7 +342,7 @@ function loadMap(mapName)
 						
 						$('#main_checkbox').append(layerCtl);
 					}
-					
+					*/
 					var layerType = layer.layertype;
 					
 					var layerStyle = layer.layerstyle;
@@ -525,6 +526,26 @@ function loadMap(mapName)
 							}
 						}
 					});
+				}
+				
+				for(var i = respObj.list.length - 1; i >= 0; i--){
+					var layer = respObj.list[i];
+					
+					var layerId = layer.id;
+		
+					//图层列表
+					if(layer.checked == '否'){
+						var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'">' + 
+							  '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
+						
+						$('#main_checkbox').append(layerCtl);
+					}
+					else {
+						var layerCtl = '<li><input class="form-check-input" type="checkbox" name="layer" id="'+layerId+'" checked>' + 
+							  '<label class="form-check-label" style="color:black; font-size:12px;">'+layer.note+'</label></li>';
+						
+						$('#main_checkbox').append(layerCtl);
+					}
 				}
 				
 				//console.log(layerStyleMap);
