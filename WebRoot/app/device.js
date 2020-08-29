@@ -79,7 +79,9 @@ function openSocket() {
 			
 			dialog.send_subImgData.connect(function(message) {
 				var element = document.getElementById("bigSubDev");
-				element.src = "data:image/jpg;base64," + message;							
+				if(element != null){
+					element.src = "data:image/jpg;base64," + message;							
+				}
 			});
 			
 			//接收拍照base64，主头数据
@@ -98,7 +100,9 @@ function openSocket() {
 			//接收拍照base64，副头数据
 			dialog.send_subPhotoData.connect(function(message) {
 				var element = document.getElementById("devPhoto2");
-				element.src = "data:image/jpg;base64," + message;	
+				if(element != null){
+					element.src = "data:image/jpg;base64," + message;	
+				}
 
 				uploadimage(message);
 				//console.log(message);
