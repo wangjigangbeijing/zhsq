@@ -157,7 +157,9 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 			jsonTmp.put("mobile",jc_volunteer.getmobile());
 			jsonTmp.put("education",jc_volunteer.geteducation());
 			jsonTmp.put("politicalstatus",jc_volunteer.getpoliticalstatus());
-			jsonTmp.put("of_volunteerteam",jc_volunteer.getof_volunteerteam());
+			
+			jsonTmp.put("of_volunteerteam",ConstValue.hmDicMap.get(jc_volunteer.getof_volunteerteam()));
+			
 			jsonTmp.put("join_date",TimeUtil.formatDate(jc_volunteer.getjoin_date(),"yyyy-MM-dd"));
 			jsonTmp.put("certificate_id",jc_volunteer.getcertificate_id());
 			jsonTmp.put("special_skill",jc_volunteer.getspecial_skill());

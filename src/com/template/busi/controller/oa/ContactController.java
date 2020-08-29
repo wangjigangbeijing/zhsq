@@ -2,7 +2,10 @@ package com.template.busi.controller.oa;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.template.model.SysUser;
 import com.template.model.oa.Contact;
+import com.template.service.SysUserService;
 import com.template.service.oa.ContactService;
 import com.template.util.HqlFilter;
 import com.template.util.ConstValue;
@@ -25,6 +28,9 @@ public class ContactController {
 	private  HttpServletRequest request;
 	@Autowired
 	private ContactService contactService;
+	@Autowired
+	private SysUserService sysUserService;
+	
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
 public String addOrUpdate(String id,String contacttype,String name,String tel,String mobile,String unitid,String unitname,String job,
@@ -130,7 +136,6 @@ public String load(String contacttype,String name,String mobile,String unitname,
 		{
 			String [] organizationArr = organization.split(",");
 			
-		
 			for(int i=0;i<organizationArr.length;i++)
 			{
 				alOrg.add("%"+organizationArr[i]+"%");
@@ -176,10 +181,50 @@ public String load(String contacttype,String name,String mobile,String unitname,
 			jsonTmp.put("seq",contact.getseq());
 			jsonTmp.put("note",contact.getnote());
 			jsonTmp.put("authoritystaffid",contact.getauthoritystaffid());
-
+			jsonTmp.put("editable",true);
+			jsonTmp.put("usertype","contact");
+			
        		jsonArr.put(jsonTmp);
         	iTotalCnt++;
 		}
+		
+		//如果用户查询的是内部通讯录,则需要把sys_user表里归属于同一个社区的用户给列出来
+		if(contacttype == null || contacttype.equalsIgnoreCase("") || contacttype.equalsIgnoreCase("内部通讯录"))
+		{
+			HqlFilter hqlFilterUser = new HqlFilter();
+			
+			if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+			{
+				hqlFilterUser.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+			}
+			if(mobile != null && mobile.equalsIgnoreCase("") == false && mobile.equalsIgnoreCase("null") == false)
+			{
+				hqlFilterUser.addQryCond("mobile", HqlFilter.Operator.LIKE, "%"+mobile+"%");
+			}
+			
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilterUser.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);			
+			
+			List<SysUser> listSysUser = sysUserService.findByFilter(hqlFilterUser);
+			
+			for(int j=0;j<listSysUser.size();j++)
+			{
+				SysUser sysUser = listSysUser.get(j);
+				
+				JSONObject jsonTmp = new JSONObject();
+				
+				jsonTmp.put("contacttype","内部通讯录");
+				jsonTmp.put("name",sysUser.getname());
+				//jsonTmp.put("tel",sysUser.gett);
+				jsonTmp.put("mobile",sysUser.getmobile());
+				jsonTmp.put("job",sysUser.getjob());
+				jsonTmp.put("usertype","sysuser");
+				jsonTmp.put("editable",false);
+				jsonArr.put(jsonTmp);
+	        	iTotalCnt++;
+			}
+		}
+		
         jsonObj.put("totalCount", iTotalCnt);
         jsonObj.put("list", jsonArr);
         jsonObj.put("success", true);

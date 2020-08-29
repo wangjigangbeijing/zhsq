@@ -44,6 +44,15 @@
 					</div>
                   </div>
 				  
+				   <div class="form-group row">
+                    <label class='col-md-2 col-form-label'>发送时间</label>
+					<div class='col-md-9'>
+						<input type="hidden" id="nowTime" value="" />
+						 <input type="text" class="form-control" id="sendTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'nowTime\',{d:0})})">
+					</div>
+                  </div>
+				  
+				  
 				  <div class="form-group row">
                     <label class='col-md-2 col-form-label'>短信类别</label>
 					<div class='col-md-9'>
@@ -258,6 +267,25 @@
       </div>
     </section>
 <script>
+
+function nowTime(){
+    var today=new Date();
+    var h=today.getFullYear();
+    var m=today.getMonth()+1;
+    var d=today.getDate();
+    var hh=today.getHours();
+    var mm=today.getMinutes();
+    var ss=today.getSeconds();
+    m= m<10?"0"+m:m;     
+    d= d<10?"0"+d:d;
+    hh = hh < 10 ? "0" + hh:hh;
+    mm = mm < 10 ? "0" +  mm:mm;
+    ss = ss < 10 ? "0" + ss:ss;
+    return h+"-"+m+"-"+d+" "+hh+":"+mm+":"+ss;
+}
+
+$('#nowTime').val(nowTime());
+$('#sendTime').val(nowTime());
 
 var userList = null;
 

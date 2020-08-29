@@ -67,10 +67,10 @@ function load()
 					{ 'data': 'name' ,'sClass':'text-center'},
 					{ 'data': 'tel' ,'sClass':'text-center'},
 					{ 'data': 'mobile' ,'sClass':'text-center'},
-					{ 'data': 'unitid' ,'sClass':'text-center'},
+					//{ 'data': 'unitid' ,'sClass':'text-center'},
 					{ 'data': 'unitname' ,'sClass':'text-center'},
 					{ 'data': 'job' ,'sClass':'text-center'},
-					{ 'data': 'order' ,'sClass':'text-center'},
+					//{ 'data': 'order' ,'sClass':'text-center'},
 					{ 'data': 'note' ,'sClass':'text-center'},
 					//{ 'data': 'authoritystaffid' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
@@ -88,11 +88,25 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  9,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
+						/*var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">编辑</a>";
 						
 						btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\" data-toggle=\"tooltip\">删除</a>";
+						
+						return btn;
+						*/
+						
+						var btn = "";
+
+						if(full.editable == true)
+						{
+							btn += "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
+							
+							btn += "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-pencil\"></i>编辑</a>&nbsp;";
+
+							btn += "<a href=\"#\" onclick=\"deleteData('"+full.id+"')\"  class=\"btn btn-danger btn-xs\"><i class=\"fa fa-trash-o\"></i>删除</a>";
+						}
 						
 						return btn;
 					}
@@ -103,51 +117,21 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
+
+function viewData(id)
 {
-	//$('#modalTitle').text('修改用户信息');
 	curId = id;
-	$.get(getContextPath()+"/contactController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#contacttype').val(obj.contacttype);
-				$('#name').val(obj.name);
-				$('#tel').val(obj.tel);
-				$('#mobile').val(obj.mobile);
-				$('#unitid').val(obj.unitid);
-				$('#unitname').val(obj.unitname);
-				$('#job').val(obj.job);
-				$('#order').val(obj.order);
-				$('#note').val(obj.note);
-				$('#authoritystaffid').val(obj.authoritystaffid);
-
-			}
-		});
+	$('#main-content').load("./oa/contact/contactDetail.html", function () {
+		$('#confirmBtn').hide();
+		
+		$("select").attr("disabled","disabled");
+		$("textarea").attr("disabled","disabled");
+		$("input").attr("disabled","disabled");
+		$("#picturespick").hide();
+		
+		$("#cancelBtn").text('返回');
+    });
 }
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#contacttype').val('');
-	$('#name').val('');
-	$('#tel').val('');
-	$('#mobile').val('');
-	$('#unitid').val('');
-	$('#unitname').val('');
-	$('#job').val('');
-	$('#order').val('');
-	$('#note').val('');
-	$('#authoritystaffid').val('');
-
-}
-*/
 
 function editData(id)
 {
