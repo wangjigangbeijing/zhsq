@@ -447,13 +447,37 @@ public class SXSQSJController {
     	
 		try
 		{
-	        JSONArray jsonArr = new JSONArray();
+			String organization = Utility.getInstance().getOrganization(request);
+	    	
+			String [] organizationArr = organization.split(",");
+			
+			List<Object> params = new ArrayList<Object>();
+			String where = "";
+			
+			for(int i=0;i<organizationArr.length;i++)
+			{				
+				if(organizationArr[i].trim().length() == 0) {
+					continue;
+				}
+				if(where.length() == 0) {
+					where = "owner like ?";
+				}
+				else {
+					where += " or owner like ?";
+				}
+				params.add("%" + organizationArr[i] + "%");
+			}
+			
 	        
 			String sSql = "SELECT SXDL,COUNT(*) CNT FROM SXSQSJ GROUP BY SXDL";
+			if(params.size() > 0) {
+				sSql = "SELECT SXDL,COUNT(*) CNT FROM SXSQSJ where (" + where + ") GROUP BY SXDL";
+			}
+			
 			
 			logger.debug(sSql);
 			
-	        List<HashMap> listObj = sxsqsjService.findBySql(sSql);
+	        List<HashMap> listObj = sxsqsjService.findBySql(sSql, params);
 			
 	        jsonObj.put("sqdj", 0);
 	        jsonObj.put("mzzz", 0);
