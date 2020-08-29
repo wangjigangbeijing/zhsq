@@ -108,6 +108,12 @@ public class DataController {
 			{
 				SysTableAttribute sla = layerAttrInDB.get(i);
 				
+				if(sFieldNames.indexOf(sla.getENName()+",") != -1)
+				{
+					logger.error("Seems like duplicate column:"+sla.getENName()+"    "+tableId);
+					continue;
+				}
+				
 				sFieldNames += sla.getENName()+",";
 				
 				hmFiledNameToFieldType.put(sla.getENName(), sla.getDBType());

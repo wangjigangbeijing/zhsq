@@ -84,7 +84,7 @@ public class DaemonService
 		{
 			logger.info("Periodic Job...");
 			
-			/*loadDictionaryInfo();
+			loadDictionaryInfo();
 			
 			loadResidentInfo();
 			
@@ -94,11 +94,11 @@ public class DaemonService
 			
 			loadOrganizationInfo();
 			
-			loadAdvertisementInfo();*/
+			loadAdvertisementInfo();
 			
-			refreshResident();//定期刷民情图数据
+			/*refreshResident();//定期刷民情图数据
 			
-			refreshResidentBuilding();//定期刷民情图数据
+			refreshResidentBuilding();//定期刷民情图数据*/
 		}
 		catch(Exception e)
 		{
