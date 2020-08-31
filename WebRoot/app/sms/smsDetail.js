@@ -86,6 +86,7 @@ function addOrUpdate()
 {
 	var residentList = $('#realMobileList').val();
 	var internalMobileList = $('#internalMobileList').val();
+	var sendTime = $('#sendTime').val();
 	
 	var mobileList = residentList;
 	
@@ -100,6 +101,7 @@ function addOrUpdate()
 		smsContent:$('#smsContent').val(),
 		smsType:$('#smsType').val(),
 		smsXl: $('#smsXl').val(),
+		sendTime:sendTime,
 		mobileList:mobileList  //$('#mobileList').val()
 	},
 	function(result){

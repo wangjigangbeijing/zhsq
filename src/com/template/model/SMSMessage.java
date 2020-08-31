@@ -88,23 +88,23 @@ public class SMSMessage implements java.io.Serializable {
 	}
 	
 	@Column(name = "TIMER_SEND", nullable = true)
-	public Date timerSend;
-	public Date getTimerSend()
+	public String timerSend;
+	public String getTimerSend()
 	{
 		return timerSend;
 	}
-	public void setTimerSend(Date timerSend)
+	public void setTimerSend(String timerSend)
 	{
 		this.timerSend = timerSend;
 	}
 	
 	@Column(name = "CREATE_DATE", nullable = true)
-	public Date createDate;
-	public Date getCreateDate()
+	public String createDate;
+	public String getCreateDate()
 	{
 		return createDate;
 	}
-	public void setCreateDate(Date createDate)
+	public void setCreateDate(String createDate)
 	{
 		this.createDate = createDate;
 	}

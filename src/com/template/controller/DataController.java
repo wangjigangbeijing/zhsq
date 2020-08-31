@@ -924,12 +924,13 @@ public class DataController {
 					if(hm.containsKey(sla.getENName()))
 					{
 						String enName = sla.getENName();
+						String value = sla.getValues();
 						
 						Object objValue = hm.get(sla.getENName().toLowerCase());	
 						
 						jsonObj.put(sla.getENName(), objValue);
 						
-						if(ConstValue.dicList.contains(enName) && objValue != null)
+						if((ConstValue.dicList.contains(enName)||ConstValue.dicList.contains(value)) && objValue != null)
 						{
 							JSONObject jsonDict = new JSONObject();
 							String sVal = objValue.toString();

@@ -72,7 +72,8 @@ function viewDetail(id)
 				if(obj.role != null && obj.role != undefined)							
 					$("#role").val(obj.role.split(',')).trigger("change");
 						
-				$('#status').val(obj.status);
+				//$('#status').val(obj.status);
+				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
 				
 				$('#parentOrgInput').val(obj.orgIds);
 				$('#parentOrgNameInput').val(obj.orgNames);
@@ -108,7 +109,7 @@ function addOrUpdate()
 		department:$('#parentOrgInput').val(),
 		job:$('#job').val(),
 		role:roleArr.join(','),
-		status:$('#status').val()
+		status:$("input[name='status']:checked").val()//$('#status').val()
 	},
 	function(result){
 		var obj = jQuery.parseJSON(result);  

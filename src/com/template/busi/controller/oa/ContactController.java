@@ -142,8 +142,12 @@ public String load(String contacttype,String name,String mobile,String unitname,
 			}
 		}
 		
-		if(alOrg != null && alOrg.size() != 0)
-			hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);			
+		//只有在内部通讯录的时候才根据组织进行过滤
+		if(contacttype != null && contacttype.equalsIgnoreCase("") == false && contacttype.equalsIgnoreCase("内部通讯录"))
+		{
+			if(alOrg != null && alOrg.size() != 0)
+				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+		}
 
 		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
 		
@@ -163,13 +167,13 @@ public String load(String contacttype,String name,String mobile,String unitname,
 			String contactType = contact.getcontacttype();
 			String createdBy = contact.getcreated_by();
 			
-			if(contactType.equalsIgnoreCase("个人通讯录") && createdBy.equalsIgnoreCase(userId))
+			if(contactType.equalsIgnoreCase("个人通讯录") && createdBy.equalsIgnoreCase(userId) == false)
 				continue;
 			
 			String owner = contact.getowner();
 			String sOrgId = Utility.getInstance().getOrganization(request); 
 						
-			if(contactType.equalsIgnoreCase("内部通讯录") && sOrgId.equalsIgnoreCase(owner))
+			if(contactType.equalsIgnoreCase("内部通讯录") && sOrgId.equalsIgnoreCase(owner) == false)
 				continue;
 			
 			jsonTmp.put("name",contact.getname());

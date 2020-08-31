@@ -877,6 +877,8 @@ function getCurrentLoginUserInfo()
 			
 			curUserOrgId = obj.userOrg;
 			
+			curUserId = obj.userId;
+			
 			for(var i=0;obj.rightArr != null && i<obj.rightArr.length;i++)
 			{
 				var rightObj = obj.rightArr[i];

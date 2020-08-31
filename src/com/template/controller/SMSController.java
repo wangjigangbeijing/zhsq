@@ -40,7 +40,7 @@ public class SMSController {
 	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST)
 	@ResponseBody
-	public String addOrUpdate(String id,String smsContent,String smsType, String smsXl, String mobileList)
+	public String addOrUpdate(String id,String smsContent,String smsType, String smsXl, String mobileList,String sendTime)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -55,14 +55,14 @@ public class SMSController {
 			
 			int iTargetCnt = mobileArr.length;
 			
-			smsMessage.setCreateDate(new Date());
+			smsMessage.setCreateDate(TimeUtil.formatDate(new Date(),"yyyy-MM-dd HH:mm:ss"));
 			smsMessage.setSuccessCnt(0);
 			smsMessage.setMessageContent(smsContent);
 			smsMessage.setFailCnt(0);
 			smsMessage.setSendStatus(ConstValue.SMS_STATUS_INITIAL);
 			smsMessage.setTargetCnt(iTargetCnt);
 			smsMessage.setSender(userId);
-			smsMessage.setTimerSend(new Date());
+			smsMessage.setTimerSend(sendTime);
 			smsMessage.setTarget(mobileList);
 			smsMessage.setSMSType(smsType);
 			smsMessage.setSMSXl(smsXl);
@@ -161,6 +161,9 @@ public class SMSController {
 			if(alOrg != null && alOrg.size() != 0)
 				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);			
 			
+			hqlFilter.setSort("createDate");
+			hqlFilter.setOrder("desc");
+			
 	        List<SMSMessage> listObj = smsService.findByFilter(hqlFilter);
 	        
 	        JSONArray jsonArr = new JSONArray();
@@ -171,8 +174,8 @@ public class SMSController {
 				
 				JSONObject jsonTmp = new JSONObject();
 				jsonTmp.put("id", message.getId());
-				
-				jsonTmp.put("createDate", TimeUtil.formatDate(message.getCreateDate(),"yyyy-MM-dd HH:mm:ss"));
+				jsonTmp.put("sendTime", message.getTimerSend());
+				jsonTmp.put("createDate", message.getCreateDate());
 				
 				String messageContent = message.getMessageContent();
 				
@@ -263,7 +266,7 @@ public class SMSController {
 				jsonTmp.put("mobile", mobile);
 				
 				if(messageStatus.getSendTime() != null)
-					jsonTmp.put("sendTime", TimeUtil.formatDate(messageStatus.getSendTime(),"yyyy-MM-dd HH:mm:ss"));
+					jsonTmp.put("sendTime", messageStatus.getSendTime());
 				else
 					jsonTmp.put("sendTime", "-");
 				

@@ -15,6 +15,8 @@ var VALUE_SPLITTER = ",";
 var USER_TYPE_ADMIN = 0;
 var USER_TYPE_PM = 1;
 
+var curUserId = '';
+
 var curSXType = '';//事项类型
 
 var curUserType = -1;

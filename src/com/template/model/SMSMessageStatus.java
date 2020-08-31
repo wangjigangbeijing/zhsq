@@ -54,12 +54,12 @@ public class SMSMessageStatus implements java.io.Serializable {
 	}
 	
 	@Column(name = "SENDTIME", nullable = true)
-	public Date sendTime;
-	public Date getSendTime()
+	public String sendTime;
+	public String getSendTime()
 	{
 		return sendTime;
 	}
-	public void setSendTime(Date sendTime)
+	public void setSendTime(String sendTime)
 	{
 		this.sendTime = sendTime;
 	}

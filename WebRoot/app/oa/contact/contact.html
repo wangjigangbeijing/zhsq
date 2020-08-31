@@ -16,7 +16,15 @@
                   <div class="form-group row">
                     						<label class='col-md-1 control-label' style='text-align:right;'>通讯录类型</label>
 <div class='col-sm-2'>
- 					<input type='text' class='form-control' id='contacttypeQuery'>
+ 					<!--input type='text' class='form-control' id='contacttypeQuery'-->
+					
+					<select class="form-control m-bot15" id="contacttypeQuery">
+						  <option value=''>全部</option>
+						  <option value='公共通讯录'>公共通讯录</option>
+						  <option value='内部通讯录'>内部通讯录</option>
+						  <option value='个人通讯录'>个人通讯录</option>
+					  </select>
+					
 </div>
 						<label class='col-md-1 control-label' style='text-align:right;'>姓名</label>
 <div class='col-sm-2'>
@@ -26,7 +34,7 @@
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='mobileQuery'>
 </div>
-						<label class='col-md-1 control-label' style='text-align:right;'>外部工作单位</label>
+						<label class='col-md-1 control-label' style='text-align:right;'>工作单位</label>
 <div class='col-sm-2'>
  					<input type='text' class='form-control' id='unitnameQuery'>
 </div>
@@ -59,7 +67,7 @@
 <th style='text-align:center;'>座机</th>
 <th style='text-align:center;'>手机</th>
 <!--th style='text-align:center;'>内部工作部门id</th-->
-<th style='text-align:center;'>外部工作单位</th>
+<th style='text-align:center;'>工作单位</th>
 <th style='text-align:center;'>职务</th>
 <!--th style='text-align:center;'>顺序</th-->
 <th style='text-align:center;'>备注</th>

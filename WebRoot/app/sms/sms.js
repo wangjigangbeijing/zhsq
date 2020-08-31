@@ -59,6 +59,7 @@ function load()
 				"data":obj.list,
 				"columns": [
 					{ 'data': 'createDate' ,'sClass':'text-center'},
+					{ 'data': 'sendTime' ,'sClass':'text-center'},
 					{ 'data': 'messageContent' ,'sClass':'text-center'},
 					{ 'data': 'successCnt' ,'sClass':'text-center'},
 					{ 'data': 'failCnt' ,'sClass':'text-center'},
@@ -69,7 +70,7 @@ function load()
 				columnDefs: [ {
 					className: 'control',
 					orderable: false,
-					targets:   1,//从0开始
+					targets:   2,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.messageContent+"\">"+full.messageContentShort+"</a>";
 						return btn;
@@ -78,7 +79,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  5,//从0开始
+					targets:  6,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewSendDetail('"+full.id+"')\" data-toggle=\"tooltip\" title=\"查看\">查看</a>";
 						
