@@ -78,14 +78,14 @@ public class DataController {
 	
 	@RequestMapping(value=ConstValue.DATA_CONTROLLER_LOAD_DATA_OF_TABLE,method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String loadDataOfTable(String tableId,String queryStr)
+	public String loadDataOfTable(String tableId,String queryStr,Integer curPage,Integer pageSize)
 	{
 		logger.info("loadDataOfTable "+tableId+"	"+queryStr);
 		
     	JSONObject jsonObj = new JSONObject();
     	
 		try
-		{	
+		{
 			if(queryStr != null && queryStr.endsWith("AND"))
 				queryStr = queryStr.substring(0, queryStr.length() - 3);
 			
@@ -158,7 +158,16 @@ public class DataController {
 					sSql += " AND ("+ownerCond+") ";
 			}
 			
-			sSql += " ORDER BY CREATED_AT DESC";
+			sSql += " ORDER BY CREATED_AT DESC ";
+			
+			if(curPage == null)
+				curPage = 0;
+			if(pageSize == null)
+				pageSize = 10000;
+			
+			int startRec = curPage*pageSize;
+			
+			sSql += " LIMIT "+startRec+","+pageSize;
 			
 			logger.debug(sSql);
 			
@@ -180,13 +189,46 @@ public class DataController {
 					
 					if(hm.containsKey(sla.getENName()))
 					{
+						Object objValue = hm.get(sla.getENName());						
+						jsonRec.put(sla.getENName(), objValue);
+					}
+
+					if(hm.containsKey(sla.getENName().toLowerCase()))
+					{
 						Object objValue = hm.get(sla.getENName().toLowerCase());						
 						jsonRec.put(sla.getENName(), objValue);
 					}
-					else
+
+					//处理列表字典配置
+					if((ConstValue.dicList.contains(sla.getENName().toLowerCase())||ConstValue.dicList.contains(sla.getValues().toLowerCase())))
 					{
-						//jsonRec.put(sla.getENName(), "");
-						logger.error("Not able to find value of field "+sla.getENName());
+						if(hm.containsKey(sla.getENName()))
+						{
+							Object objValue = hm.get(sla.getENName());		
+							if(objValue != null)
+							{
+								String sVal = objValue.toString();
+								
+								if(ConstValue.hmDicMap.containsKey(sVal))
+								{
+									jsonRec.put(sla.getENName(), ConstValue.hmDicMap.get(sVal));
+								}
+							}
+						}
+						if(hm.containsKey(sla.getENName().toLowerCase()))
+						{
+							Object objValue = hm.get(sla.getENName().toLowerCase());		
+							
+							if(objValue != null)
+							{
+								String sVal = objValue.toString();
+								
+								if(ConstValue.hmDicMap.containsKey(sVal))
+								{
+									jsonRec.put(sla.getENName(), ConstValue.hmDicMap.get(sVal));
+								}
+							}
+						}
 					}
 				}
 				
@@ -893,7 +935,13 @@ public class DataController {
 			{
 				SysTableAttribute sla = layerAttrInDB.get(i);
 				
-				sFields += sla.getENName()+",";
+				if(sFields.indexOf(sla.getENName().toLowerCase()+",") != -1)
+				{
+					logger.error("Seems like duplicate column:"+sla.getENName().toLowerCase()+"    "+tableId);
+					continue;
+				}
+				
+				sFields += sla.getENName().toLowerCase()+",";
 			}
 			
 			if(sFields.endsWith(","))
@@ -921,7 +969,7 @@ public class DataController {
 				{
 					SysTableAttribute sla = layerAttrInDB.get(j);
 					
-					if(hm.containsKey(sla.getENName()))
+					if(hm.containsKey(sla.getENName().toLowerCase()))
 					{
 						String enName = sla.getENName();
 						String value = sla.getValues();
@@ -940,6 +988,20 @@ public class DataController {
 								//jsonObj.put(sla.getENName(), ConstValue.hmDicMap.get(sVal));
 								jsonDict.put("key",sVal);
 								jsonDict.put("value",ConstValue.hmDicMap.get(sVal));
+								
+								jsonArrDic.put(jsonDict);
+							}
+						}
+						if((ConstValue.dicList.contains(enName.toLowerCase())||ConstValue.dicList.contains(value.toLowerCase())) && objValue != null)
+						{
+							JSONObject jsonDict = new JSONObject();
+							String sVal = objValue.toString();
+							
+							if(ConstValue.hmDicMap.containsKey(sVal.toLowerCase()))
+							{
+								//jsonObj.put(sla.getENName(), ConstValue.hmDicMap.get(sVal));
+								jsonDict.put("key",sVal.toLowerCase());
+								jsonDict.put("value",ConstValue.hmDicMap.get(sVal.toLowerCase()));
 								
 								jsonArrDic.put(jsonDict);
 							}

@@ -69,7 +69,7 @@ function addOrUpdate()
 {
 	var contacttype = '个人通讯录'; //通常情况下用户个人只能添加  个人通讯录,系统管理员能添加内部通讯录,街道管理员能添加公共通讯录
 	
-	if(curUserId == '7a004f74-7862-4384-92c9-75426e33467f')
+	if(curUserId == '7a004f74-7862-4384-92c9-75426e33467f' || curUserId == 'admin')
 		contacttype = '公共通讯录';
 	
 	$.post(getContextPath()+"/contactController/addOrUpdate",

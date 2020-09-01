@@ -201,6 +201,8 @@ public class DictionaryController {
 			
 			SysDictionary dictionary = dictionaryService.getById(id);
 			
+			String orgId = Utility.getInstance().getOrganization(request);
+			
 			JSONArray jsonArr = new JSONArray();
 			
 			if(dictionary != null)
@@ -210,6 +212,9 @@ public class DictionaryController {
 				if(dictionary.getdic_type().equalsIgnoreCase("SQL"))
 				{
 					logger.debug(sql);
+					
+					sql = sql.replaceAll("\\{organization\\}", "%"+orgId+"%");
+					
 					for(int i=0;paramArr != null && i<paramArr.size();i++)
 					{
 						Param param = paramArr.get(i);

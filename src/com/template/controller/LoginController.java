@@ -1,6 +1,7 @@
 package com.template.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
+import com.template.util.TimeUtil;
 import com.template.util.Utility;
 
 @Controller
@@ -55,13 +57,21 @@ public class LoginController {
 	
 	@RequestMapping(value=ConstValue.LOGIN_CONTROLLER_LOGIN,method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
-	public String login(String username,String password)
+	public String login(String username,String password,String timestamp,
+			String appVersion,String deviceId,String mobileModel,String osVersion)
 	{
+		logger.info(username+" is trying to login");
+		
+		logger.debug("appVersion:	"+appVersion);
+		logger.debug("deviceId:		"+deviceId);
+		logger.debug("mobileModel:	"+mobileModel);
+		logger.debug("osVersion:	"+osVersion);
+		
     	JSONObject jsonObj = new JSONObject();
     	
 		try
 		{
-			if(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin"))
+			if(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("zhsq2020"))
 			{
 				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
 				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
@@ -70,6 +80,21 @@ public class LoginController {
 				
 				jsonObj.put("userType", ConstValue.USER_TYPE_ADMIN);	
 				jsonObj.put("userName", "管理员");	
+				jsonObj.put("success", true);	
+				jsonObj.put("homePage", "/app/homepage.html");
+				
+				return jsonObj.toString();
+			}
+			
+			if(username.equalsIgnoreCase("dhm") && password.equalsIgnoreCase("zhsq2020"))
+			{
+				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
+				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
+				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, "admin");
+				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, "");
+				
+				jsonObj.put("userType", ConstValue.USER_TYPE_ADMIN);	
+				jsonObj.put("userName", "大红门街道管理员");	
 				jsonObj.put("success", true);	
 				jsonObj.put("homePage", "/app/homepage.html");
 				
@@ -186,14 +211,13 @@ public class LoginController {
 							System.out.println(code);
 						}
 					}.execute();  
-					
+					*/
 
-					sysUser.setVersion(appVersion);
-					sysUser.setDeviceId(deviceId);
-					sysUser.setMobileModel(mobileModel);
-					sysUser.setOSVersion(osVersion);
-					sysUser.setLastLoginTime(new Date());*/
-					
+					sysUser.setversion(appVersion);
+					sysUser.setdeviceid(deviceId);
+					sysUser.setmobilemodel(mobileModel);
+					sysUser.setosversion(osVersion);
+					sysUser.setlastlogintime(TimeUtil.formatDate(new Date()));
 				}
 				
 				jsonObj.put("success", true);	

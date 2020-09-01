@@ -156,5 +156,78 @@ public void setowner(String owner)
 {
 	this.owner = owner;
 }
+
+@Column(name = "version", nullable = true)
+public String version;
+public String getversion()
+{
+	return version;
+}
+public void setversion(String version)
+{
+	this.version = version;
+}
+
+@Column(name = "deviceid", nullable = true)
+public String deviceid;
+public String getdeviceid()
+{
+	return deviceid;
+}
+public void setdeviceid(String deviceid)
+{
+	this.deviceid = deviceid;
+}
+
+@Column(name = "mobilemodel", nullable = true)
+public String mobilemodel;
+public String getmobilemodel()
+{
+	return mobilemodel;
+}
+public void setmobilemodel(String mobilemodel)
+{
+	this.mobilemodel = mobilemodel;
+}
+
+@Column(name = "osversion", nullable = true)
+public String osversion;
+public String getosversion()
+{
+	return osversion;
+}
+public void setosversion(String osversion)
+{
+	this.osversion = osversion;
+}
+
+@Column(name = "lastlogintime", nullable = true)
+public String lastlogintime;
+public String getlastlogintime()
+{
+	return lastlogintime;
+}
+public void setlastlogintime(String lastlogintime)
+{
+	this.lastlogintime = lastlogintime;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
