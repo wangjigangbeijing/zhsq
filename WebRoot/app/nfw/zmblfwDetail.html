@@ -460,4 +460,53 @@
 			doIdCard();
 		}
 		
+		//查询居民信息
+		function queryresident(name, idnumber){
+			if(hasuse){
+				return;
+			}
+			else {
+				hasuse = true;
+			}
+			$.get(getContextPath()+"/idcardController/queryresident?idnumber="+idnumber,
+				function(result){
+					var obj = jQuery.parseJSON(result);  
+					if(obj.success)
+					{
+						var val = $('#blr').val();
+						if(val == ''){
+							$('#blr').val(obj.data.id);
+						}
+						else {
+							$('#blr').val(val + "," + obj.data.id);
+						}
+						
+						val = $('#blrname').val();
+						if(val == ''){
+							$('#blrname').val(showData(aesDecrypt(obj.data.name), 1));	
+						}
+						else {
+							$('#blrname').val(val + "," + showData(aesDecrypt(obj.data.name), 1));
+						}
+						
+						val = $("#lxdh").val();
+						if(val == ''){
+							$('#lxdh').val(showData(aesDecrypt(obj.data.mobile), 2));
+						}
+						else {
+							$('#lxdh').val(val + "," + showData(aesDecrypt(obj.data.mobile), 2));
+						}
+					}
+					else {
+						var val = $('#blrname').val();
+						if(val == ''){
+							$('#blrname').val(showData(name, 1));	
+						}
+						else {
+							$('#blrname').val(val + "," + showData(name, 1));
+						}
+					}
+				});
+		}
+		
 		</script>

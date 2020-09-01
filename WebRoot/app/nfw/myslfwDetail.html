@@ -1,5 +1,7 @@
 ﻿
 		<script src="./nfw/myslfwDetail.js"></script>
+		<script src="./device.js"></script>
+		<script type="text/javascript" src="./qwebchannel.js"></script>
 		
 		<section class="content-header">
       <div class="container-fluid">
@@ -62,7 +64,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label>反馈人<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident(); return false;">选择</button></label>
+                      <label>反馈人<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident(); return false;">选择</button><button class="btn btn-info" type="button" onclick="startidcard(); return false;" style="margin-left:15px;">身份证读取</button></label>
 					  <input type="hidden" class="form-control" id="fkr" placeholder="">
 					  <input type="text" class="form-control" id="fkrname" >
 					  
@@ -94,9 +96,13 @@
 						<div id='picturesdiv' class='wu-example'>
 						<input type='text' class='form-control field' name='pictures' id='pictures' style='display:none;'>
 						<table class='table' id='picturespicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
-						<div class='btns'>
-						<div id='picturespick'>选择文件</div>
-						</div>
+						<div class='row'>
+							<div id='picturespick' class="col-sm-1">选择文件</div>
+							
+							<div style="col-sm-1">
+							<button class="btn btn-success" type="button" data-toggle="modal" data-target="#deviceDialog" onclick="startdevice();" style="height:35px; font-size:14px;" >高拍仪</button>
+							</div>
+							</div>
 						</div>
  						</div>
  					</div>
@@ -113,6 +119,43 @@
 			  
           </div>
         </div>
+	  </div>
+	  
+	  <div class="modal fade" id="deviceDialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+              <h4 class="modal-title">材料拍照</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+			  <form class="form-horizontal">
+                <!--div class="card-body"-->
+				  <div class='form-group row'>
+                  <img class='col-md-8' id="bigPriDev" width="640" height="480"  /></img>
+				
+				  <img class='col-md-4' id="devPhoto" width="360" height="270"  /></img>
+				  </div>
+				  <!--
+				  <textarea id="output"></textarea><br />	
+				  -->
+              </form>
+			 </div> 
+			 
+			 <div class="modal-footer justify-content-between">
+              <button type="button" id="photographPri" class="btn btn-primary" onclick="doPhoto1(); return false;">拍照</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+            </div>
+			  
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+		</div>
+        <!-- /.modal-dialog -->
       </div>
 	  
 	  <div class="modal fade" id="residentDialog">
@@ -363,6 +406,67 @@
 			});
 			
 		});
+
+		function startdevice(){
+			openSocket();
+		}
+		
+		function startidcard(){
+			openSocket();
+			
+			doIdCard();
+		}
+
+					
+		//查询居民信息
+		function queryresident(name, idnumber){
+			if(hasuse){
+				return;
+			}
+			else {
+				hasuse = true;
+			}
+			$.get(getContextPath()+"/idcardController/queryresident?idnumber="+idnumber,
+				function(result){
+					var obj = jQuery.parseJSON(result);  
+					if(obj.success)
+					{
+						var val = $('#fkr').val();
+						if(val == ''){
+							$('#fkr').val(obj.data.id);
+						}
+						else {
+							$('#fkr').val(val + "," + obj.data.id);
+						}
+						
+						val = $('#fkrname').val();
+						if(val == ''){
+							$('#fkrname').val(showData(aesDecrypt(obj.data.name), 1));	
+						}
+						else {
+							$('#fkrname').val(val + "," + showData(aesDecrypt(obj.data.name), 1));
+						}
+						
+						val = $("#lxdh").val();
+						if(val == ''){
+							$('#lxdh').val(showData(aesDecrypt(obj.data.mobile), 2));
+						}
+						else {
+							$('#lxdh').val(val + "," + showData(aesDecrypt(obj.data.mobile), 2));
+						}
+					}
+					else {
+						var val = $('#fkrname').val();
+						if(val == ''){
+							$('#fkrname').val(showData(name, 1));	
+						}
+						else {
+							$('#fkrname').val(val + "," + showData(name, 1));
+						}
+					}
+				});
+		}
+
 		
 		</script>
 		
