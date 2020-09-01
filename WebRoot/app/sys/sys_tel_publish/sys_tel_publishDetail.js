@@ -195,7 +195,7 @@ function addOrUpdate()
 	}
 	*/
 	
-	telPublish();
+	//telPublish();
 }
 
 function postDataToServer()
@@ -224,6 +224,8 @@ function postDataToServer()
 			gobackPage();
 			
 			//load();
+			
+			//telPublish();
 		}
 		else
 		{

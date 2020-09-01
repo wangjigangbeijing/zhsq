@@ -9,6 +9,7 @@ import com.template.util.ConstValue;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,6 +141,28 @@ if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnore
 {
 	hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
 }
+
+
+String organization = Utility.getInstance().getOrganization(request);
+
+ArrayList<String> alOrg = new ArrayList<String>(); 
+
+if(organization != null && organization.equalsIgnoreCase("") == false)
+{
+	String [] organizationArr = organization.split(",");
+	
+
+	for(int i=0;i<organizationArr.length;i++)
+	{
+		alOrg.add("%"+organizationArr[i]+"%");
+	}
+}
+
+if(alOrg != null && alOrg.size() != 0)
+	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
+
+hqlFilter.setSort("created_at");
+hqlFilter.setOrder("desc");
 
         List<Jc_volunteer> listObj = jc_volunteerService.findByFilter(hqlFilter);
         JSONArray jsonArr = new JSONArray();
