@@ -54,9 +54,13 @@ function openSocket() {
 						//document.getElementById("blrname").value = message.substr(dot + 1);
 						var strs = new Array(); //定义一数组
 						strs = message.substr(dot + 1).split(" "); //字符分割
+					
 						
-						queryresident(strs[7]);
+						console.log("身份证号：" + strs[7]);
+						queryresident(strs[0], strs[7]);
 					}
+					
+					dialog.get_actionType("stopIDCard");
 				}
 				output(message);
 				
@@ -169,8 +173,10 @@ function openSocket2() {
 						$('#nation').val(strs[2]);
 						$('#birthday').val(strs[3] + strs[4] + strs[5]);
 						$('#residenceaddress').val(strs[6]);
-						$('#idnumber').val(strs[7]);
+						$('#idnumber').val(strs[7]);	
 					}
+					
+					dialog.get_actionType("stopIDCard");
 				}
 				output(message);
 				
@@ -213,12 +219,14 @@ function openSocket2() {
 
 //主摄像头拍照
 function doPhoto1(){
+	hasuse = false;
 	piclist.length = 0;
 	dialog.photoBtnClicked("primaryDev_");
 }
 
 //副摄像头拍照
 function doPhoto2(){
+	hasuse = false;
 	piclist.length = 0;
 	dialog.photoBtnClicked("subDev_");
 }
@@ -231,46 +239,19 @@ function doIdCard(){
 				HorizontalPosition : 'center'});
 		return;
 	}
+	hasuse = false;
 	dialog.get_actionType("singleReadIDCard");
-}
-
-//查询居民信息
-function queryresident(idnumber){
-	$.get(getContextPath()+"/idcardController/queryresident?idnumber="+idnumber,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				var val = $('#blr').val();
-				if(val == ''){
-					$('#blr').val(obj.data.id);
-				}
-				else {
-					$('#blr').val(val + "," + obj.data.id);
-				}
-				
-				val = $('#blrname').val();
-				if(val == ''){
-					$('#blrname').val(obj.data.blrname);	
-				}
-				else {
-					$('#blrname').val(val + "," + obj.data.name);
-				}
-				
-				val = $("#lxdh").val();
-				if(val == ''){
-					$('#lxdh').val(obj.data.mobile);
-				}
-				else {
-					$('#lxdh').val(val + "," + obj.data.mobile);
-				}
-			}
-		});
 }
 
 function uploadimage(img){
 	
 	dialog.get_actionType("closeSignal");
+	if(hasuse){
+		return;
+	}
+	else {
+		hasuse = true;
+	}
 	
 	$.post(getContextPath()+"/fileController/uploadfilestring",
 	{
