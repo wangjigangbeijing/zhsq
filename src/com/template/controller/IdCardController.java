@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.template.busi.safe.SafeFieldChecker;
 import com.template.service.SysUserService;
 
 @Controller
@@ -31,7 +32,8 @@ public class IdCardController {
 		try
 		{
 			List<Object> params = new ArrayList<Object>();
-			params.add(idnumber);
+			String decnum = new SafeFieldChecker().checkField(userService, "jc_resident", "idnumber", idnumber);
+			params.add(decnum);
 			String sql = "select * from jc_resident where idnumber=?";
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0) {

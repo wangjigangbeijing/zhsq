@@ -269,6 +269,8 @@ var map;
 
 var maptype = 1; 
 
+var iconStyle;
+
 var highlightStyle = new ol.style.Style({
   fill: new ol.style.Fill({
     color: 'rgba(255,255,255,0.7)',
@@ -435,7 +437,7 @@ function loadMap(mapName)
 									
 									//console.log("http://localhost:8080"+getContextPath()+"/fileController/downloadIcon?fileName="+iconurl);
 									if(labelshow){
-										iconFeature.setStyle(new ol.style.Style({
+										 iconStyle = new ol.style.Style({
 											image: new ol.style.Icon({
 												src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
 											}),
@@ -444,14 +446,16 @@ function loadMap(mapName)
 												// and show only under certain resolution
 												text: data.label
 											  })
-										}));
+										});
+										iconFeature.setStyle(iconStyle);
 									}
 									else {
-										iconFeature.setStyle(new ol.style.Style({
+										 iconStyle = new ol.style.Style({
 											image: new ol.style.Icon({
 												src: getContextPath()+"/fileController/downloadIcon?fileName="+iconurl//'../icons/point.png'
 											})
-										}));
+										});
+										iconFeature.setStyle(iconStyle);
 									}
 									
 									iconFeature.setId(data.id);
@@ -999,16 +1003,11 @@ function initMap(){
 	
 	var dataSource = new ol.source.Vector();								
 	dataLayer = new ol.layer.Vector({
-		source: dataSource/*,
-		style: new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: 'red',
-                    width: 3
-                }),
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 0, 255, 0.1)'
-                })
-            })*/
+		source: dataSource,
+		style: function(feature, resolution) {
+			iconStyle.getImage().setScale(1/Math.pow(resolution, 1/3));
+			return iconStyle;
+		  }
 	});
 	
 	map.addLayer(dataLayer);

@@ -54,8 +54,10 @@ function openSocket() {
 						//document.getElementById("blrname").value = message.substr(dot + 1);
 						var strs = new Array(); //定义一数组
 						strs = message.substr(dot + 1).split(" "); //字符分割
+					
 						
-						queryresident(strs[7]);
+						console.log("身份证号：" + strs[7]);
+						queryresident(strs[0], strs[7]);
 					}
 				}
 				output(message);
@@ -235,7 +237,7 @@ function doIdCard(){
 }
 
 //查询居民信息
-function queryresident(idnumber){
+function queryresident(name, idnumber){
 	$.get(getContextPath()+"/idcardController/queryresident?idnumber="+idnumber,
 		function(result){
 			var obj = jQuery.parseJSON(result);  
@@ -251,18 +253,27 @@ function queryresident(idnumber){
 				
 				val = $('#blrname').val();
 				if(val == ''){
-					$('#blrname').val(obj.data.blrname);	
+					$('#blrname').val(showData(aesDecrypt(obj.data.name), 1));	
 				}
 				else {
-					$('#blrname').val(val + "," + obj.data.name);
+					$('#blrname').val(val + "," + showData(aesDecrypt(obj.data.name), 1));
 				}
 				
 				val = $("#lxdh").val();
 				if(val == ''){
-					$('#lxdh').val(obj.data.mobile);
+					$('#lxdh').val(showData(aesDecrypt(obj.data.mobile), 2));
 				}
 				else {
-					$('#lxdh').val(val + "," + obj.data.mobile);
+					$('#lxdh').val(val + "," + showData(aesDecrypt(obj.data.mobile), 2));
+				}
+			}
+			else {
+				var val = $('#blrname').val();
+				if(val == ''){
+					$('#blrname').val(showData(name, 1));	
+				}
+				else {
+					$('#blrname').val(val + "," + showData(name, 1));
 				}
 			}
 		});
