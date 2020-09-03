@@ -23,7 +23,7 @@ $(document).ready(function (){
 	if(curId != '')
 		viewDetail(curId);
 	
-	try{
+	/*try{
 		TV_Initialize();
 	}
 	catch(error)
@@ -31,8 +31,8 @@ $(document).ready(function (){
 		debugger;
 		console.log('Failed to initialize...');
 	}
-	
-	getEvent(T_GetEvent);
+	*/
+	//getEvent(T_GetEvent);
 	
 	loadcategory();
 });
@@ -147,6 +147,57 @@ function addOrUpdate()
 {
 	var residentList = $('#realMobileList').val();
 	var internalMobileList = $('#internalMobileList').val();
+	var sendTime = $('#sendTime').val();
+	
+	var mobileList = residentList;
+	
+	if(mobileList != null && mobileList != '')
+		mobileList += ',';
+	
+	mobileList += internalMobileList;
+	
+	debugger;
+	
+	$.post(getContextPath()+"/sysTelPublishController/addOrUpdate",
+	{
+		id:curId,
+		title:$('#title').val(),
+		category:$('#category').val(),
+		telxl:$('#telxl').val(),
+		content:$('#content').val(),
+		audio:$('#audio').val(),
+		target:mobileList,//$('#realmobileList').val(),
+		publishtime:$('#publishtime').val(),
+		status:$('#status').val()
+	},
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			jSuccess("数据修改成功!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+			
+			gobackPage();
+			
+			//load();
+			
+			//telPublish();
+		}
+		else
+		{
+			jError("数据修改失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	});
+	
+	
+	/*
+	var residentList = $('#realMobileList').val();
+	var internalMobileList = $('#internalMobileList').val();
 	
 	var target = residentList;
 	
@@ -198,6 +249,7 @@ function addOrUpdate()
 	//telPublish();
 }
 
+/*
 function postDataToServer()
 {
 	$.post(getContextPath()+"/sysTelPublishController/addOrUpdate",
@@ -257,7 +309,7 @@ function telPublish()
 	
 	TV_StartDial(0,target);
 }
-
+*/
 function downloadAttach(fileName)
 {
 	var url = getContextPath()+"/fileController/download?fileName="+fileName;
@@ -267,7 +319,7 @@ function downloadAttach(fileName)
 	//window.open(getContextPath()+"/fileController/downLoad/"+encodeURI(obj.fileName));
 }
 
-
+/*
 function  T_GetEvent(uID,uEventType,uHandle,uResult,szdata)
 {
 	//var vValueArray=qnviccub.QNV_Event(0,2,0,"","",1024);
@@ -450,7 +502,7 @@ function AppendStatusEx(uID,szStatus)
 	uID=uID+1;
 	AppendStatus("通道"+uID+":"+szStatus);
 }
-
+*/
 
 
 
