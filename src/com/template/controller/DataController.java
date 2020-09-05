@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1590,4 +1592,184 @@ public class DataController {
 	    
 	    return true;  
 	} 
+	
+	@RequestMapping(value="exportDataOfTable",method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
+    @ResponseBody
+	public String exportDataOfTable(String tableId,String queryStr)
+	{
+		logger.info("loadDataOfTable "+tableId+"	"+queryStr);
+		
+    	JSONObject jsonObj = new JSONObject();
+    	
+    	FileOutputStream fos = null;
+    	
+		try
+		{
+			if(queryStr != null && queryStr.endsWith("AND"))
+				queryStr = queryStr.substring(0, queryStr.length() - 3);
+			
+			SysTable layer = tableService.getById(tableId);
+			jsonObj.put("id", layer.getId());
+			jsonObj.put("enName", layer.getTableENName());
+			
+			HqlFilter hqlFilter = new HqlFilter();
+			
+			if(tableId != null && tableId.equalsIgnoreCase("") == false && tableId.equalsIgnoreCase("null") == false)
+			{
+				hqlFilter.addQryCond("tableId", HqlFilter.Operator.EQ, tableId);
+			}
+			
+			List<SysTableAttribute> layerAttrInDB = layerAttributeService.findByFilter(hqlFilter);
+			
+			HashMap<String,String> hmFiledNameToFieldType =  new HashMap<String,String>();
+			
+			String csvHeader = "";
+			
+			String sFieldNames = "";
+			
+			ArrayList<String> fieldList = new ArrayList<String>();
+			ArrayList<String> fieldValList = new ArrayList<String>();
+			
+			for(int i=0;i<layerAttrInDB.size();i++)
+			{
+				SysTableAttribute sla = layerAttrInDB.get(i);
+				
+				if(sFieldNames.indexOf(sla.getENName()+",") != -1)
+				{
+					logger.error("Seems like duplicate column:"+sla.getENName()+"    "+tableId);
+					continue;
+				}
+				
+				sFieldNames += sla.getENName().toLowerCase()+",";
+				
+				csvHeader += sla.getZHName()+",";
+				
+				hmFiledNameToFieldType.put(sla.getENName(), sla.getDBType());
+				
+				fieldList.add(sla.getENName());
+				fieldValList.add(sla.getValues());
+			}
+			
+			if(sFieldNames.endsWith(","))
+			{
+				sFieldNames = sFieldNames.substring(0,sFieldNames.length() - 1);
+				csvHeader = csvHeader.substring(0,csvHeader.length() - 1);
+			}
+			
+			String sTableName = layer.getTableENName();			
+			
+			String sSql = "SELECT "+sFieldNames+" FROM "+sTableName+" WHERE 1 = 1 ";
+			
+			if(queryStr != null && queryStr.equalsIgnoreCase("") == false)
+				sSql += " AND "+queryStr;
+			
+			if(sSql.endsWith(" AND "))
+				sSql = sSql.substring(0, sSql.length() - 5);
+			
+			String organization = Utility.getInstance().getOrganization(request);
+			
+			if(organization != null)
+			{
+				String [] organizationArr = organization.split(",");
+				
+				String ownerCond = "";
+				
+				for(int i=0;i<organizationArr.length;i++)
+				{
+					ownerCond += " OWNER LIKE '%"+organizationArr[i]+"%' OR ";
+				}
+				
+				if(ownerCond.endsWith(" OR "))
+					ownerCond = ownerCond.substring(0, ownerCond.length() - 4);
+				
+				if(ownerCond.equalsIgnoreCase("") == false)
+					sSql += " AND ("+ownerCond+") ";
+			}
+			
+			sSql += " ORDER BY CREATED_AT DESC ";
+			/*
+			if(curPage == null)
+				curPage = 0;
+			if(pageSize == null)
+				pageSize = 10000;
+			
+			int startRec = curPage*pageSize;
+			
+			sSql += " LIMIT "+startRec+","+pageSize;
+			*/
+
+	        String sFileName = Utility.getUniStrAsTime()+".csv";
+
+            if(tmpdir.endsWith("/") == false)
+            	tmpdir += "/";
+            
+			fos = new FileOutputStream(tmpdir+sFileName);
+			
+			fos.write(new byte[] { (byte) 0xEF, (byte) 0xBB,(byte) 0xBF});//乱码处理
+			
+			PrintStream ps = new PrintStream(fos);
+			
+			ps.println(csvHeader);
+			
+			logger.debug(sSql);
+			
+			List<HashMap> listObj = tableService.findBySql(sSql);
+			
+			for(int i=0;i<listObj.size();i++)
+			{
+				String output = "";
+				
+				HashMap hm = listObj.get(i);
+				
+				for(int j=0;j<fieldList.size();j++)
+				{
+					String fieldName = fieldList.get(j).toLowerCase();
+					//String fieldValue = fieldList.get(j).toLowerCase();//字段取值范围
+					
+					String val = "";
+					if(hm.containsKey(fieldName))
+					{
+						Object objValue = hm.get(fieldName);	
+						if(objValue != null)
+							val = objValue.toString();
+					}
+
+					if(ConstValue.hmDicMap.containsKey(val))
+					{
+						val = ConstValue.hmDicMap.get(val);
+					}
+					
+					output += val+",";
+				}
+				
+				if(output.endsWith(","))
+					output = output.substring(0, output.length() - 1);
+				
+				output = output + "\\n";
+				
+	        	output = output.replaceAll("null", "");
+	        	
+	        	ps.println(output);
+			}
+			
+			jsonObj.put("fileName", sFileName);
+	        jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", "获取数据失败");
+		}
+		finally
+		{
+			try {
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+        return jsonObj.toString();
+    }
 }

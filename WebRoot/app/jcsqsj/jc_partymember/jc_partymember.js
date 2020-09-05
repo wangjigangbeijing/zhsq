@@ -8,6 +8,13 @@ $(document).ready(function (){
 		$('#btnAdd1').hide();
 		$('#btnAdd2').hide();
 	}
+	
+	if(haveRight('jc_partymember_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -19,6 +26,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 });
@@ -151,76 +161,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_partymemberController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#name').val(obj.name);
-				$('#idnumber').val(obj.idnumber);
-				$('#sex').val(obj.sex);
-				$('#birthday').val(obj.birthday);
-				$('#age').val(obj.age);
-				$('#mobile').val(obj.mobile);
-				$('#education').val(obj.education);
-				$('#partymembertype').val(obj.partymembertype);
-				$('#of_partyorganization').val(obj.of_partyorganization);
-				$('#isincommunity').val(obj.isincommunity);
-				$('#homeaddress').val(obj.homeaddress);
-				$('#zhiwu').val(obj.zhiwu);
-				$('#joinpartydate').val(obj.joinpartydate);
-				$('#inpartydate').val(obj.inpartydate);
-				$('#dyage').val(obj.dyage);
-				$('#membership').val(obj.membership);
-				$('#islost').val(obj.islost);
-				$('#lostdate').val(obj.lostdate);
-				$('#movemember').val(obj.movemember);
-				$('#moveto').val(obj.moveto);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#name').val('');
-	$('#idnumber').val('');
-	$('#sex').val('');
-	$('#birthday').val('');
-	$('#age').val('');
-	$('#mobile').val('');
-	$('#education').val('');
-	$('#partymembertype').val('');
-	$('#of_partyorganization').val('');
-	$('#isincommunity').val('');
-	$('#homeaddress').val('');
-	$('#zhiwu').val('');
-	$('#joinpartydate').val('');
-	$('#inpartydate').val('');
-	$('#dyage').val('');
-	$('#membership').val('');
-	$('#islost').val('');
-	$('#lostdate').val('');
-	$('#movemember').val('');
-	$('#moveto').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
-
 function viewData(id)
 {
 	curId = id;
@@ -301,3 +241,89 @@ function deleteData(id)
 }
 
 
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+ 
+	 
+	 
+	 
+ var idnumber = $('#idnumberQuery').val();
+ if(idnumber != '')
+		queryStr += "idnumber like '%"+idnumber+"%' AND ";
+ 
+ var sex = $('#sexQuery').val();
+ if(sex != '')
+		queryStr += "address like '%"+sex+"%' AND ";
+ 
+ var age = $('#ageQuery').val();
+ if(age != '')
+		queryStr += "age = '"+age+"' AND ";
+ 
+ var mobile = $('#mobileQuery').val();
+ if(mobile != '')
+		queryStr += "mobile like '%"+mobile+"%' AND ";
+ 
+  var partymembertype = $('#partymembertypeQuery').val();
+  if(partymembertype != '')
+		queryStr += "partymembertype like '%"+partymembertype+"%' AND ";
+  
+ var of_partyorganization = $('#of_partyorganizationQuery').val();
+ if(of_partyorganization != '')
+		queryStr += "of_partyorganization = '"+of_partyorganization+"' AND ";
+ 
+ var isincommunity = $('#isincommunityQuery').val();
+ if(isincommunity != '')
+		queryStr += "isincommunity = '"+isincommunity+"' AND ";
+ 
+ var dyage = $('#dyageQuery').val();
+ if(dyage != '')
+		queryStr += "dyage = '"+dyage+"' AND ";
+ 
+ var membership = $('#membershipQuery').val();
+ if(membership != '')
+		queryStr += "membership = '"+membership+"' AND ";
+ 
+ var movemember = $('#movememberQuery').val();
+	 if(movemember != '')
+		queryStr += "movemember = '"+movemember+"' AND ";
+	 
+ 
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_partymember',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

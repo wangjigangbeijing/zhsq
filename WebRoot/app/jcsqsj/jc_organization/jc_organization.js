@@ -8,6 +8,12 @@ $(document).ready(function (){
 		$('#btnAdd2').hide();
 	}
 	
+	if(haveRight('jc_organization_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -19,6 +25,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 });
@@ -157,86 +166,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_organizationController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dataid').val(obj.dataid);
-				$('#name').val(obj.name);
-				$('#haslicence').val(obj.haslicence);
-				$('#socialcode').val(obj.socialcode);
-				$('#socialcodedate').val(obj.socialcodedate);
-				$('#orgtype').val(obj.orgtype);
-				$('#economictype').val(obj.economictype);
-				$('#industry').val(obj.industry);
-				$('#subordination').val(obj.subordination);
-				$('#establishdate').val(obj.establishdate);
-				$('#capitaltype').val(obj.capitaltype);
-				$('#capital').val(obj.capital);
-				$('#businessscope').val(obj.businessscope);
-				$('#scale').val(obj.scale);
-				$('#regaddress').val(obj.regaddress);
-				$('#officeaddress').val(obj.officeaddress);
-				$('#ofbizbuilding').val(obj.ofbizbuilding);
-				$('#legalname').val(obj.legalname);
-				$('#contactname').val(obj.contactname);
-				$('#contacttel').val(obj.contacttel);
-				$('#moveindate').val(obj.moveindate);
-				$('#responsibilityplateno').val(obj.responsibilityplateno);
-				$('#hasfirefacilities').val(obj.hasfirefacilities);
-				$('#wastedisposal').val(obj.wastedisposal);
-				$('#status').val(obj.status);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dataid').val('');
-	$('#name').val('');
-	$('#haslicence').val('');
-	$('#socialcode').val('');
-	$('#socialcodedate').val('');
-	$('#orgtype').val('');
-	$('#economictype').val('');
-	$('#industry').val('');
-	$('#subordination').val('');
-	$('#establishdate').val('');
-	$('#capitaltype').val('');
-	$('#capital').val('');
-	$('#businessscope').val('');
-	$('#scale').val('');
-	$('#regaddress').val('');
-	$('#officeaddress').val('');
-	$('#ofbizbuilding').val('');
-	$('#legalname').val('');
-	$('#contactname').val('');
-	$('#contacttel').val('');
-	$('#moveindate').val('');
-	$('#responsibilityplateno').val('');
-	$('#hasfirefacilities').val('');
-	$('#wastedisposal').val('');
-	$('#status').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
-
 function viewData(id)
 {
 	curId = id;
@@ -317,3 +246,86 @@ function deleteData(id)
 }
 
 
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+ 
+	
+	var haslicence = $('#haslicenceQuery').val();
+	if(haslicence != '')
+		queryStr += "haslicence = '"+haslicence+"' AND ";
+	
+	var socialcode = $('#socialcodeQuery').val();
+	if(socialcode != '')
+		queryStr += "socialcode = '"+socialcode+"' AND ";
+	
+	var orgtype = $('#orgtypeQuery').val();
+	if(orgtype != '')
+		queryStr += "orgtype = '"+orgtype+"' AND ";
+	
+	var economictype = $('#economictypeQuery').val();
+	if(economictype != '')
+		queryStr += "economictype = '"+economictype+"' AND ";
+	
+	var industry = $('#industryQuery').val();
+	if(industry != '')
+		queryStr += "industry = '"+industry+"' AND ";
+	
+	var scale = $('#scaleQuery').val();
+	if(scale != '')
+		queryStr += "scale = '"+scale+"' AND ";
+	
+	var officeaddress = $('#officeaddressQuery').val();
+	if(officeaddress != '')
+		queryStr += "officeaddress = '"+officeaddress+"' AND ";
+	
+	var ofbizbuilding = $('#ofbizbuildingQuery').val();
+	if(ofbizbuilding != '')
+		queryStr += "ofbizbuilding = '"+ofbizbuilding+"' AND ";
+	
+	var contacttel = $('#contacttelQuery').val();
+	if(contacttel != '')
+		queryStr += "contacttel like '%"+contacttel+"%' AND ";
+	
+	var status = $('#statusQuery').val();
+	if(status != '')
+		queryStr += "status = '"+status+"' AND ";
+  
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_organization',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

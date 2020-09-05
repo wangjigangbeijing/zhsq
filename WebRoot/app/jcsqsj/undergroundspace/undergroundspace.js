@@ -8,6 +8,12 @@ $(document).ready(function (){
 		$('#btnAdd2').hide();
 	}
 	
+	if(haveRight('jc_undergroundspace_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -19,6 +25,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 
@@ -164,59 +173,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/undergroundspaceController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dateid').val(obj.dateid);
-				$('#name').val(obj.name);
-				$('#type').val(obj.type);
-				$('#address').val(obj.address);
-				$('#ofresidebuilding').val(obj.ofresidebuilding);
-				$('#ofbizbuilding').val(obj.ofbizbuilding);
-				$('#level').val(obj.level);
-				$('#area').val(obj.area);
-				$('#purpose').val(obj.purpose);
-				$('#longitude').val(obj.longitude);
-				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dateid').val('');
-	$('#name').val('');
-	$('#type').val('');
-	$('#address').val('');
-	$('#ofresidebuilding').val('');
-	$('#ofbizbuilding').val('');
-	$('#level').val('');
-	$('#area').val('');
-	$('#purpose').val('');
-	$('#longitude').val('');
-	$('#latitude').val('');
-	$('#status').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
 function viewData(id)
 {
 	curId = id;
@@ -297,3 +253,66 @@ function deleteData(id)
 }
 
 
+
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+	
+	 var type = $('#typeQuery').val();
+	 if(type != '')
+		queryStr += "type = '"+type+"' AND ";
+	 
+	 var address = $('#addressQuery').val();
+	 if(address != '')
+		queryStr += "address like '%"+address+"%' AND ";
+ 
+ var ofresidebuilding = $('#ofresidebuildingQuery').val();
+ if(ofresidebuilding != '')
+		queryStr += "ofresidebuilding = '"+ofresidebuilding+"' AND ";
+	
+ var ofbizbuilding = $('#ofbizbuildingQuery').val();
+if(ofbizbuilding != '')
+		queryStr += "ofbizbuilding = '"+ofbizbuilding+"' AND ";
+
+	 var status = $('#statusQuery').val();
+	 if(status != '')
+		queryStr += "status = '"+status+"' AND ";
+	 
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_undergroundspace',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

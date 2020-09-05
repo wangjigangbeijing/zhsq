@@ -51,7 +51,7 @@ public String addOrUpdate(String id,String title,String category, String telxl, 
 		sys_tel_publish.setaudio(audio);
 		sys_tel_publish.settarget(target);
 		sys_tel_publish.setpublishtime(TimeUtil.formatDate(new Date(),"yyyy-MM-dd HH:mm"));
-		sys_tel_publish.setstatus(status);
+		sys_tel_publish.setstatus(ConstValue.SMS_STATUS_INITIAL);
 		sys_tel_publish.setowner(sOrgId);
 
         sys_tel_publishService.save(sys_tel_publish);

@@ -9,6 +9,13 @@ $(document).ready(function (){
 		$('#btnAdd2').hide();
 	}
 	
+	if(haveRight('jc_bizbuilding_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -20,6 +27,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 });
@@ -223,4 +233,78 @@ function deleteData(id)
 	});
 }
 
+
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		 $('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		 $('#btnExport2').attr('disabled','disabled');
+	}
+	var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		 name = $('#nameQuery2').val();
+	}
+	
+	queryStr += "name like '%"+name+"%' AND ";
+	
+	var address = $('#addressQuery').val();
+	queryStr += "address like '%"+address+"%' AND ";
+	
+	var purpose = $('#purposeQuery').val();
+	queryStr += "purpose = '"+purpose+"' AND ";
+	
+	var propertyyears = $('#propertyyearsQuery').val();
+	queryStr += "propertyyears = '"+propertyyears+"' AND ";
+	
+	var propertyrights = $('#propertyrightsQuery').val();
+	queryStr += "propertyrights = '"+propertyrights+"' AND ";
+	
+	var heatingsystem = $('#heatingsystemQuery').val();
+	queryStr += "heatingsystem = '"+heatingsystem+"' AND ";
+	
+	var ofcommunity = $('#ofcommunityQuery').val();
+	queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
+	
+	var buildtype = $('#buildtypeQuery').val();
+	queryStr += "buildtype = '"+buildtype+"' AND ";
+	
+	var buildframework = $('#buildframeworkQuery').val();
+	queryStr += "buildframework = '"+buildframework+"' AND ";
+	
+	var constructiontype = $('#constructiontypeQuery').val();
+	queryStr += "constructiontype = '"+constructiontype+"' AND ";
+	
+	var status = $('#statusQuery').val();
+	queryStr += "status = '"+status+"' AND ";
+		//$.get(getContextPath()+'/bizbuildingController/load?name='+name+'&address='+address+'&purpose='+purpose+'&propertyyears='+propertyyears+'&propertyrights='+propertyrights+'&heatingsystem='+heatingsystem+'&ofcommunity='+ofcommunity+'&buildtype='+buildtype+'&buildframework='+buildframework+'&constructiontype='+constructiontype+'&status='+status+'&',
+	
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_bizbuilding',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}
 

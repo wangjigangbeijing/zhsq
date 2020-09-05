@@ -218,6 +218,8 @@ public class LoginController {
 					sysUser.setmobilemodel(mobileModel);
 					sysUser.setosversion(osVersion);
 					sysUser.setlastlogintime(TimeUtil.formatDate(new Date()));
+					
+					userService.save(sysUser);
 				}
 				
 				jsonObj.put("success", true);	

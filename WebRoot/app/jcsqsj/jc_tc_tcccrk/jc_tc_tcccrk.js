@@ -6,6 +6,12 @@ $(document).ready(function (){
 	{
 		$('#btnAdd').hide();
 	}
+	
+	if(haveRight('jc_tc_tcccrk_exp') == false)
+	{
+		$('#btnExport1').hide();
+	}
+	
 	$('#btnAdd').click(ShowAddModal);
 	
 	$('.dpYears').datepicker({
@@ -15,6 +21,7 @@ $(document).ready(function (){
 	//$('#btnReset').click(Reset);
 	
 	$('#btnSearch').click(load);
+	$('#btnExport1').click(exportData);
 	
 	$.ajax({
 	  type: 'POST',
@@ -135,42 +142,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_tc_tcccrkController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#rkType').val(obj.rkType);
-				$('#name').val(obj.name);
-				$('#parkName').val(obj.parkName);
-				$('#picture').val(obj.picture);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#rkType').val('');
-	$('#name').val('');
-	$('#parkName').val('');
-	$('#picture').val('');
-	$('#note').val('');
-
-}
-*/
-
 function viewData(id)
 {
 	curId = id;
@@ -250,4 +221,45 @@ function deleteData(id)
 	});
 }
 
+
+
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	
+	$('#btnExport1').attr('disabled','disabled');
+	
+	 var name = $('#nameQuery').val();
+	 if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+	
+	var parkName = $('#parkNameQuery').val();
+	if(parkName != '')
+		queryStr += "parkName like '%"+parkName+"%' AND ";
+ 
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_tc_tcccrk',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}
 

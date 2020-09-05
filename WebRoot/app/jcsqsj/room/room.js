@@ -8,6 +8,13 @@ $(document).ready(function (){
 		$('#btnAdd1').hide();
 		$('#btnAdd2').hide();
 	}
+	
+	if(haveRight('jc_room_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -16,6 +23,9 @@ $(document).ready(function (){
 	});
 	
 	//$('#btnReset').click(Reset);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
@@ -367,3 +377,66 @@ function deleteData(id)
 }
 
 
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 
+	var number  = $('#numberQuery').val();
+	if(searchtype == 2){
+		number  = $('#numberQuery2').val();
+	}
+	if(number != '')
+		queryStr += "number = '"+address+"' AND ";
+	
+	var ofcommunity = $('#ofcommunityQuery').val();
+	if(ofcommunity != '')
+		queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
+	
+	var ofresidebuilding = $('#ofresidebuildingQuery').val();
+	if(ofresidebuilding != '')
+		queryStr += "ofresidebuilding = '"+ofresidebuilding+"' AND ";
+	
+	var ofunit = $('#ofunitQuery').val();
+	if(ofunit != '')
+		queryStr += "ofunit = '"+ofunit+"' AND ";
+	
+	var status = $('#statusQuery').val();
+	if(status != '')
+		queryStr += "status = '"+status+"' AND ";
+	
+	var isgrouporiented = $('#isgrouporientedQuery').val(); 
+	if(isgrouporiented != '')
+		queryStr += "isgrouporiented = '"+isgrouporiented+"' AND ";
+ 
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_room',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

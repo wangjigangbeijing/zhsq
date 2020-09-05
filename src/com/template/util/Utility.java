@@ -103,8 +103,8 @@ public class Utility
 		return sResult;*/
 		return UUID.randomUUID().toString();
 	}
-	/*
-	public synchronized static String getUniStr()
+	
+	public synchronized static String getUniStrAsTime()
 	{
 		Date m_date = new Date();
 		Calendar c = Calendar.getInstance();
@@ -118,7 +118,8 @@ public class Utility
 		}
 		
 		return sResult;
-	}*/
+	}
+	
 	public static double round(double value, int scale) {
 
 		BigDecimal bd = new BigDecimal(value);

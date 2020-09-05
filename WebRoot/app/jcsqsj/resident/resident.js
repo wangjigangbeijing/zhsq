@@ -6,6 +6,13 @@ $(document).ready(function (){
 		$('#btnAdd1').hide();
 		$('#btnAdd2').hide();
 	}
+	
+	if(haveRight('jc_resident_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -14,6 +21,9 @@ $(document).ready(function (){
 	});
 	
 	//$('#btnReset').click(Reset);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
@@ -501,3 +511,145 @@ function selectidtype(){
 }
 
 
+
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnSearch1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnSearch2').attr('disabled','disabled');
+	}
+
+	var name = $('#nameQuery').val();
+	var idnumber = $('#idnumberQuery').val();
+	var characteristics = $('#characteristicsQuery').val();
+	 if(searchtype == 2){
+		 name = $('#nameQuery2').val();
+		 idnumber = $('#idnumberQuery2').val();
+		 characteristics = $('#characteristicsQuery2').val();
+	 }
+
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+	if(idnumber != '')
+		queryStr += "idnumber like '%"+idnumber+"%' AND ";
+	if(characteristics != '')
+		queryStr += "characteristics like '%"+characteristics+"%' AND ";
+
+	var ofcommunity = $('#ofcommunityQuery').val();
+	if(ofcommunity != '')
+		queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
+	
+	var ofresidebuilding = $('#ofresidebuildingQuery').val();
+	if(ofresidebuilding != '')
+		queryStr += "ofresidebuilding = '"+ofresidebuilding+"' AND ";
+	
+	var ofunit = $('#ofunitQuery').val();
+	if(ofunit != '')
+		queryStr += "ofunit = '"+ofunit+"' AND ";
+	
+	var ofroom = $('#ofroomQuery').val();
+	if(ofroom != '')
+		queryStr += "ofroom = '"+ofroom+"' AND ";
+	
+	var offamily = $('#offamilyQuery').val();
+	if(offamily != '')
+		queryStr += "offamily = '"+offamily+"' AND ";
+	
+	var sex = $('#sexQuery').val();
+	if(sex != '')
+		queryStr += "sex = '"+sex+"' AND ";
+	
+	var residencestatus = $('#residencestatusQuery').val();
+	if(residencestatus != '')
+		queryStr += "residencestatus = '"+residencestatus+"' AND ";
+	
+	var ishouseholder = $('#ishouseholderQuery').val();
+	if(ishouseholder != '')
+		queryStr += "ishouseholder = '"+ishouseholder+"' AND ";
+	
+	var relationshiphouseholder = $('#relationshiphouseholderQuery').val();
+	if(relationshiphouseholder != '')
+		queryStr += "relationshiphouseholder = '"+relationshiphouseholder+"' AND ";
+	
+	var registrationcategory = $('#registrationcategoryQuery').val();
+	if(registrationcategory != '')
+		queryStr += "registrationcategory = '"+registrationcategory+"' AND ";
+	
+	var birthday = $('#birthdayQuery').val();
+	if(birthday != '')
+		queryStr += "birthday = '"+birthday+"' AND ";
+	
+	var age = $('#ageQuery').val();
+	if(age != '')
+		queryStr += "age = '"+age+"' AND ";
+	
+	var nation = $('#nationQuery').val();
+	if(nation != '')
+		queryStr += "nation = '"+nation+"' AND ";
+	
+	var education = $('#educationQuery').val();
+	if(education != '')
+		queryStr += "education = '"+education+"' AND ";
+	
+	var professionstatus = $('#professionstatusQuery').val();
+	if(professionstatus != '')
+		queryStr += "professionstatus = '"+professionstatus+"' AND ";
+	
+	var professiontype = $('#professiontypeQuery').val();
+	if(professiontype != '')
+		queryStr += "professiontype = '"+professiontype+"' AND ";
+	
+	var mobile = $('#mobileQuery').val();
+	if(mobile != '')
+		queryStr += "mobile like '%"+mobile+"%' AND ";
+	
+	var marriage = $('#marriageQuery').val();
+	if(marriage != '')
+		queryStr += "marriage = '"+marriage+"' AND ";
+	
+	var zdr_type = $('#zdr_typeQuery').val();
+	if(zdr_type != '')
+		queryStr += "zdr_type = '"+zdr_type+"' AND ";
+	
+	var cj_disabilitytype = $('#cj_disabilitytypeQuery').val();
+	if(cj_disabilitytype != '')
+		queryStr += "cj_disabilitytype = '"+cj_disabilitytype+"' AND ";
+	
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_community',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

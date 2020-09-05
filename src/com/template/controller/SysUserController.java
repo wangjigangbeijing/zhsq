@@ -8,6 +8,7 @@ import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.util.HqlFilter;
 import com.template.util.ConstValue;
+import com.template.util.EncryptUtil;
 import com.template.util.Utility;
 import com.template.util.TimeUtil;
 import java.util.List;
@@ -62,7 +63,7 @@ public String addOrUpdate(String id,String name,String loginid,String password,S
 		}
 		sys_user.setname(name);
 		sys_user.setloginid(loginid);
-		sys_user.setpassword(password);
+		sys_user.setpassword(EncryptUtil.encodeStr(password));
 		sys_user.setgender(gender);
 		
 		if(birthday != null && birthday.equalsIgnoreCase("") == false)

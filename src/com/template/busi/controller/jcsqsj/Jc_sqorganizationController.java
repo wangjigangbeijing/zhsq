@@ -59,6 +59,9 @@ public String addOrUpdate(String id,String dateid,String name,String regstatus,S
 		jc_sqorganization.setpictures(pictures);
 		jc_sqorganization.setnote(note);
 
+		String organization = Utility.getInstance().getOrganization(request);
+		jc_sqorganization.setowner(organization);
+		
         jc_sqorganizationService.save(jc_sqorganization);
         jsonObj.put("success", true);
 	}

@@ -6,6 +6,13 @@ $(document).ready(function (){
 		$('#btnAdd1').hide();
 		$('#btnAdd2').hide();
 	}
+	
+	if(haveRight('jc_tc_fjdctcw_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -17,6 +24,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 });
@@ -122,48 +132,6 @@ function load()
 	});
 }
 
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_tc_fjdctcwController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#parkID').val(obj.parkID);
-				$('#parkName').val(obj.parkName);
-				$('#parkType').val(obj.parkType);
-				$('#adminDep').val(obj.adminDep);
-				$('#ownerDep').val(obj.ownerDep);
-				$('#maintDep').val(obj.maintDep);
-				$('#picture').val(obj.picture);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#parkID').val('');
-	$('#parkName').val('');
-	$('#parkType').val('');
-	$('#adminDep').val('');
-	$('#ownerDep').val('');
-	$('#maintDep').val('');
-	$('#picture').val('');
-	$('#note').val('');
-
-}
-*/
-
 function viewData(id)
 {
 	curId = id;
@@ -244,3 +212,50 @@ function deleteData(id)
 }
 
 
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	
+	var parkName = $('#parkNameQuery').val();
+	if(searchtype == 2){
+		parkName = $('#parkNameQuery2').val();
+	}
+	if(parkName != '')
+		queryStr += "parkName like '%"+parkName+"%' AND ";
+
+	var parkType = $('#parkTypeQuery').val();
+	if(parkType != '')
+		queryStr += "parkType = '"+parkType+"' AND ";
+
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_tc_fjdctcw',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

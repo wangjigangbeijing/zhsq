@@ -6,6 +6,13 @@ $(document).ready(function (){
 		$('#btnAdd1').hide();
 		$('#btnAdd2').hide();
 	}
+	
+	if(haveRight('jc_tc_dltcc_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -17,6 +24,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 });
@@ -201,6 +211,63 @@ function deleteData(id)
 		},
 		confirmButton: "删除",
 		cancelButton: "放弃"
+	});
+}
+
+
+
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 
+	var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+ 
+	var rateinfo = $('#rateinfoQuery').val();
+	if(searchtype == 2){
+		rateinfo = $('#rateinfoQuery').val();
+	}
+	if(rateinfo != '')
+		queryStr += "rateinfo = '"+rateinfo+"' AND ";
+	
+	var roadname = $('#roadnameQuery').val();
+	if(roadname != '')
+		queryStr += "roadname like '%"+roadname+"%' AND ";
+	
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_tc_dltcc',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
 	});
 }
 

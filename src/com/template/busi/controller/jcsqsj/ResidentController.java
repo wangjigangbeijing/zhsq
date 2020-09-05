@@ -36,6 +36,21 @@ public String addOrUpdate(String id,String dataid,String name,String identitytyp
 	JSONObject jsonObj = new JSONObject();
 	try
 	{
+		HqlFilter hqlFilter = new HqlFilter();
+		
+		if(idnumber != null && idnumber.equalsIgnoreCase("") == false && idnumber.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("idnumber", HqlFilter.Operator.EQ, new SafeFieldChecker().checkField(residentService, "jc_resident", "idnumber", idnumber));
+		}
+		
+		List<Resident> listResident = residentService.findByFilter(hqlFilter);
+		if(listResident.size() != 0)
+		{
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", "身份证号码已存在");
+			return jsonObj.toString();
+		}
+		
 		Resident resident;
 		if(id==null || id.equalsIgnoreCase(""))
 		{

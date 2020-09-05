@@ -9,6 +9,12 @@ $(document).ready(function (){
 		$('#btnAdd2').hide();
 	}
 	
+	if(haveRight('jc_service_store_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -20,6 +26,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 });
@@ -168,74 +177,7 @@ function load()
 			});  
 		}
 	});
-	
-	
-	
 }
-
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/service_storeController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dateid').val(obj.dateid);
-				$('#name').val(obj.name);
-				$('#type').val(obj.type);
-				$('#address').val(obj.address);
-				$('#socialcode').val(obj.socialcode);
-				$('#businessscope').val(obj.businessscope);
-				$('#businessarea').val(obj.businessarea);
-				$('#ischain').val(obj.ischain);
-				$('#otherbusiness').val(obj.otherbusiness);
-				$('#contact').val(obj.contact);
-				$('#contacttel').val(obj.contacttel);
-				$('#opentime').val(obj.opentime);
-				$('#closetime').val(obj.closetime);
-				$('#is24hours').val(obj.is24hours);
-				$('#longitude').val(obj.longitude);
-				$('#latitude').val(obj.latitude);
-				$('#status').val(obj.status);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dateid').val('');
-	$('#name').val('');
-	$('#type').val('');
-	$('#address').val('');
-	$('#socialcode').val('');
-	$('#businessscope').val('');
-	$('#businessarea').val('');
-	$('#ischain').val('');
-	$('#otherbusiness').val('');
-	$('#contact').val('');
-	$('#contacttel').val('');
-	$('#opentime').val('');
-	$('#closetime').val('');
-	$('#is24hours').val('');
-	$('#longitude').val('');
-	$('#latitude').val('');
-	$('#status').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
 
 function viewData(id)
 {
@@ -317,3 +259,70 @@ function deleteData(id)
 }
 
 
+
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+ 
+	 var type = $('#typeQuery').val();
+	 if(type != '')
+		queryStr += "type = '"+type+"' AND ";
+	
+	 var address = $('#addressQuery').val();
+	 if(address != '')
+		queryStr += "address like '%"+address+"%' AND ";
+ 
+	 var socialcode = $('#socialcodeQuery').val();
+	 if(socialcode != '')
+			queryStr += "socialcode = '"+socialcode+"' AND ";
+	 
+	 var ischain = $('#ischainQuery').val();
+	 if(ischain != '')
+			queryStr += "ischain = '"+ischain+"' AND ";
+	 
+	 var is24hours = $('#is24hoursQuery').val();
+	 if(is24hours != '')
+			queryStr += "is24hours = '"+is24hours+"' AND ";
+ 
+	 var status = $('#statusQuery').val();
+	 if(status != '')
+		queryStr += "status = '"+status+"' AND ";
+	 
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_service_store',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

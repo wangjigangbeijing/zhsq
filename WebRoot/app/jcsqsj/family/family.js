@@ -8,6 +8,12 @@ $(document).ready(function (){
 		$('#btnAdd2').hide();
 	}
 	
+	if(haveRight('jc_family_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -19,6 +25,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 	
@@ -371,53 +380,7 @@ function load()
 			});  
 		}
 	});
-	
-	
-	
-	
 }
-
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/familyController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#name').val(obj.name);
-				$('#registrationcategory').val(obj.registrationcategory);
-				$('#registrationaddress').val(obj.registrationaddress);
-				$('#ofcommunity').val(obj.ofcommunity);
-				$('#ofresidebuilding').val(obj.ofresidebuilding);
-				$('#ofunit').val(obj.ofunit);
-				$('#ofroom').val(obj.ofroom);
-				$('#status').val(obj.status);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#name').val('');
-	$('#registrationcategory').val('');
-	$('#registrationaddress').val('');
-	$('#ofcommunity').val('');
-	$('#ofresidebuilding').val('');
-	$('#ofunit').val('');
-	$('#ofroom').val('');
-	$('#status').val('');
-
-}
-*/
 
 
 function viewData(id)
@@ -501,3 +464,71 @@ function deleteData(id)
 }
 
 
+
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+ 
+ 
+	 var registrationcategory = $('#registrationcategoryQuery').val();
+	 if(registrationcategory != '')
+		queryStr += "registrationcategory = '"+registrationcategory+"' AND ";
+	 
+	 var ofcommunity = $('#ofcommunityQuery').val();
+	 if(ofcommunity != '')
+		queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
+	 
+	 var ofresidebuilding = $('#ofresidebuildingQuery').val();
+	 if(ofresidebuilding != '')
+		queryStr += "ofresidebuilding = '"+ofresidebuilding+"' AND ";
+	 
+	 var ofunit = $('#ofunitQuery').val();
+	 if(ofunit != '')
+		queryStr += "ofunit = '"+ofunit+"' AND ";
+	 
+	 var ofroom = $('#ofroomQuery').val();
+	 if(ofroom != '')
+		queryStr += "ofroom = '"+ofroom+"' AND ";
+	 
+	 var status = $('#statusQuery').val();
+	if(status != '')
+		queryStr += "status = '"+status+"' AND ";
+
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_family',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

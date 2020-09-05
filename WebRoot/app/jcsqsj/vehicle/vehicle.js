@@ -8,6 +8,12 @@ $(document).ready(function (){
 		$('#btnAdd2').hide();
 	}
 	
+	if(haveRight('jc_vehicle_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -20,8 +26,10 @@ $(document).ready(function (){
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
 	
-	load();
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
+	load();
 	
 $.ajax({
 	  type: 'POST',
@@ -410,3 +418,79 @@ function deleteData(id)
 }
 
 
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	
+	
+	var number = $('#numberQuery').val();
+	if(searchtype == 2){
+		number = $('#numberQuery2').val();
+	}
+	if(number != '')
+		queryStr += "number like '%"+number+"%' AND ";
+
+	 var ofcommunity = $('#ofcommunityQuery').val();
+	 if(ofcommunity != '')
+		queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
+	 
+	 var ofresidebuilding = $('#ofresidebuildingQuery').val();
+	 if(ofresidebuilding != '')
+		queryStr += "ofresidebuilding = '"+ofresidebuilding+"' AND ";
+	 
+	 var ofunit = $('#ofunitQuery').val();
+	 if(ofunit != '')
+		queryStr += "ofunit = '"+ofunit+"' AND ";
+	 
+	 var ofroom = $('#ofroomQuery').val();
+	 if(ofroom != '')
+		queryStr += "ofroom = '"+ofroom+"' AND ";
+	 
+	 var offamily = $('#offamilyQuery').val();
+	 if(offamily != '')
+		queryStr += "offamily = '"+offamily+"' AND ";
+	 
+	 var type = $('#typeQuery').val();
+	 if(type != '')
+		queryStr += "type = '"+type+"' AND ";
+	 
+	 var ownername = $('#ownernameQuery').val();
+	 if(ownername != '')
+		queryStr += "ownername like '%"+ownername+"%' AND ";
+	
+	 var status = $('#statusQuery').val();
+	 if(status != '')
+		queryStr += "status = '"+status+"' AND ";
+	 
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_vehicle',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}

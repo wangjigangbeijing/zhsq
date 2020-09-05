@@ -7,6 +7,13 @@ $(document).ready(function (){
 		$('#btnAdd1').hide();
 		$('#btnAdd2').hide();
 	}
+	
+	if(haveRight('jc_pubfacilities_gy_exp') == false)
+	{
+		$('#btnExport1').hide();
+		$('#btnExport2').hide();
+	}
+	
 	$('#btnAdd1').click(ShowAddModal);
 	$('#btnAdd2').click(ShowAddModal);
 	
@@ -18,6 +25,9 @@ $(document).ready(function (){
 	
 	$('#btnSearch1').click(load);
 	$('#btnSearch2').click(load);
+	
+	$('#btnExport1').click(exportData);
+	$('#btnExport2').click(exportData);
 	
 	load();
 });
@@ -169,62 +179,7 @@ function load()
 			});  
 		}
 	});
-	
 }
-
-/*
-function viewDetail(id)
-{
-	//$('#modalTitle').text('修改用户信息');
-	curId = id;
-	$.get(getContextPath()+"/jc_pubfacilities_gyController/get?id="+curId,
-		function(result){
-			var obj = jQuery.parseJSON(result);  
-			if(obj.success)
-			{
-				$('#modalDetail').show();
-				
-								$('#dateid').val(obj.dateid);
-				$('#type').val(obj.type);
-				$('#objid').val(obj.objid);
-				$('#objname').val(obj.objname);
-				$('#locatedsc').val(obj.locatedsc);
-				$('#deptname1').val(obj.deptname1);
-				$('#deptname2').val(obj.deptname2);
-				$('#deptname3').val(obj.deptname3);
-				$('#isincommunity').val(obj.isincommunity);
-				$('#material').val(obj.material);
-				$('#form').val(obj.form);
-				$('#objState').val(obj.objState);
-				$('#pictures').val(obj.pictures);
-				$('#note').val(obj.note);
-
-			}
-		});
-}
-
-function closeModalDetail()
-{
-	$('#modalDetail').hide();
-	curId = '';
-	
-		$('#dateid').val('');
-	$('#type').val('');
-	$('#objid').val('');
-	$('#objname').val('');
-	$('#locatedsc').val('');
-	$('#deptname1').val('');
-	$('#deptname2').val('');
-	$('#deptname3').val('');
-	$('#isincommunity').val('');
-	$('#material').val('');
-	$('#form').val('');
-	$('#objState').val('');
-	$('#pictures').val('');
-	$('#note').val('');
-
-}
-*/
 
 function viewData(id)
 {
@@ -306,3 +261,72 @@ function deleteData(id)
 }
 
 
+function exportData()
+{
+	var queryStr = '';
+	
+	var searchtype = $("#searchtype").val();
+	if(searchtype == 1){
+		$('#btnExport1').attr('disabled','disabled');
+	}
+	else {
+		$('#btnExport2').attr('disabled','disabled');
+	}
+	 var name = $('#nameQuery').val();
+	if(searchtype == 2){
+		name = $('#nameQuery2').val();
+	}
+	if(name != '')
+		queryStr += "name like '%"+name+"%' AND ";
+ 
+	 var type = $('#typeQuery').val();
+	if(searchtype == 2){
+		type = $('#typeQuery2').val();
+	}
+	if(type != '')
+		queryStr += "type = '"+type+"' AND ";
+	
+	var deptname1 = $('#deptname1Query').val();
+	if(deptname1 != '')
+		queryStr += "deptname1 like '%"+deptname1+"%' AND ";
+	
+	var isincommunity = $('#isincommunityQuery').val();
+	if(isincommunity != '')
+		queryStr += "isincommunity = '"+isincommunity+"' AND ";
+	
+	var material = $('#materialQuery').val();
+	if(material != '')
+		queryStr += "material = '"+material+"' AND ";
+	
+	var form = $('#formQuery').val();
+	if(form != '')
+		queryStr += "form = '"+form+"' AND ";
+	
+	var objState = $('#objStateQuery').val();
+	if(objState != '')
+		queryStr += "objState = '"+objState+"' AND ";
+	
+	$.post(getContextPath()+"/dataController/exportDataOfTable",
+		{
+			tableId:'jc_pubfacilities_gy',
+			queryStr:queryStr
+		},
+		function(result){
+			
+			$('#btnExport1').removeAttr('disabled');
+			$('#btnExport2').removeAttr('disabled');
+			//$('#loading').hide();
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				window.open(getContextPath()+"/fileController/download?fileName="+encodeURI(obj.fileName));
+			}
+			else
+			{
+				jError("数据导出失败,请联系管理员!",{
+							VerticalPosition : 'center',
+							HorizontalPosition : 'center'
+						});
+			}
+	});
+}
