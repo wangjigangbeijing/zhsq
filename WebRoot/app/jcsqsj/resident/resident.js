@@ -554,19 +554,19 @@ function exportData()
 		queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
 	
 	var ofresidebuilding = $('#ofresidebuildingQuery').val();
-	if(ofresidebuilding != '')
+	if(ofresidebuilding != '' && ofresidebuilding != null)
 		queryStr += "ofresidebuilding = '"+ofresidebuilding+"' AND ";
 	
 	var ofunit = $('#ofunitQuery').val();
-	if(ofunit != '')
+	if(ofunit != '' && ofunit != null)
 		queryStr += "ofunit = '"+ofunit+"' AND ";
 	
 	var ofroom = $('#ofroomQuery').val();
-	if(ofroom != '')
+	if(ofroom != '' && ofroom != null)
 		queryStr += "ofroom = '"+ofroom+"' AND ";
 	
 	var offamily = $('#offamilyQuery').val();
-	if(offamily != '')
+	if(offamily != '' && offamily != null)
 		queryStr += "offamily = '"+offamily+"' AND ";
 	
 	var sex = $('#sexQuery').val();
@@ -631,7 +631,7 @@ function exportData()
 	
 	$.post(getContextPath()+"/dataController/exportDataOfTable",
 		{
-			tableId:'jc_community',
+			tableId:'jc_resident',
 			queryStr:queryStr
 		},
 		function(result){

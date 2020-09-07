@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 import com.mysql.cj.util.StringUtils;
+import com.template.busi.safe.AES;
 import com.template.model.SysTable;
 import com.template.model.SysTableAttribute;
 import com.template.model.gis.Gismaplayers;
@@ -39,6 +40,7 @@ import com.template.service.TableAttributeService;
 import com.template.service.TableService;
 import com.template.service.gis.GismaplayersService;
 import com.template.util.ConstValue;
+import com.template.util.EncryptUtil;
 import com.template.util.HqlFilter;
 import com.template.util.TimeUtil;
 import com.template.util.Utility;
@@ -1124,9 +1126,7 @@ public class DataController {
 				if((sSource == null || sSource.equalsIgnoreCase("app") == false) && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
 					userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 				
-				String organization = "";
-				if(ConstValue.userToOrgMap.containsKey(userId))
-					organization = ConstValue.userToOrgMap.get(userId);
+				String organization = Utility.getInstance().getOrganization(request);
 				
 				if(organization != null && organization.equalsIgnoreCase("") == false)
 				{
@@ -1629,7 +1629,7 @@ public class DataController {
 			
 			ArrayList<String> fieldList = new ArrayList<String>();
 			ArrayList<String> fieldValList = new ArrayList<String>();
-			
+			ArrayList<String> encFieldList = new ArrayList<String>();
 			for(int i=0;i<layerAttrInDB.size();i++)
 			{
 				SysTableAttribute sla = layerAttrInDB.get(i);
@@ -1646,8 +1646,12 @@ public class DataController {
 				
 				hmFiledNameToFieldType.put(sla.getENName(), sla.getDBType());
 				
-				fieldList.add(sla.getENName());
-				fieldValList.add(sla.getValues());
+				fieldList.add(sla.getENName().toLowerCase());
+				fieldValList.add(sla.getValues().toLowerCase());
+				if(sla.getencryption()!=null && sla.getencryption().equalsIgnoreCase("是"))
+				{
+					encFieldList.add(sla.getENName().toLowerCase());
+				}
 			}
 			
 			if(sFieldNames.endsWith(","))
@@ -1739,6 +1743,23 @@ public class DataController {
 						val = ConstValue.hmDicMap.get(val);
 					}
 					
+					if(encFieldList.contains(fieldName))
+					{
+						try
+						{
+							val = AES.decrypt(val);
+						}
+						catch(Exception e)
+						{
+							logger.error("failed to decode "+val+" in table "+sTableName);
+						}
+					}
+					
+					if(val != null && val.equalsIgnoreCase("") == false)
+					{
+						val = val.replaceAll(",", "|");
+						val = val.replaceAll("\\n", "");
+					}
 					output += val+",";
 				}
 				

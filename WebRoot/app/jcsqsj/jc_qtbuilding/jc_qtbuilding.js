@@ -356,7 +356,7 @@ function exportData()
 		queryStr += "heatingsystem = '"+heatingsystem+"' AND ";
 	 
 	 var ofcommunity = $('#ofcommunityQuery').val();
-	 if(ofcommunity != '')
+	 if(ofcommunity != '' && ofcommunity != null)
 		queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
 	 
 	 var buildtype = $('#buildtypeQuery').val();

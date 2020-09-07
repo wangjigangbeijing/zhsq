@@ -307,9 +307,9 @@ function exportData()
 	 if(catagory != '')
 		queryStr += "catagory = '"+catagory+"' AND ";
 	 
-	 var deptname1 = $('#deptname1Query').val();
+	 /*var deptname1 = $('#deptname1Query').val();
 	if(deptname1 != '')
-		queryStr += "deptname1 like '%"+deptname1+"%' AND ";
+		queryStr += "deptname1 like '%"+deptname1+"%' AND ";*/
 	 
 	 var address = $('#addressQuery').val();	 
 	if(address != '')

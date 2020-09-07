@@ -38,7 +38,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	/**
 	 * 获取用户社区
 	 * @return
-	 */
+	 
 	private String getOrganization() {
 		String userid = (String) request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 		
@@ -60,6 +60,9 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	 */
 	private String getOrganizationName() {
 		String owner = Utility.getInstance().getOrganization(request);
+		
+		if(owner == null || owner.equalsIgnoreCase(""))
+			return "大红门街道办事处";
 		
 		String sql = "select b.name from sys_organization b where b.id=?";
 		List<Object> params = new ArrayList<Object>();
@@ -88,7 +91,8 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			params.add(owner);
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
-				jsonObj.put("success", false);
+				jsonObj.put("boundary", "116.3713932,39.828271,116.4296722,39.8599433");
+				jsonObj.put("success", true);
 			}
 			else {
 				jsonObj.put("boundary", list.get(0).get("boundry"));

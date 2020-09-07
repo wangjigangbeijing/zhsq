@@ -78,6 +78,7 @@ public class LoginController {
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, "admin");
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, "");
 				
+				jsonObj.put("border", "116.3713932,39.828271,116.4296722,39.8599433");
 				jsonObj.put("userType", ConstValue.USER_TYPE_ADMIN);	
 				jsonObj.put("userName", "管理员");	
 				jsonObj.put("success", true);	
@@ -90,12 +91,15 @@ public class LoginController {
 			{
 				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
 				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
-				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, "admin");
+				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, "7a004f74-7862-4384-92c9-75426e33467f");
 				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, "");
 				
+				jsonObj.put("border", "116.3713932,39.828271,116.4296722,39.8599433");
 				jsonObj.put("userType", ConstValue.USER_TYPE_ADMIN);	
 				jsonObj.put("userName", "大红门街道管理员");	
 				jsonObj.put("success", true);	
+				jsonObj.put("organizations", "d216599c-7b85-48ab-8e49-049178f5a285");
+				jsonObj.put("organizationNames", "大红门街道办事处");
 				jsonObj.put("homePage", "/app/homepage.html");
 				
 				return jsonObj.toString();
@@ -188,7 +192,7 @@ public class LoginController {
 				
 				String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
 				
-				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
+				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_COMMUNITY);
 				
 				if(sSource != null && sSource.equalsIgnoreCase(ConstValue.HTTP_HEADER_SOURCE_APP))//用户从APP端登陆
 				{
@@ -305,7 +309,7 @@ public class LoginController {
 			String sSql = "SELECT SYS_RIGHT.RIGHTID,RIGHTTYPE FROM SYS_RIGHT,SYS_ROLE_RIGHT WHERE "
 					+ "ROLEID IN ("+roleIds+") AND SYS_RIGHT.RIGHTID = SYS_ROLE_RIGHT.RIGHTID";
 			
-			if(sUserId.equalsIgnoreCase("admin"))
+			if(sUserId.equalsIgnoreCase("admin") || sUserId.equalsIgnoreCase("7a004f74-7862-4384-92c9-75426e33467f"))
 				sSql = "SELECT RIGHTID,RIGHTTYPE FROM SYS_RIGHT";
 				
 			List<HashMap> listObj = organizationService.findBySql(sSql);

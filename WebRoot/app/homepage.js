@@ -879,6 +879,8 @@ function getCurrentLoginUserInfo()
 			
 			curUserId = obj.userId;
 			
+			curUserType = obj.userType;
+			
 			for(var i=0;obj.rightArr != null && i<obj.rightArr.length;i++)
 			{
 				var rightObj = obj.rightArr[i];

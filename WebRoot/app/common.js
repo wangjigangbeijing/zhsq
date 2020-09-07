@@ -13,7 +13,7 @@ function getContextPath() {
 var VALUE_SPLITTER = ",";
 
 var USER_TYPE_ADMIN = 0;
-var USER_TYPE_PM = 1;
+var USER_TYPE_COMMUNITY = 1;
 
 var curUserId = '';
 

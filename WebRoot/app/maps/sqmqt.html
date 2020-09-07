@@ -252,6 +252,10 @@ function initMap(){
 	  }
 	});
 	
+	var zoom = 17;
+	if(curUserType == USER_TYPE_ADMIN)//Admin
+		zoom = 15;
+	
 	if(boundary.length == 0){
 		map = new ol.Map({
 			overlays: [overlay],
@@ -280,7 +284,7 @@ function initMap(){
 				//center: ol.proj.transform([116.30454,39.849639], 'EPSG:4326', 'EPSG:3857'),
 				extend: boundary,
 				center: centers,
-				zoom: 17,
+				zoom: zoom,
 				maxZoom: 18,
 				//projection: 'EPSG:3857',// 
 				projection: 'EPSG:4326',// 

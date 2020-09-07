@@ -227,14 +227,11 @@ public class Utility
 		
 		try
 		{
-			//String sSource = request.getHeader(ConstValue.HTTP_HEADER_SOURCE);//app
-			
 			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
 			
 			if(userId == null || userId.equalsIgnoreCase(""))
 				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 			
-			//String organization = "";
 			if(ConstValue.userToOrgMap.containsKey(userId))
 				organization = ConstValue.userToOrgMap.get(userId);
 		}
@@ -254,6 +251,9 @@ public class Utility
 		{
 			logger.error(e.getMessage(),e);
 		}
+		
+		if(organization == null || organization.equalsIgnoreCase("d216599c-7b85-48ab-8e49-049178f5a285"))//如果是一个街道用户,则返回一个空的组织ID以应付数据操作
+			organization = "";
 		
 		return organization;
 	}

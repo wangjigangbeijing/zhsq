@@ -489,19 +489,19 @@ function exportData()
 		queryStr += "registrationcategory = '"+registrationcategory+"' AND ";
 	 
 	 var ofcommunity = $('#ofcommunityQuery').val();
-	 if(ofcommunity != '')
+	 if(ofcommunity != '' && ofcommunity != null)
 		queryStr += "ofcommunity = '"+ofcommunity+"' AND ";
 	 
 	 var ofresidebuilding = $('#ofresidebuildingQuery').val();
-	 if(ofresidebuilding != '')
+	 if(ofresidebuilding != '' && ofresidebuilding != null)
 		queryStr += "ofresidebuilding = '"+ofresidebuilding+"' AND ";
 	 
 	 var ofunit = $('#ofunitQuery').val();
-	 if(ofunit != '')
+	 if(ofunit != '' && ofunit != null)
 		queryStr += "ofunit = '"+ofunit+"' AND ";
 	 
 	 var ofroom = $('#ofroomQuery').val();
-	 if(ofroom != '')
+	 if(ofroom != '' && ofroom != null)
 		queryStr += "ofroom = '"+ofroom+"' AND ";
 	 
 	 var status = $('#statusQuery').val();
