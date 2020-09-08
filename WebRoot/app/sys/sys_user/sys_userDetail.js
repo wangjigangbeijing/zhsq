@@ -39,10 +39,10 @@ $(document).ready(function (){
 		}
 	);
 	
-	initialOrganizationTree('');
-	
 	if(curId != '')
 		viewDetail(curId);
+	else
+		initialOrganizationTree(curUserOrgId,'');
 });
 
 
@@ -55,7 +55,7 @@ function viewDetail(id)
 			{
 				$('#modalDetail').show();
 				
-								$('#name').val(obj.name);
+				$('#name').val(obj.name);
 				$('#loginid').val(obj.loginid);
 				$('#password').val(obj.password);
 				//$('#gender').val(obj.gender);
@@ -75,8 +75,10 @@ function viewDetail(id)
 				//$('#status').val(obj.status);
 				$("input[name='status'][value='"+obj.status+"']").attr("checked",true); 
 				
-				$('#parentOrgInput').val(obj.orgIds);
-				$('#parentOrgNameInput').val(obj.orgNames);
+				//$('#parentOrgInput').val(obj.orgIds);
+				//$('#parentOrgNameInput').val(obj.orgNames);
+				
+				initialOrganizationTree(curUserOrgId,obj.orgIds);
 			}
 		});
 }
@@ -198,9 +200,9 @@ function onBodyDown(event) {
 	
 var orgTree;
 
-function initialOrganizationTree(selectedOrgId)
+function initialOrganizationTree(rootOrgId,selectedOrgId)
 {
-	$.get(getContextPath()+"/sysOrganizationController/loadOrganizationTree",
+	$.get(getContextPath()+"/sysOrganizationController/loadOrganizationTree?rootOrgId="+rootOrgId,
 		function(result){
 		var obj = jQuery.parseJSON(result);  
 		if(obj.success)

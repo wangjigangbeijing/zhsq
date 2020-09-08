@@ -213,7 +213,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jc_volunteer/jc_volunteerDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_volunteer/jc_volunteerDetail.html", function () {
 		
     });
 	

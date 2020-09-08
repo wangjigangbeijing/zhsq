@@ -122,12 +122,19 @@ public class SysOrganizationController {
 			
 			hqlFilter.setSort("seq");
 	
+			ArrayList<String> orgIdList = new ArrayList<String>(); 
+			
 	        List<SysOrganization> listObj = organizationService.findByFilter(hqlFilter);
 	        JSONArray jsonArr = new JSONArray();
 	        int iTotalCnt = 0;
 			for(int i=0;i<listObj.size();i++)
 			{
 				SysOrganization organization = listObj.get(i);
+				
+				if(orgIdList.contains(organization.getId()))
+					continue;
+				orgIdList.add(organization.getId());
+				
 				JSONObject jsonTmp = new JSONObject();
 				jsonTmp.put("id", organization.getId());
 				jsonTmp.put("name",organization.getname());
@@ -177,6 +184,11 @@ public class SysOrganizationController {
 			for(int i=0;i<listOwnObj.size();i++)
 			{
 				SysOrganization organization = listOwnObj.get(i);
+				
+				if(orgIdList.contains(organization.getId()))
+					continue;
+				orgIdList.add(organization.getId());
+				
 				JSONObject jsonTmp = new JSONObject();
 				jsonTmp.put("id", organization.getId());
 				jsonTmp.put("name",organization.getname());

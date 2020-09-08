@@ -126,6 +126,89 @@ public String delete(String id)
 			}
 
 			if(alOrg != null && alOrg.size() != 0)
+				hqlFilter.addOrCondGroup("authorityorg", HqlFilter.Operator.LIKE, alOrg);
+			
+	        List<Notice> listObj = noticeService.findByFilter(hqlFilter);
+	        JSONArray jsonArr = new JSONArray();
+	        int iTotalCnt = 0;
+			for(int i=0;i<listObj.size();i++)
+			{
+				Notice notice = listObj.get(i);
+				JSONObject jsonTmp = new JSONObject();
+				jsonTmp.put("id", notice.getId());
+				jsonTmp.put("title",notice.gettitle());
+				jsonTmp.put("type",notice.gettype());
+				jsonTmp.put("authorityorg",notice.getauthorityorg());
+				
+				if(ConstValue.orgMap.containsKey(notice.getauthorityorg()))
+					jsonTmp.put("authorityorgname",ConstValue.orgMap.get(notice.getauthorityorg()));
+				
+				jsonTmp.put("body",notice.getbody());
+				
+				String bodyTxt = notice.getbody();
+				String bodyShort = bodyTxt;
+				if(bodyShort != null && bodyShort.length() > 10)
+					bodyShort = bodyShort.substring(0, 10) + "...";
+				
+				jsonTmp.put("bodyShort", bodyShort);
+				
+				jsonTmp.put("attach",notice.getattach());
+				jsonTmp.put("time",TimeUtil.formatDate(notice.gettime(),"yyyy-MM-dd HH:mm"));
+	
+	       		jsonArr.put(jsonTmp);
+	        	iTotalCnt++;
+			}
+	        jsonObj.put("totalCount", iTotalCnt);
+	        jsonObj.put("list", jsonArr);
+	        jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+
+	@RequestMapping(value="loadFromWeb",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadFromWeb(String title,String type,String body)
+	{
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			HqlFilter hqlFilter = new HqlFilter();
+			
+			if(title != null && title.equalsIgnoreCase("") == false && title.equalsIgnoreCase("null") == false)
+			{
+				hqlFilter.addQryCond("title", HqlFilter.Operator.LIKE, "%"+title+"%");
+			}
+			if(type != null && type.equalsIgnoreCase("") == false && type.equalsIgnoreCase("null") == false)
+			{
+				hqlFilter.addQryCond("type", HqlFilter.Operator.LIKE, "%"+type+"%");
+			}
+			if(body != null && body.equalsIgnoreCase("") == false && body.equalsIgnoreCase("null") == false)
+			{
+				hqlFilter.addQryCond("body", HqlFilter.Operator.LIKE, "%"+body+"%");
+			}
+	
+			ArrayList<String> alOrg = new ArrayList<String>(); 
+			
+			String organization = Utility.getInstance().getOrganization(request);
+			
+			if(organization != null && organization.equalsIgnoreCase("") == false)
+			{
+				String [] organizationArr = organization.split(",");
+				
+
+				for(int i=0;i<organizationArr.length;i++)
+				{
+					alOrg.add("%"+organizationArr[i]+"%");
+				}
+			}
+
+			if(alOrg != null && alOrg.size() != 0)
 				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 			
 	        List<Notice> listObj = noticeService.findByFilter(hqlFilter);
@@ -139,6 +222,10 @@ public String delete(String id)
 				jsonTmp.put("title",notice.gettitle());
 				jsonTmp.put("type",notice.gettype());
 				jsonTmp.put("authorityorg",notice.getauthorityorg());
+				
+				if(ConstValue.orgMap.containsKey(notice.getauthorityorg()))
+					jsonTmp.put("authorityorgname",ConstValue.orgMap.get(notice.getauthorityorg()));
+				
 				jsonTmp.put("body",notice.getbody());
 				
 				String bodyTxt = notice.getbody();

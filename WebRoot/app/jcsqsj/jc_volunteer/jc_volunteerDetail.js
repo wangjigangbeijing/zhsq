@@ -109,7 +109,7 @@ function gobackPage()
 	
 	curId = '';
 	
-	$('#main-content').load("./jcsqsj/jc_volunteer/jc_volunteer.html", function () {
+	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
     });
 	

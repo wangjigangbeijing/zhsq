@@ -2,6 +2,8 @@ package com.template.busi.controller.jcsqsj;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.template.busi.safe.SafeFieldChecker;
 import com.template.model.jcsqsj.Jc_volunteer;
 import com.template.service.jcsqsj.Jc_volunteerService;
 import com.template.util.HqlFilter;
@@ -99,7 +101,8 @@ public String load(String name,String idnumber,String sex,String birthday,String
 		HqlFilter hqlFilter = new HqlFilter();
 if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
 {
-	hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+	//hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
+	hqlFilter.addQryCond("name", HqlFilter.Operator.EQ, new SafeFieldChecker().checkField(jc_volunteerService, "jc_volunteer", "name", name));
 }
 if(idnumber != null && idnumber.equalsIgnoreCase("") == false && idnumber.equalsIgnoreCase("null") == false)
 {

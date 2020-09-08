@@ -8,20 +8,23 @@ $(document).ready(function (){
 		autoclose: true
 	});
 	
-	initialOrganizationTree(curUserOrgId,'');
-	
 	$('#btnSearch').click(load);
 	
 	if(curId != '')
 		viewDetail(curId);
 	else
 	{
+		initialOrganizationTree(curUserOrgId,'');
+	
 		var now = new Date();
 		 var year = now.getFullYear();
 		 var month = now.getMonth()+1;
 		 var date = now.getDate();
 		$('#time').val(year+'-'+month+'-'+date);
 	}
+	
+	if(curUserType == USER_TYPE_COMMUNITY)
+		$('#typeDiv').hide();
 });
 
 
@@ -35,10 +38,13 @@ function viewDetail(id)
 				$('#modalDetail').show();
 				
 				$('#title').val(obj.title);
-				$('#type').val(obj.type);
+				//$('#type').val(obj.type);
+				$("input[name='type'][value='"+obj.type+"']").attr("checked",true); 
 				$('#authorityorg').val(obj.authorityorg);
 				$('#body').val(obj.body);
 				$('#attach').val(obj.attach);
+				
+				initialOrganizationTree(curUserOrgId,obj.authorityorg);
 				
 				var attachArr = obj.attach.split(VALUE_SPLITTER);		
 
@@ -80,11 +86,16 @@ function ShowAddModal()
 */
 function addOrUpdate()
 {
+	var type = $('input:radio[name="type"]:checked').val();
+	
+	if(type == null || type == '')
+		type = '社区公告';
+	
 	$.post(getContextPath()+"/noticeController/addOrUpdate",
 	{
 		id:curId,
 		title:$('#title').val(),
-		type:$('#type').val(),
+		type:type,    //$('#type').val(),
 		authorityorg:$("#parentOrgInput").val(),//$('#authorityorg').val(),
 		body:$('#body').val(),
 		attach:$('#attach').val(),
@@ -122,9 +133,6 @@ function downloadAttach(fileName)
 	
 	//window.open(getContextPath()+"/fileController/downLoad/"+encodeURI(obj.fileName));
 }
-
-
-
 
 var setting = {
 	view: {

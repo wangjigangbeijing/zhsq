@@ -266,13 +266,14 @@ function exportData()
 	else {
 		$('#btnExport2').attr('disabled','disabled');
 	}
-	 var name = $('#nameQuery').val();
+	
+	/*var name = $('#nameQuery').val();
 	if(searchtype == 2){
 		name = $('#nameQuery2').val();
 	}
 	if(name != '')
 		queryStr += "name like '%"+name+"%' AND ";
- 
+	*/
 	var UseType = $('#UseTypeQuery').val();
 	if(UseType != '')
 		queryStr += "UseType = '"+UseType+"' AND ";

@@ -72,7 +72,7 @@ function load()
 					{ 'data': 'mobile' ,'sClass':'text-center'},
 					{ 'data': 'orgNames' ,'sClass':'text-center'},
 					{ 'data': 'job' ,'sClass':'text-center'},
-					{ 'data': 'roleTxt' ,'sClass':'text-center'},
+					//{ 'data': 'roleTxt' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
 
@@ -89,7 +89,7 @@ function load()
 					{
 					className: 'control',
 					orderable: false,
-					targets:  9,//从0开始
+					targets:  8,//从0开始
 					mRender : function(data,type,full){
 						
 						var btn = "<a href=\"#\" onclick=\"editData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\">编辑</a>&nbsp;";

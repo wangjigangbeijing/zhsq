@@ -183,7 +183,7 @@ function ShowAddModal()
 	//$('#modalDetail').show();
 	
 	curId = '';
-	$('#main-content').load("./jc_sqorgmember/jc_sqorgmemberDetail.html", function () {
+	$('#main-content').load("./jcsqsj/jc_sqorgmember/jc_sqorgmemberDetail.html", function () {
 		
     });
 	

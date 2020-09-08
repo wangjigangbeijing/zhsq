@@ -25,7 +25,7 @@ function load()
  var body = $('#bodyQuery').val();
 
 	
-	$.get(getContextPath()+'/noticeController/load?title='+title+'&type='+type+'&body='+body+'&',
+	$.get(getContextPath()+'/noticeController/loadFromWeb?title='+title+'&type='+type+'&body='+body+'&',
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  
@@ -63,7 +63,7 @@ function load()
 				"columns": [
 										{ 'data': 'title' ,'sClass':'text-center'},
 					{ 'data': 'type' ,'sClass':'text-center'},
-					{ 'data': 'authorityorg' ,'sClass':'text-center'},
+					{ 'data': 'authorityorgname' ,'sClass':'text-center'},
 					{ 'data': 'bodyShort' ,'sClass':'text-center'},
 					{ 'data': 'time' ,'sClass':'text-center'},
 					{ 'data': '' ,'sClass':'text-center'}
