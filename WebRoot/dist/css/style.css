@@ -1,0 +1,171 @@
+
+*{margin:0px;padding:0px;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+
+.center{margin:0 auto;}
+
+body{background-color:#fff;font-size:14px;font-family:"Î¢ÈíÑÅºÚ",Arial, Helvetica, sans-serif,"ËÎÌå";font-size: 12px; }
+ul,li{list-style:none; }
+
+A {/*COLOR:#000; */TEXT-DECORATION: none;}
+
+
+img{border:0px;}
+
+.time_box{ margin-left:-18px; margin-bottom: 25px; }
+.time1{ width:18%; text-align: center; border-radius: 8px; margin-left:2%; }
+.time1 div{  color: #ec6b41; font-weight: bold; font-size: 18px; padding: 10px 0;}
+.timeColor1{ border:1px solid #c47b6a; }
+.timeColor2{ border:1px solid #e1cb7f; }
+.timeColor3{ border:1px solid #77b5ca; }
+.timeColor4{ border:1px solid #ddb369; }
+.timeColor5{ border:1px solid #77b5ca; }
+.card-titleColor{  overflow: hidden;}
+.card-titleColor img{  float: left; margin-top: 2px;}
+.card-titleColor span{ float: left; margin-left: 10px; color: #2f6299}
+.text-muted{ font-size: 18px; line-height: 28px; color#333!important;
+    display: -webkit-box;text-overflow: ellipsis;
+    overflow : hidden;text-overflow: ellipsis;
+    -webkit-line-clamp: 5;-webkit-box-orient: vertical;
+}
+
+
+/*Í¼Æ¬ÂÖ²¥*/
+.fs{ color:#ff7cba;}
+
+
+
+.index_zhuanjia{ width:100%; overflow:hidden;margin:0px auto 0 auto;}
+
+.index_zhuanjia_pic{ width:70%; height:265px; overflow:hidden; float:right;position:relative;}
+
+.index_zhuanjia_pic ul{height:285px;position:absolute; left:0;}
+
+.index_zhuanjia_pic li{width:949px; height:265px; overflow:hidden;position:relative;float:left;}
+
+
+
+.index_zhuanjia_left_inc{ width:32px; height:41px; position:absolute;left:0px;top:195px; cursor:pointer;background:url(../images/float_left_inc.png) left top no-repeat; z-index:9; display: none;}
+
+.index_zhuanjia_right_inc{ width:32px; height:41px; position:absolute;right:0px;top:195px; cursor:pointer;background:url(../images/float_right_inc.png) left top no-repeat; z-index:9; display: none;}
+
+
+
+.index_zhuanjia_list{ width:29%;height:265px; overflow:hidden; float:left;position:relative;}
+
+.index_zhuanjia_lists{width:100%; height:265px; overflow:hidden;position:relative;}
+
+.index_zhuanjia_lists ul{ width:100%; height:265px;position:absolute;overflow:hidden;}
+
+.index_zhuanjia_lists ul li{ width:100%; height:80px; padding-bottom:9px;overflow: hidden; margin-bottom: 2px; }
+
+.index_zhuanjia_lists ul li.on dd img{width:100%; height:80px; border:1px #4273b0 solid;}
+
+.index_zhuanjia_lists ul li dd{  overflow:hidden;}
+
+.index_zhuanjia_lists ul li dd img{ width:100%; height:80px; border:1px #e8e8e8 solid;}
+
+
+.index_zhuanjia_lists ul li dl{ width:152px; height:26px; overflow:hidden; float:right; color:#7a7a7a;}
+
+.index_zhuanjia_pre{ width:100%; height:23px; overflow:hidden; cursor:pointer;background:url(../images/ico01.png) no-repeat center top; position: absolute; left: 0 ;top:8px; z-index: 3}
+
+.index_zhuanjia_next{ width:100%; height:23px; overflow:hidden; cursor:pointer;background:url(../images/ico02.png) no-repeat center top;position: absolute; left: 0 ;bottom:-3px; z-index: 3}
+
+.index_zhuanjia_pic ul li p{background: rgba(0, 0, 0, 0.5); color: #fff; height: 30px; line-height: 30px; position: absolute; bottom: 0;
+    left: 0; width: 100%;margin-bottom:0; padding: 0 10px;}
+.index_zhuanjia_pic li img{ width: 100%; height:100%;}
+
+
+/*½áÊø*/
+.line2{ width: 4px; background: #0fb0f4; border-radius: 2px; display: inline-block; height: 20px; float: left; margin-right:15px; margin-left: 5px;}
+.btn_box{
+    border-radius: 3px;
+    color: #6c757d;
+    font-size: 12px;
+    margin: 0 0 10px 10px;
+    min-width: 80px;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    float: left;
+    overflow: hidden;
+    margin-left: 35px;
+}
+.btn-app{  height: 45px; line-height: 45px; min-width: 120px; padding: 0 10px; border:none; background: none; background-color: #f8f9fa;
+    border: 1px solid #ddd; margin: 0; margin: 5px; color: #fff; font-size: 22px; font-weight: bold; border-radius: 8px;}
+.btn_box p{  width: 100%; margin-bottom: 0; line-height: 30px; font-size: 14px; color: #333; }
+.btn_box div{  width: 100%; color: #c8c8c8}
+.btn_box span{ border:1px solid #ddd; border-radius: 8px;display: inline-block;}
+.btn_box span a{ color: #fff}
+.btn1{ background: url("../images/btn1.png") repeat-y; background-size: 100% auto; }
+.btn2{ background: url("../images/btn2.png") repeat-y; background-size: 100% auto; }
+.btn3{ background: url("../images/btn3.png") repeat-y; background-size: 100% auto; }
+.btn4{ background: url("../images/btn4.png") repeat-y; background-size: 100% auto; }
+.btn5{ background: url("../images/btn5.png") repeat-y; background-size: 100% auto; }
+.btn6{ background: url("../images/btn6.png") repeat-y; background-size: 100% auto; }
+.btn7{ background: url("../images/btn7.png") repeat-y; background-size: 100% auto; }
+.btn8{ background: url("../images/btn8.png") repeat-y; background-size: 100% auto; }
+.border-none{ border-bottom: none; padding-bottom: inherit}
+.card_number{ clear: both}
+.user-block{ overflow: hidden}
+.number1{ background: #f7f7f9; border-radius: 3px; height: 150px; padding: 50px 10px 50px 40px}
+.number1 .username{ font-size: 22px; font-weight: bold}
+.number1 .username a{ color: #333;}
+.margin0{ margin:0;  padding: 0;}
+.car_1{ background: url("../images/b1.png") no-repeat; background-size: 100% 100%; height: 150px;  margin-top:20px; margin-bottom: 50px;}
+.car_2{ background: url("../images/b2.png") no-repeat; background-size: 100% 100%; height: 150px;  margin-top:20px; margin-bottom: 50px;}
+.car_3{ background: url("../images/b3.png") no-repeat; background-size: 100% 100%; height: 150px;  margin-top:20px; margin-bottom: 50px;}
+.car_4{ background: url("../images/b4.png") no-repeat; background-size: 100% 100%; height: 150px;  margin-top:20px; margin-bottom: 50px;}
+.carBox { color: #fff; padding:20px;  }
+.carBox p{ margin-bottom: 0;}
+.carBox div{ font-size: 24px; font-weight: bold; margin-top: 15px;}
+.carBox div span{ font-size: 14px; font-weight: lighter}
+.jindu{ position: relative}
+.jindu i{ display: inline-block; height: 6px; background: #fff; position: absolute;
+    left: 0; top:0; border-radius: 3px}
+.jindu p{ width: 100%;height: 6px; background: #3389cb; border-radius: 3px}
+
+.jindu1 i{  background: #fff; }
+.jindu1 p{  background: #3389cb;}
+.jindu2 i{  background: #d97600; }
+.jindu2 p{  background: #fff;}
+.jindu3 i{  background: #317902; }
+.jindu3 p{  background: #fff;}
+.jindu4 i{  background: #012ca7; }
+.jindu4 p{  background: #fff;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

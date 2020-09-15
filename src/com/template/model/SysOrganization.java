@@ -34,6 +34,16 @@ public void setname(String name)
 {
 	this.name = name;
 }
+@Column(name = "year", nullable = true)
+public String year;
+public String getyear()
+{
+	return year;
+}
+public void setyear(String year)
+{
+	this.year = year;
+}
 @Column(name = "code", nullable = true)
 public String code;
 public String getcode()
@@ -76,12 +86,12 @@ public void setboundary(String boundary)
 	this.boundary = boundary;
 }
 @Column(name = "area", nullable = true)
-public Integer area;
-public Integer getarea()
+public Double area;
+public Double getarea()
 {
 	return area;
 }
-public void setarea(Integer area)
+public void setarea(Double area)
 {
 	this.area = area;
 }
@@ -221,6 +231,17 @@ public String getowner()
 public void setowner(String owner)
 {
 	this.owner = owner;
+}
+
+@Column(name = "pictures", nullable = true)
+public String pictures;
+public String getpictures()
+{
+	return pictures;
+}
+public void setpictures(String pictures)
+{
+	this.pictures = pictures;
 }
 
 }

@@ -2,6 +2,8 @@ package com.template.controller;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.template.busi.safe.AES;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
 import com.template.service.SysUserOrganizationService;
@@ -329,4 +331,53 @@ public String get(String id)
 	}
     return jsonObj.toString();
 }
+
+
+
+
+@RequestMapping(value="changePassword",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
+@ResponseBody
+public String changePassword(String id,String oldPassword,String newPassword)
+{
+	JSONObject jsonObj = new JSONObject();
+	try
+	{
+		SysUser sys_user = sys_userService.getById(id);
+		
+		if(sys_user == null)
+		{
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", "不能修改该用户的密码");
+			
+			return jsonObj.toString();
+		}
+		
+		String encOldPassword = AES.encrypt(oldPassword);
+		
+		if(sys_user.getpassword().equalsIgnoreCase(encOldPassword)  == false && 
+				sys_user.getpassword().equalsIgnoreCase(oldPassword) == false)
+		{
+			jsonObj.put("success", false);
+			jsonObj.put("errMsg", "原始密码错误");
+			
+			return jsonObj.toString();
+		}
+		
+		String encNewPassword = AES.encrypt(newPassword);
+		
+		sys_user.setpassword(encNewPassword);
+		
+        sys_userService.save(sys_user);
+        jsonObj.put("success", true);
+	}
+	catch(Exception e)
+	{
+		logger.error(e.getMessage(),e);
+		jsonObj.put("success", false);
+		jsonObj.put("errMsg", e.getMessage());
+	}
+    return jsonObj.toString();
+}
+
+
 }

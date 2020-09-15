@@ -12,16 +12,29 @@ package com.template.util;
  */
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.apache.http.entity.StringEntity;
 
 public class RestClient 
@@ -81,7 +94,47 @@ public class RestClient
         return sRespMsg;
 	}
 	
-	public String postToRunReport(String _sUrl, String _sBody,String _sUser,String _sPassword)
+
+	public String getUrlResult(String _sUrl,String token)
+	{
+		logger.info("GET :"+_sUrl);
+		HttpGet getMethod = new HttpGet(_sUrl);
+        
+		String sRespMsg = "";
+		
+		try {
+
+			getMethod.setHeader("token", token);
+			
+			HttpResponse httpResponse = m_Httpclient.execute(getMethod);
+			int statusCode = httpResponse.getStatusLine().getStatusCode(); 
+			
+			HttpEntity entity = httpResponse.getEntity();             //
+			
+			if (null != entity) { 
+	            
+	            try {
+	            	sRespMsg = EntityUtils.toString(entity, "UTF-8");
+	            }
+	            catch(Exception e)
+	            {
+	            	e.printStackTrace();
+	            }
+	        }
+			if(statusCode < 200 || statusCode >= 300)
+			{
+				logger.error("error code "+statusCode+":"+httpResponse.getStatusLine().getReasonPhrase()+" returned from url:"+_sUrl);
+				return "";
+			}
+		} catch (ClientProtocolException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+        return sRespMsg;
+	}
+	
+	public String post(String _sUrl,Map<String, String> params)
 	{
 		logger.info("POST:"+_sUrl);
 		HttpPost methodPost = new HttpPost(_sUrl);
@@ -90,19 +143,24 @@ public class RestClient
 		
 		try {
 			
-			String auth = _sUser + ":"+ _sPassword;
 
-			byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("ISO-8859-1")));
+			//byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("ISO-8859-1")));
 
-			String authHeader = "Basic "  + new
-			String(encodedAuth);
+			//String authHeader = "Basic "  + new
+			//String(encodedAuth);
 
-			methodPost.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
-					
-					
-			StringEntity requestEntity = new StringEntity(_sBody ,"UTF-8");  
+			//methodPost.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
 			
-			methodPost.setEntity(requestEntity);
+			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            Set<String> keySet = params.keySet();
+            for (String key : keySet) {
+                nvps.add(new BasicNameValuePair(key, params.get(key)));
+            }
+            methodPost.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
+					
+			//StringEntity requestEntity = new StringEntity(_sBody ,"UTF-8");  
+			
+			//methodPost.setEntity(requestEntity);
 			
 			//methodPost.addHeader("Content-Type", "application/vnd.emc.apollo-v1+xml");
 			HttpResponse httpResponse = m_Httpclient.execute(methodPost);
@@ -139,30 +197,74 @@ public class RestClient
 	}
 	
 	public static void main(String[] args) {
-		//DOMConfigurator.configure("./config/log4j.xml");
+
+
 		
-		RestClient rc = new RestClient();
+		RestClient rcLogin = new RestClient();
 		
-		String sPayload = "<wfs:Transaction service=\"WFS\" version=\"1.0.0\" "+
-		  "xmlns:cdf=\"http://www.opengis.net/cite/data\" "+
-		  "xmlns:ogc=\"http://www.opengis.net/ogc\" "+
-		  "xmlns:wfs=\"http://www.opengis.net/wfs\" "+
-		  "xmlns:topp=\"http://www.openplans.org/topp\"> "+
-		  "<wfs:Delete typeName=\"geosolutions:cy_point\"> "+
-		    "<ogc:Filter> "+
-		     " <ogc:PropertyIsEqualTo> "+
-		      "  <ogc:PropertyName>name</ogc:PropertyName> "+
-		       " <ogc:Literal>ddddddd</ogc:Literal> "+
-		      "</ogc:PropertyIsEqualTo> "+
-		    "</ogc:Filter> "+
-		  "</wfs:Delete> "+
-		"</wfs:Transaction>";
+		Map<String, String> params = new HashMap<>();
+		params.put("username","nicai");
+		params.put("password","046cbc223b97b1f24649958da2cfb311");
 		
-		System.out.println(sPayload);
+		String loginResp = rcLogin.post("http://www.weixineasy.com/restful/login",params);
 		
-		rc.postToRunReport("http://localhost:8090/geoserver/wfs",sPayload,"","");
-		
-		
+		JSONObject jsonLoginResp;
+		try {
+			jsonLoginResp = new JSONObject(loginResp);
+			
+
+			String token = jsonLoginResp.getString("token");
+
+			Date yesterday = TimeUtil.getYesterdayDate(new Date());
+			
+			Date today = new Date();
+			
+			long yesterdaySec = yesterday.getTime()/1000-1599517000;
+			
+			long todaySec = today.getTime()/1000;
+			
+			String articlesResp = rcLogin.getUrlResult("http://www.weixineasy.com/restful/articles/0/"+yesterdaySec+"/"+todaySec,token);
+			
+			System.out.println("http://www.weixineasy.com/restful/articles/0/"+yesterdaySec+"/"+todaySec);
+			
+			System.out.println(articlesResp);
+			
+			JSONArray jsonArticlesResp = new JSONArray(articlesResp);
+			
+			for(int i=0;i<jsonArticlesResp.length();i++)
+			{
+				JSONObject jsonTmp = jsonArticlesResp.getJSONObject(i);
+				
+				String sendTime = jsonTmp.getString("createtime");
+				String link = jsonTmp.getString("link");
+				String linkurl = jsonTmp.getString("linkurl");//如果是电话则tel开头
+				String pcatename = jsonTmp.getString("pcatename"); //栏目
+				
+				
+				
+				
+				
+				
+				
+				/*JSONArray jsonSubArticles = jsonTmp.getJSONArray("children");
+				
+				for(int j=0;j<jsonSubArticles.length();j++)
+				{
+					JSONObject jsonTmpSubArticle = jsonSubArticles.getJSONObject(j);
+					
+					String title = jsonTmpSubArticle.getString("title");
+					String url = jsonTmpSubArticle.getString("url");
+					
+					System.out.println(sendTime+title+url);
+					
+					
+				}*/
+				
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}

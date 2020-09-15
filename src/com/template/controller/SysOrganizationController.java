@@ -29,8 +29,9 @@ public class SysOrganizationController {
 	private SysOrganizationService organizationService;
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String addOrUpdate(String id,String name,String code,String type,String border,Integer area,String address,
-			String telphone,String secretary,String secretaryphone,String directorname,String directorphone,String note,String parent_id)
+	public String addOrUpdate(String id,String name,String code,String type,String border,Double area,String address,
+			String telphone,String secretary,String secretaryphone,String directorname,String directorphone,String note,String parent_id,
+			String year,String pictures)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -58,6 +59,8 @@ public class SysOrganizationController {
 			organization.setdirectorphone(directorphone);
 			organization.setnote(note);
 			organization.setparentid(parent_id);
+			organization.setyear(year);
+			organization.setpictures(pictures);
 	
 	        organizationService.save(organization);
 	        jsonObj.put("success", true);

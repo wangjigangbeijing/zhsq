@@ -1319,7 +1319,7 @@ public class DataController {
 			return jsonObj.toString();
 		}
 		
-		//logger.debug(jsonObj.toString());
+		logger.debug(jsonObj.toString());
 		
         return jsonObj.toString();
     }

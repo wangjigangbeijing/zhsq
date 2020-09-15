@@ -252,7 +252,6 @@ function load()
 	 characteristics = $('#characteristicsQuery2').val();
  }
 
- 
  var ofcommunity = $('#ofcommunityQuery').val();
  var ofresidebuilding = $('#ofresidebuildingQuery').val();
  var ofunit = $('#ofunitQuery').val();
@@ -264,7 +263,8 @@ function load()
  var relationshiphouseholder = $('#relationshiphouseholderQuery').val();
  var registrationcategory = $('#registrationcategoryQuery').val();
  var birthday = $('#birthdayQuery').val();
- var age = $('#ageQuery').val();
+ var beginage = $('#beginageQuery').val();
+ var endage = $('#endageQuery').val();
  var nation = $('#nationQuery').val();
  var education = $('#educationQuery').val();
  var professionstatus = $('#professionstatusQuery').val();
@@ -378,7 +378,8 @@ function load()
 							relationshiphouseholder : relationshiphouseholder,
 							registrationcategory : registrationcategory,
 							birthday : birthday,
-							age : age,
+							beginage : beginage,
+							endage : endage,
 							nation : nation,
 							education : education,
 							professionstatus : professionstatus,
@@ -593,9 +594,13 @@ function exportData()
 	if(birthday != '')
 		queryStr += "birthday = '"+birthday+"' AND ";
 	
-	var age = $('#ageQuery').val();
-	if(age != '')
-		queryStr += "age = '"+age+"' AND ";
+	var beginage = $('#beginageQuery').val();
+	if(beginage != '')
+		queryStr += "age >= "+beginage+" AND ";
+	
+	var endage = $('#endageQuery').val();
+	if(endage != '')
+		queryStr += "age <= "+endage+" AND ";
 	
 	var nation = $('#nationQuery').val();
 	if(nation != '')

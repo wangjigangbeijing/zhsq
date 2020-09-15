@@ -88,27 +88,30 @@ function viewDetail(id)
 				$('#cwcode').val(obj.cwcode);
 				
 				
-				$('#pciture').val(obj.pciture);
-				var pcitureArr = obj.pciture.split(VALUE_SPLITTER);  
-				var header = getContextPath()+"/fileController/download?fileName=";	
+				if(obj.picture != null)
+				{
+					$('#picture').val(obj.picture);
+					var pictureArr = obj.picture.split(VALUE_SPLITTER);  
+					var header = getContextPath()+"/fileController/download?fileName=";	
 
-				for(var j=0;j<pcitureArr.length;j++)				
-				{if(pcitureArr[j] != '')	
-				{	
-					var url = header + pcitureArr[j];
-					if(url.indexOf('.pdf') >= 0 || url.indexOf('.PDF') >= 0){
-						var uurl = getContextPath() + "/dist/js/pdf.html?param=" + url;
-						$('#pciturepicktable').append('<tr><td><a href="' + uurl + '" target="_blank")>' + pcitureArr[j] + '</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pcitureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');											
-					}						
-					else 
-					{							
-						$('#pciturepicktable').append('<tr><td><a href="' + url + '" data-lightbox="' + pcitureArr[j] + '" data-title="' + pcitureArr[j] + '" style="color:#64A600; font-size: 12px;">'+pcitureArr[j]+'</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pcitureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');											
-					}					
-				}				
-			}	
+					for(var j=0;j<pictureArr.length;j++)				
+					{
+						if(pictureArr[j] != '')	
+						{	
+							var url = header + pictureArr[j];
+							if(url.indexOf('.pdf') >= 0 || url.indexOf('.PDF') >= 0){
+								var uurl = getContextPath() + "/dist/js/pdf.html?param=" + url;
+								$('#picturepicktable').append('<tr><td><a href="' + uurl + '" target="_blank")>' + pictureArr[j] + '</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pictureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');											
+							}						
+							else 
+							{							
+								$('#picturepicktable').append('<tr><td><a href="' + url + '" data-lightbox="' + pictureArr[j] + '" data-title="' + pictureArr[j] + '" style="color:#64A600; font-size: 12px;">'+pictureArr[j]+'</a></td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+pictureArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');											
+							}					
+						}				
+					}
+				}
 				
-				
-				('#note').val(obj.note);
+				$('#note').val(obj.note);
 
 					
 			}
@@ -141,7 +144,7 @@ function addOrUpdate()
 		hascharge:$('input:radio[name="hascharge"]:checked').val(),//$('#hascharge').val(),
 		chargenum:$('#chargenum').val(),
 		cwcode:$('#cwcode').val(),
-		pciture:$('#pciture').val(),
+		picture:$('#picture').val(),
 		note:$('#note').val()
 	},
 	function(result){

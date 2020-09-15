@@ -120,7 +120,7 @@ public class SXSQSJController {
 			sxsqsj.setOWNER(organization);
 			sxsqsj.setPOINT(point);
 			
-			sxsqsjService.saveOrUpdate(sxsqsj);
+			sxsqsjService.save(sxsqsj);
 			
 			jsonObj.put("success", true);
 		}
@@ -203,6 +203,9 @@ public class SXSQSJController {
 				
 				alStr.add("%"+organizationArr[i]+"%");
 			}
+			
+			hqlFilter.setOrder("desc");
+			hqlFilter.setSort("SXBM");
 			
 			hqlFilter.addOrCondGroup("OWNER", HqlFilter.Operator.LIKE, alStr);
 			
@@ -553,7 +556,9 @@ public class SXSQSJController {
 		{
 			String year = TimeUtil.getYear(new Date());
 			
-			SysSeq sysSeq = sysSeqService.getById("sxbm");
+			String organization = Utility.getInstance().getOrganization(request);
+			
+			SysSeq sysSeq = sysSeqService.getById(organization);
 			
 			int seq = 1;
 			
@@ -564,7 +569,7 @@ public class SXSQSJController {
 			else
 			{
 				sysSeq = new SysSeq();
-				sysSeq.setId("sxbm");
+				sysSeq.setId(organization);
 			}
 			String str = String.format("%05d", seq);      
 

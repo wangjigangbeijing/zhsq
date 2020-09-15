@@ -21,7 +21,9 @@ $(document).ready(function (){
 	
 	
 	
-	
+	$('#passwordAnchor').click(function () {
+        loadPasswordPage();
+    });
 	
 	
 	
@@ -229,6 +231,14 @@ $(document).ready(function (){
 	
 	
 	
+	
+	$('#homeChartAnchor').click(function () {
+        loadHomeChartPage();
+    });
+	
+	
+	
+	
 	getCurrentLoginUserInfo();
 	
 	//loadTablePage();
@@ -269,6 +279,20 @@ function loaddata(){
 	loadsqbs();
 	
 	getgpyip();
+}
+
+function loadPasswordPage()
+{
+	$('#main-content').load("./changePassword.html", function () {
+        
+    });
+}
+
+function loadHomeChartPage()
+{
+	$('#main-content').load("./homechart.html", function () {
+        
+    });
 }
 
 function loadbaseinfo1(){

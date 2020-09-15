@@ -1038,5 +1038,20 @@ public void setowner(String owner)
 {
 	this.owner = owner;
 }
+
+
+@Column(name = "agecharacteristic", nullable = true)
+public String agecharacteristic;
+public String getagecharacteristic()
+{
+	return agecharacteristic;
+}
+public void setagecharacteristic(String agecharacteristic)
+{
+	this.agecharacteristic = agecharacteristic;
+}
+
+
+
 }
 

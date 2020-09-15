@@ -23,6 +23,8 @@
 		<task:scheduled ref="DaemonService" method="twoMinsJob" cron="0 0/2 * * * ?" />
 		
 		<task:scheduled ref="DaemonService" method="dailyJob" cron="0 0 * * * ?" />
+		
+		<task:scheduled ref="DaemonService" method="wechatSync" cron="0 0 * * * ?" />
 	</task:scheduled-tasks>
 	
 </beans>

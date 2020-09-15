@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.template.util.EncryptUtil;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.template.busi.safe.AES;
 import com.template.model.SysOrganization;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
@@ -111,7 +112,7 @@ public class LoginController {
 			
 			ArrayList<String> alPassword = new ArrayList<String>();
 			alPassword.add(password);
-			alPassword.add(EncryptUtil.encodeStr(password));
+			alPassword.add(AES.encrypt(password));
 			
 			hqlFilter.addOrCondGroup("password", HqlFilter.Operator.EQ, alPassword);
 			

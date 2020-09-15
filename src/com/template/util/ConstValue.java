@@ -132,7 +132,7 @@ public class ConstValue {
 	
 	public static HashMap<String,String> roleMap = new HashMap<String,String>();
 	
-	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();
+	public static HashMap<String,String> userToOrgMap = new HashMap<String,String>();//用户的社区组织ID
 	
 	public static HashMap<String,List<String>> userToRoleMap = new HashMap<String,List<String>>();
 	

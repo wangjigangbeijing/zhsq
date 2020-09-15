@@ -91,7 +91,7 @@ public String delete(String id)
 	}
     return jsonObj.toString();
 }
-@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
+@RequestMapping(value="load",method = {RequestMethod.GET,RequestMethod.POST},produces="text/html;charset=UTF-8")
 @ResponseBody
 public String load(String name,String idnumber,String sex,String birthday,String age,String mobile,String education,String politicalstatus,String of_volunteerteam,String join_date,String status)
 {

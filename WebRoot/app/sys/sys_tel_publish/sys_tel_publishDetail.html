@@ -3,10 +3,10 @@
 <script src="./sys/sys_tel_publish/sys_tel_publishDetail.js"></script>
 
 
-<script language="javascript" type="text/javascript" src="../plugins/telbox/qnviccub.js"></script>
+<!--script language="javascript" type="text/javascript" src="../plugins/telbox/qnviccub.js"></script>
 <script language="javascript" type="text/javascript" src="../plugins/telbox/qnvfunc.js"></script>
 <script language="javascript" type="text/javascript" src="../plugins/telbox/json2.js"></script>
-<script language="javascript" type="text/javascript" src="../plugins/telbox/deviceapi.js"></script>
+<script language="javascript" type="text/javascript" src="../plugins/telbox/deviceapi.js"></script-->
 
 
 <section class="content">
@@ -72,7 +72,7 @@
  					</div>
 					
 					<div class="form-group row">
-                    <label class='col-md-2 col-form-label'>发送目标(逗号分隔手机号码列表)</label>
+                    <label class='col-md-2 col-form-label'>接收人(逗号分隔手机号码列表)</label>
 					
 					<div class='col-md-9'>
 						<div class='form-group row'>
@@ -82,9 +82,16 @@
 						<textarea class="form-control" name="mobileList" rows="9" id="mobileList" readonly></textarea>
 						</div>
 						
-						<div class='col-md-2'>
+						<!--div class='col-md-2'>
 						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident();">选择居民</button>&nbsp;
-						<!--button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button-->
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button>
+						</div-->
+						
+						<div class='col-md-2'>
+						<button style="margin-bottom:3px;" class="btn btn-primary" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident();">选择居民</button>&nbsp; <br/>
+						<button style="margin-bottom:3px;" class="btn btn-primary" type="button" data-toggle="modal" data-target="#partymemberDialog" onclick="searchPartyMember();">选择党员</button>&nbsp; <br/>
+						<button style="margin-bottom:3px;" class="btn btn-primary" type="button" data-toggle="modal" data-target="#volunteerDialog" onclick="searchVolunteer();">选择志愿者</button>&nbsp; <br/>
+						<button style="margin-bottom:3px;"class="btn btn-danger" type="button" onclick="removeSelected();">&nbsp;清&nbsp;除&nbsp;</button>&nbsp;
 						</div>
 						
 						</div>
@@ -92,7 +99,7 @@
                   </div>
 				  
 				  <div class="form-group row">
-                    <label class='col-md-2 col-form-label'>发送目标(逗号分隔手机号码列表)</label>
+                    <label class='col-md-2 col-form-label'>接收人(逗号分隔手机号码列表)</label>
 					
 					<div class='col-md-9'>
 						<div class='form-group row'>
@@ -104,7 +111,7 @@
 						
 						<div class='col-md-2'>
 						<!--button class="btn btn-default" type="button" data-toggle="modal" data-target="#residentDialog" onclick="searchResident();">选择居民</button>&nbsp;  -->
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button>
+						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#userDialog" onclick="searchUser();">选择内部人员</button>
 						</div>
 						
 						</div>
@@ -151,6 +158,120 @@
 	  
 	  
 	  
+	  
+	  <div class="modal fade" id="partymemberDialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+              <h4 class="modal-title">党员选择</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+			  <form class="form-horizontal">
+                <!--div class="card-body"-->
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">姓名</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="partyMemberQry">
+                    </div>
+					
+					<label for="inputEmail3" class="col-sm-1 col-form-label">党组织</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" id="partyOrganizationQry"/>
+                    </div>
+					
+					<button id="btnSearchPartyMember" type="button" class="btn btn-success" onclick="searchPartyMember();">查询</button>
+					
+                  </div>
+              </form>
+			  
+			  <div class="card-body">
+                <table class="table table-bordered table-striped" id="partyMemberDataTable">
+                  <thead>
+                  <tr>
+					<th style='text-align:center;'><input type="checkbox" class="checkall"/></th>
+                    <th style='text-align:center;'>姓名</th>
+					<th style='text-align:center;'>手机号</th>
+					<th style='text-align:center;'>党组织</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+			  
+            </div>
+            <div class="modal-footer justify-content-between">
+				<div>
+              <button type="button" class="btn btn-default" onclick="javascript:addSelectedPartyMember();">添加选中</button>
+			  <button type="button" class="btn btn-primary" onclick="javascript:addAllPartyMember();">添加全部</button>
+			  </div>
+              <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+	  
+	  <div class="modal fade" id="volunteerDialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width:1000px;">
+            <div class="modal-header">
+              <h4 class="modal-title">志愿者选择</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+			  <form class="form-horizontal">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-1 col-form-label">姓名</label>
+                    <div class="col-sm-2">
+                      <input class="form-control" id="volunteerQry">
+                    </div>
+					
+					<label for="inputEmail3" class="col-sm-2 col-form-label">志愿者组织</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" id="volunteerTeamQry"/>
+                    </div>
+					
+					
+					<button id="btnSearchVolunteer" type="button" class="btn btn-success" onclick="searchVolunteer();">查询</button>
+					
+                  </div>
+              </form>
+			  
+			  <div class="card-body">
+                <table class="table table-bordered table-striped" id="volunteerDataTable">
+                  <thead>
+                  <tr>
+					<th style='text-align:center;'><input type="checkbox" class="checkall"/></th>
+                    <th style='text-align:center;'>姓名</th>
+					<th style='text-align:center;'>手机号</th>
+					<th style='text-align:center;'>志愿者组织</th>
+                  </tr>
+                  </thead>
+				  <tbody></tbody>
+                </table>
+              </div>
+			  
+            </div>
+            <div class="modal-footer justify-content-between">
+				<div>
+              <button type="button" class="btn btn-default" onclick="javascript:addSelectedVolunteer();">添加选中</button>
+			  <button type="button" class="btn btn-primary" onclick="javascript:addAllVolunteer();">添加全部</button>
+			  </div>
+              <button type="button" data-dismiss="modal" class="btn btn-primary">关闭</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 	  
 	  
 	  
@@ -341,6 +462,72 @@ uploaderaudio.on( 'uploadError', function( file,response ) {
 });	
 
 
+$.ajax({
+  type: 'POST',
+  url: getContextPath()+"/volunteerteamController/load",
+  data: '',//JSON.stringify({id:'ofcommunity'}),
+  contentType: "application/json",
+  success:function(result){
+			
+		if(result.success)
+		{
+			$('#volunteerTeamQry').html('');
+			var filterArr = [];
+			
+			filterArr[0] = "<option value=''></option>";				
+			
+			for(var i=0;i<result.list.length;i++)
+			{
+				var filter = result.list[i];
+				
+				filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.name + "</option>";						
+			}
+			$('#volunteerTeamQry').html(filterArr.join(''));
+		}
+		else
+		{
+			jError("获取志愿者组织列表失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	},
+  dataType: "json"
+});
+
+$.ajax({
+  type: 'POST',
+  url: getContextPath()+"/partyorganizationController/load",
+  data: '',//JSON.stringify({id:'ofcommunity'}),
+  contentType: "application/json",
+  success:function(result){
+			
+		if(result.success)
+		{
+			$('#partyOrganizationQry').html('');
+			var filterArr = [];
+			
+			filterArr[0] = "<option value=''></option>";				
+			
+			for(var i=0;i<result.list.length;i++)
+			{
+				var filter = result.list[i];
+				
+				filterArr[i+1] = "<option value='" + filter.id + "'>" + filter.name + "</option>";						
+			}
+			$('#partyOrganizationQry').html(filterArr.join(''));
+		}
+		else
+		{
+			jError("获取党组织列表失败!",{
+				VerticalPosition : 'center',
+				HorizontalPosition : 'center'
+			});
+		}
+	},
+  dataType: "json"
+});
+
   
 var userList = null;
 
@@ -459,6 +646,281 @@ function searchResident()
 }
 
 
+
+
+
+function searchPartyMember()
+{
+	var name = $('#partyMemberQry').val();
+	var of_partyorganization = $('#partyOrganizationQry').val();
+	
+	$.get(getContextPath()+'/jc_partymemberController/load?name='+name+'&of_partyorganization='+of_partyorganization,
+	function(result){
+		$('#btnSearchPartyMember').removeAttr('disabled');
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			userList = obj.list;
+			dataTable = $('#partyMemberDataTable').dataTable( {
+				"processing": true,
+				"bJQueryUI": false,
+				"bFilter": false,
+				"bStateSave":true,
+				"bAutoWidth": false, //自适应宽度 
+				iDisplayLength: 10,
+				lengthChange: false,
+				"bProcessing": true, 
+				"bDestroy":true,
+				"bSort": false, 
+				"data":obj.list,
+				"oLanguage": { 
+					"sProcessing": "正在加载中......", 
+					"sLengthMenu": "每页显示 _MENU_ 条记录", 
+					"sZeroRecords": "对不起，查询不到相关数据！", 
+					"sInfoEmpty":"",
+					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+					"sSearch": "搜索", 
+					"oPaginate":  
+					{ 
+						"sFirst": "首页", 
+						"sPrevious": "上一页", 
+						"sNext": "下一页", 
+						"sLast": "末页" 
+					}
+				}, //多语言配置					
+				"columns": [{
+						"sClass": "text-center",
+						"data": "id",
+						"render": function (data, type, row, meta) {
+							return '<input type="checkbox" name="pmid" value="' + data + '"/>';
+						},
+					},
+					{ 'data': 'name' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.name), 1);
+						}
+					},
+					{ 'data': 'mobile' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.mobile), 1);
+						}
+					},
+					{ 'data': 'of_partyorganizationname' ,'sClass':'text-center'}
+				]
+			} );
+		}
+	});
+}
+
+function addAllPartyMember()
+{
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realMobileList').val();
+	
+	for(var i=0;i<userList.length;i++)
+	{
+		var phone = '', realphone = '';
+		var name = '',realname = '';
+		if(typeof(userList[i].mobile)!="undefined") {
+			phone = showData(aesDecrypt(userList[i].mobile), 2);
+			realphone = aesDecrypt(userList[i].mobile);
+			
+			name = showData(aesDecrypt(userList[i].name), 1);
+			realname = aesDecrypt(userList[i].name);
+		}
+		if(mobileList == '') {
+			mobileList = name + '-' + phone;
+			realMobileList = realname+'-'+realphone;
+		}
+		else {
+			mobileList += ", " +name +'-'+ phone;
+			realMobileList +=", " +realname+'-'+ realphone;
+		}
+	}
+
+	console.log(realMobileList);
+	$('#mobileList').val(mobileList);
+	$('#realMobileList').val(realMobileList);
+}
+
+function addSelectedPartyMember()
+{
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realMobileList').val();
+	
+	$('input:checkbox[name=pmid]:checked').each(function (i) {
+		var val = $(this).val();
+		
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+					
+					name = showData(aesDecrypt(userList[i].name), 1);
+					realname = aesDecrypt(userList[i].name);
+				}
+				if(mobileList == '') {
+					mobileList = name + '-' + phone;
+					realMobileList = realname+'-'+realphone;
+				}
+				else {
+					mobileList += ", " + name + '-' + phone;
+					realMobileList +=", " +realname+'-'+ realphone;
+				}
+			}
+		}
+		
+	});
+	
+	console.log(realMobileList);
+	$('#mobileList').val(mobileList);
+	 $('#realMobileList').val(realMobileList);
+}
+
+
+function searchVolunteer()
+{
+	var name = $('#volunteerQry').val();
+	var of_volunteerteam = $('#volunteerTeamQry').val();
+	
+	$.get(getContextPath()+'/jc_volunteerController/load?name='+name+'&of_volunteerteam='+of_volunteerteam,
+	function(result){
+		var obj = jQuery.parseJSON(result);  
+		if(obj.success)
+		{
+			userList = obj.list;
+			dataTable = $('#volunteerDataTable').dataTable( {
+				"processing": true,
+				"bJQueryUI": false,
+				"bFilter": false,
+				"bStateSave":true,
+				"bAutoWidth": false, //自适应宽度 
+				iDisplayLength: 10,
+				lengthChange: false,
+				"bProcessing": true, 
+				"bDestroy":true,
+				"bSort": false, 
+				"oLanguage": { 
+					"sProcessing": "正在加载中......", 
+					"sLengthMenu": "每页显示 _MENU_ 条记录", 
+					"sZeroRecords": "对不起，查询不到相关数据！", 
+					"sInfoEmpty":"",
+					"sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录", 
+					"sInfoFiltered": "数据表中共为 _MAX_ 条记录", 
+					"sSearch": "搜索", 
+					"oPaginate":  
+					{ 
+						"sFirst": "首页", 
+						"sPrevious": "上一页", 
+						"sNext": "下一页", 
+						"sLast": "末页" 
+					}
+				}, //多语言配置					
+				"data":obj.list,
+				"columns": [{
+						"sClass": "text-center",
+						"data": "id",
+						"render": function (data, type, row, meta) {
+							return '<input type="checkbox" name="volid" value="' + data + '"/>';
+						},
+					},
+					{ 'data': 'name' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.name), 1);
+						}
+					},
+					{ 'data': 'mobile' ,'sClass':'text-center',
+						mRender : function(data,type,full){
+							return showData(aesDecrypt(full.mobile), 1);
+						}
+					},
+					{ 'data': 'of_volunteerteam' ,'sClass':'text-center'}
+				]
+			} );
+		}
+	});
+}
+
+function addAllVolunteer()
+{
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realMobileList').val();
+	
+	for(var i=0;i<userList.length;i++)
+	{
+		var phone = '', realphone = '';
+		var name = '',realname = '';
+		if(typeof(userList[i].mobile)!="undefined") {
+			phone = showData(aesDecrypt(userList[i].mobile), 2);
+			realphone = aesDecrypt(userList[i].mobile);
+			
+			name = showData(aesDecrypt(userList[i].name), 1);
+			realname = aesDecrypt(userList[i].name);
+		}
+		if(mobileList == '') {
+			mobileList = name + '-' + phone;
+			realMobileList = realname+'-'+realphone;
+		}
+		else {
+			mobileList += ", " +name +'-'+ phone;
+			realMobileList +=", " +realname+'-'+ realphone;
+		}
+	}
+
+	console.log(realMobileList);
+	$('#mobileList').val(mobileList);
+	$('#realMobileList').val(realMobileList);
+}
+
+function addSelectedVolunteer()
+{
+	var mobileList = $('#mobileList').val();
+	var realMobileList = $('#realMobileList').val();
+	
+	$('input:checkbox[name=volid]:checked').each(function (i) {
+		var val = $(this).val();
+		for(var i=0;i<userList.length;i++)
+		{
+			if(userList[i].id == val){
+				var phone = '', realphone = '';
+				if(typeof(userList[i].mobile)!="undefined") {
+					phone = showData(aesDecrypt(userList[i].mobile), 2);
+					realphone = aesDecrypt(userList[i].mobile);
+					
+					name = showData(aesDecrypt(userList[i].name), 1);
+					realname = aesDecrypt(userList[i].name);
+				}
+				if(mobileList == '') {
+					mobileList = name + '-' + phone;
+					realMobileList = realname+'-'+realphone;
+				}
+				else {
+					mobileList += ", " + name + '-' + phone;
+					realMobileList +=", " +realname+'-'+ realphone;
+				}
+			}
+		}
+		
+	});
+	
+	console.log(realMobileList);
+	$('#mobileList').val(mobileList);
+	 $('#realMobileList').val(realMobileList);
+}
+
+
+function removeSelected()
+{
+	$('#mobileList').val('');
+	$('#realMobileList').val('');
+}
+
+
+
 function searchUser()
 {
 	var userName = $('#userNameQry').val();
@@ -482,7 +944,7 @@ function searchUser()
 				"bProcessing": true, 
 				"bDestroy":true,
 				"bSort": false, //是否使用排序 		
-				/*"oLanguage": { 
+				"oLanguage": { 
 					"sProcessing": "正在加载中......", 
 					"sLengthMenu": "每页显示 _MENU_ 条记录", 
 					"sZeroRecords": "对不起，查询不到相关数据！", 
@@ -497,7 +959,7 @@ function searchUser()
 						"sNext": "下一页", 
 						"sLast": "末页" 
 					}
-				}, *///多语言配置					
+				}, //多语言配置					
 				"data":obj.list,
 				"columns": [
 					{ 'data': 'name' ,'sClass':'text-center'},

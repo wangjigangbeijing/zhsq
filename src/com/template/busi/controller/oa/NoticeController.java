@@ -2,7 +2,10 @@ package com.template.busi.controller.oa;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.template.model.SysUserOrganization;
 import com.template.model.oa.Notice;
+import com.template.service.SysUserOrganizationService;
 import com.template.service.oa.NoticeService;
 import com.template.util.HqlFilter;
 import com.template.util.ConstValue;
@@ -25,6 +28,10 @@ public class NoticeController {
 	private  HttpServletRequest request;
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private SysUserOrganizationService userOrganizationService;
+	
 	@RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String addOrUpdate(String id,String title,String type,String authorityorg,String body,String attach,String time)
@@ -112,6 +119,7 @@ public String delete(String id)
 	
 			ArrayList<String> alOrg = new ArrayList<String>(); 
 			
+			//社区组织
 			String organization = Utility.getInstance().getOrganization(request);
 			
 			if(organization != null && organization.equalsIgnoreCase("") == false)
@@ -124,7 +132,20 @@ public String delete(String id)
 					alOrg.add("%"+organizationArr[i]+"%");
 				}
 			}
+			
+			//用户映射的具体组织 
+			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);//该接口只从APP上调用
+			
+			HqlFilter hqlFilterOrganzation = new HqlFilter();
+			hqlFilterOrganzation.addQryCond("user", HqlFilter.Operator.EQ, userId);
+			
+			List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
 
+			for(int j=0;j<userOrgList.size();j++)
+			{
+				alOrg.add(userOrgList.get(j).getorganization());
+			}
+			
 			if(alOrg != null && alOrg.size() != 0)
 				hqlFilter.addOrCondGroup("authorityorg", HqlFilter.Operator.LIKE, alOrg);
 			

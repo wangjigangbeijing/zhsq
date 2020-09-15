@@ -1,0 +1,564 @@
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../dist/css/all.min.css"> 
+
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+
+    
+  <style>
+	.card-titleColor img{ margin-top:15px}
+  .text-lg-right  .custom-select{ margin-top: 5px;}
+  .line2{ margin-top:15px}
+  .navbar-dark{background-color: white}
+</style>
+
+ <link rel="stylesheet" href="../dist/css/style.css">
+	
+     <script src="./homechart.js"></script>
+	 
+         <div class="content">
+
+          <section class="content-header" style="padding-bottom:0px;">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-12" style="text-align:center;">
+                  <h1 style="font-size:40px; color:#005AB5;"><span id="sqtitle"></span>民情指数</h1>	
+            <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#" id="homeChartAnchor">社情概览</a></li>
+                  </ol>			
+                </div>
+              </div>		
+            </div><!-- /.container-fluid -->
+          </section>
+
+
+              <div class="container-fluid">
+                <!--社区基本信息-->
+                   <div class="row">
+                       <div class="col-lg-6">
+                        <div class="card">
+                         <div class="card-header">
+                            <h3 class="card-title card-titleColor">
+                                <img src="../dist/images/1.png">
+                                <span>社区基本信息</span>
+                            </h3>
+                         </div>
+                           <div class="card-body">
+                                <p class="text-muted" id="sqnote"></p>
+                            <div class="row time_box">
+                                <div class=" time1 timeColor1">
+                                    <div id='sqyear'>2013年</div>
+                                    <p>社区建成时间</p>
+                                </div>
+                                <div class=" time1 timeColor2">
+									 <div id='sqtype'>2013年</div>
+									 <p>社区类型</p>
+                                </div>
+                                <div class=" time1 timeColor3">
+									 <div id='sqarea'>2013年</div>
+									 <p>社区面积</p>
+                                </div>
+                                 <div class="  time1 timeColor4">
+									  <div id='sqroomarea'>2013年</div>
+									  <p>总住房面积</p>
+                                 </div>
+                                 <div class=" time1 timeColor5">
+									  <div id='sqresidentcnt'>2013年</div>
+									  <p>总人口数</p>
+                                 </div>
+                            </div>
+                           </div>
+                        </div>
+
+
+                       </div>
+                      <!--社区美景-->
+                        <div class="col-lg-6">
+                          <div class="card">
+                            <div class="card-header">
+                             <h3 class="card-title card-titleColor">
+                              <img src="../dist/images/2.png">
+                              <span>社区美景</span>
+                             </h3>
+                            </div>
+                           <!--美景切换-->
+                           <div class="card-body">
+                            <div class="index_zhuanjia">
+                             <div class="index_zhuanjia_list" id="listBox">
+
+                              <div class="index_zhuanjia_pre" id="prev"></div>
+
+                              <!--<div style="height:9px;"></div>-->
+
+                              <div class="index_zhuanjia_lists" id="listBox">
+
+                               <ul id='picul'>
+
+                                <!--li class="on">
+
+                                 <dd><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></dd>
+
+
+                                </li>
+
+                                <li>
+
+                                 <dd><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2493914691,2834144944&fm=26&gp=0.jpg"></dd>
+
+
+
+                                </li>
+
+                                <li>
+
+                                 <dd><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></dd>
+
+
+                                </li>
+
+                                <li>
+
+                                 <dd><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></dd>
+
+
+
+                                </li>
+
+                                <li>
+
+                                 <dd><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></dd>
+
+
+
+                                </li>
+
+                                <li>
+
+                                 <dd><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></dd>
+
+
+                                </li-->
+
+                               </ul>
+
+                              </div>
+
+                              <div class="index_zhuanjia_next" id="next"></div>
+
+                             </div>
+                             <div class="index_zhuanjia_pic" id="picBox">
+
+                              <div class="index_zhuanjia_left_inc" id="prevTop"></div>
+
+                              <div class="index_zhuanjia_right_inc" id="nextTop"></div>
+
+                              <ul>
+
+                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a>  <p>图一</p></li>
+
+                               <li><a href="#"><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2493914691,2834144944&fm=26&gp=0.jpg"></a> <p>图2</p></li>
+
+                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a> <p>图3</p></li>
+
+                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a> <p>图4</p></li>
+
+                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a> <p>图5</p></li>
+
+                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a> <p>图6</p></li>
+
+                              </ul>
+
+                             </div>
+
+
+
+                            </div>
+
+                           </div>
+                           <!--美景切换结束-->
+
+                          </div>
+
+
+                        </div>
+                   </div>
+                <!--指数统计-->
+               <div class="row">
+                     <div class="col-lg-12">
+                      <div class="card">
+                       <div class="card-header ">
+                        <h3 class="card-title card-titleColor col-sm-6" style="padding-top:10px;">
+                         <img src="../dist/images/3.png">
+                         <span>指数统计</span>
+                        </h3>
+                        <!--div class="col-sm-6 float-sm-right text-lg-right">
+
+                          <select class="custom-select col-sm-2 col-md-2">
+                           <option>全部社区</option>
+                           <option>option 2</option>
+                           <option>option 3</option>
+                           <option>option 4</option>
+                           <option>option 5</option>
+                          </select>
+                          <!--select class="custom-select col-sm-2 col-md-2">
+                           <option>全部小区</option>
+                           <option>option 2</option>
+                           <option>option 3</option>
+                           <option>option 4</option>
+                           <option>option 5</option>
+                          </select>
+                        </div-->
+
+                       </div>
+
+
+                       </div>
+
+                     </div>
+               </div>
+               <!--指数统计结束-->
+               <!--居民居住指数-->
+               <div class="row">
+                <div class="col-lg-12">
+                 <div class="card">
+                  <div class="card-header border-none ">
+                   <h3 class="card-title  col-sm-6" style="padding-top:10px;">
+                    <i class="line2"></i>
+                    <span>居民居住指数</span>
+                   </h3>
+
+                  </div>
+                  <div class="card-body">
+                   <div class="btn_box">
+                    <span><a class="btn btn-app btn1" id='residentDensity'>246</a></span>
+                    <p>人口密度</p>
+                    <div>(人口数量/社区面积)</div>
+                   </div>
+                   <div class="btn_box">
+                    <span><a class="btn btn-app btn2" id="averageRoomArea">246</a></span>
+                    <p>人均住房面积</p>
+                    <div>(总房屋面积/人口数量)</div>
+                   </div>
+                   <div class="btn_box">
+                    <span><a class="btn btn-app btn3" id="averageUnderGroundArea">246</a></span>
+                    <p>人均地下空间面积</p>
+                    <div>(总地下空间面积/人口数量)</div>
+                   </div>
+                   <div class="btn_box">
+                    <span><a class="btn btn-app btn4" id="publcFacilityDensity">246</a></span>
+                    <p>市政设施密度</p>
+                    <div>(各类设施总数/社区面积)</div>
+                   </div>
+                   <div class="btn_box">
+                    <span><a class="btn btn-app btn5" id="averageRubbishNum">246</a></span>
+                   <p>人均垃圾设施数量</p>
+                   <div>(垃圾设施总数/人口数量)</div>
+                  </div>
+                  <div class="btn_box">
+                   <span><a class="btn btn-app btn6" id="averageAdvertisementNum">246</a></span>
+                   <p>人员宣传设施数量</p>
+                   <div>(宣传设施总数/人口数量)</div>
+                  </div>
+                  <div class="btn_box">
+                   <span><a class="btn btn-app btn7">0</a></span>
+                   <p>人均绿地面积</p>
+                   <div>(绿地面积/人口数量)</div>
+                  </div>
+                  <div class="btn_box">
+                   <span><a class="btn btn-app btn8" id="averageTreeNum">246</a></span>
+                   <p>人均绿植密度</p>
+                   <div>(树木/人口数量)</div>
+                  </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               <!--居民居住指数结束-->
+               <!--居民便利指数-->
+               <div class="row">
+                <div class="col-lg-12">
+                 <div class="card">
+                  <div class="card-header border-none ">
+                   <h3 class="card-title  col-sm-6" style="padding-top:10px;">
+                    <i class="line2"></i>
+                    <span>居民便利指数</span>
+                   </h3>
+                  </div>
+                   <div class="row">
+                      <!--div class="col-md-4" style="height: 250px;" id="convenienceDivFirst">
+					  
+					  <div class="progress-group">
+                      社区工作者占比情况
+                      <span class="float-right" id="sqPercentSpan"><b>160</b>/200</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary" id="sqPercentDiv" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <div class="progress-group">
+                      党员占比情况
+                      <span class="float-right" id="partyMemberPercentSpan"><b>310</b>/400</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger" id="partyMemberPercentDiv" style="width: 75%"></div>
+                      </div>
+                    </div>
+					
+					  </div-->
+					  
+					  <div  style="margin: 10px 10px 10px 10px;">
+                    <div class="col-12 col-md-12">
+                     <div class="user-block  col-lg-6">
+                      <div class="number1">
+                       <img class="img-circle " src="../dist/images/ico03.png" alt="user image">
+                           <span class="username" style="font-size:120%">
+                             <a href="#" id="averageCultureFacArea"></a>
+                           </span>
+                       <span class="description">人均健身场地面积</span>
+                      </div>
+                     </div>
+                     <div class="user-block  col-lg-6">
+                      <div class="number1">
+                       <img class="img-circle " src="../dist/images/ico04.png" style="width: 40px; height: 45px" alt="user image">
+                           <span class="username" style="font-size:120%">
+                             <a href="#" id='averageCultureFacNum'>0.25(34/6666)</a>		
+                           </span>
+                       <span class="description">人均健身设施数量</span>
+                      </div>
+                     </div>
+                  </div>
+                  </div>
+				  
+                      <div class="col-lg-8" style="height: 250px;" id="convenienceDivSecond"></div>
+                    </div>
+                 </div>
+
+                </div>
+               </div>
+               <!--居民便利指数结束-->
+               
+               <div class="row">
+                <div class="col-lg-8">
+                 <div class="card">
+                 <!--居民民情指数-->
+                  <div class="card-header border-none ">
+                   <h3 class="card-title  col-sm-6" style="padding-top:10px;">
+                    <i class="line2"></i>
+                    <span>居民民情指数</span>
+                   </h3>
+					
+					<div class="row" style="height:70px;"/>
+					
+				   <div class="row">
+                    <div class="" style="height:268px;width:50%;" id="chartGenderDiv"></div><!--https://echarts.apache.org/examples/zh/editor.html?c=pie-nest-->
+					<div class="" style="height:268px;width:50%;" id="chartAgeDiv"></div><!--https://echarts.apache.org/examples/zh/editor.html?c=pie-doughnut-->
+					
+                   </div>				   
+				   
+                   <div class="row">
+                    <div class="" style="height:320px;width:50%;" id="chartHukouDiv"></div><!--（下图中右侧的）https://echarts.apache.org/examples/zh/editor.html?c=pie-roseType-->
+					<div class="" style="height:320px;width:50%;" id="chartNationDiv"></div><!--https://echarts.apache.org/examples/zh/editor.html?c=sunburst-drink-->
+					
+                   </div>
+                   <div class="row">
+                    <div class="" style="height:320px;width:50%;" id="chartPartyDiv"></div><!--https://echarts.apache.org/examples/zh/editor.html?c=pie-roseType-->
+					<div class="" style="height:320px;width:50%;" id="chartEmployDiv"></div><!--https://echarts.apache.org/examples/zh/editor.html?c=pie-doughnut-->
+					
+                   </div>
+                  </div>
+                  <!--居民民情指数结束-->
+                  
+                 </div>
+                <!--居民停车指数-->
+             <div class="card">
+                  <div class="card-header border-none ">
+                   <h3 class="card-title " style="padding-top:10px;">
+                    <i class="line2"></i>
+                    <span>居民停车指数</span>
+                   </h3>
+                   <p style=" clear: both"></p>
+                   <div class="row">
+	                    <div class="col-12 col-md-12">
+	                     <div class="user-block  col-lg-3">
+	                      <div class="carBox car_1">
+	                           <p>每百人居住区停车位数</p>
+                               <p>（居住区停车位总数/人口数量）</p>
+                               <div id="averageResidentJZQTcwDiv">0.005<span id="averageResidentJZQTcwSpan">（524/21246）</span></div>
+                         <div class="jindu jindu1">
+                          <i style="width: 20%"></i>
+                          <p></p>
+                         </div>
+	                      </div>
+	                     </div>
+                         <div class="user-block  col-lg-3">
+                          <div class="carBox car_2">
+                           <p>每百人总停车位数</p>
+                           <p>（停车位总数/人口数量）</p>
+                           <div id="averageResidentTcwDiv">0.005<span id="averageResidentTcwSpan">（524/21246）</span></div>
+                           <div class="jindu jindu2">
+                            <i style="width: 20%"></i>
+                            <p></p>
+                           </div>
+                          </div>
+                         </div> <div class="user-block  col-lg-3">
+                         <div class="carBox car_3">
+                          <p>户均居住区停车位数</p>
+                          <p>（居住区停车位总数/家庭数量）</p>
+                          <div id="averageFamilyJZQTcwDiv">0.005<span id="averageFamilyJZQTcwSpan">（524/21246）</span></div>
+                          <div class="jindu jindu3">
+                           <i style="width: 20%"></i>
+                           <p></p>
+                          </div>
+                         </div>
+                        </div>
+                         <div class="user-block  col-lg-3">
+                          <div class="carBox car_4">
+                           <p>户均总停车位数</p>
+                           <p>（停车位总数/家庭数量）</p>
+                           <div id="averageFamilyTcwDiv">0.005<span id="averageFamilyTcwSpan">（524/21246）</span></div>
+                           <div class="jindu jindu4">
+                            <i style="width: 20%"></i>
+                            <p></p>
+                           </div>
+                          </div>
+                         </div>
+	                  </div>
+                   </div>                   
+                  </div>
+                  </div>
+                  <!--居民停车指数结束-->
+                </div>
+
+                <div class="col-lg-4">
+                 <div class="card">
+                  <div class="card-header border-none ">
+                   <h3 class="card-title  col-sm-6" style="padding-top:10px;">
+                    <i class="line2"></i>
+                    <span>居民安居指数</span>
+                   </h3>
+                  </div>
+
+                  <div  style="margin: 30px 30px 40px 30px;">
+                    <div class="col-12 col-md-12">
+                     <div class="user-block  col-lg-6">
+                      <div class="number1">
+                       <img class="img-circle " src="../dist/images/ico03.png" alt="user image">
+                           <span class="username">
+                             <a href="#">2.3万</a>
+                           </span>
+                       <span class="description">辖区民警数量</span>
+                      </div>
+                     </div>
+                     <div class="user-block  col-lg-6">
+                      <div class="number1">
+                       <img class="img-circle " src="../dist/images/ico04.png" style="width: 40px; height: 45px" alt="user image">
+                           <span class="username">
+                             <a href="#" id='cameraNum'>2.3万</a>
+                           </span>
+                       <span class="description">监控探头数量</span>
+                      </div>
+                     </div>
+                  </div>
+                  </div>
+
+                </div>
+                 <!--居民教育指数-->
+                 <div class="col-lg-12 margin0">
+                  <div class="card" style="height:350px;">
+                   <div class="card-header border-none ">
+                    <h3 class="card-title  col-sm-6" style="padding-top:10px;">
+                     <i class="line2"></i>
+                     <span>居民教育指数</span>
+                    </h3>
+                    <!--图表-->
+                    <div style="height:300px" id="chartEducationDiv"></div>
+                   </div>
+
+                  </div>
+                 </div>
+                 <!--居民教育指数结束-->
+                 <!--居民婚姻育儿指数-->
+                 <div class="col-lg-12 margin0">
+                  <div class="card" style="height:350px">
+                   <div class="card-header border-none ">
+                    <h3 class="card-title  col-sm-6" style="padding-top:10px;">
+                     <i class="line2"></i>
+                     <span>居民婚姻育儿指数</span>
+                    </h3>
+                    <!--图表-->
+                    <div style="height:300px" id="chartMarriageDiv"></div>					
+					<!--育儿图：
+					https://echarts.apache.org/examples/zh/editor.html?c=pie-nest					
+					-->
+                   </div>
+
+                  </div>
+                 </div>
+                 <!--居民婚姻育儿指数结束-->
+                 <!--基层党建指数-->
+                 <div class="col-lg-12 margin0">
+                  <div class="card">
+                   <div class="card-header border-none ">
+                    <h3 class="card-title  col-sm-6" style="padding-top:10px;">
+                     <i class="line2"></i>
+                     <span>基层党建指数</span>
+                    </h3>
+                    <!--图表-->
+                    <!--div style="height:270px" id="chartPartyPercentDiv"></div-->
+					
+					<div style="height:70px"/>
+					
+					<div class="progress-group">
+                      每百人社区工作者占比情况
+                      <span class="float-right" id="sqPercentSpan"><b>160</b>/200</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary" id="sqPercentDiv" style="width: 80%"></div>
+                      </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                      志愿者比例情况
+                      <span class="float-right" id="volunteerPercentSpan"><b>250</b>/500</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning" id="volunteerPercentDiv" style="width: 50%"></div>
+                      </div>
+                    </div>
+					
+                    <div class="progress-group">
+                      党员占比情况
+                      <span class="float-right" id="partyMemberPercentSpan"><b>310</b>/400</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger" id="partyMemberPercentDiv" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <div class="progress-group">
+						社区工作者党员占比情况
+                      <span class="float-right" id="sqOfPartyMemberPercentSpan"><b>12</b>/20</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-success" id="sqOfPartyMemberPercentDiv" style="width: 60%"></div>
+                      </div>
+                    </div>
+
+					<div class="progress-group">
+                      志愿者党员占比情况
+                      <span class="float-right" id="volunteerOfPartyMemberPercentSpan"><b>16</b>/32</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning" id="volunteerOfPartyMemberPercentDiv" style="width: 50%"></div>
+                      </div>
+                    </div>
+                   </div>
+
+                  </div>
+                 </div>
+                 <!--基层党建指数结束-->
+
+                </div>
+
+               </div>
+
+              </div>
+         </div>

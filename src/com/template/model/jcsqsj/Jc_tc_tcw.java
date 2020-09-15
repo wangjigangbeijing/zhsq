@@ -145,15 +145,15 @@ public void setcwcode(String cwcode)
 {
 	this.cwcode = cwcode;
 }
-@Column(name = "pciture", nullable = true)
-public String pciture;
-public String getpciture()
+@Column(name = "picture", nullable = true)
+public String picture;
+public String getpicture()
 {
-	return pciture;
+	return picture;
 }
-public void setpciture(String pciture)
+public void setpicture(String picture)
 {
-	this.pciture = pciture;
+	this.picture = picture;
 }
 @Column(name = "note", nullable = true)
 public String note;

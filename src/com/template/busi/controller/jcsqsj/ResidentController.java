@@ -205,7 +205,7 @@ public String delete(String id)
 @ResponseBody
 public String load(String name,String identitytype,String idnumber,String characteristics,String ofcommunity,String ofresidebuilding,
 		String ofunit,String ofroom,String offamily,String sex,String residencestatus,String ishouseholder,String relationshiphouseholder,
-		String registrationcategory,String birthday,String age,String nation,String politicalstatus,String education,String professionstatus,
+		String registrationcategory,String birthday,String beginage,String endage,String nation,String politicalstatus,String education,String professionstatus,
 		String professiontype,String issocialsecurity,String tel,String mobile,String marriage,String isforeignmarriage,String health,String blood,
 		String custodianincommunity,String dy_partymembertype,String dy_of_partyorganization,String dy_joinpartydate,String dy_membership,String dy_islost,
 		String dy_movemember,String zdr_type,String jzr_correctioncontent,String sy_unemployedreemployment,String lnr_economicsources,String lnr_livingconditions,
@@ -313,9 +313,13 @@ public String load(String name,String identitytype,String idnumber,String charac
 		{
 			hqlFilter.addQryCond("birthday", HqlFilter.Operator.LIKE, "%"+birthday+"%");
 		}
-		if(age != null && age.equalsIgnoreCase("") == false && age.equalsIgnoreCase("null") == false)
+		if(beginage != null && beginage.equalsIgnoreCase("") == false && beginage.equalsIgnoreCase("null") == false)
 		{
-			hqlFilter.addQryCond("age", HqlFilter.Operator.LIKE, "%"+age+"%");
+			hqlFilter.addQryCond("age", HqlFilter.Operator.GE, beginage);
+		}
+		if(endage != null && endage.equalsIgnoreCase("") == false && endage.equalsIgnoreCase("null") == false)
+		{
+			hqlFilter.addQryCond("age", HqlFilter.Operator.LE, endage);
 		}
 		if(nation != null && nation.equalsIgnoreCase("") == false && nation.equalsIgnoreCase("null") == false)
 		{

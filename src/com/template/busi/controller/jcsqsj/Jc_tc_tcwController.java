@@ -27,7 +27,8 @@ public class Jc_tc_tcwController {
 	private Jc_tc_tcwService jc_tc_tcwService;
 @RequestMapping(value="addOrUpdate",method = RequestMethod.POST,produces="text/html;charset=UTF-8")
 @ResponseBody
-public String addOrUpdate(String id,String inparkname,String cwtype,String location,Integer numbers,String UseType,String sizeType,String heightType,String arrange,String hascharge,Integer chargenum,String cwcode,String pciture,String note)
+public String addOrUpdate(String id,String inparkname,String cwtype,String location,Integer numbers,String UseType,String sizeType,String heightType,String arrange,
+		String hascharge,Integer chargenum,String cwcode,String picture,String note)
 {
 	JSONObject jsonObj = new JSONObject();
 	try
@@ -53,7 +54,7 @@ public String addOrUpdate(String id,String inparkname,String cwtype,String locat
 		jc_tc_tcw.sethascharge(hascharge);
 		jc_tc_tcw.setchargenum(chargenum);
 		jc_tc_tcw.setcwcode(cwcode);
-		jc_tc_tcw.setpciture(pciture);
+		jc_tc_tcw.setpicture(picture);
 		jc_tc_tcw.setnote(note);
 
 		String userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
@@ -201,7 +202,7 @@ hqlFilter.setOrder("desc");
 			jsonTmp.put("hascharge",jc_tc_tcw.gethascharge());
 			jsonTmp.put("chargenum",jc_tc_tcw.getchargenum());
 			jsonTmp.put("cwcode",jc_tc_tcw.getcwcode());
-			jsonTmp.put("pciture",jc_tc_tcw.getpciture());
+			jsonTmp.put("picture",jc_tc_tcw.getpicture());
 			jsonTmp.put("note",jc_tc_tcw.getnote());
 
        		jsonArr.put(jsonTmp);
@@ -242,7 +243,7 @@ public String get(String id)
 			jsonObj.put("hascharge",jc_tc_tcw.gethascharge());
 			jsonObj.put("chargenum",jc_tc_tcw.getchargenum());
 			jsonObj.put("cwcode",jc_tc_tcw.getcwcode());
-			jsonObj.put("pciture",jc_tc_tcw.getpciture());
+			jsonObj.put("picture",jc_tc_tcw.getpicture());
 			jsonObj.put("note",jc_tc_tcw.getnote());
 
 			jsonObj.put("success", true);

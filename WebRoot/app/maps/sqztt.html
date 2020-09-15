@@ -98,7 +98,7 @@
 
 					  <a class="btn btn-app" id="csgltAnchor" >
 						<i> <img src="../../images/icon/gisicon/城市管理图.png" width="32px"  alt="" /></i></br>
-						城市管理图
+						市政设施图
 						</a>
 
 						<a class="btn btn-app" id="tczytAnchor" >
@@ -376,13 +376,18 @@ function loadMap(mapName)
 						contentType: "application/json; charset=utf-8",
 						dataType: "json",
 						success: function (dataList) {
-						
+							
 							for(var p=0;dataList.features != null && p < dataList.features.length;p++)
 							{
 								var data = dataList.features[p];
 								
 								var layerId = data.layerId;
 								
+								console.log(data.layerId);
+								
+								if(data.layerId == 'layer3_5')
+									debugger;
+									
 								layerStyleObj = layerStyleMap[layerId];
 								
 								if(data.type == 'MultiLineString')
@@ -401,18 +406,8 @@ function loadMap(mapName)
 								}
 								else if(data.type == 'Point')
 								{
-									/*var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Point(data.coordinates),
-										weight:1,
-										population: 4000,
-										rainfall: 500
-									});
-									
-									iconFeature.setId(data.id);
-									dataLayer.getSource().addFeature(iconFeature);	
-									*/
 									var iconFeature = new ol.Feature({
-										geometry: new ol.geom.Point(data.coordinates),//(["116.37970237","39.83650525"]),//(data.coordinates),//			
+										geometry: new ol.geom.Point(data.coordinates),
 										weight:1,
 										population: 4000,
 										rainfall: 500
@@ -421,21 +416,19 @@ function loadMap(mapName)
 									var iconurl = '';
 									if(layerStyleObj.style != null)
 										iconurl = layerStyleObj.style.iconurl;
+									else
+										console.log('layerStyleObj.style is null');
 									
 									if(isFacilityLayer(layerId))
-									/*if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
-										||layerId == 'layer13_7'||layerId == 'layer5_2'||layerId == 'layer13_5'
-										||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')*/
 									{
 										if(layerStyleMap[data.facilitytype] == null)
 										{
-											//console.log('icon for '+data.facilitytype+' not found for layerId:'+layerId+'.');
+											console.log('icon for '+data.facilitytype+' not found for layerId:'+layerId+'.');
 											continue;
 										}
 										iconurl = layerStyleMap[data.facilitytype].iconurl;
 									}
 									
-									//console.log("http://localhost:8080"+getContextPath()+"/fileController/downloadIcon?fileName="+iconurl);
 									if(labelshow){
 										 iconStyle = new ol.style.Style({
 											image: new ol.style.Icon({
@@ -1225,7 +1218,7 @@ function showlayerlabel(){
 
 function isFacilityLayer(layerId)
 {
-	if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer12_3'||layerId == 'layer16_2'
+	if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer12_3'||layerId == 'layer16_2'
 						||layerId == 'layer13_7' ||layerId == 'layer13_8'||layerId == 'layer13_10'||layerId == 'layer13_5'
 						||layerId == 'layer13_3'||layerId == 'layer13_4'||layerId == 'layer13_6'||layerId == 'layer15_3'||layerId == 'layer7_4')
 	{

@@ -19,6 +19,7 @@ import com.template.model.SysOrganization;
 import com.template.model.SysRole;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
+import com.template.model.SysWechatNotice;
 import com.template.model.jcsqsj.Jc_advertisement;
 import com.template.model.jcsqsj.Residebuilding;
 import com.template.model.jcsqsj.Resident;
@@ -28,6 +29,7 @@ import com.template.service.SysOrganizationService;
 import com.template.service.SysRoleService;
 import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
+import com.template.service.SysWechatNoticeService;
 import com.template.service.jcsqsj.FamilyService;
 import com.template.service.jcsqsj.Jc_advertisementService;
 import com.template.service.jcsqsj.ResidebuildingService;
@@ -35,7 +37,9 @@ import com.template.service.jcsqsj.ResidentService;
 import com.template.service.jcsqsj.RoomService;
 import com.template.util.ConstValue;
 import com.template.util.HqlFilter;
+import com.template.util.RestClient;
 import com.template.util.TimeUtil;
+import com.template.util.Utility;
 
 /*
 
@@ -74,6 +78,13 @@ public class DaemonService
 	
 	@Autowired
 	private FamilyService familyService;
+	
+
+	@Autowired
+	private SysWechatNoticeService sysWechatNoticeService;
+	
+	
+	
 	
 	/*
 	 * @Desc	
@@ -122,6 +133,62 @@ public class DaemonService
 		{
 			logger.error(e.getMessage(),e);
 		}
+	}
+	
+	public void wechatSync()
+	{
+		try
+		{
+			logger.info("wechatSync...");
+			
+			RestClient rcLogin = new RestClient();
+			
+			Map<String, String> params = new HashMap<>();
+			params.put("username","nicai");
+			params.put("password","046cbc223b97b1f24649958da2cfb311");
+			
+			String loginResp = rcLogin.post("http://www.weixineasy.com/restful/login",params);
+			
+			JSONObject jsonLoginResp = new JSONObject(loginResp);
+			
+			String token = jsonLoginResp.getString("token");
+
+			Date yesterday = TimeUtil.getYesterdayDate(new Date());
+			
+			Date today = new Date();
+			
+			long yesterdaySec = yesterday.getTime()/1000;
+			
+			long todaySec = today.getTime()/1000;
+			
+			String articlesResp = rcLogin.getUrlResult("http://www.weixineasy.com/restful/articles/0/"+yesterdaySec+"/"+todaySec,token);
+			
+			JSONArray jsonArticlesResp = new JSONArray(articlesResp);
+			
+			for(int i=0;i<jsonArticlesResp.length();i++)
+			{
+				JSONObject jsonTmp = jsonArticlesResp.getJSONObject(i);
+				
+				String createtime = jsonTmp.getString("createtime");
+				String link = jsonTmp.getString("link");
+				String linkurl = jsonTmp.getString("linkurl");//如果是电话则tel开头
+				String pcatename = jsonTmp.getString("pcatename"); //栏目
+				
+				SysWechatNotice sysWeChat = new SysWechatNotice();
+				
+				sysWeChat.setId(Utility.getUniStr());
+				sysWeChat.setcreatetime(createtime);
+				sysWeChat.setlink(link);
+				sysWeChat.setlinkurl(linkurl);
+				sysWeChat.setpcatename(pcatename);
+				sysWechatNoticeService.save(sysWeChat);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+		
 	}
 	
 	
@@ -383,6 +450,20 @@ public class DaemonService
 							
 							resident.setage(String.valueOf(years));
 							
+							String ageChar = "";
+							if(years <= 6)
+								ageChar = "0-6岁儿童";
+							else if(years <= 13 && years >6)
+								ageChar = "7-13岁青少年"; 
+							else if(years <= 18 && years >13)
+								ageChar = "13-18岁青少年"; 
+							else if(years <= 44 && years >19)
+								ageChar = "19-44岁青年"; 
+							else if(years <= 64 && years >45)
+								ageChar = "45-64岁中年"; 
+							else if(years >= 65)
+								ageChar = "65岁以上老年人";
+							
 							String yearChar = "";
 							if(years <= 6)
 								yearChar = "0-6岁儿童";
@@ -413,6 +494,7 @@ public class DaemonService
 								curChar += ",";
 							curChar += yearChar;
 							resident.setcharacteristics(curChar);
+							resident.setagecharacteristic(ageChar);
 						}
 						
 						residentService.save(resident);  

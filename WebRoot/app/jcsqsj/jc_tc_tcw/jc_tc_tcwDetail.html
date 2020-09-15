@@ -108,11 +108,11 @@
 					<div class='form-group row'>
 						<label class='col-md-2 control-label'>照片</label>
   				<div class='col-md-9'>
-<div id='pciturediv' class='wu-example'>
-<input type='text' class='form-control field' name='pciture' id='pciture' style='display:none;'>
-<table class='table' id='pciturepicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
+<div id='picturediv' class='wu-example'>
+<input type='text' class='form-control field' name='picture' id='picture' style='display:none;'>
+<table class='table' id='picturepicktable'><thead><tr><th>名称</th><th>状态</th><th>操作</th></tr></thead><tbody></tbody></table>
 <div class='btns'>
-<div id='pciturepick'>选择文件</div>
+<div id='picturepick'>选择文件</div>
 </div>
 </div>
  						</div>
@@ -144,7 +144,7 @@
 	
 <script>
 
-var uploaderpciture = WebUploader.create({
+var uploaderpicture = WebUploader.create({
 	auto: true,
 // swf文件路径
 //swf: BASE_URL + '/js/Uploader.swf',
@@ -152,23 +152,23 @@ var uploaderpciture = WebUploader.create({
 server: getContextPath()+'/fileController/upload',
 // 选择文件的按钮。可选。
 // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-pick: '#pciturepick',
+pick: '#picturepick',
 formData:{
-attributeName:'pciture'
+attributeName:'picture'
 }
 });
-uploaderpciture.on( 'fileQueued', function( file ) {
+uploaderpicture.on( 'fileQueued', function( file ) {
 	$('#'+file.source._refer[0].id+'table').append('<tr><td>'+file.name+'</td><td id='+file.id+'>等待上传...</td>'+
 						"<td><button type='button' id='"+file.id+"Button' class='btn btn-success btn-xs' onclick='javascript:downloadAttach();return false;'><i class='fa fa-check'></i></button></td>"+
 						'</tr>');
 });
-uploaderpciture.on( 'uploadSuccess', function( file,response ) {
+uploaderpicture.on( 'uploadSuccess', function( file,response ) {
 	$( '#'+response.attributeName ).val(response.fileName+VALUE_SPLITTER+$('#'+response.attributeName ).val());
 	console.log($( '#'+response.attributeName ).val());
 	$( '#'+file.id ).text('已上传');
 	$('#'+file.id+'Button').attr('onclick', onclick='javascript:downloadAttach("'+response.fileName+'");return false;');
 });
-uploaderpciture.on( 'uploadError', function( file,response ) {
+uploaderpicture.on( 'uploadError', function( file,response ) {
 });	
 
 
