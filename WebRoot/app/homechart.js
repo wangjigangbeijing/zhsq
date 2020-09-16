@@ -11,6 +11,7 @@ $(document).ready(function (){
 	
 	//getConvenience();
 	
+	
 });	
 
 
@@ -48,7 +49,258 @@ function getOrganizationInfo()
 						var picli = '<li><dd><img src="'+getContextPath()+"/fileController/download?fileName="+picArr[i]+'"></dd></li>';
 							
 						$('#picul').append(picli);
+						
+						var picliBig = '<li><a href="#"><img src="'+getContextPath()+"/fileController/download?fileName="+picArr[i]+'"></a> </li>';
+						
+						$('#picliBig').append(picliBig);
 					}
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+	function G(s){
+
+		return document.getElementById(s);
+
+	}
+
+	
+
+	function getStyle(obj, attr){
+
+		if(obj.currentStyle){
+
+			return obj.currentStyle[attr];
+
+		}else{
+
+			return getComputedStyle(obj, false)[attr];
+
+		}
+
+	}
+
+	
+
+	function Animate(obj, json){
+
+		if(obj.timer){
+
+			clearInterval(obj.timer);
+
+		}
+
+		obj.timer = setInterval(function(){
+
+			for(var attr in json){
+
+				var iCur = parseInt(getStyle(obj, attr));
+
+				iCur = iCur ? iCur : 0;
+
+				var iSpeed = (json[attr] - iCur) / 4;
+
+				iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+				obj.style[attr] = iCur + iSpeed + 'px';
+
+				if(iCur == json[attr]){
+
+					clearInterval(obj.timer);
+
+				}
+
+			}
+
+		}, 30);
+
+	}
+
+
+
+	var oPic = G("picBox");
+
+	var oList = G("listBox");
+
+	
+
+	var oPrev = G("prev");
+
+	var oNext = G("next");
+
+	var oPrevTop = G("prevTop");
+
+	var oNextTop = G("nextTop");
+
+
+
+	var oPicLi = oPic.getElementsByTagName("li");
+
+	var oListLi = oList.getElementsByTagName("li");
+
+	var len1 = oPicLi.length;
+
+	var len2 = oListLi.length;
+
+	
+
+	var oPicUl = oPic.getElementsByTagName("ul")[0];
+
+	var oListUl = oList.getElementsByTagName("ul")[0];
+
+	debugger;
+	var w1 = oPicLi[0].offsetWidth;
+
+	var w2 = oListLi[0].offsetHeight;
+
+
+
+	oPicUl.style.width = w1 * len1 + "px";
+
+	oListUl.style.height = (w2+9) * len2 + "px";
+
+
+
+	var index = 0;
+
+	
+
+	var num = 4;
+
+	var num2 = Math.ceil(num / 1.5);
+
+
+
+	function Change(){
+
+
+
+		Animate(oPicUl, {left: - index * w1});
+
+		
+
+		if(index < num2){
+
+			Animate(oListUl, {top: 0});
+
+		}else if(index + num2 <= len2){
+
+			Animate(oListUl, {top: - (index - num2 + 1) * w2});
+
+		}else{
+
+			Animate(oListUl, {top: - (len2 - num) * w2});
+
+		}
+
+
+
+		for (var i = 0; i < len2; i++) {
+
+			oListLi[i].className = "";
+
+			if(i == index){
+
+				oListLi[i].className = "on";
+
+			}
+
+		}
+
+	}
+
+	
+
+	oNextTop.onclick = oNext.onclick = function(){
+
+		
+
+		index ++;
+
+		index = index == len2 ? 0 : index;
+
+		Change();
+
+	}
+
+	
+
+	oPrev.onmouseover = oNext.onmouseover = oPrevTop.onmouseover = oNextTop.onmouseover = function(){
+
+		clearInterval(timer);
+
+		}
+
+	oPrev.onmouseout = oNext.onmouseout = oPrevTop.onmouseout = oNextTop.onmouseout = function(){
+
+		timer=setInterval(autoPlay,4000);
+
+		}
+
+
+
+	oPrevTop.onclick = oPrev.onclick = function(){
+
+
+
+		index --;
+
+		index = index == -1 ? len2 -1 : index;
+
+		Change();
+
+	}
+
+	
+
+	var timer=null;
+
+	timer=setInterval(autoPlay,4000);
+
+	function autoPlay(){
+
+		    index ++;
+
+			index = index == len2 ? 0 : index;
+
+			Change();
+
+		}
+
+	
+
+	
+
+
+
+	for (var i = 0; i < len2; i++) {
+
+		oListLi[i].index = i;
+
+		oListLi[i].onclick = function(){
+
+			index = this.index;
+
+
+
+			Change();
+
+		}
+
+	}
+	
+	
+	
+	
+	
+	
 				}
 				
 				obj.underGroundArea;//底下空间面积
@@ -67,17 +319,17 @@ function getOrganizationInfo()
 				
 				$('#averageTreeNum').text(averageTreeNum);//人均绿植数量
 				
-				$('#averageResidentJZQTcwDiv').html(obj.averageResidentJZQTcw+'<span>（'+obj.jzqtcwCnt+'/（'+obj.residentCnt+'/100））</span>');//
+				$('#averageResidentJZQTcwDiv').html(obj.averageResidentJZQTcw+'<span>【'+obj.jzqtcwCnt+'/('+obj.residentCnt+'/100)】</span>');//
 
-				$('#averageResidentTcwDiv').html(obj.averageResidentTcw+'<span>（'+obj.tcwCnt+'/（'+obj.residentCnt+'/100））</span>');
+				$('#averageResidentTcwDiv').html(obj.averageResidentTcw+'<span>【'+obj.tcwCnt+'/('+obj.residentCnt+'/100)】</span>');
 
-				$('#averageFamilyJZQTcwDiv').html(obj.averageFamilyJZQTcw+'<span>（'+obj.jzqtcwCnt+'/'+obj.famliyCnt+'）</span>');
+				$('#averageFamilyJZQTcwDiv').html(obj.averageFamilyJZQTcw+'<span>【'+obj.jzqtcwCnt+'/('+obj.famliyCnt+'/100)】</span>');
 
-				$('#averageFamilyTcwDiv').html(obj.averageFamilyTcw+'<span>（'+obj.tcwCnt+'/'+obj.famliyCnt+'）</span>');
+				$('#averageFamilyTcwDiv').html(obj.averageFamilyTcw+'<span>【'+obj.tcwCnt+'/('+obj.famliyCnt+'/100)】</span>');
 				
-				$('#averageCultureFacArea').text(obj.averageCultureFacArea+'('+obj.cultureFacilitiesArea+'/'+obj.residentCnt+')');
+				$('#averageCultureFacArea').text(obj.averageCultureFacArea+'【'+obj.cultureFacilitiesArea+'/('+obj.residentCnt+'/100)】');
 				
-				$('#averageCultureFacNum').text(obj.averageCultureFacNum+'('+obj.cultureFacilitiesNum+'/'+obj.residentCnt+')');
+				$('#averageCultureFacNum').text(obj.averageCultureFacNum+'【'+obj.cultureFacilitiesNum+'/('+obj.residentCnt+'/100)】');
 				
 				//每百人社区工作者占比情况
 				$("#sqPercentDiv").width(obj.sqPercent+'%');				
@@ -85,7 +337,7 @@ function getOrganizationInfo()
 
 				//党员占比情况				
 				$("#partyMemberPercentDiv").width(obj.partyMemberPercent+'%');				
-				$("#partyMemberPercentSpan").html('<b>'+obj.partyMemberCnt+'</b>/('+obj.residentCnt+'/100)');
+				$("#partyMemberPercentSpan").html('<b>'+obj.partyMemberCnt+'</b>/'+obj.residentCnt);
 
 				//社区工作者党员占比情况
 				$("#sqOfPartyMemberPercentDiv").width(obj.sqOfPartyMember+'%');
@@ -141,7 +393,7 @@ function getOrganizationInfo()
 							}
 						},*/
 						legend: {
-							data: ['服务网点数', '每百人服务网点数']
+							data: ['网点数', '每百人网点数']
 						},
 						xAxis: [
 							{
@@ -165,7 +417,7 @@ function getOrganizationInfo()
 							},
 							{
 								type: 'value',
-								name: '百人网点数',
+								name: '每百人网点数',
 								min: 0,
 								max: 1,
 								interval: 0.1/*,
@@ -181,7 +433,7 @@ function getOrganizationInfo()
 								data: serviceStoreNum//[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
 							},
 							{
-								name: '百人网点数',
+								name: '每百人网点数',
 								type: 'bar',
 								yAxisIndex: 1,
 								data: serviceStoreNum100//[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
@@ -226,24 +478,24 @@ function getMinQing()
 				
 				var optionGender = {
 					title: {
-							text: '户籍性别分布图',
+							text: '性别分布图',
 							right: 20
 						},
 					tooltip: {
 						trigger: 'item',
 						formatter: '{a} <br/>{b}: {c} ({d}%)'
 					},
-					/*legend: {
+					legend: {
 						orient: 'vertical',
 						left: 10,
 						data: genderArr//['直达', '营销广告', '搜索引擎']
-					},*/
+					},
 					series: [
 						{
 							name: '性别比例',
 							type: 'pie',
 							selectedMode: 'single',
-							radius: [0, '30%'],
+							//radius: [0, '30%'],
 
 							label: {
 								position: 'inner'
@@ -252,43 +504,13 @@ function getMinQing()
 								show: false
 							},
 							data: genderData
-						},
+						}/*,
 						{
 							name: '户籍类别',
 							type: 'pie',
 							radius: ['40%', '55%'],
-							/*label: {
-								formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
-								backgroundColor: '#eee',
-								borderColor: '#aaa',
-								borderWidth: 1,
-								borderRadius: 4,
-								rich: {
-									a: {
-										color: '#999',
-										lineHeight: 22,
-										align: 'center'
-									},
-									hr: {
-										borderColor: '#aaa',
-										width: '100%',
-										borderWidth: 0.5,
-										height: 0
-									},
-									b: {
-										fontSize: 16,
-										lineHeight: 33
-									},
-									per: {
-										color: '#eee',
-										backgroundColor: '#334455',
-										padding: [2, 4],
-										borderRadius: 2
-									}
-								}
-							},*/
 							data: residenceStatusData
-						}
+						}*/
 					]
 				};
 

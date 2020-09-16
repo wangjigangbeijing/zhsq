@@ -222,10 +222,10 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			double averageResidentTcw = tcwCnt*1.0/(residentCnt/100);//人均总车位数（停车位总数/人口数量）
 			jsonObj.put("averageResidentTcw", df.format(averageResidentTcw));
 			
-			double averageFamilyJZQTcw = jzqtcwCnt*1.0/famliyCnt;//户均居住区停车位数（居住区停车位总数/人口数量）
+			double averageFamilyJZQTcw = jzqtcwCnt*1.0/(famliyCnt/100);//户均居住区停车位数（居住区停车位总数/人口数量）
 			jsonObj.put("averageFamilyJZQTcw", df.format(averageFamilyJZQTcw));
 			
-			double averageFamilyTcw = tcwCnt*1.0/famliyCnt;//户均总车位数（停车位总数/人口数量）
+			double averageFamilyTcw = tcwCnt*1.0/(famliyCnt/100);//户均总车位数（停车位总数/人口数量）
 			jsonObj.put("averageFamilyTcw", df.format(averageFamilyTcw));
 			
 			String sDZY = "SELECT SUM(num) as num FROM jc_pubfacilities_gy__v_jldzy where owner = '"+owner+"'";
@@ -303,7 +303,7 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 				{
 					volunteerPartyMemberNum = ((BigInteger)listVolunteerPartyMember.get(i).get("cnt")).intValue();
 				}
-				volunteerNum += ((BigInteger)listSQOrgMember.get(i).get("cnt")).intValue();
+				volunteerNum += ((BigInteger)listVolunteerPartyMember.get(i).get("cnt")).intValue();
 			}
 			
 			double volunteerOfPartyMember = volunteerPartyMemberNum*1.0/volunteerNum;//社区工作者党员占比情况

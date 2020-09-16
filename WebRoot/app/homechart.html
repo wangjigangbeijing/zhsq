@@ -13,6 +13,7 @@
   .text-lg-right  .custom-select{ margin-top: 5px;}
   .line2{ margin-top:15px}
   .navbar-dark{background-color: white}
+  .btn{font-size:14px}
 </style>
 
  <link rel="stylesheet" href="../dist/css/style.css">
@@ -26,9 +27,10 @@
               <div class="row">
                 <div class="col-sm-12" style="text-align:center;">
                   <h1 style="font-size:40px; color:#005AB5;"><span id="sqtitle"></span>民情指数</h1>	
-            <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#" id="homeChartAnchor">社情概览</a></li>
-                  </ol>			
+           
+                  <ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="./homepage.html" id="homePageAnchor">社情概览</a></li>
+                 </ol>	
                 </div>
               </div>		
             </div><!-- /.container-fluid -->
@@ -155,9 +157,9 @@
 
                               <div class="index_zhuanjia_right_inc" id="nextTop"></div>
 
-                              <ul>
+                              <ul id='picliBig'>
 
-                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a>  <p>图一</p></li>
+                               <!--li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a>  <p>图一</p></li>
 
                                <li><a href="#"><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2493914691,2834144944&fm=26&gp=0.jpg"></a> <p>图2</p></li>
 
@@ -167,7 +169,7 @@
 
                                <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a> <p>图5</p></li>
 
-                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a> <p>图6</p></li>
+                               <li><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778173668,1422088699&fm=26&gp=0.jpg"></a> <p>图6</p></li-->
 
                               </ul>
 
@@ -254,23 +256,23 @@
                    </div>
                    <div class="btn_box">
                     <span><a class="btn btn-app btn5" id="averageRubbishNum">246</a></span>
-                   <p>人均垃圾设施数量</p>
-                   <div>(垃圾设施总数/人口数量)</div>
+                   <p>每百人人均垃圾设施数量</p>
+                   <div>(垃圾设施总数/每百人口数量)</div>
                   </div>
                   <div class="btn_box">
                    <span><a class="btn btn-app btn6" id="averageAdvertisementNum">246</a></span>
-                   <p>人员宣传设施数量</p>
-                   <div>(宣传设施总数/人口数量)</div>
+                   <p>每百人人均宣传设施数量</p>
+                   <div>(宣传设施总数/每百人口数量)</div>
                   </div>
                   <div class="btn_box">
                    <span><a class="btn btn-app btn7">0</a></span>
-                   <p>人均绿地面积</p>
-                   <div>(绿地面积/人口数量)</div>
+                   <p>每百人人均绿地面积</p>
+                   <div>(绿地面积/每百人口数量)</div>
                   </div>
                   <div class="btn_box">
                    <span><a class="btn btn-app btn8" id="averageTreeNum">246</a></span>
-                   <p>人均绿植密度</p>
-                   <div>(树木/人口数量)</div>
+                   <p>每百人人均绿植密度</p>
+                   <div>(树木/每百人口数量)</div>
                   </div>
                   </div>
                  </div>
@@ -288,44 +290,28 @@
                    </h3>
                   </div>
                    <div class="row">
-                      <!--div class="col-md-4" style="height: 250px;" id="convenienceDivFirst">
-					  
-					  <div class="progress-group">
-                      社区工作者占比情况
-                      <span class="float-right" id="sqPercentSpan"><b>160</b>/200</span>
-                      <div class="progress progress-sm">
-                        <div class="progress-bar bg-primary" id="sqPercentDiv" style="width: 80%"></div>
-                      </div>
-                    </div>
+                   
+            
+          
 
-                    <div class="progress-group">
-                      党员占比情况
-                      <span class="float-right" id="partyMemberPercentSpan"><b>310</b>/400</span>
-                      <div class="progress progress-sm">
-                        <div class="progress-bar bg-danger" id="partyMemberPercentDiv" style="width: 75%"></div>
-                      </div>
-                    </div>
-					
-					  </div-->
-					  
-					  <div  style="margin: 10px 10px 10px 10px;">
+					  <div  style="margin: 10px 10px 10px 10px; width:30%;">
                     <div class="col-12 col-md-12">
                      <div class="user-block  col-lg-6">
                       <div class="number1">
-                       <img class="img-circle " src="../dist/images/ico03.png" alt="user image">
+                       <img class="img-circle " src="../dist/images/ico031.png" alt="">
                            <span class="username" style="font-size:120%">
                              <a href="#" id="averageCultureFacArea"></a>
                            </span>
-                       <span class="description">人均健身场地面积</span>
+                       <span class="description">每百人人均健身场地面积</span>
                       </div>
                      </div>
                      <div class="user-block  col-lg-6">
                       <div class="number1">
-                       <img class="img-circle " src="../dist/images/ico04.png" style="width: 40px; height: 45px" alt="user image">
+                       <img class="img-circle " src="../dist/images/ico032.png" style="width: 30px; height: 45px" alt="">
                            <span class="username" style="font-size:120%">
                              <a href="#" id='averageCultureFacNum'>0.25(34/6666)</a>		
                            </span>
-                       <span class="description">人均健身设施数量</span>
+                       <span class="description" id="averageCultureFacNum">每百人人均健身设施数量</span>
                       </div>
                      </div>
                   </div>
@@ -384,7 +370,7 @@
 	                     <div class="user-block  col-lg-3">
 	                      <div class="carBox car_1">
 	                           <p>每百人居住区停车位数</p>
-                               <p>（居住区停车位总数/人口数量）</p>
+                               <p>（居住区停车位总数/每百人口数量）</p>
                                <div id="averageResidentJZQTcwDiv">0.005<span id="averageResidentJZQTcwSpan">（524/21246）</span></div>
                          <div class="jindu jindu1">
                           <i style="width: 20%"></i>
@@ -395,7 +381,7 @@
                          <div class="user-block  col-lg-3">
                           <div class="carBox car_2">
                            <p>每百人总停车位数</p>
-                           <p>（停车位总数/人口数量）</p>
+                           <p>（停车位总数/每百人口数量）</p>
                            <div id="averageResidentTcwDiv">0.005<span id="averageResidentTcwSpan">（524/21246）</span></div>
                            <div class="jindu jindu2">
                             <i style="width: 20%"></i>
@@ -404,8 +390,8 @@
                           </div>
                          </div> <div class="user-block  col-lg-3">
                          <div class="carBox car_3">
-                          <p>户均居住区停车位数</p>
-                          <p>（居住区停车位总数/家庭数量）</p>
+                          <p>每百户均居住区停车位数</p>
+                          <p>（居住区停车位总数/每百家庭数量）</p>
                           <div id="averageFamilyJZQTcwDiv">0.005<span id="averageFamilyJZQTcwSpan">（524/21246）</span></div>
                           <div class="jindu jindu3">
                            <i style="width: 20%"></i>
@@ -415,8 +401,8 @@
                         </div>
                          <div class="user-block  col-lg-3">
                           <div class="carBox car_4">
-                           <p>户均总停车位数</p>
-                           <p>（停车位总数/家庭数量）</p>
+                           <p>每百户均总停车位数</p>
+                           <p>（停车位总数/每百家庭数量）</p>
                            <div id="averageFamilyTcwDiv">0.005<span id="averageFamilyTcwSpan">（524/21246）</span></div>
                            <div class="jindu jindu4">
                             <i style="width: 20%"></i>
@@ -457,7 +443,7 @@
                            <span class="username">
                              <a href="#" id='cameraNum'>2.3万</a>
                            </span>
-                       <span class="description">监控探头数量</span>
+                       <span class="description">监控探头数量（每百人）</span>
                       </div>
                      </div>
                   </div>
@@ -536,7 +522,7 @@
                     </div>
 
                     <div class="progress-group">
-						社区工作者党员占比情况
+						        社区工作者党员占比情况
                       <span class="float-right" id="sqOfPartyMemberPercentSpan"><b>12</b>/20</span>
                       <div class="progress progress-sm">
                         <div class="progress-bar bg-success" id="sqOfPartyMemberPercentDiv" style="width: 60%"></div>
