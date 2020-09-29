@@ -65,7 +65,7 @@ public String addOrUpdate(String id,String name,String loginid,String password,S
 		}
 		sys_user.setname(name);
 		sys_user.setloginid(loginid);
-		sys_user.setpassword(EncryptUtil.encodeStr(password));
+		sys_user.setpassword(AES.encrypt(password));
 		sys_user.setgender(gender);
 		
 		if(birthday != null && birthday.equalsIgnoreCase("") == false)

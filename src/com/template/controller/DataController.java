@@ -716,7 +716,7 @@ public class DataController {
 
 				String sCurTime = TimeUtil.formatDate(new Date());
 				
-				sSql += " POINT = '"+sPoint+"',created_at = '"+sCurTime+"',created_by = '"+userId+"', ";
+				sSql += " POINT = '"+sPoint+"',created_at = '"+sCurTime+"',created_by = '"+userId+"',";
 				
 				if(sSql != null && sSql.endsWith(","))
 					sSql = sSql.substring(0,sSql.length() - 1);

@@ -161,6 +161,8 @@ public class DaemonService
 			
 			long todaySec = today.getTime()/1000;
 			
+			yesterdaySec = 0;
+			
 			String articlesResp = rcLogin.getUrlResult("http://www.weixineasy.com/restful/articles/0/"+yesterdaySec+"/"+todaySec,token);
 			
 			JSONArray jsonArticlesResp = new JSONArray(articlesResp);
@@ -173,6 +175,16 @@ public class DaemonService
 				String link = jsonTmp.getString("link");
 				String linkurl = jsonTmp.getString("linkurl");//如果是电话则tel开头
 				String pcatename = jsonTmp.getString("pcatename"); //栏目
+				
+				//通过link判断是否是已经发布过的文章
+				
+				HqlFilter hqlFilterLink = new HqlFilter();
+				hqlFilterLink.addQryCond("link", HqlFilter.Operator.EQ, link);
+				
+				long iCount = sysWechatNoticeService.countByFilter(hqlFilterLink);
+				
+				if(iCount > 0)
+					continue;
 				
 				SysWechatNotice sysWeChat = new SysWechatNotice();
 				
