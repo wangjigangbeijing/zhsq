@@ -212,8 +212,10 @@ $(document).ready(function (){
 		updateActiveMenu('boardAnchor');
         loadBoardPage();
     });
-	
-	
+	$('#wechatAnchor').click(function () {
+		updateActiveMenu('wechatAnchor');
+        loadWechatPage();
+    });
 	
 	
 	$('#organizationAnchor').click(function () {
@@ -824,7 +826,12 @@ function loadTelPage()
     });
 }
 
-
+function loadWechatPage()
+{
+	$('#main-content').load("./sys/sys_wechat_notice/sys_wechat_notice.html", function () {
+        
+    });
+}
 
 function loadBoardPage()
 {

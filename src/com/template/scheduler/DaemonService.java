@@ -163,38 +163,59 @@ public class DaemonService
 			
 			yesterdaySec = 0;
 			
-			String articlesResp = rcLogin.getUrlResult("http://www.weixineasy.com/restful/articles/0/"+yesterdaySec+"/"+todaySec,token);
-			
-			JSONArray jsonArticlesResp = new JSONArray(articlesResp);
-			
-			for(int i=0;i<jsonArticlesResp.length();i++)
+			HashMap<Integer,String> hmCommunity = new HashMap<Integer,String>()
 			{
-				JSONObject jsonTmp = jsonArticlesResp.getJSONObject(i);
+				{
+					put(5,"9d1dbf8b-5ebb-48f1-a88e-d57230b363d3");//木樨园南里
+					put(6,"0bf8f42d-76da-40a6-ab0e-74f55d518cf7");//东罗园
+					put(7,"eb5aa541-f752-4501-a3f8-09f63f7f0936");//西马小区
+					put(8,"dfa8b555-161e-4102-a47e-3ad07f61df93");//金润家园
+				}
+			};
+					
+			Iterator iter = hmCommunity.entrySet().iterator();
+			while (iter.hasNext()) 
+			{
+				Map.Entry entry = (Map.Entry) iter.next();
+				Integer uniacid = (Integer)entry.getKey();
+				String orgId = (String)entry.getValue();
 				
-				String createtime = jsonTmp.getString("createtime");
-				String link = jsonTmp.getString("link");
-				String linkurl = jsonTmp.getString("linkurl");//如果是电话则tel开头
-				String pcatename = jsonTmp.getString("pcatename"); //栏目
+				String articlesResp = rcLogin.getUrlResult("http://www.weixineasy.com/restful/articles/"+uniacid+"/"+yesterdaySec+"/"+todaySec,token);
 				
-				//通过link判断是否是已经发布过的文章
+				JSONArray jsonArticlesResp = new JSONArray(articlesResp);
 				
-				HqlFilter hqlFilterLink = new HqlFilter();
-				hqlFilterLink.addQryCond("link", HqlFilter.Operator.EQ, link);
-				
-				long iCount = sysWechatNoticeService.countByFilter(hqlFilterLink);
-				
-				if(iCount > 0)
-					continue;
-				
-				SysWechatNotice sysWeChat = new SysWechatNotice();
-				
-				sysWeChat.setId(Utility.getUniStr());
-				sysWeChat.setcreatetime(createtime);
-				sysWeChat.setlink(link);
-				sysWeChat.setlinkurl(linkurl);
-				sysWeChat.setpcatename(pcatename);
-				sysWechatNoticeService.save(sysWeChat);
-			}
+				for(int i=0;i<jsonArticlesResp.length();i++)
+				{
+					JSONObject jsonTmp = jsonArticlesResp.getJSONObject(i);
+					
+					String createtime = jsonTmp.getString("createtime");
+					String link = jsonTmp.getString("link");
+					String linkurl = jsonTmp.getString("linkurl");//如果是电话则tel开头
+					String pcatename = jsonTmp.getString("pcatename"); //栏目
+					String title = jsonTmp.getString("title"); 
+					
+					//通过link判断是否是已经发布过的文章
+					
+					HqlFilter hqlFilterLink = new HqlFilter();
+					hqlFilterLink.addQryCond("link", HqlFilter.Operator.EQ, link);
+					
+					long iCount = sysWechatNoticeService.countByFilter(hqlFilterLink);
+					
+					if(iCount > 0)
+						continue;
+					
+					SysWechatNotice sysWeChat = new SysWechatNotice();
+					
+					sysWeChat.setId(Utility.getUniStr());
+					sysWeChat.setcreatetime(createtime);
+					sysWeChat.setlink(link);
+					sysWeChat.setlinkurl(linkurl);
+					sysWeChat.setowner(orgId);
+					sysWeChat.settitle(title);
+					sysWeChat.setpcatename(pcatename);
+					sysWechatNoticeService.save(sysWeChat);
+				}
+			}			
 		}
 		catch(Exception e)
 		{

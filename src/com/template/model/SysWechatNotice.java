@@ -64,4 +64,26 @@ public void setpcatename(String pcatename)
 {
 	this.pcatename = pcatename;
 }
+
+@Column(name = "title", nullable = true)
+public String title;
+public String gettitle()
+{
+	return title;
+}
+public void settitle(String title)
+{
+	this.title = title;
+}
+
+@Column(name = "owner", nullable = true)
+public String owner;
+public String getowner()
+{
+	return owner;
+}
+public void setowner(String owner)
+{
+	this.owner = owner;
+}
 }

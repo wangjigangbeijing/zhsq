@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import com.template.busi.safe.AES;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
+import com.template.model.SysWechatNotice;
 import com.template.service.SysUserOrganizationService;
 import com.template.service.SysUserService;
 import com.template.service.SysWechatNoticeService;
@@ -34,19 +35,15 @@ public class SysWechatNoticeController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String load(String name,String status)
+	public String load(String title)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
 		{
-			/*HqlFilter hqlFilter = new HqlFilter();
-			if(name != null && name.equalsIgnoreCase("") == false && name.equalsIgnoreCase("null") == false)
+			HqlFilter hqlFilter = new HqlFilter();
+			if(title != null && title.equalsIgnoreCase("") == false && title.equalsIgnoreCase("null") == false)
 			{
-				hqlFilter.addQryCond("name", HqlFilter.Operator.LIKE, "%"+name+"%");
-			}
-			if(status != null && status.equalsIgnoreCase("") == false && status.equalsIgnoreCase("null") == false)
-			{
-				hqlFilter.addQryCond("status", HqlFilter.Operator.LIKE, "%"+status+"%");
+				hqlFilter.addQryCond("title", HqlFilter.Operator.LIKE, "%"+title+"%");
 			}
 			
 			hqlFilter.setOrder("asc");
@@ -69,95 +66,40 @@ public class SysWechatNoticeController {
 			if(alOrg != null && alOrg.size() != 0)
 				hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 	
-			hqlFilter.setSort("uorder");
+			hqlFilter.setSort("createtime");
 			
-	        List<SysUser> listObj = sys_userService.findByFilter(hqlFilter);
+	        List<SysWechatNotice> listObj = sysWechatNoticeService.findByFilter(hqlFilter);
 	        JSONArray jsonArr = new JSONArray();
 	        int iTotalCnt = 0;
 			for(int i=0;i<listObj.size();i++)
 			{
-				SysUser sys_user = listObj.get(i);
+				SysWechatNotice sys_wechatnotice = listObj.get(i);
 				JSONObject jsonTmp = new JSONObject();
-				jsonTmp.put("id", sys_user.getId());
-				jsonTmp.put("name",sys_user.getname());
-				jsonTmp.put("loginid",sys_user.getloginid());
-				jsonTmp.put("password",sys_user.getpassword());
-				jsonTmp.put("gender",sys_user.getgender());
-				if(sys_user.getbirthday() != null)
-					jsonTmp.put("birthday",TimeUtil.formatDate(sys_user.getbirthday(),"yyyy-MM-dd"));
-				else
-					jsonTmp.put("birthday","-");
 				
-				if(sys_user.getjoinday() != null)
-					jsonTmp.put("joinday",TimeUtil.formatDate(sys_user.getjoinday(),"yyyy-MM-dd"));
-				else
-					jsonTmp.put("joinday","-");
+				String createtime = sys_wechatnotice.getcreatetime();
 				
-				jsonTmp.put("mobile",sys_user.getmobile());
-				//jsonTmp.put("department",sys_user.getdepartment());
-				jsonTmp.put("job",sys_user.getjob());
-				jsonTmp.put("role",sys_user.getrole());
-				
-				String roleTxt = "";
-				
-				if(sys_user.getrole() != null)
+				try
 				{
-					String [] roleArr = sys_user.getrole().split(",");
+					Integer createTimeInt = Integer.parseInt(createtime);
+					createtime = TimeUtil.getTimeByMillSecond2(createTimeInt*1000);
+				}
+				catch(Exception e)
+				{
 					
-					for(int j=0;j<roleArr.length;j++)
-					{
-						String roleId = roleArr[j];
-						
-						if(ConstValue.roleMap.containsKey(roleId))
-						{
-							roleTxt += ConstValue.roleMap.get(roleId)+",";
-						}
-					}
 				}
 				
-				if(roleTxt.endsWith(","))
-					roleTxt = roleTxt.substring(0, roleTxt.length() - 1);
-				
-				jsonTmp.put("status",sys_user.getstatus());
-				jsonTmp.put("roleTxt",roleTxt);
-				
-				String orgIds = "";//ConstValue.userToOrgMap.get(sys_user.getId());
-				String orgNames = "";
-				
-				
-				HqlFilter hqlFilterUser = new HqlFilter();
-				hqlFilterUser.addQryCond("user", HqlFilter.Operator.EQ, sys_user.getId());
-				List<SysUserOrganization> userOrgList = sys_userOrgService.findByFilter(hqlFilterUser);
-				
-				if(userOrgList.size() == 0)//当前用户不属于要查询的组织
-					continue;
-				
-				for(int j=0;j<userOrgList.size();j++)
-				{
-					SysUserOrganization userOrg = userOrgList.get(j);
-					
-					String orgId = userOrg.getorganization();
-					
-					String orgName = ConstValue.orgMap.get(orgId);
-					
-					orgIds += orgId + ",";
-					orgNames += orgName + ",";
-				}
-				
-				if(orgIds != null && orgIds.endsWith(","))
-				{
-					orgIds = orgIds.substring(0, orgIds.length() - 1);
-					orgNames = orgNames.substring(0, orgNames.length() - 1);
-				}
-				
-				jsonTmp.put("orgIds", orgIds);
-				jsonTmp.put("orgNames", orgNames);
-	
+				jsonTmp.put("id", sys_wechatnotice.getId());
+				jsonTmp.put("createtime", createtime);
+				jsonTmp.put("link", sys_wechatnotice.getlink());
+				jsonTmp.put("linkurl", sys_wechatnotice.getlinkurl());
+				jsonTmp.put("title", sys_wechatnotice.gettitle());
+				jsonTmp.put("pcatename", sys_wechatnotice.getpcatename());
+								
 	       		jsonArr.put(jsonTmp);
 	        	iTotalCnt++;
 			}
 	        jsonObj.put("totalCount", iTotalCnt);
-	        jsonObj.put("list", jsonArr);*/
+	        jsonObj.put("list", jsonArr);
 	        jsonObj.put("success", true);
 		}
 		catch(Exception e)
