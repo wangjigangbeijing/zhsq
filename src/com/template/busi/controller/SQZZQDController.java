@@ -173,8 +173,8 @@ public class SQZZQDController {
 				String gzzzTxt = sqzzqd.getgzzz();
 				String gzzzShort = gzzzTxt;
 				
-				if(gzzzShort != null && gzzzShort.length() > 10)
-					gzzzShort = gzzzShort.substring(0, 10) + "...";
+				if(gzzzShort != null && gzzzShort.length() > 20)
+					gzzzShort = gzzzShort.substring(0, 20) + "...";
 				
 				jsonTmp.put("gzzz", sqzzqd.getgzzz());
 				jsonTmp.put("gzzzShort", gzzzShort);

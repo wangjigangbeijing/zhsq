@@ -88,23 +88,23 @@ public class LoginController {
 				return jsonObj.toString();
 			}
 			
-			if(username.equalsIgnoreCase("dhm") && password.equalsIgnoreCase("zhsq2020"))
-			{
-				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
-				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
-				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, "7a004f74-7862-4384-92c9-75426e33467f");
-				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, "");
-				
-				jsonObj.put("border", "116.3713932,39.828271,116.4296722,39.8599433");
-				jsonObj.put("userType", ConstValue.USER_TYPE_ADMIN);	
-				jsonObj.put("userName", "大红门街道管理员");	
-				jsonObj.put("success", true);	
-				jsonObj.put("organizations", "d216599c-7b85-48ab-8e49-049178f5a285");
-				jsonObj.put("organizationNames", "大红门街道办事处");
-				jsonObj.put("homePage", "/app/homepage.html");
-				
-				return jsonObj.toString();
-			}
+//			if(username.equalsIgnoreCase("dhm") && password.equalsIgnoreCase("zhsq2020"))
+//			{
+//				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
+//				request.getSession().setAttribute(ConstValue.SESSION_USER_NAME, username);
+//				request.getSession().setAttribute(ConstValue.SESSION_USER_ID, "7a004f74-7862-4384-92c9-75426e33467f");
+//				request.getSession().setAttribute(ConstValue.SESSION_USER_ORG, "");
+//				
+//				jsonObj.put("border", "116.3713932,39.828271,116.4296722,39.8599433");
+//				jsonObj.put("userType", ConstValue.USER_TYPE_ADMIN);	
+//				jsonObj.put("userName", "大红门街道管理员");	
+//				jsonObj.put("success", true);	
+//				jsonObj.put("organizations", "d216599c-7b85-48ab-8e49-049178f5a285");
+//				jsonObj.put("organizationNames", "大红门街道办事处");
+//				jsonObj.put("homePage", "/app/homepage.html");
+//				
+//				return jsonObj.toString();
+//			}
 			
 			HqlFilter hqlFilter = new HqlFilter();
 			hqlFilter.addQryCond("loginid", HqlFilter.Operator.EQ, username);
@@ -195,9 +195,23 @@ public class LoginController {
 				
 				request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_COMMUNITY);
 				
+				if("".equals(organizations) || "d216599c-7b85-48ab-8e49-049178f5a285".equals(organizations)) {
+					List<Object> params = new ArrayList<Object>();
+					String sql = "select id,name,boundry as border from sys_organization where org_type = ? and id != ?";
+					params.add("社区");
+					params.add("d216599c-7b85-48ab-8e49-049178f5a285");
+					List<HashMap> list = this.userService.findBySql(sql, params);
+					jsonObj.put("ownerlist", com.alibaba.fastjson.JSONArray.toJSON(list));
+					
+					request.getSession().setAttribute(ConstValue.SESSION_USER_TYPE, ConstValue.USER_TYPE_ADMIN);
+				}
+//				else {
+//					jsonObj.put("ownerlist", "[]");
+//				}
+				
 				if(sSource != null && sSource.equalsIgnoreCase(ConstValue.HTTP_HEADER_SOURCE_APP))//用户从APP端登陆
 				{
-					logger.info("login success from app:"+username);
+					logger.info("login success from app:"+username);					
 					
 					/*String logoutMessage = "{\"type\":\"system\",\"action\":\"logout\",\"content\":\"\",\"timestamp\":\""+timestamp+"\"}";
 					

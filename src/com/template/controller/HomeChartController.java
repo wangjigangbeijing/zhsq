@@ -99,41 +99,64 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	{
 		String owner = Utility.getInstance().getOrganization(request);//社区用户返回的是社区ID
 		
-		if(owner == null || owner.equalsIgnoreCase(""))
-			return "大红门街道办事处";
+		JSONObject jsonObj = new JSONObject();
 		
-    	JSONObject jsonObj = new JSONObject();
-    	
+		Double area = null;
+		    	
 		try
 		{
-			SysOrganization sysOrganization = organizationService.getById(owner);
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				SysOrganization sysOrganization = organizationService.getById(owner);
+				
+				String note = sysOrganization.getnote();//社区介绍
+				jsonObj.put("note", note);
+				String noteShort = note;
+				if(note != null && note.length() > 300)
+					noteShort = note.substring(0, 300);
+				jsonObj.put("noteShort", noteShort+"...");
+				
+				String year = sysOrganization.getyear();//社区建成时间
+				jsonObj.put("year", year);
+				String type = sysOrganization.gettype();//社区类型
+				jsonObj.put("type", type);
+				area = sysOrganization.getarea();//社区面积
+				jsonObj.put("area", area);
+				String pictures = sysOrganization.getpictures();//社区美景
+				jsonObj.put("pictures", pictures);
+				
+				jsonObj.put("hasowner", 1);
+			}
+			else {
+				jsonObj.put("hasowner", 0);
+			}
 			
-			String note = sysOrganization.getnote();//社区介绍
-			jsonObj.put("note", note);
-			String noteShort = note;
-			if(note != null && note.length() > 300)
-				noteShort = note.substring(0, 300);
-			jsonObj.put("noteShort", noteShort+"...");
-			
-			String year = sysOrganization.getyear();//社区建成时间
-			jsonObj.put("year", year);
-			String type = sysOrganization.gettype();//社区类型
-			jsonObj.put("type", type);
-			Double area = sysOrganization.getarea();//社区面积
-			jsonObj.put("area", area);
-			String pictures = sysOrganization.getpictures();//社区美景
-			jsonObj.put("pictures", pictures);
-			
-			String sRoomArea = "SELECT SUM(area) as area FROM jc_residebuilding where owner = '"+owner+"'";
-			List<HashMap> listRoomObj = organizationService.findBySql(sRoomArea);
+			String sRoomArea = "";
+			List<HashMap> listRoomObj = null;
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sRoomArea = "SELECT SUM(area) as area FROM jc_residebuilding";
+				listRoomObj = organizationService.findBySql(sRoomArea);
+			}
+			else {
+				sRoomArea = "SELECT SUM(area) as area FROM jc_residebuilding where owner = '"+owner+"'";
+				listRoomObj = organizationService.findBySql(sRoomArea);
+			}
 			
 			double roomArea = 0.0;
 			if(listRoomObj.size() != 0 && listRoomObj.get(0).get("area") != null)
 				roomArea = (Double)listRoomObj.get(0).get("area");
 			jsonObj.put("roomArea", roomArea);
 			
-			String sUnderGroundArea = "SELECT SUM(area) as area FROM jc_undergroundspace where owner = '"+owner+"'";
-			List<HashMap> listUnderGroundObj = organizationService.findBySql(sUnderGroundArea);
+			
+			String sUnderGroundArea = "";
+			List<HashMap> listUnderGroundObj = null;
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sUnderGroundArea = "SELECT SUM(area) as area FROM jc_undergroundspace";
+				listUnderGroundObj = organizationService.findBySql(sUnderGroundArea);
+			}
+			else {
+				sUnderGroundArea = "SELECT SUM(area) as area FROM jc_undergroundspace where owner = '"+owner+"'";
+				listUnderGroundObj = organizationService.findBySql(sUnderGroundArea);
+			}
 			
 			double underGroundArea = 0.0;
 			if(listUnderGroundObj.size() != 0 && listUnderGroundObj.get(0).get("area") != null)
@@ -141,18 +164,38 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			jsonObj.put("underGroundArea", underGroundArea);
 			HqlFilter cntResident = new HqlFilter();
 			
-			cntResident.addQryCond("owner", HqlFilter.Operator.EQ, owner);
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				cntResident.addQryCond("owner", HqlFilter.Operator.EQ, owner);
+			}
 			long residentCnt = residentService.countByFilter(cntResident);
 			jsonObj.put("residentCnt", residentCnt);
 			
-			double residentDensity = residentCnt*1.0/area;//人口密度
-			jsonObj.put("residentDensity", df.format(residentDensity));
+			
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				double residentDensity = residentCnt*1.0/area;//人口密度
+				jsonObj.put("residentDensity", df.format(residentDensity));
+			}
+			else {
+				jsonObj.put("residentDensity", "0");
+			}
 			
 			double averageRoomArea = roomArea/residentCnt;//人均住房面积
 			jsonObj.put("averageRoomArea", df.format(averageRoomArea));
 			
 			double averageUnderGroundArea = underGroundArea/residentCnt;//人均地下空间面积
 			jsonObj.put("averageUnderGroundArea", df.format(averageUnderGroundArea));
+			
+			double averagetoilet = 0;
+			String sql = "select count(*) as num from jc_pubfacilities_hj where type = '公共厕所'";
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				sql += " and owner='" + owner + "'";
+			}
+			List<HashMap> list = this.organizationService.findBySql(sql);
+			if(list != null && list.size() > 0) {
+				averagetoilet = list.size() * 1.0/(residentCnt/100);
+			}
+			jsonObj.put("averageToiletNum", df.format(averagetoilet));
+			
 			
 			long gyCnt = gyService.countByFilter(cntResident);
 			long hjCnt = hjService.countByFilter(cntResident);
@@ -161,10 +204,21 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			long qtCnt = qtService.countByFilter(cntResident);
 			long publcFacility = gyCnt + hjCnt + jtCnt + lhCnt + qtCnt;
 			
-			double publcFacilityDensity = publcFacility*1.0/area;//市政设施密度
-			jsonObj.put("publcFacilityDensity", df.format(publcFacilityDensity));
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				double publcFacilityDensity = publcFacility*1.0/area;//市政设施密度
+				jsonObj.put("publcFacilityDensity", df.format(publcFacilityDensity));
+			}
+			else {
+				jsonObj.put("publcFacilityDensity", 0);
+			}
 			
-			String sRubbishNum = "SELECT SUM(num) as num FROM jc_rubbish where owner = '"+owner+"'";
+			String sRubbishNum = "";			
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sRubbishNum = "SELECT SUM(num) as num FROM jc_rubbish";
+			}
+			else {
+				sRubbishNum = "SELECT SUM(num) as num FROM jc_rubbish where owner = '"+owner+"'";
+			}
 			List<HashMap> listRubbishNum = organizationService.findBySql(sRubbishNum);
 			
 			Integer rubbishNum = 0;
@@ -180,7 +234,13 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			double averageAdvertisementNum = advertisementCnt*1.0/(residentCnt/100);//每百人宣传设施数量（宣传设施总数/人口数量）
 			jsonObj.put("averageAdvertisementNum", df.format(averageAdvertisementNum));
 			
-			String sCultureFacilities = "SELECT SUM(num) as num,SUM(area) as area FROM jc_culturefacilities where owner = '"+owner+"' and tpye = '健身设施'";
+			String sCultureFacilities = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sCultureFacilities = "SELECT SUM(num) as num,SUM(area) as area FROM jc_culturefacilities where tpye = '健身设施'";
+			}
+			else {
+				sCultureFacilities = "SELECT SUM(num) as num,SUM(area) as area FROM jc_culturefacilities where owner = '"+owner+"' and tpye = '健身设施'";
+			}
 			List<HashMap> listCultureFacilities = organizationService.findBySql(sCultureFacilities);
 			
 			Integer cultureFacilitiesNum = 0;
@@ -210,7 +270,9 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			jsonObj.put("tcwCnt", tcwCnt);
 			
 			HqlFilter tcwResident = new HqlFilter();
-			tcwResident.addQryCond("owner", HqlFilter.Operator.EQ, owner);
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				tcwResident.addQryCond("owner", HqlFilter.Operator.EQ, owner);
+			}
 			tcwResident.addQryCond("cwtype", HqlFilter.Operator.EQ, "居住区停车位");
 			
 			long jzqtcwCnt = tcwService.countByFilter(tcwResident);
@@ -222,13 +284,27 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			double averageResidentTcw = tcwCnt*1.0/(residentCnt/100);//人均总车位数（停车位总数/人口数量）
 			jsonObj.put("averageResidentTcw", df.format(averageResidentTcw));
 			
-			double averageFamilyJZQTcw = jzqtcwCnt*1.0/(famliyCnt/100);//户均居住区停车位数（居住区停车位总数/人口数量）
-			jsonObj.put("averageFamilyJZQTcw", df.format(averageFamilyJZQTcw));
+			if(area != null) {
+				double averageFamilyJZQTcw = jzqtcwCnt*1.0/area;//户均居住区停车位数（居住区停车位总数/人口数量）
+				jsonObj.put("averageFamilyJZQTcw", df.format(averageFamilyJZQTcw));
+				
+				double averageFamilyTcw = tcwCnt*1.0/area;//户均总车位数（停车位总数/人口数量）
+				jsonObj.put("averageFamilyTcw", df.format(averageFamilyTcw));
+			}
+			else {
+				jsonObj.put("averageFamilyJZQTcw", df.format(0));
+				jsonObj.put("averageFamilyTcw", df.format(0));
+			}
 			
-			double averageFamilyTcw = tcwCnt*1.0/(famliyCnt/100);//户均总车位数（停车位总数/人口数量）
-			jsonObj.put("averageFamilyTcw", df.format(averageFamilyTcw));
 			
-			String sDZY = "SELECT SUM(num) as num FROM jc_pubfacilities_gy__v_jldzy where owner = '"+owner+"'";
+			
+			String sDZY = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sDZY = "SELECT SUM(num) as num FROM jc_pubfacilities_gy__v_jldzy";
+			}
+			else {
+				sDZY = "SELECT SUM(num) as num FROM jc_pubfacilities_gy__v_jldzy where owner = '"+owner+"'";
+			}
 			List<HashMap> listDZY = organizationService.findBySql(sDZY);
 			
 			Integer dzyNum = 0;
@@ -253,7 +329,13 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			jsonObj.put("volunteerCnt", volunteerCnt);
 			jsonObj.put("volunteerPercent", df.format(volunteerPercent*100));
 			
-			String sTree = "SELECT COUNT(*) AS cnt FROM jc_pubfacilities_lh where owner = '"+owner+"' and (type = '行树' or type = '独立树')";
+			String sTree = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sTree = "SELECT COUNT(*) AS cnt FROM jc_pubfacilities_lh where (type = '行树' or type = '独立树')";
+			}
+			else {
+				sTree = "SELECT COUNT(*) AS cnt FROM jc_pubfacilities_lh where owner = '"+owner+"' and (type = '行树' or type = '独立树')";
+			}
 			List<HashMap> listTree = organizationService.findBySql(sTree);
 			
 			Integer treeNum = 0;
@@ -263,16 +345,47 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			double averageTreeNum = treeNum*1.0/(residentCnt/100);//每百人绿植数量
 			jsonObj.put("averageTreeNum", df.format(averageTreeNum));
 			
-			String sCamera = "SELECT SUM(NUM) AS cnt FROM jc_pubfacilities_gy where owner = '"+owner+"' and type = '监控电子眼'";
+			sql = "select count(*) as num from jc_police where 1=1";
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				sql += " and owner='" + owner + "'";
+			}
+			list = this.organizationService.findBySql(sql);
+			int policenu = 0;
+			if(list != null && list.size() > 0) {
+				jsonObj.put("policeNum", ((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else {
+				jsonObj.put("policeNum", 0);
+			}
+			
+			String sCamera = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sCamera = "SELECT SUM(NUM) AS cnt FROM jc_pubfacilities_gy where type = '监控电子眼'";
+			}
+			else {
+				sCamera = "SELECT SUM(NUM) AS cnt FROM jc_pubfacilities_gy where owner = '"+owner+"' and type = '监控电子眼'";
+			}
 			List<HashMap> listCamera = organizationService.findBySql(sCamera);
 			
 			Integer cameraNum = 0;
 			if(listCamera.size() != 0 && listCamera.get(0).get("cnt") != null)
-				cameraNum = ((BigDecimal)listCamera.get(0).get("cnt")).intValue();;
-			jsonObj.put("cameraNum", cameraNum);		
+				cameraNum = ((BigDecimal)listCamera.get(0).get("cnt")).intValue();
+			jsonObj.put("cameraNum", cameraNum);	
+			if(area != null) {
+				jsonObj.put("cameraDensity", df.format(cameraNum * 1.0/area));
+			}
+			else {
+				jsonObj.put("cameraDensity", df.format(0));
+			}
 			
 			
-			String sSQOrgMember = "SELECT COUNT(*) AS cnt,politicalstatus FROM jc_sqorgmember where owner = '"+owner+"' group by politicalstatus";
+			String sSQOrgMember = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sSQOrgMember = "SELECT COUNT(*) AS cnt,politicalstatus FROM jc_sqorgmember group by politicalstatus";
+			}
+			else {
+				sSQOrgMember = "SELECT COUNT(*) AS cnt,politicalstatus FROM jc_sqorgmember where owner = '"+owner+"' group by politicalstatus";
+			}
 			List<HashMap> listSQOrgMember = organizationService.findBySql(sSQOrgMember);
 			
 			Integer sqOrgMemberNum = 1;
@@ -292,7 +405,13 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			jsonObj.put("sqOfPartyMember", df.format(sqOfPartyMember*100));
 			
 			
-			String sVolunteerPartyMember = "SELECT COUNT(*) AS cnt,politicalstatus FROM jc_volunteer where owner = '"+owner+"' group by politicalstatus";
+			String sVolunteerPartyMember = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sVolunteerPartyMember = "SELECT COUNT(*) AS cnt,politicalstatus FROM jc_volunteer group by politicalstatus";
+			}
+			else {
+				sVolunteerPartyMember = "SELECT COUNT(*) AS cnt,politicalstatus FROM jc_volunteer where owner = '"+owner+"' group by politicalstatus";
+			}
 			List<HashMap> listVolunteerPartyMember = organizationService.findBySql(sVolunteerPartyMember);
 			
 			Integer volunteerNum = 1;
@@ -314,7 +433,13 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			
 
 			//服务网点			
-			String sServiceStoreSql = "SELECT TYPE,COUNT(*) CNT FROM jc_service_store where owner = '"+owner+"' GROUP BY TYPE";
+			String sServiceStoreSql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sServiceStoreSql = "SELECT TYPE,COUNT(*) CNT FROM jc_service_store GROUP BY TYPE";
+			}
+			else {
+				sServiceStoreSql = "SELECT TYPE,COUNT(*) CNT FROM jc_service_store where owner = '"+owner+"' GROUP BY TYPE";
+			}
 			List<HashMap> listServiceStore = organizationService.findBySql(sServiceStoreSql);
 			
 			JSONArray jsonServiceStore = new JSONArray();
@@ -361,10 +486,11 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	{
 		String owner = Utility.getInstance().getOrganization(request);//社区用户返回的是社区ID
 		
-		if(owner == null || owner.equalsIgnoreCase(""))
-			return "大红门街道办事处";
-		
-    	JSONObject jsonObj = new JSONObject();
+		JSONObject jsonObj = new JSONObject();
+//		if(owner == null || owner.equalsIgnoreCase("")) {
+//			jsonObj.put("success", false);
+//			return jsonObj.toString();
+//		}
     	
 		try
 		{
@@ -544,10 +670,11 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 	{
 		String owner = Utility.getInstance().getOrganization(request);//社区用户返回的是社区ID
 		
-		if(owner == null || owner.equalsIgnoreCase(""))
-			return "大红门街道办事处";
-		
-    	JSONObject jsonObj = new JSONObject();
+		JSONObject jsonObj = new JSONObject();
+//		if(owner == null || owner.equalsIgnoreCase("")) {
+//			jsonObj.put("success", false);
+//			return jsonObj.toString();
+//		}
     	
 		try
 		{

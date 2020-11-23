@@ -2,6 +2,8 @@ package com.template.busi.controller.oa;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.mysql.cj.util.StringUtils;
 import com.template.model.oa.Worklog;
 import com.template.service.oa.WorklogService;
 import com.template.util.HqlFilter;
@@ -124,11 +126,16 @@ public String load(String title,String date,String type,String hours,String cont
 			hqlFilter.addQryCond("owner", HqlFilter.Operator.LIKE, "%"+owner+"%");
 		}
 		
-		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
-		if(userId != null && userId.equalsIgnoreCase("") == false && userId.equalsIgnoreCase("null") == false)
-		{
-			hqlFilter.addQryCond("created_by", HqlFilter.Operator.EQ, userId);
+		String org = Utility.getInstance().getOrganization(request);
+		if(!StringUtils.isNullOrEmpty(org)) {
+			hqlFilter.addQryCond("owner", HqlFilter.Operator.LIKE, "%"+org+"%");
 		}
+		
+//		String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+//		if(userId != null && userId.equalsIgnoreCase("") == false && userId.equalsIgnoreCase("null") == false)
+//		{
+//			hqlFilter.addQryCond("created_by", HqlFilter.Operator.EQ, userId);
+//		}
 		
 		hqlFilter.setSort("date");
 		hqlFilter.setOrder("desc");

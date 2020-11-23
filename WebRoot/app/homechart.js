@@ -2,6 +2,8 @@
 
 
 $(document).ready(function (){
+
+	getsqname();
 	
 	getOrganizationInfo();
 	
@@ -14,6 +16,19 @@ $(document).ready(function (){
 	
 });	
 
+function getsqname(){
+	$.get(getContextPath()+'/homeController/getsqname',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				//$("#sqname").html("(" + obj.data + ")");
+				$("#sqtitle").html(obj.data);
+			}
+		});	
+}
+
 
 
 function getOrganizationInfo()
@@ -22,19 +37,25 @@ function getOrganizationInfo()
 		function(result){
 		
 			var obj = jQuery.parseJSON(result);  
+			console.log(obj);
 			if(obj.success)
 			{
-				$('#sqnote').text(obj.noteShort);//社区简介
-				
-				$('#sqyear').text(obj.year);//社区建成时间
-				
-				$('#sqtype').text(obj.type);//社区类型
-				
-				$('#sqarea').text(obj.area+'平方公里');//社区面积
-				
-				$('#sqroomarea').text(obj.roomArea+'平方米');//居住面积
-				
-				$('#sqresidentcnt').text(obj.residentCnt);//总人口数
+				if(obj.hasowner == 0){
+					$("#sqxx").hide();
+				}
+				else {
+					$('#sqnote').text(obj.noteShort);//社区简介
+					
+					$('#sqyear').text(obj.year);//社区建成时间
+					
+					$('#sqtype').text(obj.type);//社区类型
+					
+					$('#sqarea').text(obj.area+'平方公里');//社区面积
+					
+					$('#sqroomarea').text(obj.roomArea+'平方米');//居住面积
+					
+					$('#sqresidentcnt').text(obj.residentCnt);//总人口数
+				}
 				
 				var pictures = obj.pictures;//社区美景
 				
@@ -56,251 +77,230 @@ function getOrganizationInfo()
 					}
 					
 					
+					function G(s){
+
+						return document.getElementById(s);
+
+					}
+
 					
+
+					function getStyle(obj, attr){
+
+						if(obj.currentStyle){
+
+							return obj.currentStyle[attr];
+
+						}else{
+
+							return getComputedStyle(obj, false)[attr];
+
+						}
+
+					}
+
+	
+
+					function Animate(obj, json){
+
+						if(obj.timer){
+
+							clearInterval(obj.timer);
+
+						}
+
+						obj.timer = setInterval(function(){
+
+							for(var attr in json){
+
+								var iCur = parseInt(getStyle(obj, attr));
+
+								iCur = iCur ? iCur : 0;
+
+								var iSpeed = (json[attr] - iCur) / 4;
+
+								iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+								obj.style[attr] = iCur + iSpeed + 'px';
+
+								if(iCur == json[attr]){
+
+									clearInterval(obj.timer);
+
+								}
+
+							}
+
+						}, 30);
+
+					}
+
+
+
+					var oPic = G("picBox");
+
+					var oList = G("listBox");
+
 					
+
+					var oPrev = G("prev");
+
+					var oNext = G("next");
+
+					var oPrevTop = G("prevTop");
+
+					var oNextTop = G("nextTop");
+
+
+
+					var oPicLi = oPic.getElementsByTagName("li");
+
+					var oListLi = oList.getElementsByTagName("li");
+
+					var len1 = oPicLi.length;
+
+					var len2 = oListLi.length;
+
 					
+
+					var oPicUl = oPic.getElementsByTagName("ul")[0];
+
+					var oListUl = oList.getElementsByTagName("ul")[0];
+
+					debugger;
+					var w1 = oPicLi[0].offsetWidth;
+
+					var w2 = oListLi[0].offsetHeight;
+
+
+
+					oPicUl.style.width = w1 * len1 + "px";
+
+					oListUl.style.height = (w2+9) * len2 + "px";
+
+
+
+					var index = 0;
+
 					
+
+					var num = 4;
+
+					var num2 = Math.ceil(num / 1.5);
+
+
+
+					function Change(){
+
+
+
+						Animate(oPicUl, {left: - index * w1});
+
+						
+
+						if(index < num2){
+
+							Animate(oListUl, {top: 0});
+
+						}else if(index + num2 <= len2){
+
+							Animate(oListUl, {top: - (index - num2 + 1) * w2});
+
+						}else{
+
+							Animate(oListUl, {top: - (len2 - num) * w2});
+
+						}
+
+
+
+						for (var i = 0; i < len2; i++) {
+
+							oListLi[i].className = "";
+
+							if(i == index){
+
+								oListLi[i].className = "on";
+
+							}
+
+						}
+
+					}
+
+	
+
+					oNextTop.onclick = oNext.onclick = function(){
+
+						
+
+						index ++;
+
+						index = index == len2 ? 0 : index;
+
+						Change();
+
+					}
+
 					
-					
-					
-					
-					
-	function G(s){
 
-		return document.getElementById(s);
+					oPrev.onmouseover = oNext.onmouseover = oPrevTop.onmouseover = oNextTop.onmouseover = function(){
 
-	}
+						clearInterval(timer);
 
-	
+						}
 
-	function getStyle(obj, attr){
+					oPrev.onmouseout = oNext.onmouseout = oPrevTop.onmouseout = oNextTop.onmouseout = function(){
 
-		if(obj.currentStyle){
+						timer=setInterval(autoPlay,4000);
 
-			return obj.currentStyle[attr];
-
-		}else{
-
-			return getComputedStyle(obj, false)[attr];
-
-		}
-
-	}
-
-	
-
-	function Animate(obj, json){
-
-		if(obj.timer){
-
-			clearInterval(obj.timer);
-
-		}
-
-		obj.timer = setInterval(function(){
-
-			for(var attr in json){
-
-				var iCur = parseInt(getStyle(obj, attr));
-
-				iCur = iCur ? iCur : 0;
-
-				var iSpeed = (json[attr] - iCur) / 4;
-
-				iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
-
-				obj.style[attr] = iCur + iSpeed + 'px';
-
-				if(iCur == json[attr]){
-
-					clearInterval(obj.timer);
-
-				}
-
-			}
-
-		}, 30);
-
-	}
+						}
 
 
 
-	var oPic = G("picBox");
+					oPrevTop.onclick = oPrev.onclick = function(){
 
-	var oList = G("listBox");
+
+
+						index --;
+
+						index = index == -1 ? len2 -1 : index;
+
+						Change();
+
+					}
 
 	
 
-	var oPrev = G("prev");
+					var timer=null;
 
-	var oNext = G("next");
+					timer=setInterval(autoPlay,4000);
 
-	var oPrevTop = G("prevTop");
+					function autoPlay(){
 
-	var oNextTop = G("nextTop");
+						index ++;
 
+						index = index == len2 ? 0 : index;
 
+						Change();
 
-	var oPicLi = oPic.getElementsByTagName("li");
+					}
 
-	var oListLi = oList.getElementsByTagName("li");
+					for (var i = 0; i < len2; i++) {
 
-	var len1 = oPicLi.length;
+						oListLi[i].index = i;
 
-	var len2 = oListLi.length;
+						oListLi[i].onclick = function(){
 
-	
+							index = this.index;
 
-	var oPicUl = oPic.getElementsByTagName("ul")[0];
 
-	var oListUl = oList.getElementsByTagName("ul")[0];
 
-	debugger;
-	var w1 = oPicLi[0].offsetWidth;
+							Change();
 
-	var w2 = oListLi[0].offsetHeight;
+						}
 
-
-
-	oPicUl.style.width = w1 * len1 + "px";
-
-	oListUl.style.height = (w2+9) * len2 + "px";
-
-
-
-	var index = 0;
-
-	
-
-	var num = 4;
-
-	var num2 = Math.ceil(num / 1.5);
-
-
-
-	function Change(){
-
-
-
-		Animate(oPicUl, {left: - index * w1});
-
-		
-
-		if(index < num2){
-
-			Animate(oListUl, {top: 0});
-
-		}else if(index + num2 <= len2){
-
-			Animate(oListUl, {top: - (index - num2 + 1) * w2});
-
-		}else{
-
-			Animate(oListUl, {top: - (len2 - num) * w2});
-
-		}
-
-
-
-		for (var i = 0; i < len2; i++) {
-
-			oListLi[i].className = "";
-
-			if(i == index){
-
-				oListLi[i].className = "on";
-
-			}
-
-		}
-
-	}
-
-	
-
-	oNextTop.onclick = oNext.onclick = function(){
-
-		
-
-		index ++;
-
-		index = index == len2 ? 0 : index;
-
-		Change();
-
-	}
-
-	
-
-	oPrev.onmouseover = oNext.onmouseover = oPrevTop.onmouseover = oNextTop.onmouseover = function(){
-
-		clearInterval(timer);
-
-		}
-
-	oPrev.onmouseout = oNext.onmouseout = oPrevTop.onmouseout = oNextTop.onmouseout = function(){
-
-		timer=setInterval(autoPlay,4000);
-
-		}
-
-
-
-	oPrevTop.onclick = oPrev.onclick = function(){
-
-
-
-		index --;
-
-		index = index == -1 ? len2 -1 : index;
-
-		Change();
-
-	}
-
-	
-
-	var timer=null;
-
-	timer=setInterval(autoPlay,4000);
-
-	function autoPlay(){
-
-		    index ++;
-
-			index = index == len2 ? 0 : index;
-
-			Change();
-
-		}
-
-	
-
-	
-
-
-
-	for (var i = 0; i < len2; i++) {
-
-		oListLi[i].index = i;
-
-		oListLi[i].onclick = function(){
-
-			index = this.index;
-
-
-
-			Change();
-
-		}
-
-	}
-	
-	
-	
-	
-	
-	
+					}	
 				}
 				
 				obj.underGroundArea;//底下空间面积
@@ -319,9 +319,11 @@ function getOrganizationInfo()
 				
 				$('#averageTreeNum').text(averageTreeNum);//人均绿植数量
 				
-				$('#averageResidentJZQTcwDiv').html(obj.averageResidentJZQTcw+'<span>【'+obj.jzqtcwCnt+'/('+obj.residentCnt+'/100)】</span>');//
+				$('#averageToiletNum').text(obj.averageToiletNum);//人均公厕
+				
+				$('#averageResidentJZQTcwDiv').html(obj.averageResidentJZQTcw+'<span>【'+obj.jzqtcwCnt+'/('+obj.area+')】</span>');//
 
-				$('#averageResidentTcwDiv').html(obj.averageResidentTcw+'<span>【'+obj.tcwCnt+'/('+obj.residentCnt+'/100)】</span>');
+				$('#averageResidentTcwDiv').html(obj.averageResidentTcw+'<span>【'+obj.tcwCnt+'/('+obj.area+')】</span>');
 
 				$('#averageFamilyJZQTcwDiv').html(obj.averageFamilyJZQTcw+'<span>【'+obj.jzqtcwCnt+'/('+obj.famliyCnt+'/100)】</span>');
 
@@ -351,8 +353,9 @@ function getOrganizationInfo()
 				$("#volunteerOfPartyMemberPercentSpan").html('<b>'+obj.volunteerPartyMemberNum+'</b>/'+obj.volunteerNum);	
 				$("#volunteerOfPartyMemberPercentDiv").width(obj.volunteerOfPartyMember+'%');				
 				
+				$("#policeNum").text(obj.policeNum);
 				$("#cameraNum").text(obj.cameraNum);
-				
+				$("#cameradensity").text(obj.cameraDensity);
 				
 				
 				var serviceStoreArr = obj.serviceStoreArr;
@@ -444,6 +447,7 @@ function getOrganizationInfo()
 				chartConvenienceSecond.setOption(optionConvenienceSecond);
 
 			}
+			
 		});	
 }
 

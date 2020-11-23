@@ -251,10 +251,12 @@ function viewDetail(id)
 				$('#ofunit').html(filterArr.join(''));
 				//$('#ofunit').attr("readonly","readonly");	
 				
-				$('#ofroom').html('');
-				var filterArr = [];				
-				filterArr[0] = "<option value='"+obj.ofroom+"'>"+obj.roomname+"</option>";				
-				$('#ofroom').html(filterArr.join(''));
+				if(obj.roomname != '' && typeof(obj.roomname) !="undefined"){
+					$('#ofroom').html('');
+					var filterArr = [];				
+					filterArr[0] = "<option value='"+obj.ofroom+"'>"+obj.roomname+"</option>";				
+					$('#ofroom').html(filterArr.join(''));
+				}
 				//$('#ofroom').attr("readonly","readonly");	
 				
 			}
@@ -266,12 +268,32 @@ function gobackPage()
 	
 	curId = '';
 	
-	//$('#main-content').load("./jcsqsj/family/family.html", function () {
-	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {	
+	if(ditutype > 0){
+		if(ditutype == 1){
+			$('#main-content').load("./maps/sqgkt.html", function () {
+				ditutype = 0;
+			});
+		}
+		else if(ditutype == 2){
+			$('#main-content').load("./maps/sqmqt.html", function () {
+				ditutype = 0;
+			});
+		}
+		else {
+			$('#main-content').load("./maps/sqztt.html", function () {
+				ditutype = 0;
+
+			});
+		}
+	}
+	else {
+		$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
 		
-    });
+		});
+	}
 	
 }
+
 /*
 function ShowAddModal()
 {

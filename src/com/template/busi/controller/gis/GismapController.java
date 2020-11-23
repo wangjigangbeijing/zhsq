@@ -9,6 +9,9 @@ import com.template.service.gis.GismaplayersService;
 import com.template.util.HqlFilter;
 import com.template.util.ConstValue;
 import com.template.util.Utility;
+
+import net.openmob.mobileimsdk.java.utils.Log;
+
 import com.template.util.TimeUtil;
 import java.util.List;
 import java.util.Date;
@@ -208,6 +211,7 @@ public String get(String id)
 				jsonTmp.put("order",gismaplayers.getlorder());	
 				jsonTmp.put("lorder",gismaplayers.getlorder());	
 				jsonTmp.put("checked", gismaplayers.getdefaultchecked());
+				jsonTmp.put("showzooms", gismaplayers.getshowzooms());
 				jsonTmp.put("geoserver",geoserverURL);
 				
 	       		jsonArr.put(jsonTmp);
@@ -244,6 +248,8 @@ public String get(String id)
 			HqlFilter hqlFilter = new HqlFilter();
 			
 			hqlFilter.addQryCond("mapname", HqlFilter.Operator.EQ, name);
+			
+			logger.info("mapname:" + name);
 			
 			Gismap gismap = gismapService.getByFilter(hqlFilter);
 			

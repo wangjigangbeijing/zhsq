@@ -9,8 +9,9 @@ var ip = '127.0.0.1';
 
 var maintab = 'tabl_2', secondtab = null;
 
-var backditu = false;
+//地图相关
 var ditutype = 0;
+var curmap = '';
 
 
 $(document).ready(function (){
@@ -258,6 +259,8 @@ $(document).ready(function (){
 
 function loaddata(){
 	
+	loadownerinfo();
+	
 	loadbaseinfo1();
 	
 	loadhomeinfo();
@@ -278,6 +281,8 @@ function loaddata(){
 	
 	loadbaseinfo6();
 	
+	loadbaseinfo7();
+	
 	loadsqbs();
 	
 	getgpyip();
@@ -295,6 +300,50 @@ function loadHomeChartPage()
 	$('#main-content').load("./homechart.html", function () {
         
     });
+}
+
+function loadownerinfo(){
+	$.get(getContextPath()+'/homeController/getownerinfo',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			if(obj.success)
+			{
+				console.log(obj);
+				if(obj.ownernum > 1){
+					for(var i = 0; i < obj.data.length; i++){
+						var opt = '<option value="' + obj.data[i].id + '">' + obj.data[i].name + '</option>';
+						$("#ownerlist").append(opt);
+					}
+					$("#ownerli").show();
+					$("#ownerlist").val(obj.selectowner);
+				}
+				else {
+					$("#ownerli").hide();
+				}
+			}
+		});
+}
+
+function selectowner(){
+	var owner = $("#ownerlist").val();
+	
+	$.post(getContextPath()+"/homeController/selectowner",
+			{
+				owner:owner
+			},
+			function(result){
+				var obj = jQuery.parseJSON(result);  
+				if(obj.success)
+				{
+					
+					window.location.reload();
+				}
+				else
+				{
+					
+				}
+			});
 }
 
 function loadbaseinfo1(){
@@ -416,6 +465,8 @@ function loadbaseinfo5(){
 			{
 				$("#b51").html(obj.data[0]);
 				$("#b52").html(obj.data[1]);
+				$("#b53").html(obj.data[2]);
+				$("#b54").html(obj.data[3]);
 			}
 		});	
 }
@@ -434,6 +485,26 @@ function loadbaseinfo6(){
 				$("#b64").html(obj.data[3]);
 				$("#b65").html(obj.data[4]);
 				$("#b66").html(obj.data[5]);
+			}
+		});	
+}
+
+function loadbaseinfo7(){
+	$.get(getContextPath()+'/homeController/loadbaseinfo7',
+		function(result){
+		
+			var obj = jQuery.parseJSON(result);  
+			//console.log(obj);
+			if(obj.success)
+			{
+				$("#b71").html(obj.data[0]);
+				$("#b72").html(obj.data[1]);
+				$("#b73").html(obj.data[2]);
+				$("#b74").html(obj.data[3]);
+				$("#b75").html(obj.data[4]);
+				$("#b76").html(obj.data[5]);
+				$("#b77").html(obj.data[6]);
+				$("#b78").html(obj.data[7]);
 			}
 		});	
 }
@@ -580,6 +651,15 @@ function loadinfodata(){
 				$("#i16").html(obj.data[15]);
 				$("#i17").html(obj.data[16]);
 				$("#i18").html(obj.data[17]);
+				$("#i19").html(obj.data[18]);
+				$("#i20").html(obj.data[19]);
+				$("#i21").html(obj.data[20]);
+				$("#i22").html(obj.data[21]);
+				$("#i23").html(obj.data[22]);
+				$("#i24").html(obj.data[23]);
+				$("#i25").html(obj.data[24]);
+				$("#i26").html(obj.data[25]);
+				$("#i27").html(obj.data[26]);
 			}
 		});	
 }
@@ -918,13 +998,13 @@ function getCurrentLoginUserInfo()
 				
 				if(rightObj.righttype == 'MENU')
 				{
-					curUserMenuRightArr[curUserMenuRightArr.length+1] = rightObj.rightid;
+					curUserMenuRightArr[curUserMenuRightArr.length] = rightObj.rightid;
 					
 					$("#"+rightObj.rightid).show();
 				}
 				else
 				{
-					curUserOptRightArr[curUserOptRightArr.length+1] = rightObj.rightid;
+					curUserOptRightArr[curUserOptRightArr.length] = rightObj.rightid;
 				}
 			}
 			

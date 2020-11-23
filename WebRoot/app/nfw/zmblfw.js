@@ -1,5 +1,5 @@
 ﻿
-var curUserType = -1;
+//var curUserType = -1;
 
 $(document).ready(function (){
 	

@@ -35,15 +35,16 @@
             <!-- AREA CHART -->
             <div class="card card-primary">
               <div class="card-header">
+				  <!--
                 <h3 class="card-title">社区民情图</h3>
-
+				  -->
                 <div class="card-tools" id="layerDiv">
                   <!--button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
                   <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button-->
                 </div>
               </div>
-         	 <div class="card-body" id="sqmqtDiv" style="height:800px;">
+         	 <div class="card-body" id="sqmqtDiv" style="height:700px;">
 			 
 				<div style="position:absolute; right: 15px; top:65px; z-index:999;">
 					<div class="btn-group" role="group" aria-label="...">						
@@ -71,6 +72,7 @@
               </div>
 			  
 			  <div class="row" style="padding:10px;">
+					<span>当前缩放比例：<b id="zoominfo">10</b></span>&nbsp;&nbsp;&nbsp;&nbsp;
 					<span style="width: 100px; padding-left:10px;">图例图层：</span>
 					<select class="col-sm-1" id="layernames" onchange="changelayers()">
 						<option value="">请选择</option>
@@ -106,12 +108,11 @@
         position: absolute;
         background-color: white;
         box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-        padding: 15px;
+        padding: 5px;
         border-radius: 10px;
         border: 1px solid #cccccc;
         bottom: 12px;
-        left: -50px;
-        min-width: 280px;
+        min-width: 400px;
       }
       .ol-popup:after, .ol-popup:before {
         top: 100%;
@@ -151,7 +152,7 @@
 
 <div id="popup" class="ol-popup">
       <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-      <div id="popup-content"></div>
+      <div id="popup-content" style="width: auto; margin:0px;"></div>
     </div>
 
 <!-- page script -->
@@ -165,6 +166,7 @@ var draw;
 
 var layerStyleMap = {};
 var layerNameMap = {};
+var layerZoomMap = {};
 
 var selected = null;
 
@@ -198,6 +200,8 @@ var highlightPointStyle = new ol.style.Style({
 $(function () 
 {
 	loadboundary();	
+	
+	document.body.scrollTop=document.documentElement.scrollTop=0;
 })
 
 function loadboundary(){
@@ -312,6 +316,7 @@ function initMap(){
 	
 	var dataSource = new ol.source.Vector();								
 	dataLayer = new ol.layer.Vector({
+		declutter: true,
 		source: dataSource/*,
 		style: new ol.style.Style({
                 stroke: new ol.style.Stroke({
@@ -344,10 +349,30 @@ function initMap(){
 	dataLayer.getSource().addFeature(iconFeature);	*/
 	map.addLayer(dataLayer);
 	
+	$("#zoominfo").html(zoom);
+
+	map.on("moveend",function(e){
+		var zoom = map.getView().getZoom();  //获取当前地图的缩放级别
+		$("#zoominfo").html(parseInt(zoom));
+		var checkedLayerId = '';
+					
+		$("input[name='layer']").each(function () {
+			
+			if($(this).prop('checked')){
+				//checkedLayerId += $(this).attr('id')+',';
+				checkedLayerId = $(this).attr('id')+',' + checkedLayerId;
+			}
+		});
+		
+		drawLayers(checkedLayerId);
+	}); 
+	
 	$.get(getContextPath()+"/gismapController/getMapByName?name=社区民情图",
 			function(response)
 			{	
 				//debugger;
+				overlay.setPosition(undefined);
+				document.getElementById('popup-closer').blur();
 				
 				var respObj = jQuery.parseJSON(response); 
 
@@ -400,6 +425,7 @@ function initMap(){
 					
 					layerStyleMap[layerId] = layerStyleObj;
 					layerNameMap[layerId] = layer.note;
+					layerZoomMap[layerId] = layer.showzooms;
 					
 					if(isFacilityLayer(layerId))
 					/*if(layerId == 'layer2_5'||layerId == 'layer4_3'||layerId == 'layer3_5'||layerId == 'layer4_2'||layerId == 'layer6_2'
@@ -455,8 +481,10 @@ function initMap(){
 					
 					$("input[name='layer']").each(function () {
 						
-						if($(this).prop('checked'))
-							checkedLayerId += $(this).attr('id')+',';
+						if($(this).prop('checked')){
+							//checkedLayerId += $(this).attr('id')+',';
+							checkedLayerId = $(this).attr('id')+',' + checkedLayerId;
+						}
 					});
 					
 					drawLayers(checkedLayerId);
@@ -473,6 +501,14 @@ function initMap(){
 			}
 		}
 		return hash;
+	}
+	
+	function stringDivider(str, width, spaceReplacer) {
+	  var result;
+	  if(str.length > width){
+		result = str.substr(0, width) + spaceReplacer + str.substr(width);
+		}
+	  return result;
 	}
 	
 	function drawLayers(layerIds)
@@ -494,6 +530,13 @@ function initMap(){
 				
 					layerStyleObj = layerStyleMap[data.layerId];
 					
+					var showzooms = layerZoomMap[data.layerId];
+					var index = showzooms.indexOf("-");
+					var t1 = showzooms.substr(0, index);
+					var t2 = showzooms.substr(index + 1);					
+					var curzoom = parseInt(map.getView().getZoom());
+					
+					
 					if(data.type == 'MultiLineString')
 					{
 						var iconFeature = new ol.Feature({
@@ -505,7 +548,9 @@ function initMap(){
 						
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
-						dataLayer.getSource().addFeature(iconFeature);	
+						if(curzoom>= t1 && curzoom <= t2){
+							dataLayer.getSource().addFeature(iconFeature);	
+						}
 					}
 					else if(data.type == 'Point')
 					{
@@ -542,7 +587,8 @@ function initMap(){
 								text: new ol.style.Text({
 									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 									// and show only under certain resolution
-									text: showData(aesDecrypt(data.label), 1)
+									text: stringDivider(showData(aesDecrypt(data.label), 1), 6, '\n'),
+									overflow:true
 								  })
 							}));
 						}
@@ -554,15 +600,19 @@ function initMap(){
 							}));
 						}
 						
+						/*
 						if(num > 380){
 							continue;
 						}
+						*/
 						
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
 						iconFeature.set("label", data.label);
 						console.log(iconFeature);
-						dataLayer.getSource().addFeature(iconFeature);	
+						if(curzoom>= t1 && curzoom <= t2){
+							dataLayer.getSource().addFeature(iconFeature);	
+						}
 						
 						num++;
 							
@@ -595,7 +645,9 @@ function initMap(){
 								text: new ol.style.Text({
 									font: '12px Calibri,sans-serif',fill: new ol.style.Fill({ color: '#ff6900' }),
 									// and show only under certain resolution
-									text: data.label
+									text: stringDivider(data.label, 6, '\n'),
+									overflow:true,
+									placement: 'point'
 								  })
 							}));
 						}
@@ -614,7 +666,9 @@ function initMap(){
 						iconFeature.setId(data.id);
 						iconFeature.set('info', data.info);
 						iconFeature.set("label", data.label);
-						dataLayer.getSource().addFeature(iconFeature);	
+						if(curzoom>= t1 && curzoom <= t2){
+							dataLayer.getSource().addFeature(iconFeature);	
+						}
 					}
 				}
 			}
@@ -837,7 +891,10 @@ function initMap(){
 					continue;
 				}
 				tableinfo += "<tr><td style='width:30%; text-align:right; padding:.3rem .3rem'>" + feature.get('info')[i].attribute_zhname + "：</td><td style='width:70%; text-align:left; padding:.3rem .3rem''>";
-				if(feature.get('info')[i].attribute_enname == 'pictures' || feature.get('info')[i].attribute_enname == 'picture'){
+				if(feature.get('info')[i].attribute_zhname == '姓名'){
+					tableinfo += showData(aesDecrypt(feature.get('info')[i].attribute_value), 1);
+				}
+				else if(feature.get('info')[i].attribute_enname == 'pictures' || feature.get('info')[i].attribute_enname == 'picture'){
 					var pics = feature.get('info')[i].attribute_value.split(',');
 					var url = getContextPath()+"/fileController/download?fileName="+pics[0];
 					tableinfo += "<a href='" + url + "' data-lightbox='" + pics[0] + "' data-title='" + pics[0] + "'><img width='150px' src='" + url + "'></a>";
@@ -964,29 +1021,47 @@ function editData(gid)
 	arr = gid.split('.');
 	curId = arr[1];
 	var url = "";
-	if(arr[0] == 'jc_service_store'){
-		url = './jcsqsj/service_store/service_storeDetail.html';
+	if(arr[0] == 'jc_service_store' || arr[0] == 'jc_service_store__v_whjy'){
+		url = './jcsqsj/service_store/service_storeDetail.html?back=ditu3';
 	}
-	else if(arr[0] == 'v_jc_pubfacilities_gy_jldzy'){
-		url = './jcsqsj/jc_pubfacilities_gy/jc_pubfacilities_gyDetail.html';
+	else if(arr[0].indexOf('jc_pubfacilities_gy') != -1){
+		url = './jcsqsj/jc_pubfacilities_gy/jc_pubfacilities_gyDetail.html?back=ditu3';
+	}
+	else if(arr[0].indexOf('jc_pubfacilities_hj') != -1){
+		url = './jcsqsj/jc_pubfacilities_hj/jc_pubfacilities_hjDetail.html?back=ditu3';
 	}
 	else if(arr[0] == 'jc_rubbish'){
-		url = './jcsqsj/jc_rubbish/jc_rubbishDetail.html';
+		url = './jcsqsj/jc_rubbish/jc_rubbishDetail.html?back=ditu3';
 	}
 	else if(arr[0] == 'jc_xftd'){
-		url = './jcsqsj/jc_xftd/jc_xftdDetail.html';
+		url = './jcsqsj/jc_xftd/jc_xftdDetail.html?back=ditu3';
+	}
+	else if(arr[0] == 'jc_xfss'){
+		url = './jcsqsj/jc_xfss/jc_xfssDetail.html?back=ditu3';
 	}
 	else if(arr[0] == 'jc_advertisement'){
-		url = './jcsqsj/jc_advertisement/jc_advertisementDetail.html';
+		url = './jcsqsj/jc_advertisement/jc_advertisementDetail.html?back=ditu3';
 	}
 	else if(arr[0] == 'jc_tc_tcccrk'){
-		url = './jcsqsj/jc_tc_tcccrk/jc_tc_tcccrkDetail.html';
+		url = './jcsqsj/jc_tc_tcccrk/jc_tc_tcccrkDetail.html?back=ditu3';
 	}
 	else if(arr[0] == 'jc_tc_fjdctcw'){
-		url = './jcsqsj/jc_tc_fjdctcw/jc_tc_fjdctcwDetail.html';
+		url = './jcsqsj/jc_tc_fjdctcw/jc_tc_fjdctcwDetail.html?back=ditu3';
 	}
 	else if(arr[0] == 'jc_tc_ybtcc'){
-		url = './jcsqsj/jc_tc_ybtcc/jc_tc_ybtccDetail.html';
+		url = './jcsqsj/jc_tc_ybtcc/jc_tc_ybtccDetail.html?back=ditu3';
+	}
+	else if(arr[0] == 'v_jc_resident_zgdy'){
+		url = './jcsqsj/resident/residentDetail.html?back=ditu3';
+	}
+	else if(arr[0] == 'sxsqsj'){
+		url = './sxsqsj/sxsqsjDetail.html?back=ditu3';
+	}
+	else if(arr[0] == 'v_shequ'){
+		url = './jcsqsj/community/communityDetail.html?back=ditu3';
+	}
+	else if(arr[0] == 'jc_xqway__v_vehicle'){
+		url = './jcsqsj/jc_xqway/jc_xqwayDetail.html?back=ditu3';
 	}
 	else {		
 		var arr2 = new Array();
@@ -994,6 +1069,7 @@ function editData(gid)
 		var url = './jcsqsj/' + arr2[1] + '/' + arr2[1] + 'Detail.html';
 	}
 	
+	ditutype = 2;
 	$('#main-content').load(url, function () {
 		$('#confirmBtn').hide();
 		
@@ -1007,6 +1083,7 @@ function editData(gid)
 function mingqing(id)
 {
 	curId = id;
+	ditutype = 2;
 	$('#main-content').load("./jcsqsj/residebuilding/residebuildingMinqing.html", function () {
 		
     });
@@ -1044,7 +1121,7 @@ function changelayers(){
 						$("#tuli").append(content);
 					}
 					else {
-						var content = "<div style='width: 24px; height: 24px; color: " + layerStyleMap[key][k].style['fill-color'] + "; border: 1px solid " + layerStyleMap[key][k].style['stroke-color'] + "'></div>";
+						var content = "<div style='width: 24px; height: 24px; background-color: " + layerStyleMap[key][k].style['fill-color'] + "; border: 1px solid " + layerStyleMap[key][k].style['stroke-color'] + "'></div>";
 						$("#tuli").append(content);
 					}
 				}
@@ -1057,7 +1134,7 @@ function changelayers(){
 					$("#tuli").append(content);
 				}
 				else {
-					var content = "<div style='width: 24px; height: 24px; color: " + layerStyleMap[key].style['fill-color'] + "; border: 1px solid " + layerStyleMap[key].style['stroke-color'] + "'></div>";
+					var content = "<div style='width: 24px; height: 24px; background-color: " + layerStyleMap[key].style['fill-color'] + "; border: 1px solid " + layerStyleMap[key].style['stroke-color'] + "'></div>";
 					$("#tuli").append(content);
 				}
 			}

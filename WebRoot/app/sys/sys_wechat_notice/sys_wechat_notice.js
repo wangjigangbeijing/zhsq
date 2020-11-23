@@ -1,4 +1,4 @@
-
+﻿
 
 $(document).ready(function (){
 	
@@ -21,8 +21,9 @@ function load()
 {
 	$('#btnSearch').attr('disabled','disabled');
 	var title = $('#titleQuery').val();
+	var category = $("#categoryQuery").val();
 	
-	$.get(getContextPath()+'/sysWechatNoticeController/load?title='+title,
+	$.get(getContextPath()+'/sysWechatNoticeController/load?title='+title + '&category=' + category,
 	function(result){
 		$('#btnSearch').removeAttr('disabled');
 		var obj = jQuery.parseJSON(result);  

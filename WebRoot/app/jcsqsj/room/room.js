@@ -225,8 +225,8 @@ function load()
 					//{ 'data': 'dataid' ,'sClass':'text-center'},
 					{ 'data': 'number' ,'sClass':'text-center'},
 					{ 'data': 'ofcommunity' ,'sClass':'text-center'},
-					//{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
-					//{ 'data': 'ofunit' ,'sClass':'text-center'},
+					{ 'data': 'ofresidebuilding' ,'sClass':'text-center'},
+					{ 'data': 'ofunit' ,'sClass':'text-center'},
 					//{ 'data': 'level' ,'sClass':'text-center'},
 					{ 'data': 'status' ,'sClass':'text-center'},
 					{ 'data': 'isgrouporiented' ,'sClass':'text-center'},
@@ -241,7 +241,7 @@ function load()
 				{
 					className: 'control',
 					orderable: false,
-					targets:  5,//从0开始
+					targets:  7,//从0开始
 					mRender : function(data,type,full){
 						var btn = "<a href=\"#\" onclick=\"viewData('"+full.id+"')\" class=\"btn btn-info btn-xs\"><i class=\"fa fa-pencil\"></i>查看</a>&nbsp;";
 						

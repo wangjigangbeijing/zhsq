@@ -147,5 +147,14 @@ public class Gismaplayers implements java.io.Serializable {
 		this.defaultchecked = defaultchecked;
 	}
 	
+	@Column(name = "showzooms", nullable = true)
+	public String showzooms;
+	public String getshowzooms() {
+		return this.showzooms;
+	}
+	public void setshowzooms(String showzoom) {
+		this.showzooms = showzoom;
+	}
+	
 }
 

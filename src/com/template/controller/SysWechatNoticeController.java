@@ -3,6 +3,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.mysql.cj.util.StringUtils;
 import com.template.busi.safe.AES;
 import com.template.model.SysUser;
 import com.template.model.SysUserOrganization;
@@ -35,7 +36,7 @@ public class SysWechatNoticeController {
 	
 	@RequestMapping(value="load",method = RequestMethod.GET,produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String load(String title)
+	public String load(String title, String category)
 	{
 		JSONObject jsonObj = new JSONObject();
 		try
@@ -44,6 +45,9 @@ public class SysWechatNoticeController {
 			if(title != null && title.equalsIgnoreCase("") == false && title.equalsIgnoreCase("null") == false)
 			{
 				hqlFilter.addQryCond("title", HqlFilter.Operator.LIKE, "%"+title+"%");
+			}
+			if(!StringUtils.isNullOrEmpty(category)) {
+				hqlFilter.addQryCond("pcatename", HqlFilter.Operator.EQ, category);
 			}
 			
 			hqlFilter.setOrder("asc");
@@ -80,8 +84,7 @@ public class SysWechatNoticeController {
 				
 				try
 				{
-					Integer createTimeInt = Integer.parseInt(createtime);
-					createtime = TimeUtil.getTimeByMillSecond2(createTimeInt*1000);
+					createtime = TimeUtil.getTimeByMillSecond2(Long.valueOf(createtime + "000"));
 				}
 				catch(Exception e)
 				{

@@ -517,6 +517,7 @@ function exportData()
 {
 	var queryStr = '';
 	
+	/*
 	var searchtype = $("#searchtype").val();
 	if(searchtype == 1){
 		$('#btnExport1').attr('disabled','disabled');
@@ -533,7 +534,7 @@ function exportData()
 	else {
 		$('#btnSearch2').attr('disabled','disabled');
 	}
-
+	*/
 	var name = $('#nameQuery').val();
 	var idnumber = $('#idnumberQuery').val();
 	var characteristics = $('#characteristicsQuery').val();
@@ -641,8 +642,12 @@ function exportData()
 		},
 		function(result){
 			
-			$('#btnExport1').removeAttr('disabled');
-			$('#btnExport2').removeAttr('disabled');
+			
+			//$('#btnSearch2').removeAttr('disabled');
+			//$('#btnAdd2').removeAttr('disabled');
+			
+			//$('#btnExport2').removeAttr('disabled');
+			//$('#btnQuery').removeAttr('disabled');
 			//$('#loading').hide();
 			var obj = jQuery.parseJSON(result);  
 			if(obj.success)

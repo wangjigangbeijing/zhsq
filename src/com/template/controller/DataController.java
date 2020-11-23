@@ -137,6 +137,10 @@ public class DataController {
 			
 			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
 			
+			String token = request.getHeader(ConstValue.HTTP_HEADER_TOKEN);
+			
+			logger.info(sSource + ":" + userId + ":" + token);
+			
 			if(sSource != null && sSource.equalsIgnoreCase("app") == false && request.getSession().getAttribute(ConstValue.SESSION_USER_ID) != null)
 				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
 			
@@ -148,18 +152,42 @@ public class DataController {
 			{
 				String [] organizationArr = organization.split(",");
 				
-				String ownerCond = "";
-				
-				for(int i=0;i<organizationArr.length;i++)
-				{
-					ownerCond += " OWNER LIKE '%"+organizationArr[i]+"%' OR ";
+				if(StringUtils.isNullOrEmpty(token) || userId.equals(token)) {
+					String ownerCond = "";
+					
+					for(int i=0;i<organizationArr.length;i++)
+					{
+						if(!"d216599c-7b85-48ab-8e49-049178f5a285".equals(organizationArr[i])) {
+							ownerCond += " OWNER LIKE '%"+organizationArr[i]+"%' OR ";
+						}
+
+					}
+					
+					if(ownerCond.endsWith(" OR "))
+						ownerCond = ownerCond.substring(0, ownerCond.length() - 4);
+					
+					if(ownerCond.equalsIgnoreCase("") == false)
+						sSql += " AND ("+ownerCond+") ";
+				}
+				else {
+					String ownerCond = "";
+					
+					for(int i=0;i<organizationArr.length;i++)
+					{
+						if(!"d216599c-7b85-48ab-8e49-049178f5a285".equals(token)) {
+							ownerCond += " OWNER LIKE '%"+token+"%' OR ";
+						}
+
+					}
+					
+					if(ownerCond.endsWith(" OR "))
+						ownerCond = ownerCond.substring(0, ownerCond.length() - 4);
+					
+					if(ownerCond.equalsIgnoreCase("") == false)
+						sSql += " AND ("+ownerCond+") ";
 				}
 				
-				if(ownerCond.endsWith(" OR "))
-					ownerCond = ownerCond.substring(0, ownerCond.length() - 4);
 				
-				if(ownerCond.equalsIgnoreCase("") == false)
-					sSql += " AND ("+ownerCond+") ";
 			}
 			
 			sSql += " ORDER BY CREATED_AT DESC ";
@@ -1040,6 +1068,14 @@ public class DataController {
 
 		String sResp = "";
 		
+		//加密字段名
+		List<String> encodefields = new ArrayList<String>() {
+			{
+				add("name");
+				add("offamilyname");
+			}
+		};
+		
 		JSONObject jsonObj = new JSONObject();
 		
 		try
@@ -1086,8 +1122,9 @@ public class DataController {
 				
 				if(layerId.equalsIgnoreCase("layer13_3") || layerId.equalsIgnoreCase("layer13_4") || layerId.equalsIgnoreCase("layer13_5") || 
 						layerId.equalsIgnoreCase("layer13_6") || layerId.equalsIgnoreCase("layer13_7") || layerId.equalsIgnoreCase("layer13_8")
-						 || layerId.equalsIgnoreCase("layer13_10")|| layerId.equalsIgnoreCase("layer4_3") ||
-						layerId.equalsIgnoreCase("layer12_3") || layerId.equalsIgnoreCase("layer16_2") || layerId.equalsIgnoreCase("layer7_4"))
+						|| layerId.equalsIgnoreCase("layer13_9")|| layerId.equalsIgnoreCase("layer13_10")|| layerId.equalsIgnoreCase("layer13_11")
+						|| layerId.equalsIgnoreCase("layer13_12")|| layerId.equalsIgnoreCase("layer13_13")|| layerId.equalsIgnoreCase("layer13_14")
+						|| layerId.equalsIgnoreCase("layer4_3") ||layerId.equalsIgnoreCase("layer12_3") || layerId.equalsIgnoreCase("layer7_4"))
 				{
 					infoFields += ",type as facilitytype";
 				}
@@ -1227,21 +1264,33 @@ public class DataController {
 							label += val + "\r\n";
 						}
 						
-						if(arr != null) {
-							for(int k = 0; k < arr.size(); k++) {
-								String s = arr.getJSONObject(k).getString("attribute_enname");
-								if(kvs.containsKey(s)) {
-									arr.getJSONObject(k).put("attribute_value", kvs.get(s));
+						if(!"app".equals(sSource)) { //只有web需要info字段
+							if(arr != null) {
+								for(int k = 0; k < arr.size(); k++) {
+									String s = arr.getJSONObject(k).getString("attribute_enname");
+									if(kvs.containsKey(s)) {
+//										if(encodefields.contains(s)) {
+//											try {
+//												arr.getJSONObject(k).put("attribute_value", AES.decrypt(kvs.get(s)));
+//											}catch(Exception e) {}
+//										}
+//										else {
+//											arr.getJSONObject(k).put("attribute_value", kvs.get(s));
+//										}
+										
+										arr.getJSONObject(k).put("attribute_value", kvs.get(s));
+									}
+									else {
+										arr.getJSONObject(k).put("attribute_value", "");
+									}
 								}
-								else {
-									arr.getJSONObject(k).put("attribute_value", "");
-								}
+								jsonTmp.put("info", arr);
 							}
-							jsonTmp.put("info", arr);
+							else {
+								jsonTmp.put("info", info);
+							}
 						}
-						else {
-							jsonTmp.put("info", info);
-						}
+						
 						
 						jsonTmp.put("label", label);
 						
@@ -1319,7 +1368,7 @@ public class DataController {
 			return jsonObj.toString();
 		}
 		
-		logger.debug(jsonObj.toString());
+		//logger.debug(jsonObj.toString());
 		
         return jsonObj.toString();
     }

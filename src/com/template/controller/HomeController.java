@@ -88,7 +88,12 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			
 			String sql = "select b.boundry from sys_organization b where b.id=?";
 			List<Object> params = new ArrayList<Object>();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				params.add("d216599c-7b85-48ab-8e49-049178f5a285");
+			}
+			else {
+				params.add(owner);
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
 				jsonObj.put("boundary", "116.3713932,39.828271,116.4296722,39.8599433");
@@ -125,6 +130,59 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			if(list != null && list.size() > 0) {
 				jsonObj.put("username", list.get(0).get("name"));
 			}
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="getownerinfo",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String getOwnerInfo()
+	{		
+		JSONObject jsonObj = new JSONObject();
+				
+		try
+		{
+			String owner = Utility.getInstance().getOrganization2(request);
+			if("".equals(owner)) {
+				List<Object> params = new ArrayList<Object>();
+				String sql = "select id,name from sys_organization where org_type = ? and id != ?";
+				params.add("社区");
+				params.add("d216599c-7b85-48ab-8e49-049178f5a285");
+				List<HashMap> list = this.userService.findBySql(sql, params);
+				logger.info("Owner Size:" + list.size());
+				jsonObj.put("ownernum", list.size());
+				jsonObj.put("data", JSONArray.toJSON(list));
+			}
+			else {
+				jsonObj.put("ownernum", 1);
+			}
+			String selectowner = (String) request.getSession().getAttribute("selectowner");
+			jsonObj.put("selectowner", selectowner);
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="selectowner",method = {RequestMethod.POST},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String selectowner(String owner)
+	{		
+		JSONObject jsonObj = new JSONObject();
+				
+		try
+		{
+			request.getSession().setAttribute("selectowner", owner); //选择某个社区
 			jsonObj.put("success", true);
 		}
 		catch(Exception e)
@@ -174,9 +232,13 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			
 			//1
-			String sql = "select count(*) as num from jc_community t where t.OWNER like ?";
 			List<Object> params = new ArrayList<Object>();
-			params.add("%" + owner + "%");
+			String sql = "select count(*) as num from jc_community t where 1=1";
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				sql += " and t.OWNER like ?";
+				params.add("%" + owner + "%");
+			}			
+			
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -188,9 +250,12 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//2
-			sql = "select count(*) as num from jc_residebuilding t where t.buildtype = '楼房' and t.OWNER = ?";
+			sql = "select count(*) as num from jc_residebuilding t where t.buildtype = '楼房'";
 			params.clear();
-			params.add(owner);
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				sql += " and t.OWNER like ?";
+				params.add("%" + owner + "%");
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -202,9 +267,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//3
-			sql = "select count(*) as num from jc_room t1 where t1.ofresidebuilding in (select t2.id from jc_residebuilding t2 where t2.buildtype = '楼房' and t2.OWNER = ?)";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_room t1 where t1.ofresidebuilding in (select t2.id from jc_residebuilding t2 where t2.buildtype = '楼房' )";
+			}
+			else {
+				sql = "select count(*) as num from jc_room t1 where t1.ofresidebuilding in (select t2.id from jc_residebuilding t2 where t2.buildtype = '楼房' and t2.OWNER = ?)";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -216,9 +286,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//4
-			sql = "select count(*) as num from jc_residebuilding t where t.buildtype = '平房' and t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_residebuilding t where t.buildtype = '平房' ";
+			}
+			else {
+				sql = "select count(*) as num from jc_residebuilding t where t.buildtype = '平房' and t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -230,9 +305,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//5
-			sql = "select count(*) as num from jc_room t1 where t1.ofresidebuilding in (select t2.id from jc_residebuilding t2 where t2.buildtype = '平房' and t2.OWNER = ?)";
 			params.clear();
-			params.add(owner);
+			if(!StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_room t1 where t1.ofresidebuilding in (select t2.id from jc_residebuilding t2 where t2.buildtype = '平房' )";
+			}
+			else {
+				sql = "select count(*) as num from jc_room t1 where t1.ofresidebuilding in (select t2.id from jc_residebuilding t2 where t2.buildtype = '平房' and t2.OWNER = ?)";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -244,9 +324,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//6
-			sql = "select count(*) as num from jc_bizbuilding t where  t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_bizbuilding t";
+			}
+			else {
+				sql = "select count(*) as num from jc_bizbuilding t where  t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -258,9 +343,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//7
-			sql = "select count(*) as num from jc_qtbuilding t where  t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_qtbuilding t";
+			}
+			else {
+				sql = "select count(*) as num from jc_qtbuilding t where  t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -294,9 +384,16 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			
 			//1
-			String sql = "select count(*) as num from jc_partyorganization t where t.OWNER = ?";
+			String sql = "";
 			List<Object> params = new ArrayList<Object>();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_partyorganization t";
+			}
+			else {
+				sql = "select count(*) as num from jc_partyorganization t where t.OWNER = ?";
+				params.add(owner);
+			}
+			
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -308,9 +405,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//2
-			sql = "select count(*) as num from jc_partymember t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_partymember t";
+			}
+			else {
+				sql = "select count(*) as num from jc_partymember t where t.OWNER = ?";
+				params.add(owner);
+			}
+			
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -322,9 +425,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//3
-			sql = "select count(*) as num from jc_sqorganization t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_sqorganization t";
+			}
+			else {
+				sql = "select count(*) as num from jc_sqorganization t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -336,9 +444,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//4
-			sql = "select count(DISTINCT name) as num from jc_sqorgmember where owner = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(DISTINCT name) as num from jc_sqorgmember";
+			}
+			else {
+				sql = "select count(DISTINCT name) as num from jc_sqorgmember where owner = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -350,9 +463,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//5
-			sql = "select count(*) as num from jc_organization t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_organization t";
+			}
+			else {
+				sql = "select count(*) as num from jc_organization t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -364,9 +482,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//6
-			sql = "select count(*) as num from jc_volunteerteam t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_volunteerteam t";
+			}
+			else {
+				sql = "select count(*) as num from jc_volunteerteam t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -378,9 +501,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//7
-			sql = "select count(*) as num from jc_volunteer t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_volunteer t";
+			}
+			else {
+				sql = "select count(*) as num from jc_volunteer t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -392,9 +520,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//8
-			sql = "select count(*) as num from jc_populationgroup t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_populationgroup t";
+			}
+			else {
+				sql = "select count(*) as num from jc_populationgroup t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -428,9 +561,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			
 			//1
-			String sql = "select count(*) as num from jc_culturefacilities t where t.OWNER = ?";
+			String sql = "";
 			List<Object> params = new ArrayList<Object>();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_culturefacilities t";
+			}
+			else {
+				sql = "select count(*) as num from jc_culturefacilities t where t.OWNER = ?";
+				params.add(owner);
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -442,9 +581,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//2
-			sql = "select count(*) as num from jc_shelter t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_shelter t";
+			}
+			else {
+				sql = "select count(*) as num from jc_shelter t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -456,9 +600,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//3
-			sql = "select count(*) as num from jc_rubbish t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_rubbish t";
+			}
+			else {
+				sql = "select count(*) as num from jc_rubbish t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -470,9 +619,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//4
-			sql = "select count(*) as num from jc_advertisement t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_advertisement t";
+			}
+			else {
+				sql = "select count(*) as num from jc_advertisement t where t.OWNER = ?";
+				params.add(owner);
+			}
+			
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -484,9 +639,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//5
-			sql = "select count(*) as num from jc_pubfacilities_gy t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -498,9 +658,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//6
-			sql = "select count(*) as num from jc_pubfacilities_jt t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_jt t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_jt t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -512,9 +677,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//7
-			sql = "select count(*) as num from jc_pubfacilities_hj t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_hj t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_hj t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -526,9 +696,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//7
-			sql = "select count(*) as num from jc_pubfacilities_hj t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_hj t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_hj t where t.OWNER = ?";
+				params.add(owner);
+			}
+			
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -540,9 +716,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//8
-			sql = "select count(*) as num from jc_pubfacilities_lh t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_lh t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_lh t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -554,9 +735,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//9
-			sql = "select count(*) as num from jc_pubfacilities_qt t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_qt t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_qt t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -591,9 +777,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			for(int i = 0; i < 14; i++) numlist.add(0);
 			
 			//1
-			String sql = "select type, count(*) as num from jc_service_store t where t.owner like ? group by t.type";
 			List<Object> params = new ArrayList<Object>();
-			params.add("%" + owner + "%");
+			String sql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select type, count(*) as num from jc_service_store t group by t.type";
+			}
+			else {
+				sql = "select type, count(*) as num from jc_service_store t where t.owner like ? group by t.type";
+				params.add("%" + owner + "%");
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
 				
@@ -643,9 +835,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			
 			//1
-			String sql = "select count(*) as num from jc_xftd t where t.OWNER = ?";
 			List<Object> params = new ArrayList<Object>();
-			params.add(owner);
+			String sql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select  count(*) as num from jc_xftd t";
+			}
+			else {
+				sql = "select count(*) as num from jc_xftd t where t.OWNER = ?";
+				params.add(owner);
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -656,18 +854,36 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 				numlist.add(0);
 			}
 			
+			numlist.add(0);
+			numlist.add(0);
+			numlist.add(0);
 			//2
-			sql = "select count(*) as num from jc_xfss t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select type, count(*) as num from jc_xfss t group by type";
+			}
+			else {
+				sql = "select type, count(*) as num from jc_xfss t where t.OWNER = ? group by type";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
-				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
-			}
-			else
-			{
-				numlist.add(0);
+				for(int i = 0; i < list.size();i++) {
+					String type = (String) list.get(i).get("type");
+					int num = ((BigInteger)list.get(i).get("num")).intValue();
+					if("消防箱".equals(type)) {
+						numlist.set(1, num);
+					}
+					else if("消防栓".equals(type)) {
+						numlist.set(2, num);
+					}
+					else if("微型消防站".equals(type)) {
+						numlist.set(2, num);
+					}
+					
+				}
+				//numlist.add(((BigInteger)list.get(0).get("num")).intValue());
 			}
 			
 			jsonObj.put("data", JSONArray.toJSON(numlist));
@@ -693,9 +909,16 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			
 			//1
-			String sql = "select count(*) as num from jc_tc_ybtcc t where t.OWNER = ?";
+			String sql = "";
 			List<Object> params = new ArrayList<Object>();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_tc_ybtcc t";
+			}
+			else {
+				sql = "select count(*) as num from jc_tc_ybtcc t where t.OWNER = ?";
+				params.add(owner);
+			}
+		
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -707,9 +930,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//2
-			sql = "select count(*) as num from jc_tc_dltcc t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_tc_dltcc t";
+			}
+			else {
+				sql = "select count(*) as num from jc_tc_dltcc t where t.OWNER = ?";
+				params.add(owner);
+			}
+			
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -721,9 +950,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//3
-			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_ybtcc t2 where t2.OWNER = ?)";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_ybtcc t2)";
+			}
+			else {
+				sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_ybtcc t2 where t2.OWNER = ?)";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -739,9 +973,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//4
-			sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_dltcc t2 where t2.OWNER = ?)";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_dltcc t2)";
+			}
+			else {
+				sql = "select sum(t1.numbers) as num from jc_tc_tcw t1 where t1.inparkname in (select t2.id from jc_tc_dltcc t2 where t2.OWNER = ?)";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -757,9 +996,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//5
-			sql = "select count(*) as num from jc_tc_tcw t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_tc_tcw t";
+			}
+			else {
+				sql = "select count(*) as num from jc_tc_tcw t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -771,9 +1015,192 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//6
-			sql = "select count(*) as num from jc_tc_fjdctcw t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_tc_fjdctcw t";
+			}
+			else {
+				sql = "select count(*) as num from jc_tc_fjdctcw t where t.OWNER = ?";
+				params.add(owner);
+			}
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			jsonObj.put("data", JSONArray.toJSON(numlist));
+			jsonObj.put("success", true);
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+			jsonObj.put("success", false);
+		}
+	    return jsonObj.toString();
+	}
+	
+	@RequestMapping(value="loadbaseinfo7",method = {RequestMethod.POST,RequestMethod.GET},produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String loadBaseInfo7()
+	{
+		String owner = Utility.getInstance().getOrganization(request);
+		logger.debug("loadBaseInfo6 owner:" + owner);
+		JSONObject jsonObj = new JSONObject();
+		try
+		{
+			List<Integer> numlist = new ArrayList<Integer>();
+			
+			//1
+			String sql = "";
+			List<Object> params = new ArrayList<Object>();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_water t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_water t where t.OWNER = ?";
+				params.add(owner);
+			}
+		
+			List<HashMap> list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//2
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_power t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_power t where t.OWNER = ?";
+				params.add(owner);
+			}
+			
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//3
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_gas t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_gas t where t.OWNER = ?";
+				params.add(owner);
+			}
+			
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//4
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_heat t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_heat t where t.OWNER = ?";
+				params.add(owner);
+			}
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//5
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_discharge t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_discharge t where t.OWNER = ?";
+				params.add(owner);
+			}
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//6
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_light t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_light t where t.OWNER = ?";
+				params.add(owner);
+			}
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//7
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_tel t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_tel t where t.OWNER = ?";
+				params.add(owner);
+			}
+			list = this.userService.findBySql(sql, params);
+			if(list != null && list.size() > 0)
+			{
+				numlist.add(((BigInteger)list.get(0).get("num")).intValue());
+			}
+			else
+			{
+				numlist.add(0);
+			}
+			
+			//8
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_point t";
+			}
+			else {
+				sql = "select count(*) as num from jc_pubfacilities_gy__v_point t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -807,9 +1234,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			
 			//1
-			String sql = "select count(*) as num from jc_family where owner like ?";
 			List<Object> params = new ArrayList<Object>();
-			params.add("%" + owner + "%");
+			String sql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_family";
+			}
+			else {
+				sql = "select count(*) as num from jc_family where owner like ?";
+				params.add("%" + owner + "%");
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -821,9 +1254,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//2
-			sql = "select count(*) as num from jc_resident t where t.OWNER like ?";
 			params.clear();
-			params.add("%" + owner + "%");
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_resident t";
+			}
+			else {
+				sql = "select count(*) as num from jc_resident t where t.OWNER like ?";
+				params.add("%" + owner + "%");
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -841,9 +1279,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			numlist.add(0);
 			
 			//5
-			sql = "select count(*) as num from jc_vehicle t where t.OWNER = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from jc_vehicle t";
+			}
+			else {
+				sql = "select count(*) as num from jc_vehicle t where t.OWNER = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -878,9 +1321,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			for(int i = 0; i < 25; i++) numlist.add(0);
 			
 			//1
-			String sql = "select characteristics, count(*) as num from jc_resident t where t.owner like ? group by t.characteristics";
 			List<Object> params = new ArrayList<Object>();
-			params.add("%" + owner + "%");
+			String sql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select characteristics, count(*) as num from jc_resident t group by t.characteristics";
+			}
+			else {
+				sql = "select characteristics, count(*) as num from jc_resident t where t.owner like ? group by t.characteristics";
+				params.add("%" + owner + "%");
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
 				
@@ -945,9 +1394,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			for(int i = 0; i < 6; i++) numlist.add(0);
 			
 			//1
-			String sql = "select sxdl, count(*) as num from sxsqsj t where t.owner like ? group by t.sxdl";
 			List<Object> params = new ArrayList<Object>();
-			params.add("%" + owner + "%");
+			String sql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select sxdl, count(*) as num from sxsqsj t group by t.sxdl";
+			}
+			else {
+				sql = "select sxdl, count(*) as num from sxsqsj t where t.owner like ? group by t.sxdl";
+				params.add("%" + owner + "%");
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
 				
@@ -989,9 +1444,15 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			List<Integer> numlist = new ArrayList<Integer>();
 			int total = 0;
 			//1
-			String sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '民政服务' and t.owner = ?";
 			List<Object> params = new ArrayList<Object>();
-			params.add(owner);
+			String sql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '民政服务' ";
+			}
+			else {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '民政服务' and t.owner = ?";
+				params.add(owner);
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -1004,9 +1465,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//2
-			sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '社保服务' and t.owner = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '社保服务' ";
+			}
+			else {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '社保服务' and t.owner = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -1019,9 +1485,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//3
-			sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '助残服务' and t.owner = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '助残服务' ";
+			}
+			else {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '助残服务' and t.owner = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -1034,9 +1505,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//4
-			sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '计生服务' and t.owner = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '计生服务' ";
+			}
+			else {
+				sql = "select count(*) as num from nfw_sqbsfw t where t.blsxdl = '计生服务' and t.owner = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -1049,9 +1525,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//5
-			sql = "select count(*) as num from nfw_zmblfw t where t.owner = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from nfw_zmblfw t";
+			}
+			else {
+				sql = "select count(*) as num from nfw_zmblfw t where t.owner = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -1064,9 +1545,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//6
-			sql = "select count(*) as num from nfw_wwzffw t where t.owner = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from nfw_wwzffw t";
+			}
+			else {
+				sql = "select count(*) as num from nfw_wwzffw t where t.owner = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -1079,9 +1565,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//7
-			sql = "select count(*) as num from nfw_xfslfw t where t.owner = ?";
 			params.clear();
-			params.add(owner);
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select count(*) as num from nfw_xfslfw t";
+			}
+			else {
+				sql = "select count(*) as num from nfw_xfslfw t where t.owner = ?";
+				params.add(owner);
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list != null && list.size() > 0)
 			{
@@ -1116,12 +1607,18 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 		try
 		{
 			List<Integer> numlist = new ArrayList<Integer>();
-			for(int i = 0; i < 18; i++) numlist.add(0);
+			for(int i = 0; i < 27; i++) numlist.add(0);
 			
 			//1
-			String sql = "select sms_type, count(*) as num from sms_message t where t.owner like ? group by t.sms_type";
 			List<Object> params = new ArrayList<Object>();
-			params.add("%" + owner + "%");
+			String sql = "";
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select sms_type, count(*) as num from sms_message t group by t.sms_type";
+			}
+			else {
+				sql = "select sms_type, count(*) as num from sms_message t where t.owner like ? group by t.sms_type";
+				params.add("%" + owner + "%");
+			}
 			List<HashMap> list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
 				
@@ -1146,9 +1643,14 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 			}
 			
 			//1
-			sql = "select category, count(*) as num from sys_tel_publish t where t.owner like ? group by t.category";
 			params.clear();
-			params.add("%" + owner + "%");
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select category, count(*) as num from sys_tel_publish t group by t.category";
+			}
+			else {
+				sql = "select category, count(*) as num from sys_tel_publish t where t.owner like ? group by t.category";
+				params.add("%" + owner + "%");
+			}
 			list = this.userService.findBySql(sql, params);
 			if(list == null || list.size() == 0) {
 				
@@ -1168,6 +1670,37 @@ private static Logger logger = Logger.getLogger(FlowTemplateController.class);
 					if(key.contains("社区组织")) 	numlist.set(16, num);
 					int total = numlist.get(9) + numlist.get(10) + numlist.get(11) + numlist.get(12) + numlist.get(13) + numlist.get(14) + numlist.get(15) + numlist.get(16);
 					numlist.set(17, total);
+				}
+			}
+			
+			//2-微信文章
+			params.clear();
+			if(StringUtils.isNullOrEmpty(owner)) {
+				sql = "select pcatename, count(*) as num from sys_wechat_notice t group by t.pcatename";
+			}
+			else {
+				sql = "select pcatename, count(*) as num from sys_wechat_notice t where t.owner like ? group by t.pcatename";
+				params.add("%" + owner + "%");
+			}
+			list = this.userService.findBySql(sql, params);
+			if(list == null || list.size() == 0) {
+				
+			}
+			else {
+				for(int i = 0; i < list.size(); i++) {
+					String key = (String) list.get(i).get("pcatename");
+					int num = ((BigInteger)list.get(i).get("num")).intValue();
+					
+					if(key.contains("社区党建"))  	numlist.set(18, num);
+					if(key.contains("民主自治")) 	numlist.set(19, num);
+					if(key.contains("社区服务")) 	numlist.set(20, num);
+					if(key.contains("平安建设")) 	numlist.set(21, num);
+					if(key.contains("文化教育")) 	numlist.set(22, num);
+					if(key.contains("社区环境")) 	numlist.set(23, num);
+					if(key.contains("卫生健康")) 	numlist.set(24, num);
+					if(key.contains("社区组织")) 	numlist.set(25, num);
+					int total = numlist.get(18) + numlist.get(19) + numlist.get(20) + numlist.get(21) + numlist.get(22) + numlist.get(23) + numlist.get(24) + numlist.get(25);
+					numlist.set(26, total);
 				}
 			}
 			

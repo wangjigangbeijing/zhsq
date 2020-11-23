@@ -2,6 +2,8 @@ package com.template.busi.controller.jcsqsj;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.mysql.cj.util.StringUtils;
 import com.template.model.jcsqsj.Jc_tc_dltcc;
 import com.template.service.jcsqsj.Jc_tc_dltccService;
 import com.template.util.HqlFilter;
@@ -140,6 +142,9 @@ public String load(String name,String roadname,String rateinfo)
 		for(int i=0;i<listObj.size();i++)
 		{
 			Jc_tc_dltcc jc_tc_dltcc = listObj.get(i);
+			if(jc_tc_dltcc == null) {
+				continue;
+			}
 			JSONObject jsonTmp = new JSONObject();
 			jsonTmp.put("id", jc_tc_dltcc.getId());
 			jsonTmp.put("berthID",jc_tc_dltcc.getberthID());
@@ -151,7 +156,16 @@ public String load(String name,String roadname,String rateinfo)
 			jsonTmp.put("parknum",jc_tc_dltcc.getparknum());
 			jsonTmp.put("picture",jc_tc_dltcc.getpicture());
 			jsonTmp.put("note",jc_tc_dltcc.getnote());
-			jsonTmp.put("rateinfo",jc_tc_dltcc.getrateinfo());
+			String s = jc_tc_dltcc.getrateinfo();
+			if(!StringUtils.isNullOrEmpty(s)) {
+				if(s.length() > 50) {
+					jsonTmp.put("rateinfo",s.substring(0, 50) + "...");
+				}
+				else {
+					jsonTmp.put("rateinfo",jc_tc_dltcc.getrateinfo());
+				}
+			}
+			
 
        		jsonArr.put(jsonTmp);
         	iTotalCnt++;

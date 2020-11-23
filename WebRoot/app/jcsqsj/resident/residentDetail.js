@@ -40,7 +40,7 @@ $(document).ready(function (){
 				$('#ofresidebuilding').html('');				
 				$('#ofunit').html('');
 				$('#ofroom').html('');
-				$('#offamily').html('');
+				//$('#offamily').html('');
 			}
 			else
 			{
@@ -79,7 +79,7 @@ $(document).ready(function (){
 					
 					$('#ofunit').html('');
 					$('#ofroom').html('');
-					$('#offamily').html('');
+					//$('#offamily').html('');
 				}
 				else
 				{
@@ -119,7 +119,7 @@ $(document).ready(function (){
 					$('#ofunit').html(filterArr.join(''));
 					
 					$('#ofroom').html('');
-					$('#offamily').html('');
+					//$('#offamily').html('');
 				}
 				else
 				{
@@ -158,7 +158,7 @@ $(document).ready(function (){
 						filterArr[i+1] = "<option value='" + filter.key + "'>" + filter.value + "</option>";						
 					}
 					$('#ofroom').html(filterArr.join(''));
-					$('#offamily').html('');
+					//$('#offamily').html('');
 				}
 				else
 				{
@@ -179,6 +179,7 @@ $(document).ready(function (){
 		var ofunit = $('#ofunit').val();
 		var ofroom = $('#ofroom').val();
 		
+		/*
 		$.ajax({
 		  type: 'POST',
 		  url: getContextPath()+"/dictionaryController/getDataOfDic",
@@ -209,6 +210,7 @@ $(document).ready(function (){
 			},
 		  dataType: "json"
 		});
+		*/
 	});
 	
 	
@@ -329,12 +331,13 @@ function viewDetail(id)
 				$('#ofroom').html(filterArr.join(''));
 				$('#ofroom').attr("readonly","readonly");	
 				
+				/*
 				$('#offamily').html('');
 				var filterArr = [];				
 				filterArr[0] = "<option value='"+obj.offamily+"'>"+showData(aesDecrypt(obj.offamilyname), 1)+"</option>";				
 				$('#offamily').html(filterArr.join(''));
 				$('#offamily').attr("readonly","readonly");	
-				
+				*/
 				//$('#sex').val(obj.sex);
 				$("input[name='sex'][value='"+obj.sex+"']").attr("checked",true); 
 				
@@ -466,10 +469,20 @@ function gobackPage()
 	
 	curId = '';
 	
-	if(backditu == true){
-		if(ditutype == 'ditu3'){
-			$('#main-content').load("./map/sqztt.html", function () {
-			
+	if(ditutype > 0){
+		if(ditutype == 1){
+			$('#main-content').load("./maps/sqgkt.html", function () {
+				ditutype = 0;
+			});
+		}
+		else if(ditutype == 2){
+			$('#main-content').load("./maps/sqmqt.html", function () {
+				ditutype = 0;
+			});
+		}
+		else {
+			$('#main-content').load("./maps/sqztt.html", function () {
+				ditutype = 0;
 			});
 		}
 	}
@@ -478,6 +491,7 @@ function gobackPage()
 			
 		});
 	}
+
 	
 }
 /*

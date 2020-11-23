@@ -3,6 +3,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.mysql.cj.util.StringUtils;
 import com.template.model.SysRole;
 import com.template.service.SysRightService;
 import com.template.service.SysRoleService;
@@ -52,6 +53,9 @@ public class SysRightController {
 			
 			String sSql = "SELECT SYS_RIGHT.RIGHTID,RIGHTTYPE FROM SYS_RIGHT,SYS_ROLE_RIGHT WHERE "
 					+ "ROLEID IN ("+roleIds+") AND SYS_RIGHT.RIGHTID = SYS_ROLE_RIGHT.RIGHTID";
+			if(StringUtils.isNullOrEmpty(roleIds)) {
+				sSql = "SELECT SYS_RIGHT.RIGHTID,RIGHTTYPE FROM SYS_RIGHT,SYS_ROLE_RIGHT WHERE SYS_RIGHT.RIGHTID = SYS_ROLE_RIGHT.RIGHTID";
+			}
 			
 			List<HashMap> listObj = sys_rightService.findBySql(sSql);
 			

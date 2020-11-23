@@ -164,7 +164,7 @@ if(organization != null && organization.equalsIgnoreCase("") == false)
 if(alOrg != null && alOrg.size() != 0)
 	hqlFilter.addOrCondGroup("owner", HqlFilter.Operator.LIKE, alOrg);
 
-hqlFilter.setSort("created_at");
+//hqlFilter.setSort("created_at");
 hqlFilter.setOrder("desc");
 
         List<Jc_volunteer> listObj = jc_volunteerService.findByFilter(hqlFilter);

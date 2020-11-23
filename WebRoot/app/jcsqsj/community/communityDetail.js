@@ -75,10 +75,29 @@ function viewDetail(id)
 function gobackPage()
 {
 	curId = '';
-	
-	$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
-		
-    });
+	if(ditutype > 0){
+		if(ditutype == 1){
+			$('#main-content').load("./maps/sqgkt.html", function () {
+				ditutype = 0;
+			});
+		}
+		else if(ditutype == 2){
+			$('#main-content').load("./maps/sqmqt.html", function () {
+				ditutype = 0;
+			});
+		}
+		else {
+			$('#main-content').load("./maps/sqztt.html", function () {
+				ditutype = 0;
+				curmap = '';
+			});
+		}
+	}
+	else {
+		$('#main-content').load("./jcsqsj/jcsqsj.html", function () {
+			
+		});
+	}
 	
 }
 /*

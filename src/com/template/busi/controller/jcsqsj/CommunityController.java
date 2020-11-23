@@ -152,7 +152,9 @@ if(organization != null && organization.equalsIgnoreCase("") == false)
 
 	for(int i=0;i<organizationArr.length;i++)
 	{
-		alOrg.add("%"+organizationArr[i]+"%");
+		if(!"d216599c-7b85-48ab-8e49-049178f5a285".equals(organizationArr[i])) {
+			alOrg.add("%"+organizationArr[i]+"%");
+		}
 	}
 }
 

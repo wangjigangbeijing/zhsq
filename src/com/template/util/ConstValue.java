@@ -107,6 +107,7 @@ public class ConstValue {
 	
 	public final static String HTTP_HEADER_SOURCE = "source";
 	public final static String HTTP_HEADER_USERID = "userId";
+	public final static String HTTP_HEADER_TOKEN = "token";
 	public final static String HTTP_HEADER_SOURCE_APP = "app";
 	
 	//public static HashMap<String,String> hmOrgId2OrgName = new HashMap<String,String>();

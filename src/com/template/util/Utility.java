@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.mysql.cj.util.StringUtils;
+
 
 public class Utility 
 {
@@ -222,6 +224,61 @@ public class Utility
 	}
 	
 	public String getOrganization(HttpServletRequest request)
+	{
+		String organization = "";
+		
+		try
+		{
+			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);
+			
+			if(userId == null || userId.equalsIgnoreCase(""))
+				userId = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ID);
+			
+			if(ConstValue.userToOrgMap.containsKey(userId))
+				organization = ConstValue.userToOrgMap.get(userId);
+			
+			if((organization == null || organization.equalsIgnoreCase(""))  && request.getSession().getAttribute(ConstValue.SESSION_USER_ORG) != null)
+			{	
+				organization = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ORG);
+			}
+			
+			String token = request.getHeader(ConstValue.HTTP_HEADER_TOKEN);
+			logger.info("userId:" + userId + ", token:" + token);
+			if(!StringUtils.isNullOrEmpty(token) && !token.equals(userId)) {
+				organization = token;
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+		
+		try
+		{
+			if((organization == null || organization.equalsIgnoreCase(""))  && request.getSession().getAttribute(ConstValue.SESSION_USER_ORG) != null)
+			{	
+				organization = (String)request.getSession().getAttribute(ConstValue.SESSION_USER_ORG);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.error(e.getMessage(),e);
+		}
+		
+		logger.info(">>>Organization: " + organization);
+		
+		if(organization == null || organization.equalsIgnoreCase("d216599c-7b85-48ab-8e49-049178f5a285"))//如果是一个街道用户,则返回一个空的组织ID以应付数据操作
+			organization = "";
+		
+		String selectowner = (String) request.getSession().getAttribute("selectowner");
+		if(selectowner != null) {
+			return selectowner;
+		}
+		
+		return organization;
+	}
+	
+	public String getOrganization2(HttpServletRequest request)
 	{
 		String organization = "";
 		

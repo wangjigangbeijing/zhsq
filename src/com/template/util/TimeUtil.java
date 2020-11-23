@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 时间的辅助工具
@@ -1144,12 +1145,12 @@ public class TimeUtil {
 	public static String getTimeByMillSecond2(long lMillSec) {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(lMillSec);
-		;
 		
 		SimpleDateFormat sdf = null;
 		try {
 			sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			return sdf.format(c.getTime());
+			String time = sdf.format(c.getTime());
+			return time;
 		} catch (Exception e) {
 
 		}

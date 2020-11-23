@@ -62,7 +62,8 @@ public class AES {
  
             return new String(result, "utf-8");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+        	System.out.println("解密异常");
         }
  
         return null;
@@ -96,14 +97,7 @@ public class AES {
     }
  
     public static void main(String[] args) throws Exception{
-        String plainText = "测试密码";
-        //注意key不为16位,会自动不0
-        String key = "1234567890ABCDEF";
-        System.out.println("plainText:" + plainText);
- 
- 
-        String encryptionText = AES.encrypt(plainText);
-        System.out.println("加密后的密码(encryptionText):" + encryptionText);
+       String encryptionText = "8wFaF4lWiMYit/bL83pnlA==";
  
         System.out.println("解密(decrypt):"+AES.decrypt(encryptionText));
  

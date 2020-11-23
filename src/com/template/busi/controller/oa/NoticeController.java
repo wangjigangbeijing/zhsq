@@ -3,6 +3,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.mysql.cj.util.StringUtils;
 import com.template.model.SysUserOrganization;
 import com.template.model.oa.Notice;
 import com.template.service.SysUserOrganizationService;
@@ -117,6 +118,9 @@ public String delete(String id)
 				hqlFilter.addQryCond("body", HqlFilter.Operator.LIKE, "%"+body+"%");
 			}
 	
+			//用户映射的具体组织 
+			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);//该接口只从APP上调用
+			
 			ArrayList<String> alOrg = new ArrayList<String>(); 
 			
 			//社区组织
@@ -129,22 +133,24 @@ public String delete(String id)
 
 				for(int i=0;i<organizationArr.length;i++)
 				{
-					alOrg.add("%"+organizationArr[i]+"%");
+					if(!"d216599c-7b85-48ab-8e49-049178f5a285".equals(organizationArr[i])) {
+						alOrg.add("%"+organizationArr[i]+"%");
+					}
 				}
 			}
 			
-			//用户映射的具体组织 
-			String userId = request.getHeader(ConstValue.HTTP_HEADER_USERID);//该接口只从APP上调用
 			
-			HqlFilter hqlFilterOrganzation = new HqlFilter();
-			hqlFilterOrganzation.addQryCond("user", HqlFilter.Operator.EQ, userId);
 			
-			List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
-
-			for(int j=0;j<userOrgList.size();j++)
-			{
-				alOrg.add(userOrgList.get(j).getorganization());
-			}
+//			HqlFilter hqlFilterOrganzation = new HqlFilter();
+//			hqlFilterOrganzation.addQryCond("user", HqlFilter.Operator.EQ, userId);
+//			
+//			List<SysUserOrganization> userOrgList = userOrganizationService.findByFilter(hqlFilterOrganzation);
+//
+//			for(int j=0;j<userOrgList.size();j++)
+//			{
+//				alOrg.add(userOrgList.get(j).getorganization());
+//			}
+			
 			
 			if(alOrg != null && alOrg.size() != 0)
 				hqlFilter.addOrCondGroup("authorityorg", HqlFilter.Operator.LIKE, alOrg);

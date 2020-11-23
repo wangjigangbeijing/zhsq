@@ -1,5 +1,5 @@
 ﻿
-var curUserType = -1;
+//var curUserType = -1;
 
 $(document).ready(function (){
 	
@@ -69,7 +69,7 @@ function loadsqzzqd()
 					orderable: false,
 					targets:   1,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.gzzz+"\">"+full.gzzzShort+"</a>";
+						var btn = "<span data-toggle=\"tooltip\" title=\""+full.gzzz+"\">"+full.gzzzShort+"</span>";
 						return btn;
 					}
 					},
@@ -78,7 +78,7 @@ function loadsqzzqd()
 					orderable: false,
 					targets:   5,//从0开始
 					mRender : function(data,type,full){
-						var btn = "<a href=\"#\" data-toggle=\"tooltip\" title=\""+full.yjflfgmc+"\">"+full.yjflfgmcShort+"</a>";
+						var btn = "<span  data-toggle=\"tooltip\" title=\""+full.yjflfgmc+"\">"+full.yjflfgmcShort+"</span>";
 						return btn;
 					}
 					},
