@@ -91,14 +91,51 @@ function viewDetail(id)
 			{
 				$('#modalDetail').show();
 				$('#title').val(obj.title);
-				$('#category').val(obj.category);
-				$('#telxl').val(obj.telxl);
+				
+				$.get(getContextPath()+"/utilController/getsxsqsjdl",
+				function(result){
+					var objCategory = jQuery.parseJSON(result);  
+					if(objCategory.success)
+					{
+						for(var i = 0; i < objCategory.list.length; i++){
+							var content = "<option value='" + objCategory.list[i].sxdl + "'>" + objCategory.list[i].sxdl + "</option>"
+							$("#category").append(content);
+						}
+						
+						debugger;
+						$('#category').val(obj.category);
+						
+						var dl = $("#category").val();
+						if(dl == ''){
+							return;
+						}
+						
+						$.get(getContextPath()+"/utilController/getsxsqsjxl?sxdl=" + dl,
+							function(result){
+								var objXL = jQuery.parseJSON(result);  
+								if(objXL.success)
+								{
+									for(var i = 0; i < objXL.list.length; i++){
+										var content = "<option value='" + objXL.list[i].sxxl + "'>" + objXL.list[i].sxxl + "</option>"
+										$("#telxl").append(content);
+									}
+									
+									$('#telxl').val(obj.telxl);
+								}
+							});
+					}
+				});
+				
 				$('#content').val(obj.content);
 				var audioArr = obj.audio.split(VALUE_SPLITTER);				for(var j=0;j<audioArr.length;j++)				{					if(audioArr[j] != '')					{						$('#audiopicktable').append('<tr><td>'+audioArr[j]+'</td><td>上传成功</td>'+							'<td><button type="button" class="btn btn-success btn-xs" onclick="javascript:downloadAttach(\''+audioArr[j]+'\');return false;"><i class="fa fa-check"></i></button></td>'+							'</tr>');					}				}				$('#target').val(obj.target);
 				$('#publishtime').val(obj.publishtime);
+				
+				$('#selectExternalDiv').hide();
+				$('#selectInternalDiv').hide();
+				
+				$('#mobileList').val(obj.target);
+				
 				$('#status').val(obj.status);
-
-					
 			}
 		});
 }
